@@ -86,10 +86,15 @@ footer .footer.block .section.columns-container .columns-wrapper .columns.block 
   background: unset;
   padding: unset;
   text-align: start;
+  border: unset;
 }
-
+.footer .section > div{
+  max-width: unset;
+}
 footer .footer.block .section:nth-child(2) .columns-wrapper .columns.block{
   padding-bottom: 40px;
+  margin-bottom: unset;
+  margin-top: unset;
 }
 footer .footer.block div .section:nth-child(3) .default-content-wrapper p{
   font-size: 0.875rem;
@@ -129,6 +134,7 @@ footer > .footer.block div .section:nth-child(3) > .default-content-wrapper > p:
     padding: unset;
     margin-top: unset;
     margin-bottom: unset;
+    border: unset;
 }
 footer > .footer.block div .section:nth-child(3) > .default-content-wrapper > p:nth-child(3){
   margin-left: auto;
@@ -183,12 +189,12 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
   display: inline-flex;
 }
 
-@media screen and (min-width: 768px) and (max-width:1024px) {
+@media screen and (max-width:1024px) {
   footer.footer-wrapper{
     padding: 0 16px;
   }
   footer .footer.block div .section:nth-child(1) .default-content-wrapper > p:nth-child(2){
-    margin-right: 3.5%;
+    margin-right: 9.5%;
   }
   footer > .footer.block div .section:nth-child(3) > .default-content-wrapper{
     display: grid;
@@ -207,6 +213,7 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
     align-items: center;
     justify-content: right;
     padding-bottom: 32px;
+    font-weight: 700;
   }
   footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-child(3),
   footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-child(4){
@@ -253,7 +260,7 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
     text-overflow: unset;
     border-radius: unset;
     margin-top: 8px;
-    line-height: 1;
+    line-height: 1.5rem;
   }
   footer .footer.block div .section:nth-child(2) .columns-wrapper .columns > div {
     flex-direction: row;
@@ -265,6 +272,18 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
     margin-top: unset;
     padding-bottom: 8px;
   }
+  footer > .footer.block > div > .section:nth-child(4) .columns-wrapper .columns{
+    padding-bottom: unset;
+    margin-top: 24px;
+  }
+}
+@media screen and (max-width:900px) {
+  footer > .footer.block div .section:nth-child(3) > .default-content-wrapper{
+    grid-template-columns: 40% 19%;
+  }
+  footer .footer.block div .section:nth-child(1) .default-content-wrapper > p:nth-child(2){
+    margin-right: 7.5%;
+  }
 }
 @media screen and (max-width:767px) {
   footer.footer-wrapper{
@@ -272,6 +291,7 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
   }
   footer > .footer.block div .section:nth-child(3) > .default-content-wrapper{
     flex-direction: column;
+    display: inline;
     padding-bottom: 16px;
   }
   footer .footer.block div .section:nth-child(3) .default-content-wrapper ul{
@@ -290,13 +310,13 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
   }
   footer .footer.block .section.columns-container .columns-wrapper .columns.block div div p, footer .footer.block .section.columns-container .columns-wrapper .columns.block div div p a{
     color: #fff;
-    font-family: Nunito-Regular, sans-serif;
     font-size: 0.75rem;
     line-height: 1rem;
     cursor: pointer;
     white-space: unset;
     overflow: unset;
     border: unset;
+    font-weight: 700;
   }
   footer .footer.block .section.columns-container .columns-wrapper .columns.block div div p strong{
     font-size: 0.875rem;
@@ -333,6 +353,7 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
   }
   footer .footer.block div .section:nth-child(1) .default-content-wrapper > p:nth-child(2){
     margin-bottom: unset;
+    margin-right: 12%;
   }
   footer .footer{
     padding: 24px 0;
@@ -341,6 +362,7 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
     margin-left: unset;
     padding-top: 16px;
     font-weight: 400;
+    text-align: center;
   }
   footer .footer.block div .section:nth-child(3) .default-content-wrapper ul li a img{
     margin-left: unset;
@@ -357,6 +379,12 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
   footer > .footer.block div .section:nth-child(4) .columns-wrapper .columns div div p picture img{
     height: 24px;
     width: 24px;
+  }
+  footer > .footer.block div .section:nth-child(4) .columns-wrapper .columns div div:last-child p picture img{
+    height: fit-content;
+  }
+  footer > .footer.block > div > .section:nth-child(4) .columns-wrapper .columns{
+    margin: unset;
   }
   footer > .footer.block > div > .section:nth-child(4) .columns-wrapper .columns div div p:nth-child(1){
     width: unset;
@@ -380,8 +408,23 @@ footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-ch
   }
   footer .footer.block .section.columns-container .columns-wrapper .columns.block div div p:first-child{
     margin-top: unset;
+    padding-bottom: unset;
   }
   footer > .footer.block > div > .section:nth-child(4) .default-content-wrapper:nth-child(1) p:nth-child(1){
     margin-bottom: unset;
+  }
+  footer .footer.block div .section:nth-child(3) .default-content-wrapper > p:first-child{
+    border-bottom: unset;
+    padding-bottom: unset;
+    justify-content: center;
+    min-height: unset;
+    padding-top: 1.5rem;
+  }
+  footer > .footer.block > div > .section:nth-child(3){
+    padding-bottom: 8px;
+  }
+  footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-child(4){
+    text-align: center;
+    display: block;
   }
 }

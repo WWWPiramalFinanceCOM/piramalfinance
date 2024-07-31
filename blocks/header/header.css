@@ -617,6 +617,9 @@ header .nav-wrapper  #nav > div.section.nav-sections > div > ul > li:nth-child(5
     top: 66px;
     transition-timing-function: cubic-bezier(.4,0,.2,1);
   }
+  header #nav > div.section.nav-brand > div{
+    max-width: unset;
+  }
   header .nav-brand .default-content-wrapper > ul{
     padding: 0 1pc;
   }
@@ -649,11 +652,12 @@ header .nav-wrapper  #nav > div.section.nav-sections > div > ul > li:nth-child(5
     line-height: 20px;
     text-decoration: none;
   }
-  header .nav-brand .default-content-wrapper > ul > li > p{
+  header nav#nav .nav-brand .default-content-wrapper > ul > li > p{
     align-items: center;
     display: flex;
     margin: unset;
     padding: 16px 0;
+    line-height: 1.5rem;
   }
   header .nav-brand .default-content-wrapper > ul > li > ul > li > p{
     border-bottom: 1px solid #e6e6e6;
@@ -668,17 +672,20 @@ header .nav-wrapper  #nav > div.section.nav-sections > div > ul > li:nth-child(5
   header .section.nav-brand .default-content-wrapper > ul > li > ul > li > p::after{
     content: "";
     position: absolute;
-    background-image:url(../../icons/arrow.svg);
+    /* background-image: url(../../icons/arrow.svg); */
     background-repeat: no-repeat;
     background-size: cover;
     display: block;
     height: 7px;
     margin-left: 8px;
-    top: 23px;
-    right: 2px;
-    transform: rotate(0deg);
+    border: solid #808080;
+    border-width: 0 2px 2px 0;
+    border-radius: 0 0 2.5px;
+    top: 22px;
+    right: 3px;
+    transform: rotate(45deg);
     transition: transform .6s ease-in-out;
-    width: 16px;
+    width: 7px;
   }
   header .nav-brand .default-content-wrapper > ul > li > ul > li> p > sup{
     align-items: center;
@@ -686,12 +693,12 @@ header .nav-wrapper  #nav > div.section.nav-sections > div > ul > li:nth-child(5
     border-radius: 4px;
     color: #fff;
     display: flex;
-    font-family: Nunito-Bold, sans-serif;
+    font-family: 'nunito';
     font-size: 10px;
     font-weight: 700;
     height: 1.1pc;
     line-height: 9pt;
-    padding: 2px 4px;
+    padding: 3px 8px;
     text-decoration: none;
     width: fit-content;
     font-size: 12px;
@@ -708,14 +715,15 @@ header .nav-wrapper  #nav > div.section.nav-sections > div > ul > li:nth-child(5
     width: fit-content;
     height: 100%;
   }
-  header #nav > div.section.nav-brand > div > ul > li:nth-child(3) > ul > li:nth-child(4){
+  header #nav > div.section.nav-brand > div > ul > li:nth-child(1) > ul > li:nth-child(4) > p,
+  header #nav > div.section.nav-brand > div > ul > li:nth-child(2) > ul > li:nth-child(4) > p,
+  header #nav > div.section.nav-brand > div > ul > li:nth-child(3) > ul > li:nth-child(4) p{
     border-bottom: unset;
   }
   header .nav-brand .default-content-wrapper > ul > li:nth-child(4){
     background: linear-gradient(333.16deg, #fef0ec -4.71%, #ebeef0 116.99%);
     border-radius: 15.7755px;
-    margin: 1pc auto 9pc;
-    max-width: 328px;
+    margin: 1rem auto 9rem;
     padding: 24px 36px;
   }
   header .nav-brand .default-content-wrapper > ul > li:nth-child(4) > p{
@@ -820,14 +828,13 @@ header .nav-wrapper  #nav > div.section.nav-sections > div > ul > li:nth-child(5
   }
   header .nav-brand .default-content-wrapper > ul > li > ul > li.arrow p::after {
     transition: transform .6s ease-in-out;
-    transform: rotate(180deg);
-    color: #f26841;
-    stroke: #f26841;
-    -webkit-text-stroke-color: #f26841;
+    transform: rotate(225deg);
+    border: solid #f26841;
+    border-width: 0 2px 2px 0;
   }
   header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child a{
     max-width: 81px;
-    min-height: 38px;
+    min-height: 37px;
   }
   header .nav-brand .default-content-wrapper > ul > li > ul > li.arrow p::after path {
     stroke: #f26841;
@@ -856,5 +863,19 @@ header .nav-wrapper  #nav > div.section.nav-sections > div > ul > li:nth-child(5
     border-radius: 5px;
     height: 36px;
     width: 122px;
+  }
+  header #nav > div.section.nav-brand > div > ul > li:nth-child(2) > ul > li:nth-child(4) > p::after,
+  header #nav > div.section.nav-brand > div > ul > li:nth-child(2) > ul > li:nth-child(2) > p::after,
+  header #nav > div.section.nav-brand > div > ul > li:nth-child(2) > ul > li:nth-child(1) > p::after{
+  content: none;
+  }
+  header #nav > div.section.nav-brand > div > ul > li:nth-child(4) > p{
+    padding: unset;
+    margin-bottom: .75rem;
+  }
+}
+@media screen and (max-width:360px) {
+  header .nav-brand{
+    height: 114vh;
   }
 }

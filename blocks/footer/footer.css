@@ -167,10 +167,18 @@ footer .footer.block .section.columns-container .columns-wrapper .columns.block 
   background: unset;
   padding: unset;
   text-align: start;
+  border: unset;
+  line-height: 1.5rem;
+}
+
+footer .footer.block .section.columns-container .columns-wrapper .columns.block div div p:nth-child(1){
+  margin-top: unset;
+  padding-bottom: 0.5rem;
 }
 
 footer .footer.block .section:nth-child(2) .columns-wrapper .columns.block {
-  padding-bottom: 40px;
+    /* padding-bottom: 40px; */
+    margin-top: unset;
 }
 
 footer .footer.block div .section:nth-child(3) .default-content-wrapper ul {
@@ -205,11 +213,11 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns div div
   display: none;
 }
 
-footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
+/* footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
   padding-bottom: 48px;
-}
+} */
 
-@media screen and (width >=768px) and (width <=1024px) {
+@media screen and (width <=1024px) {
   footer.footer-wrapper {
     padding: 0 16px;
   }
@@ -220,7 +228,7 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
   }
 
   footer .footer.block div .section:nth-child(1) .default-content-wrapper>p:nth-child(2) {
-    margin-right: 3.5%;
+    margin-right: 9.5%;
   }
 
   footer>.footer.block div .section:nth-child(3)>.default-content-wrapper {
@@ -241,6 +249,8 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
     align-items: center;
     justify-content: right;
     padding-bottom: 32px;
+    font-weight: 700;
+    font-size: 0.875rem;
   }
 
   footer .footer.block div .section:nth-child(3) .default-content-wrapper p:nth-child(3),
@@ -262,6 +272,10 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
   footer>.footer.block div .section:nth-child(4) .columns-wrapper .columns div div p picture img {
     width: 25px;
     height: 40px;
+  }
+
+  .footer .section > div{
+    max-width: unset;
   }
 
   footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns div {
@@ -300,6 +314,7 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
     margin-top: unset;
     padding-bottom: 8px;
   }
+
 }
 
 @media screen and (width <=767px) {
@@ -389,6 +404,7 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
     white-space: unset;
     overflow: unset;
     border: unset;
+    font-weight: 700;
   }
 
   footer .footer.block .section.columns-container .columns-wrapper .columns.block div div p strong {
@@ -399,7 +415,7 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
   }
 
   footer .footer.block .section:nth-child(2) .columns-wrapper .columns.block {
-    padding-bottom: 24px;
+    margin-bottom: unset;
   }
 
   footer .footer.block div .section .default-content-wrapper>p:nth-child(1)>picture img {
@@ -431,6 +447,7 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
 
   footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
     padding: 16px 0 24px;
+    margin: unset;
   }
 
   footer .footer.block .section:nth-child(4) {
@@ -439,5 +456,9 @@ footer>.footer.block>div>.section:nth-child(4) .columns-wrapper .columns {
 
   footer .footer.block .section.columns-container .columns-wrapper .columns.block div div p:first-child {
     margin-top: unset;
+  }
+
+  footer .footer.block .section.columns-container .columns-wrapper .columns.block div div p:nth-child(1){
+    padding-bottom: unset;
   }
 }

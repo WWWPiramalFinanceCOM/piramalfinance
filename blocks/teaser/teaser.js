@@ -54,8 +54,11 @@ export function generateTeaserDOM(props, classes) {
   const picture = pictureContainer.querySelector('picture');
 
   if(picture){
-  
+    let image = picture?.querySelector("img");
+    image.setAttribute("width" ,"400")
+    image.setAttribute("height" ,"400")
   let imageUrl = picture?.querySelector("img").src;
+
   let url = new URL(imageUrl);
   url.searchParams.set('width', '400');
   url.searchParams.set('height', '400');

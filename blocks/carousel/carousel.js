@@ -37,7 +37,7 @@ const observer = new IntersectionObserver(updateButtons, { threshold: 0.6, rootM
 export default function decorate(block) {
 
   block.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 600px)', width: '500' }, { width: '750' }]);
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, true, [{ media: '(min-width: 600px)', width: '500' }, { width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });

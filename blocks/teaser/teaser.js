@@ -52,6 +52,19 @@ export function generateTeaserDOM(props, classes) {
 
   const bgPicture = pictureBgContainer.querySelector('picture');
   const picture = pictureContainer.querySelector('picture');
+
+  if(picture){
+  
+  let imageUrl = picture?.querySelector("img").src;
+  let url = new URL(imageUrl);
+  url.searchParams.set('width', '400');
+  url.searchParams.set('height', '400');
+  url.searchParams.set('format', 'webply');
+  url.searchParams.set('optimize', 'medium');
+  picture.querySelector("img").src = url.toString();
+
+  }
+
   const hasShortDescr = shortDescr.textContent.trim() !== '';
   // Build DOM
   const ctaImageAnchor = ctaImageUrl.querySelector('a') || createAnchor(ctaImageUrl);

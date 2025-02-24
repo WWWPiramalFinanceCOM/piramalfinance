@@ -1,7 +1,8 @@
 import {
   applyLoanNow, bannerClick, ctaClick, ctaClickInteraction, readMoreInteraction,
 } from '../../dl.js';
-import { targetObject , handleOpenFormOnClick } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { targetObject, handleOpenFormOnClick, moveInstrumentation } from '../../scripts/scripts.js';
 
 export function decorateButtons(...buttons) {
   return buttons
@@ -53,20 +54,20 @@ export function generateTeaserDOM(props, classes) {
   const bgPicture = pictureBgContainer.querySelector('picture');
   const picture = pictureContainer.querySelector('picture');
 
-  if(picture){
-    let image = picture?.querySelector("img");
-    image.setAttribute("width" ,"400")
-    image.setAttribute("height" ,"400")
-  let imageUrl = picture?.querySelector("img").src;
+  // if (picture) {
+  //   let image = picture?.querySelector("img");
+  //   image.setAttribute("width", "400")
+  //   image.setAttribute("height", "400")
+  //   let imageUrl = picture?.querySelector("img").src;
 
-  let url = new URL(imageUrl);
-  url.searchParams.set('width', '400');
-  url.searchParams.set('height', '400');
-  url.searchParams.set('format', 'webply');
-  url.searchParams.set('optimize', 'medium');
-  picture.querySelector("img").src = url.toString();
+  //   let url = new URL(imageUrl);
+  //   url.searchParams.set('width', '400');
+  //   url.searchParams.set('height', '400');
+  //   url.searchParams.set('format', 'webply');
+  //   url.searchParams.set('optimize', 'medium');
+  //   picture.querySelector("img").src = url.toString();
 
-  }
+  // }
 
   const hasShortDescr = shortDescr.textContent.trim() !== '';
   // Build DOM
@@ -122,7 +123,7 @@ export function generateTeaserDOM(props, classes) {
         <div class='spacer'></div>
       </div>
   `,
-  
+
   );
 
   // set the mobile background color
@@ -140,17 +141,17 @@ export function generateTeaserDOM(props, classes) {
     el.addEventListener('click', function (e) {
       try {
         if (!e.target.closest('.calc-desktop-carousel-wrapper')) {
-          if(!e.target.closest(".multi-calc-teaser-wrapper")){
-          if (index || e.target.closest('.cta')) {
-            bannerClick(e.target.innerText, targetObject.pageName);
+          if (!e.target.closest(".multi-calc-teaser-wrapper")) {
+            if (index || e.target.closest('.cta')) {
+              bannerClick(e.target.innerText, targetObject.pageName);
+            }
           }
-        }
-        if(e.target.closest(".multi-calc-teaser-wrapper")){
+          if (e.target.closest(".multi-calc-teaser-wrapper")) {
             const click_text = e.target.textContent.trim();
             const cta_position = '';
-            const cta_category = e.target.closest('.foreground').querySelector('.long-description').querySelector('p') .textContent.trim()
+            const cta_category = e.target.closest('.foreground').querySelector('.long-description').querySelector('p').textContent.trim()
             ctaClick(click_text, cta_category, cta_position, targetObject.pageName);
-        }
+          }
           if (e.target.closest('.open-form-on-click')) {
             const formClickSection = e.target.closest('.open-form-on-click');
             handleOpenFormOnClick(formClickSection);
@@ -210,6 +211,11 @@ export function generateTeaserDOM(props, classes) {
 
 export default function decorate(block) {
   // get the first and only cell from each row
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
   const props = [...block.children].map((row) => row.firstElementChild);
   const teaserDOM = generateTeaserDOM(props, block.classList);
   block.textContent = '';

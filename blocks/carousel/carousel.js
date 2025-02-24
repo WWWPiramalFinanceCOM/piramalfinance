@@ -1,4 +1,5 @@
-import { body, createCarousle, targetObject } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { body, createCarousle, moveInstrumentation, targetObject } from '../../scripts/scripts.js';
 import { applyLoanFormClick, formOpen } from '../applyloanform/applyloanforms.js';
 import { buttonCLick } from '../applyloanform/loanformapi.js';
 import { loanutmForm } from '../applyloanform/loanutm.js';
@@ -34,7 +35,15 @@ function updateButtons(entries) {
 const observer = new IntersectionObserver(updateButtons, { threshold: 0.6, rootMargin: '500px 0px' });
 
 export default function decorate(block) {
+
+  block.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 600px)', width: '500' }, { width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
+  });
+
   // the panels container
+
   const panelContainer = document.createElement('div');
   panelContainer.classList.add('panel-container', 'carousel-inner');
   panelContainer.id = 'carouselInner';

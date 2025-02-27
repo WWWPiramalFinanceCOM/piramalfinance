@@ -223,5 +223,5 @@ function csrfReportAnalytics(e) {
 
 function setEagerImg(el) {
   const img = el?.querySelector('img');
-  img?.setAttribute('loading', 'eager');
+  img?.removeAttribute('loading');
 }

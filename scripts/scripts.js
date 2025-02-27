@@ -740,9 +740,9 @@ function loadDelayed() {
 
 async function loadPage() {
   loadHeader(document.querySelector('header'));
-  await loadingCustomCss();
   await loadEager(document);
   await loadLazy(document);
+  await loadingCustomCss();
   loadDelayed();
 }
 

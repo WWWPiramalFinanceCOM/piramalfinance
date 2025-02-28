@@ -94,7 +94,6 @@ function initEventListeners(block, groupedLocations) {
   }); */
   let isFirst = false
   window.onscroll = (() => {
-    console.log("scroll triggered");
     if (!isFirst) {
       displayCards(block, inputLocationValue, groupedLocations.grouped)
       isFirst = true

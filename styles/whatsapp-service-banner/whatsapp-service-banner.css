@@ -12,6 +12,10 @@
     bottom: 0;
 }
 
+.section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image >picture{
+    display: block;
+}
+
 .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image img {
     width: 487px;
     height: 412px;
@@ -150,6 +154,8 @@
     .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image {
         left: 10%;
         right: 0;
+        width: 278px;
+        height: 218px;
     }
 
     .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image img {

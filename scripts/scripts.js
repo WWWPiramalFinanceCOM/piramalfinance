@@ -4,7 +4,11 @@ import { validationJSFunc } from '../blocks/applyloanform/validation.js';
 import { toggleAllNavSections } from '../blocks/header/header.js';
 import { applyLoanInteraction, ctaClick, ctaClickInteraction, selectBranchInteraction } from '../dl.js';
 import {
-  sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks, loadCSS, fetchPlaceholders,
+  sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks  , fetchPlaceholders,
+  waitForFirstImage,  
+  loadSection, 
+  loadSections, 
+  loadCSS
 } from './aem.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -563,6 +567,20 @@ export function decorateViewMore(block) {
   }
 } */
 
+// Main function
+const processAnchor = (anchor, body) => {
+
+  // Handle target attribute
+  if (anchor?.innerHTML.includes('<sub>')) {
+    anchor.target = '_blank';
+  }
+
+  // Handle modal popup
+  if (anchor?.href.includes('/modal-popup/')) {
+    handleModalPopup(anchor, body);
+  }
+ 
+};
 
 export function decorateAnchorTag(main) {
   try {
@@ -689,7 +707,7 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await waitForLCP(LCP_BLOCKS);
+    await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
 
   try {
@@ -710,13 +728,13 @@ async function loadLazy(doc) {
   autolinkModals(doc);
 
   const main = doc.querySelector('main');
-  await loadBlocks(main);
+  await loadSections(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  /* loadHeader(doc.querySelector("header")); */
+  loadHeader(doc.querySelector("header"));
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
@@ -1344,20 +1362,7 @@ export function groupAllKeys(array) {
   }, {});
 }
 
-// Main function
-const processAnchor = (anchor, body) => {
 
-  // Handle target attribute
-  if (anchor.innerHTML.includes('<sub>')) {
-    anchor.target = '_blank';
-  }
-
-  // Handle modal popup
-  if (anchor.href.includes('/modal-popup/')) {
-    handleModalPopup(anchor, body);
-  }
- 
-};
 
 
 const handleModalPopup = (anchor, body) => {

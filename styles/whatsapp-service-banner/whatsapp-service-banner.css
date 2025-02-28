@@ -12,8 +12,9 @@
     bottom: 0;
 }
 
-.section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image >picture{
+.section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image>picture {
     display: block;
+    height: 418px;;
 }
 
 .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image img {
@@ -22,7 +23,7 @@
 }
 
 .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .description>p>strong,
-.section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .description> :where(h1,h2,h3,h4,h5,h6) {
+.section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .description> :where(h1, h2, h3, h4, h5, h6) {
     display: block;
     font-family: 'Nunito-Extrabold', sans-serif;
     font-size: 3rem;
@@ -154,7 +155,11 @@
     .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image {
         left: 10%;
         right: 0;
-        width: 278px;
+        
+    }
+
+    .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image>picture {
+        display: block;
         height: 218px;
     }
 
@@ -164,7 +169,7 @@
     }
 
     .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .description>p>strong,
-    .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .description> :where(h1,h2,h3,h4,h5,h6){
+    .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .description> :where(h1, h2, h3, h4, h5, h6) {
         font-size: 1.5rem;
         line-height: 32px;
     }
@@ -229,14 +234,16 @@
 
 @media screen and (min-width:1025px) and (max-width: 1300px) {
     .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service {
-      max-width: 81.25%;
+        max-width: 81.25%;
     }
+
     .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image img {
         width: 440px;
         height: 371px;
     }
+
     .section.whatsapp-service-banner .whatsappservice-wrapper .whats-app-service .front-image {
         right: 4%;
         bottom: 40px;
     }
-  }
+}

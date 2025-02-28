@@ -5,12 +5,12 @@ export default async function decorate(block) {
   const cfURL = block.textContent.trim();
   const cfRepsonse = await CFApiCall(cfURL);
   const repsonseData = cfRepsonse.data;
-  
+
   const groupedLocations = groupAndSortLocations(repsonseData);
   renderLocationSelection(block, groupedLocations);
   initEventListeners(block, groupedLocations);
   if (targetObject.isTab || targetObject.isMobile) {
-    displayCards(block,"",groupedLocations.grouped, 1);
+    displayCards(block, "", groupedLocations.grouped, 1);
   } else {
     displayCards(block, "", groupedLocations.grouped, 2);
   }
@@ -92,15 +92,23 @@ function initEventListeners(block, groupedLocations) {
       }
     }
   }); */
+  let isFirst = false
+  window.onscroll = (() => {
+    console.log("scroll triggered");
+    if (!isFirst) {
+      displayCards(block, inputLocationValue, groupedLocations.grouped)
+      isFirst = true
+    }
 
-  window.onscroll = () => displayCards(block, inputLocationValue, groupedLocations.grouped);
+  });
+
 }
 
 
-function displayCards(block, selectedCityName, groupedLocations,index) {
+function displayCards(block, selectedCityName, groupedLocations, index) {
   const cardContainer = block.querySelector('.card-container') || document.createElement('div');
   cardContainer.className = 'card-container';
-  cardContainer.innerHTML = ''; 
+  cardContainer.innerHTML = '';
   block.appendChild(cardContainer);
 
   const dataToDisplay = selectedCityName ? { [selectedCityName]: groupedLocations[selectedCityName] } : groupedLocations;
@@ -145,7 +153,7 @@ function displayCards(block, selectedCityName, groupedLocations,index) {
           </div>
         </div>
       `;
-      cardContainer.innerHTML += cardHTML; 
+      cardContainer.innerHTML += cardHTML;
     });
   });
 }

@@ -7,23 +7,29 @@ export default async function decorate(block) {
   let respLength = 0;
   repsonseData.length < 60 ? respLength = repsonseData.length : respLength = 60;
   if (targetObject.isTab || targetObject.isMobile) {
-    makeTable(block, repsonseData, 20)
+    createTableDom(block, repsonseData, 20)
   }
   else {
-    makeTable(block, repsonseData, respLength)
+    createTableDom(block, repsonseData, respLength)
   }
-  // block.addEventListener("scroll",() => makeTable(block, repsonseData))
-  let onceScroll = false;
 
-  window.onscroll = () => {
-      if (!onceScroll) {
-          makeTable(block, repsonseData);  
-          onceScroll = true;  
-      }
-  };
+  function handleScroll() {
+    createTableDom(block, repsonseData);
+    window.removeEventListener('scroll', handleScroll);
+  }
+  /* window.onscroll = () => {
+    if (!onceScroll) {
+      createTableDom(block, repsonseData);
+      onceScroll = true;
+      console.log("Scroll Inside Registered");
+    }
+    console.log("Scroll Registered");
+    window.removeEventListener
+  } */
+  window.addEventListener('scroll', handleScroll);
 }
 
-function makeTable(block, repsonseData, count) {
+function createTableDom(block, repsonseData, count) {
   let headLi = ''
   let rowLi = ''
   let key = [];

@@ -15,7 +15,6 @@
 
 .section.banner-carousel-wrapper .carousel-wrapper .carousel .panel-container .teaser.carousel-item.slide-background-light-green {
   /* background-image: url("/images/WhatsAppBannerDesktop.png"); */
-  filter: blur(1.5rem);
   background-image: url("/images/WhatsAppBannerDesktop.webp");
 }
 
@@ -1090,8 +1089,3 @@
   }
 }
 /* ek lakh loan end */
-
-.section.banner-carousel-wrapper .carousel-wrapper .carousel .panel-container .teaser.carousel-item.slide-background-light-green {
-  /* background-image: url("/images/WhatsAppBannerDesktop.png"); */
-  filter: blur(0);
-}

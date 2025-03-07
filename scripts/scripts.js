@@ -769,13 +769,13 @@ loadPage();
 async function loadingCustomCss() {
   // load custom css files
   const loadCssArray = [
-    // `${window.hlx.codeBasePath}/styles/loanproducts/loanproducts.css`,
-    // `${window.hlx.codeBasePath}/styles/calculator/calculator.css`,
+    `${window.hlx.codeBasePath}/styles/loanproducts/loanproducts.css`,
+    `${window.hlx.codeBasePath}/styles/calculator/calculator.css`,
     `${window.hlx.codeBasePath}/styles/choose-us/choose-us.css`,
-    // `${window.hlx.codeBasePath}/styles/download-piramal/download-piramal.css`,
+    `${window.hlx.codeBasePath}/styles/download-piramal/download-piramal.css`,
     `${window.hlx.codeBasePath}/styles/our-media/our-media.css`,
     `${window.hlx.codeBasePath}/styles/piramal-since/piramal-since.css`,
-   /*  `${window.hlx.codeBasePath}/styles/about-us-company/about-us-company.css`,
+    `${window.hlx.codeBasePath}/styles/about-us-company/about-us-company.css`,
     `${window.hlx.codeBasePath}/styles/reset.css`,
     `${window.hlx.codeBasePath}/styles/key-features/key-features.css`,
     `${window.hlx.codeBasePath}/styles/metro-cities/metro-cities.css`,
@@ -828,7 +828,7 @@ async function loadingCustomCss() {
     `${window.hlx.codeBasePath}/styles/support-contact-us/support-contact-popup.css`,
     `${window.hlx.codeBasePath}/styles/e-nach-registration/e-nach-registration.css`,
     `${window.hlx.codeBasePath}/styles/support-faq/support-faq.css`,
-    `${window.hlx.codeBasePath}/styles/embed-carousel-wrapper/embed-carousel-wrapper.css`,*/
+    `${window.hlx.codeBasePath}/styles/embed-carousel-wrapper/embed-carousel-wrapper.css`,
     `${window.hlx.codeBasePath}/styles/fixed-headset/fixed-headset.css`, 
   ];
 

@@ -54,6 +54,12 @@ export function generateTeaserDOM(props, classes) {
   const picture = pictureContainer.querySelector('picture');
   const hasShortDescr = shortDescr.textContent.trim() !== '';
   // Build DOM
+  // setEagerImg(picture);
+  // setEagerImg(bgPicture);
+  // setEagerImg(ctaImage);
+  // setEagerImg(ctaImage2);
+  // setEagerImg(ctaImage3);
+  // setEagerImg(mobileImage);
   const ctaImageAnchor = ctaImageUrl.querySelector('a') || createAnchor(ctaImageUrl);
   const ctaImageAnchor2 = ctaImageUrl2.querySelector('a') || createAnchor(ctaImageUrl2);
   const ctaImageAnchor3 = ctaImageUrl3.querySelector('a') || createAnchor(ctaImageUrl3);
@@ -61,7 +67,7 @@ export function generateTeaserDOM(props, classes) {
   ctaImageAnchor2.innerHTML = ctaImage2.innerHTML;
   ctaImageAnchor3.innerHTML = ctaImage3.innerHTML;
   // const bgPictureStyle = bgPicture?.querySelector("img")?.src || '';
-  const bgPictureStyle = bgPicture?.querySelector('img')?.src && bgPicture?.querySelector('img').src.split("?")[0] ? ` style='background-image:url(${bgPicture?.querySelector('img').src.split("?")[0]})' ` : '';
+  const bgPictureStyle = bgPicture?.querySelector('img')?.src && bgPicture?.querySelector('img').src ? ` style='background-image:url(${bgPicture?.querySelector('img').src})' ` : '';
   const mobileImageStyle = mobileImage?.querySelector('img')?.src ? ` style='background-image:url(${mobileImage?.querySelector('img')?.src})' ` : '';
   let bgImageAllow = bgPictureStyle;
   if (targetObject.isTab) {
@@ -213,4 +219,9 @@ function csrfReportAnalytics(e) {
   data.click_text = e.target.textContent.trim();
   data.cta_position = e.target.closest('.section').querySelector('.default-content-wrapper').querySelector('h1, h2, h3, h4, h5, h6').textContent.trim();
   ctaClickInteraction(data);
+}
+
+function setEagerImg(el) {
+  // const img = el?.querySelector('img');
+  // img?.removeAttribute('loading');
 }

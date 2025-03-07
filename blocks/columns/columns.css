@@ -1,3 +1,5 @@
+@import url("../../styles/piramal-since/piramal-since.css");
+
 .columns > div {
   display: flex;
   flex-direction: column;

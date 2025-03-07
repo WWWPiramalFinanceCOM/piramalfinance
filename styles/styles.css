@@ -889,3 +889,9 @@ footer:has(.neeyat-footer) {
 .font-size-change p{
  font-size: 12px !important;
 }
+
+
+.section.banner-carousel-wrapper .carousel-wrapper .carousel .panel-container .teaser.carousel-item.slide-background-light-green {
+  /* background-image: url("/images/WhatsAppBannerDesktop.png"); */
+  background-image: url("/images/WhatsAppBannerDesktop.webp");
+}

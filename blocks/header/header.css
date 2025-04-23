@@ -232,10 +232,10 @@ header {
   width: 20px;
 }
 
-.header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:nth-child(7) span img {
+/* .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:nth-child(7) span img {
   width: 27px;
   height: 19px;
-}
+} */
 
 .header .nav-wrapper #nav section.nav-sections[aria-expanded="true"] .default-content-wrapper ul>li:nth-child(7) p span img {
   opacity: 1;
@@ -1251,7 +1251,7 @@ body.modal-open footer {
   .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p a {
     font-size: 0.75rem;
   }
-  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p{
+  /* .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p{
     padding: 14px 10px 0 3px;
-  }
+  } */
 }

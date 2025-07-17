@@ -1,7 +1,9 @@
 export default function decorate(block) {
     console.log(block);
     const props = [...block.children].map((row) => row);
-    generateFeatureHTML(props, block)
+
+    generateFeatureHTML(props, block);
+
 }
 
 function generateFeatureHTML(props, block) {
@@ -16,21 +18,35 @@ function generateFeatureHTML(props, block) {
     ] = props;
 
     containerLink = containerLink?.querySelector('a')?.href || '';
-    cardDescription = cardDescription?.querySelector('div > div') || '';
-    mainImage = mainImage?.querySelector('picture') || '';
+    cardDescription = cardDescription?.querySelector('div > div').innerHTML || '';
+    mainImage = mainImage?.querySelector('picture > img')?.src || '';
     mainImageAlt = mainImageAlt?.textContent.trim() || '';
-    topCornerImage = topCornerImage?.querySelector('picture') || '';
+    topCornerImage = topCornerImage?.querySelector('picture > img')?.src || '';
     topCornerImageAlt = topCornerImageAlt?.textContent?.trim() || '';
-    topCornerText = topCornerText?.querySelector('div > div') || '';
+    topCornerText = topCornerText?.querySelector('div > div').innerHTML || '';
 
-    console.log(containerLink);
-    console.log(cardDescription);
-    console.log(mainImage);
-    console.log(mainImageAlt);
-    
-    console.log(topCornerImage);
-    console.log(topCornerImageAlt);
-    console.log(topCornerText);
-    
-//    block.innerHTML = "";
+    const teaser = containerLink ? document.createElement('a') : document.createElement('div');
+    teaser.classList.add('teaser');
+
+    teaser.innerHTML = `
+       <div class="cmp-teaser__content">
+            <div class="teaser__image">
+                <img loading="lazy" class="cmp-image__image" aria-label="${mainImageAlt}" role="img" alt="${mainImageAlt}" src="${mainImage}">
+            </div>
+            <div class="teaser__description" aria-labelledby="teaser-description">
+               ${cardDescription}
+            </div>              
+        </div>
+        <div class="teaser_top-content">
+            <div class="top__image">
+                <img loading="lazy" class="cmp-image__image" aria-label="${topCornerImageAlt}" role="img" alt="${topCornerImageAlt}" src="${topCornerImage}">
+            </div>
+            <div class="top__content" aria-labelledby="top-corner-content">
+               ${topCornerText}
+            </div> 
+        </div>
+    `
+
+    block.append(teaser);
+    props.forEach(prop => prop.remove());
 }

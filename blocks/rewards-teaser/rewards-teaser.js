@@ -48,5 +48,5 @@ function generateFeatureHTML(props, block) {
     `
 
     block.append(teaser);
-    // props.forEach(prop => prop.remove());
+    props.forEach(prop => prop.remove());
 }

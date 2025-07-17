@@ -583,3 +583,31 @@ ol .accordion ul {
         max-width: 343px;
     }
 }
+
+
+
+.faq-section-wrapper.faq-accordion-with-purple-bg {
+    background-color: #2F003A;
+}
+
+.faq-accordion-with-purple-bg .default-content-wrapper h2,
+.faq-accordion-with-purple-bg .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block details p,
+.faq-accordion-with-purple-bg .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block details>div p,
+.faq-accordion-with-purple-bg .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block summary.active p {
+    color: var(--white);
+}
+
+.faq-section-wrapper.faq-accordion-with-purple-bg .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block {
+    border-bottom: 1px dashed rgba(153, 153, 153, 0.2);
+}
+
+.faq-accordion-with-purple-bg .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block summary::after {
+    background-image: url(../../icons/downward-white-arrow.png);
+    width: 18px;
+    height: 18px;
+}
+
+/* .faq-accordion-with-purple-bg .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block details p {
+    font-weight: 700;
+} */
+

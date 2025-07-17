@@ -2798,5 +2798,52 @@
         "label": "Schema Tag"
       }
     ]
+  },
+  {
+    "id": "rewards-teaser",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "mainhref",
+        "label": "Main Href",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "maintext",
+        "label": "Main Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mainimage",
+        "label": "Main Image"
+      },
+      {
+        "component": "richtext",
+        "name": "mainimagealt",
+        "label": "Main Image Alt",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "topcornerimage",
+        "label": "Top-Corner Image"
+      },
+      {
+        "component": "richtext",
+        "name": "topcornerimagealt",
+        "label": "Top-Corner Image Alt",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "topcornertext",
+        "label": "Top-Corner Text",
+        "valueType": "string"
+      }
+    ]
   }
 ]

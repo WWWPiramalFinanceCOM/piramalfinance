@@ -32,5 +32,5 @@ function generateFeatureHTML(props, block) {
     console.log(topCornerImageAlt);
     console.log(topCornerText);
     
-   block.innerHTML = "";
+//    block.innerHTML = "";
 }

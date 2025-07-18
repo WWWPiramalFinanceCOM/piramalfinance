@@ -1,9 +1,6 @@
 export default function decorate(block) {
-    console.log(block);
     const props = [...block.children].map((row) => row);
-
     generateFeatureHTML(props, block);
-
 }
 
 function generateFeatureHTML(props, block) {
@@ -26,6 +23,9 @@ function generateFeatureHTML(props, block) {
     topCornerText = topCornerText?.querySelector('div > div').innerHTML || '';
 
     const teaser = containerLink ? document.createElement('a') : document.createElement('div');
+    if (containerLink) {
+        teaser.href = containerLink;
+    }
     teaser.classList.add('teaser');
 
     teaser.innerHTML = `
@@ -37,6 +37,10 @@ function generateFeatureHTML(props, block) {
                ${cardDescription}
             </div>              
         </div>
+    `
+
+    if (topCornerImage || topCornerText) {
+        teaser.innerHTML += `
         <div class="teaser_top-content">
             <div class="top__image">
                 <img loading="lazy" class="cmp-image__image" aria-label="${topCornerImageAlt}" role="img" alt="${topCornerImageAlt}" src="${topCornerImage}">
@@ -45,7 +49,8 @@ function generateFeatureHTML(props, block) {
                ${topCornerText}
             </div> 
         </div>
-    `
+        `;
+    }
 
     block.append(teaser);
     props.forEach(prop => prop.remove());

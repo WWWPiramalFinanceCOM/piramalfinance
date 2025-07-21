@@ -37,20 +37,22 @@ function generateFeatureHTML(props, block) {
                ${cardDescription}
             </div>              
         </div>
-    `
 
-    if (topCornerImage || topCornerText) {
-        teaser.innerHTML += `
-        <div class="teaser_top-content">
-            <div class="top__image">
-                <img loading="lazy" class="cmp-image__image" aria-label="${topCornerImageAlt}" role="img" alt="${topCornerImageAlt}" src="${topCornerImage}">
+        ${topCornerImage || topCornerText ? `
+            <div class="teaser_top-content">
+                ${topCornerImage ? `
+                    <div class="top__image">
+                        <img loading="lazy" class="cmp-image__image" aria-label="${topCornerImageAlt}" role="img" alt="${topCornerImageAlt}" src="${topCornerImage}">
+                    </div>
+                ` : ''}
+                ${topCornerText ? `
+                    <div class="top__content" aria-labelledby="top-corner-content">
+                        ${topCornerText}
+                    </div>
+                ` : ''}
             </div>
-            <div class="top__content" aria-labelledby="top-corner-content">
-               ${topCornerText}
-            </div> 
-        </div>
-        `;
-    }
+        ` : ''}
+    `
 
     block.append(teaser);
     props.forEach(prop => prop.remove());

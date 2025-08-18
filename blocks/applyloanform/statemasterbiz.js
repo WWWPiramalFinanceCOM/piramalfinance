@@ -14,18 +14,45 @@ ulFormBranch.classList.add('orangepoints');
 
 const defaultCityLi = brachDropDownUl()?.querySelector('.orangepoints') || ulFormBranch;
 
-function stateMasterProcessData(statemasterRaw) {
-  const statemasterArr = statemasterRaw.filter((stateobj) => Boolean(stateobj.state) && stateobj.state != '#N/A');
-  const statemaster = statemasterArr.reduce((statemasterObj, obj) => {
-    const stateObj = {};
-    const innerObj = {};
-    innerObj.data = obj.data.map((d) => JSON.parse(d));
-    innerObj.cities = innerObj.data.reduce((cityArr, cityObj) => (cityArr.includes(cityObj.city) ? cityArr : (cityArr.push(cityObj.city), cityArr)), []);
-    stateObj[obj.state.trim()] = innerObj;
-    Object.assign(statemasterObj, stateObj);
-    return statemasterObj;
-  }, {});
-  return statemaster;
+function stateMasterProcessData(rawData) {
+  // const statemasterArr = statemasterRaw.filter((stateobj) => Boolean(stateobj.state) && stateobj.state != '#N/A');
+  // const statemaster = statemasterArr.reduce((statemasterObj, obj) => {
+  //   const stateObj = {};
+  //   const innerObj = {};
+  //   innerObj.data = obj.data.map((d) => JSON.parse(d));
+  //   innerObj.cities = innerObj.data.reduce((cityArr, cityObj) => (cityArr.includes(cityObj.city) ? cityArr : (cityArr.push(cityObj.city), cityArr)), []);
+  //   stateObj[obj.state.trim()] = innerObj;
+  //   Object.assign(statemasterObj, stateObj);
+  //   return statemasterObj;
+  // }, {});
+  // return statemaster;
+    const statemaster = {};
+  
+    rawData.forEach(entry => {
+      if (!entry.State) return;
+  
+      const stateName = entry.State.trim().toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+
+      if (!statemaster[stateName]) {
+        statemaster[stateName] = {
+          cities: [],
+          data: []
+        };
+      }
+  
+      const cityName = entry.location.trim();
+  
+      if (!statemaster[stateName].cities.includes(cityName)) {
+        statemaster[stateName].cities.push(cityName);
+      }
+  
+      statemaster[stateName].data.push({
+        city: cityName,
+        locationID: null,
+        product: entry["Product Code"] ? entry["Product Code"].toLowerCase() : null
+      });
+    });
+    return statemaster;  
 }
 
 function renderStatemaster(statemaster) {

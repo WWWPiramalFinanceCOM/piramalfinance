@@ -1,6 +1,13 @@
 import { workFlowStatemaster } from './statemasterbiz.js';
 import { fetchAPI } from '../../scripts/common.js';
 
+const LOAN_TYPE_API_PATHS = {
+  pl: "personal-loan",
+  hl: "home-loan",
+  ubl: "business-loan",
+  msme: "secured-business-loan"
+}
+
 export function stateMasterApi() {
   const loaninnerform = document.querySelector('.loan-form-sub-parent');
   let applyLaonFormOpenBtns = [];
@@ -31,9 +38,11 @@ export function stateMasterApi() {
   });
 }
 
-export async function statemasterGetStatesApi() {
+export async function statemasterGetStatesApi(loanType) {
 
-  const response = await fetch("http://localhost:3000/api/state-city-master/personal-loan-state-city-master.json");
+  let productType = loanType ? loanType : 'pl';
+
+  const response = await fetch(`/api/state-city-master/${LOAN_TYPE_API_PATHS[productType]}-state-city-master.json`);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch state data: ${response.status} ${response.statusText}`);

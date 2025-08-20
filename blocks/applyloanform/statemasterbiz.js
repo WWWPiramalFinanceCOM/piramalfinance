@@ -1,6 +1,7 @@
 import {
   brachDropDownUl, branchInput, loanProduct, stateDropDownUL, stateInput,
 } from './loanformdom.js';
+import { statemasterGetStatesApi } from './statemasterapi.js';
 import { statemasterDataMap } from './statemasterDataMapping.js';
 import { clearPLLoanError, checkAllFieldValidation, validatePLLoan } from './validation.js';
 
@@ -87,6 +88,7 @@ function renderStatemaster(statemaster) {
     stateLoanFilter(currentTarget.dataset.loanType);
      clearPLLoanError();
      validatePLLoan();
+     statemasterGetStatesApi(currentTarget.dataset.loanType);
   });
 
   stateInput().addEventListener('keyup', ({ currentTarget }) => {
@@ -111,7 +113,8 @@ function renderCities(state) {
   const ul = brachDropDownUl();
 
   const isProduct = loanProduct().value.trim() != '';
-  const cities = (isProduct ? productStatemaster[state]?.cities : statemasterGlobal[state]?.cities) || [];
+  // const cities = (isProduct ? productStatemaster[state]?.cities : statemasterGlobal[state]?.cities) || [];
+  const cities = statemasterGlobal[state]?.cities;
   const fragment = cities.length > 0 ? renderHelper(cities, 'form-branch-city', 'Cities') : renderHelper(cities, 'form-branch-city', 'No options');
   ul.replaceChildren(fragment);
 

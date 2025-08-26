@@ -12,8 +12,12 @@ export function clearPLLoanError() {
   dateErrorMsg.style.display = 'none';
 }
 export function validatePLLoan() {
-      if(loanProduct().dataset.loanType !== "pl"){
-        clearPLLoanError();
+      if((loanProduct().dataset.loanType !== "pl") || (loanProduct().dataset.loanType !== "las") || (loanProduct().dataset.loanType !== "lamf")){
+        if(loanProduct().dataset.loanType !== "pl"){
+          clearPLLoanError();
+        }else{
+          clearLasOrLamfLoanError();
+        }
         return
       }
     const checkLoanAmtFor = [formLoanAmt()];
@@ -52,8 +56,10 @@ loanFormContainer().addEventListener('input', ({ target }) => {
     target.value = currenyCommaSeperation(inputValue);
 
     const isPLLoan = loanProduct().dataset.loanType === "pl";
+    const isLasLoan = loanProduct().dataset.loanType === "las";
+    const isLamfLoan = loanProduct().dataset.loanType === "lamf";
 
-    if(isPLLoan){
+    if(isPLLoan || isLasLoan || isLamfLoan){
       if (target.id === 'form-income') {
         isValidIncome(target);
       }
@@ -62,10 +68,12 @@ loanFormContainer().addEventListener('input', ({ target }) => {
         isValidLoanAmt(target);
       }
     }else {
-      clearPLLoanError()
+      if (!clearPLLoanError()) {
+        clearLasOrLamfLoanError();
+      }else{
+        clearPLLoanError()
+      }
     }
-
-    // return false;
   }
 
   if (target.dataset.valueType == 'name') {
@@ -85,12 +93,15 @@ loanFormContainer().addEventListener('input', ({ target }) => {
     
     if(loanProduct().dataset.loanType === "pl"){
       validatePLLoan();
+    }else if((loanProduct().dataset.loanType === "las") || (loanProduct().dataset.loanType === "lamf")){
+      validateLasOrLamfLoan();
     }else{
       loanFromBtn().classList.add('loan-form-button-active');
     }
   } else {
     loanFromBtn().classList.remove('loan-form-button-active');
   }
+  checkAllFieldValidation();
 });
 
 loanOtpInput().addEventListener('input', ({ currentTarget }) => {
@@ -141,8 +152,14 @@ export function checkAllFieldValidation() {
 
   // Check if the loan amount and income are valid for personal loans
   const loanType = document.querySelector('#form-loan-type')?.value;
-  if(loanType.trim().toLowerCase() !== 'personal loan') return;
-  const isLoanValid = loanType.trim().toLowerCase() === 'personal loan' ? isLoanAmtValidation && isIncomeValidations : true;
+  
+  const loanTypeValue = loanType.trim().toLowerCase();
+  if (!['personal loan', 'loan against security', 'loan against mutual funds'].includes(loanTypeValue)) {
+    return;
+  }
+  const isLoanValid = ['personal loan', 'loan against security', 'loan against mutual funds'].includes(loanTypeValue)
+  ? isLoanAmtValidation && isIncomeValidations
+  : true;
 
   // Check if all the validations pass
   if (isEmptyValidations && isNumberValidations && isLoanValid && isPlaceValidations && isDateValidations) {
@@ -192,7 +209,13 @@ function isValidLoanAmt(input, target) {
   const loanType = document.querySelector('#form-loan-type')?.value;
 
   const loanMsgErrorMsg = document.querySelector('.invalid-loanamount-msg');
-  if (loanType.trim().toLowerCase() !== 'personal loan') return true;
+  if (
+    loanType.trim().toLowerCase() !== 'personal loan' &&
+    loanType.trim().toLowerCase() !== 'loan against security' &&
+    loanType.trim().toLowerCase() !== 'loan against mutual funds'
+  ) {
+    return true;
+  }
   if (amount < 100000) {
     loanMsgErrorMsg.style.display = 'block';
     return false;
@@ -209,7 +232,13 @@ function isValidIncome(input, target) {
   const loanType = document.querySelector('#form-loan-type')?.value;
 
   const mobileErrorMsg = document.querySelector('.invalid-monthlyincome-msg');
-  if (loanType.trim().toLowerCase() !== 'personal loan') return true;
+  if (
+    loanType.trim().toLowerCase() !== 'personal loan' &&
+    loanType.trim().toLowerCase() !== 'loan against security' &&
+    loanType.trim().toLowerCase() !== 'loan against mutual funds'
+  ) {
+    return true;
+  }
   if (amount < 25000) {
     mobileErrorMsg.style.display = 'block';
     return false;
@@ -256,7 +285,13 @@ export function calculateAgeFromInput(dateString) {
 
 function isValidDob(input) {
   const loanType = document.querySelector('#form-loan-type')?.value;
-  if (loanType.trim().toLowerCase() !== 'personal loan') return;
+  if (
+    loanType.trim().toLowerCase() !== 'personal loan' &&
+    loanType.trim().toLowerCase() !== 'loan against security' &&
+    loanType.trim().toLowerCase() !== 'loan against mutual funds'
+  ) {
+    return ;
+  }
   return  input.dataset.validdate == "true";
 }
 
@@ -336,4 +371,35 @@ function currenyCommaSeperation(x) {
   // Add commas after every two digits from the right in the integral part
   integralPart = integralPart.replace(/\d(?=(\d{2})+\d$)/g, '$&,');
   return integralPart + decimalPart;
+}
+
+// Clearing error for loan against security and loan against mutual fund
+export function clearLasOrLamfLoanError() {
+  const loanMsgErrorMsg = document.querySelector('.invalid-loanamount-msg');
+  const monthlyMsgErrorMsg = document.querySelector('.invalid-monthlyincome-msg');
+  const dateErrorMsg = document.querySelector('.invalid-date-msg');
+  loanMsgErrorMsg.style.display = 'none';
+  monthlyMsgErrorMsg.style.display = 'none';
+  dateErrorMsg.style.display = 'none';
+}
+
+// validation for loan against security and loan against mutual fund
+
+export function validateLasOrLamfLoan() {
+      if((loanProduct().dataset.loanType !== "las") || (loanProduct().dataset.loanType !== "lamf")){
+        clearLasOrLamfLoanError();
+        return
+      }
+  const checkLoanAmtFor = [formLoanAmt()];
+  const checkDateFor = [formDobInput()];
+  const checkcustomerIncome = [cutomerIncome()];
+  const isLoanAmtValidation = checkLoanAmtFor.every((input) => isValidLoanAmt(input, formLoanAmt()));
+  const isCustIncomeValidation = checkcustomerIncome.every((input) => isValidIncome(input, cutomerIncome()));
+  const isDobValidation = checkDateFor.every((input) => isValidDob(input));
+  validateDOBForPL();
+  if(isCustIncomeValidation && isLoanAmtValidation && isDobValidation){
+        loanFromBtn().classList.add('loan-form-button-active');
+      }else {
+        loanFromBtn().classList.remove('loan-form-button-active');
+      }
 }

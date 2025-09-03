@@ -16,7 +16,7 @@ export const customerCardCopy = `
 <div class="forName">
 <div class="customer-info {customerClass}" id="{customerId}">
     <div class="card-images">
-        <img src="{customerImage}" alt="cutomer img" class="personimg">
+        <img src="{customerImage}" loading="lazy" alt="cutomer img" class="personimg">
     </div>
     <div class="zoom-circleone"></div>
     <div class="zoom-circletwo"></div>

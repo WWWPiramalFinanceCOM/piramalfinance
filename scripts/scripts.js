@@ -335,9 +335,9 @@ async function loadPage() {
   if (templateName) {
     await loadTemplate(document, templateName);
   }
-  await loadingCustomCss();
   await loadEager(document);
   await loadLazy(document);
+  await loadingCustomCss();
   loadDelayed();
 }
 

@@ -1,7 +1,28 @@
-import { formDobInput } from './loanformdom.js';
+import { formDobInput, loanFromBtn, loanProduct } from './loanformdom.js';
+import { calculateAgeFromInput, checkAllFieldValidation } from './validation.js';
 
 export let dpObj;
+export function validateDOBForPL() {
+    const loanTypeAttr = loanProduct()?.dataset.loanType;
+    if (!["pl", "las", "lamf"].includes(loanTypeAttr)) {
+      return;
+    }
+     const loanType = document.querySelector('#form-loan-type')?.value;
+     const formattedDate = formDobInput()?.value;
+        const dobInput = formDobInput();
+        if(!loanType || !dobInput) return;
+        if (!["personal loan", "loan against security", "loan against mutual fund"].includes(loanType.trim().toLowerCase())) {
+          return;
+        }
+        
+       const age =  calculateAgeFromInput(formattedDate);
+       dobInput.dataset.validdate = age < 23 ? "false" : "true";
 
+       const errMsg = document.querySelector('.invalid-date-msg');
+       dobInput.dataset.validdate == "true" ? errMsg.style.display = "none" : errMsg.style.display = "block";
+       checkAllFieldValidation();
+     
+}
 export function applyLoanPopper() {
   const reference = document.getElementById('stateparent');
   const tooltip = document.getElementById('statecontainer');
@@ -92,6 +113,11 @@ export function applyLoanPopper() {
       autoClose: true,
       maxDate: new Date(),
 
+      onSelect({ formattedDate }) {
+        validateDOBForPL();
+        //  dobInput.dataset.validdate == "true" ?  loanFromBtn().classList.add('loan-form-button-active') :  loanFromBtn().classList.remove('loan-form-button-active');
+      },
+
       locale: {
         days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -147,6 +173,11 @@ export function applyLoanPopper() {
       // position:'top left',
       autoClose: true,
       maxDate: new Date(),
+
+      onSelect({ formattedDate }) {
+       validateDOBForPL();
+        //  dobInput.dataset.validdate == "true" ?  loanFromBtn().classList.add('loan-form-button-active') :  loanFromBtn().classList.remove('loan-form-button-active');
+      },
 
       locale: {
         days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],

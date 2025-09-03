@@ -836,8 +836,7 @@
     color: var(--zinc);
   }
   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs label {
-    /* display: none; */
-    overflow: hidden;
+    display: none;
   }
   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input {
     font-family: "Nunito-Bold", sans-serif;

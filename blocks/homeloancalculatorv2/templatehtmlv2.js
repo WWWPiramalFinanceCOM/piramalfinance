@@ -69,7 +69,7 @@ export function homeloanCalHTML(callJson) {
         
                     <span class="rupee">${each.rupeesign}</span>
         
-                    <label for="calcemi-${index}" aria-label="calculateemi" class="sr-only"></label>
+                    <label for="calcemi-${index}" aria-label="calculateemi"></label>
                     <input type="text" class="inputvalue slider-value" value=""
                         id="calcemi-${index}" data-slider="${each.dataslider}" data-cal-input="${each.dataattr}">
         
@@ -99,7 +99,7 @@ export function homeloanCalHTML(callJson) {
         
                     <span class="rupee">${each.rupeesign}</span>
         
-                    <label for="calcemi-${index}" aria-label="calculateemi" class="sr-only"></label>
+                    <label for="calcemi-${index}" aria-label="calculateemi"></label>
                     <input type="text" class="inputvalue slider-value" value=""
                         id="calcemi-${index}" data-slider="${each.dataslider}" data-cal-input="${each.dataattr}">
         

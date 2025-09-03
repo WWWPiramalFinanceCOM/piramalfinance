@@ -834,11 +834,8 @@
     line-height: 1.5rem;
     color: var(--zinc);
   }
-  /* .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs label {
+  .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs label {
     display: none;
-  } */
-  .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs label.sr-only {
-    visibility: hidden;
   }
   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input {
     font-family: "Nunito-Bold", sans-serif;

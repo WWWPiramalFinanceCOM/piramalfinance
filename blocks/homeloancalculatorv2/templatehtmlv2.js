@@ -78,6 +78,7 @@ export function homeloanCalHTML(callJson) {
                 </div>
             </div>
             <div class="rangediv">
+                <label for="${each.dataslider}" aria-label="calculateemi" class="sr-only"></label>
                 <input type="range" min="${each.rangeminvalue}" step="${each.rangestep}" max="${each.rangemaxvalue}"
                     value="${each.displayvalue}" id="${each.dataslider}" class="range-slider__range">
                 <div class="values">
@@ -108,6 +109,7 @@ export function homeloanCalHTML(callJson) {
                 </div>
             </div>
             <div class="rangediv">
+                <label for="${each.dataslider}"  aria-label="calculateemi" class="sr-only"></label>
                 <input type="range" min="${each.rangeminvalue}" step="${each.rangestep}" max="${each.rangemaxvalue}"
                     value="${each.displayvalue}" id="${each.dataslider}" class="range-slider__range">
                 <div class="values">

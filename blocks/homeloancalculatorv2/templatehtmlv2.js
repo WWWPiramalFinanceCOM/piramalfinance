@@ -69,7 +69,7 @@ export function homeloanCalHTML(callJson) {
         
                     <span class="rupee">${each.rupeesign}</span>
         
-                    <label for="calcemi-${index}" aria-label="calculateemi"></label>
+                    <label for="calcemi-${index}" aria-label="calculateemi" class="sr-only"></label>
                     <input type="text" class="inputvalue slider-value" value=""
                         id="calcemi-${index}" data-slider="${each.dataslider}" data-cal-input="${each.dataattr}">
         
@@ -78,6 +78,7 @@ export function homeloanCalHTML(callJson) {
                 </div>
             </div>
             <div class="rangediv">
+                <label for="${each.dataslider}" aria-label="calculateemi" class="sr-only"></label>
                 <input type="range" min="${each.rangeminvalue}" step="${each.rangestep}" max="${each.rangemaxvalue}"
                     value="${each.displayvalue}" id="${each.dataslider}" class="range-slider__range">
                 <div class="values">
@@ -99,7 +100,7 @@ export function homeloanCalHTML(callJson) {
         
                     <span class="rupee">${each.rupeesign}</span>
         
-                    <label for="calcemi-${index}" aria-label="calculateemi"></label>
+                    <label for="calcemi-${index}" aria-label="calculateemi" class="sr-only"></label>
                     <input type="text" class="inputvalue slider-value" value=""
                         id="calcemi-${index}" data-slider="${each.dataslider}" data-cal-input="${each.dataattr}">
         
@@ -108,6 +109,7 @@ export function homeloanCalHTML(callJson) {
                 </div>
             </div>
             <div class="rangediv">
+                <label for="${each.dataslider}"  aria-label="calculateemi" class="sr-only"></label>
                 <input type="range" min="${each.rangeminvalue}" step="${each.rangestep}" max="${each.rangemaxvalue}"
                     value="${each.displayvalue}" id="${each.dataslider}" class="range-slider__range">
                 <div class="values">

@@ -60,7 +60,7 @@ export function stateMasterProcessApiData(rawData) {
   return statemaster;
 }
 
-function  renderStatemaster(statemaster) {
+function renderStatemaster(statemaster) {
   const states = Object.keys(statemaster).sort();
 
   renderDefaultStates(states);
@@ -85,10 +85,10 @@ function  renderStatemaster(statemaster) {
         renderCities([]);
         currentTarget.classList.remove('place-selected');
       }
-  
+
       branchInput().value = '';
     });
-  
+
     loanProduct().addEventListener('change', ({ currentTarget }) => {
       stateLoanFilter(currentTarget.dataset.loanType);
       clearPLLoanError();
@@ -96,7 +96,7 @@ function  renderStatemaster(statemaster) {
       const allowedtype = ['pl', 'las', 'lamf'].includes(currentTarget.dataset.loanType);
       const isAllowed = statemasterDataMap.get('allowedType');
       const checkedType = typeof isAllowed === 'boolean' ? isAllowed : false;
-  
+
       if (allowedtype && !checkedType) {
         statemasterGetStatesApi(currentTarget.dataset.loanType);
         statemasterDataMap.set('allowedType', true);
@@ -106,15 +106,15 @@ function  renderStatemaster(statemaster) {
         statemasterDataMap.set('allowedType', false);
       }
     });
-  
+
     stateInput().addEventListener('keyup', ({ currentTarget }) => {
       const ul = stateDropDownUL();
-  
+
       const searchStates = (productStates.length ? productStates : states).filter((state) => state.toLocaleLowerCase().includes(currentTarget.value.trim().toLocaleLowerCase()));
       const serachFragment = searchStates.length > 0 ? renderHelper(searchStates, 'form-state', 'States') : renderHelper(searchStates, 'form-state', 'No options');
       ul.replaceChildren(serachFragment);
     });
-  
+
     stateInput().addEventListener('input', ({ currentTarget }) => {
       const isState = (productStates.length && loanProduct().value ? productStates : states).map((s) => s.toLocaleLowerCase()).includes(currentTarget.value.trim().toLocaleLowerCase());
       if (isState) {
@@ -208,9 +208,9 @@ function getDefaultStatesFragment(stateFragment) {
 }
 
 export function workFlowStatemaster(statemaster) {
-  renderStatemaster(statemaster);
   statemasterDataMap.set('statemasterGlobal', statemaster);
   statemasterGlobal = statemaster;
+  renderStatemaster(statemaster);
 }
 
 function renderDefaultStates(states) {
@@ -222,8 +222,10 @@ function renderDefaultStates(states) {
 }
 
 function stateLoanFilter(loanType) {
-  const loanProduct = loanType;
   const newStates = {};
+
+  const allowedtype = ['pl', 'las', 'lamf'].includes(loanType);
+  const loanProduct = allowedtype ? 'pl' : loanType;
 
   for (const state in statemasterGlobal) {
     const stateDataArr = statemasterGlobal[state].data;

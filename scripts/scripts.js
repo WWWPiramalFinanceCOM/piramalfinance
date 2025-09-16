@@ -337,6 +337,7 @@ async function loadPage() {
   }else{
     await loadingCustomCss();
   }
+  await loadResetCss();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
@@ -347,15 +348,21 @@ loadPage();
 
 async function loadingCustomCss() {
   // load custom css files
-  const loadCssArray = [
-    `${window.hlx.codeBasePath}/styles/reset${getExtension('css')}`
-  ];
+  // const loadCssArray = [
+  //   `${window.hlx.codeBasePath}/styles/reset${getExtension('css')}`
+  // ];
+  const loadCssArray = [];
   if (!getMetadata('template')) {
     loadCssArray.push(`${window.hlx.codeBasePath}/styles/common/common${getExtension('css')}`)
   }
   loadCssArray.forEach(async (eachCss) => {
     await loadCSS(eachCss);
   });
+}
+
+async function loadResetCss() {
+  const resetCssPath = `${window.hlx.codeBasePath}/styles/reset${getExtension('css')}`;
+  await loadCSS(resetCssPath);
 }
 /* 
 async function loadingCustomCss() {

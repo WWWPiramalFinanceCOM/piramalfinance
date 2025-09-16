@@ -490,7 +490,12 @@ export function autoLinkLangPath(anchor) {
     
             let newHref = anchor.href;
             if (isSameOrigin && isLocalPath && !isExcludedPath && !isExcludedText) {
-                newHref = langPath + anchorUrl.pathname + anchorUrl.search;
+                if (newHref.includes('#')) {
+                    let splitHash = anchor.href.split('#');
+                    newHref = splitHash[1] ? "#" + splitHash[1] : "#";
+                } else {
+                    newHref = langPath + anchorUrl.pathname + anchorUrl.search;
+                }
             } else if (isExcludedText) {
                 const pathSegments = (langPath && currentUrl.pathname.startsWith(langPath)) ? currentUrl.pathname.split('/').slice(2) :  currentUrl.pathname.split('/').slice(1);
                 if (pathSegments.length > 1) {

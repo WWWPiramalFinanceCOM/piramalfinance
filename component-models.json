@@ -2798,5 +2798,17 @@
         "label": "Schema Tag"
       }
     ]
+  },
+  {
+    "id": "branches",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Branch Detail Description",
+        "valueType": "string"
+      }
+    ]
   }
 ]

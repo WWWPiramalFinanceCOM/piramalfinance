@@ -49,7 +49,6 @@ export function validationJSFunc() {
   
 
 loanFormContainer().addEventListener('input', ({ target }) => {
-
   if (target.tagName != 'INPUT') return;
   if (target.dataset.valueType == 'money') {
     let inputValue = target.value;
@@ -297,7 +296,7 @@ function isValidDob(input) {
     loanType.trim().toLowerCase() !== 'loan against security' &&
     loanType.trim().toLowerCase() !== 'loan against mutual fund'
   ) {
-    return ;
+    return true;
   }
   return  input.dataset.validdate == "true";
 }

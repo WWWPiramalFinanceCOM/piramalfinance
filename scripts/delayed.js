@@ -12,7 +12,7 @@ eventInit();
 function loadServiceWorker() {
   if ('serviceWorker' in navigator) {
     // window.addEventListener('load', () => {
-    navigator.serviceWorker.register('../scripts/serviceworker.js').then((reg) => {
+    navigator.serviceWorker.register('/serviceworker.js').then((reg) => {
       console.log('Service Worker registered.', reg);
     }).catch((err) => {
       console.log('Service Worker **not** registered', err);
@@ -70,7 +70,8 @@ async function loadMoengage() {
 
   Moengage = moe({
     app_id: moeAppID,
-    debug_logs: debug_logs
+    debug_logs: debug_logs,
+    swPath: "/serviceworker.min.js"
   });
 
   try {

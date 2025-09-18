@@ -44,6 +44,7 @@ export function statemasterGetStatesApi(loanType) {
   const url = allowedtype ? fetchUrl : graphqlUrl;
 
   return new Promise((resolve, reject) => {
+    
     fetchAPI('GET', url)
       .then(async (response) => {
         const responseJson = await response.json();

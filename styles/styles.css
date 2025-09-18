@@ -157,7 +157,7 @@ body {
     line-height: 1;
     color: var(--text-color);
     background-color: var(--background-color);
-    display: none
+    /* display: none */
 }
 
 body.appear {

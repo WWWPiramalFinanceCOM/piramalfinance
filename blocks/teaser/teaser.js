@@ -22,7 +22,6 @@ export function decorateButtons(...buttons) {
 }
 function createAnchor(element) {
   const a = document.createElement('a');
-  // a.href = element.innerText.trim();
   const link = element.innerText.trim();
   a.setAttribute('aria-label', 'teaser link');
   a.setAttribute('tabindex', '0');

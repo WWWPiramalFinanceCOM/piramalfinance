@@ -63,6 +63,8 @@ header {
   text-decoration: none;
   font-weight: 700;
   font-family: "Nunito-Bold", sans-serif;
+
+  color: white;
 }
 
 .header .nav-wrapper #nav .nav-sections .default-content-wrapper>ul>li:last-child p {
@@ -133,7 +135,9 @@ header {
 .header nav#nav a:any-link {
   color: var(--piramal-black-40);
   display: block;
+  color: white;
 }
+
 
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li a {
   text-decoration: none;
@@ -181,6 +185,8 @@ header {
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li {
   position: relative;
   padding: unset;
+
+  color: white;
 }
 
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li:hover,
@@ -442,6 +448,7 @@ body.modal-open footer {
 
   .header nav#nav a:any-link {
     display: block;
+        /* color: white; */
   }
 
   .header nav#nav[aria-expanded="true"] .nav-sections {
@@ -569,6 +576,9 @@ body.modal-open footer {
   flex-wrap: nowrap;
   justify-content: flex-start;
   width: 100%;
+
+      /* position: relative; */
+    background: #20303F;
 }
 
 .header .nav-wrapper #nav {
@@ -588,11 +598,14 @@ body.modal-open footer {
   background-color: var(--piramal-white-100);
   flex-grow: 1;
   align-items: center;
+  
+      background: #20303F;
 }
 
 .header .nav-wrapper #nav .section.nav-sections>div.default-content-wrapper {
   margin: unset;
   max-width: unset;
+
 }
 
 /* .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper {
@@ -843,6 +856,8 @@ body.modal-open footer {
     line-height: 20px;
     font-family: "Nunito-Bold", sans-serif;
   }
+
+ 
 
   .header .nav-brand .default-content-wrapper>ul>li:nth-child(4)>p {
     color: #212529;
@@ -1258,3 +1273,23 @@ body.modal-open footer {
     padding: unset;
   }
 }
+
+ .section.tabs > ul{
+    position: absolute;
+    top: 0px;
+    display: flex;
+    /* width: 100%; */
+    justify-content: space-between;
+    left: 50%;
+    padding: 11px;
+    background: #3e6595;
+    /* border-radius: 17%; */
+    border-radius: 0px 0px 16px 16px;
+    padding: 12px;
+  }
+
+.section.tabs > ul > li{
+      padding-right: 20px;
+    padding-left: 20px;
+    border-right: 1px solid #000000;
+    }

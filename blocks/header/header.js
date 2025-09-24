@@ -223,6 +223,7 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
+  const navtools = nav.querySelector('.nav-tools');
 
   const a = document.createElement('a');
   const image = navBrand.querySelector('picture');
@@ -367,4 +368,16 @@ export default async function decorate(block) {
   mobileLogo.classList.add('mobile-logo');
   mobileSections?.prepend(mobileLogo);
   block.classList.remove('dp-none');
+
+
+  try {
+    if (getMetadata('category-type') === 'retails-finance') {
+      navtools.querySelectorAll('li')[0].classList.add('active');
+    } else {
+      navtools.querySelectorAll('li')[1].classList.add('active');
+    }
+  } catch (error) {
+    console.warn(error);
+  }
+
 }

@@ -746,11 +746,9 @@ export function getExtension(type) {
     const isMinify = getMetadata('minify') === 'true'
     // const isMinify = false
     if (type === 'js') {
-        return  `.${extJs}`;
-        // return isMinify ? `.min.${extJs}` : `.${extJs}`;
+        return isMinify ? `.min.${extJs}` : `.${extJs}`;
     } else if (type === 'css') {
-        // return isMinify ? `.min.${extCss}` : `.${extCss}`;
-        return  `.${extCss}`;
+        return isMinify ? `.min.${extCss}` : `.${extCss}`;
     }
 }
 

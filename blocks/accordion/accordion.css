@@ -398,7 +398,12 @@ ol .accordion ul {
     margin-left: 18px;
 }
 
-.faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ul>li {
+.faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ol{
+    margin-left: 18px;
+}
+
+.faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ul>li,
+ .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ol>li{
     color: var(--gradient-gray);
     font-size: 1.25rem;
     line-height: 28px;
@@ -521,16 +526,20 @@ ol .accordion ul {
         line-height: 28px;
     }
 
-    .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ul {
+    .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ul,
+    .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ol{
         margin-left: 16px;
     }
 
 
-    .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ul>li {
+    .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ul>li,
+    .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ol>li {
         font-size: 1rem;
         line-height: 24px;
         padding-left: 5px;
     }
+
+    
 
     .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block>details ul>li::marker {
         font-size: 1rem;

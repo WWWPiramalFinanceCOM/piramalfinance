@@ -1,7 +1,7 @@
 // import { formOpen, overlay } from '../blocks/applyloanform/applyloanforms.js';
 // import { statemasterGetStatesApi } from '../blocks/applyloanform/statemasterapi.js';
 // import { validationJSFunc } from '../blocks/applyloanform/validation.js';
-import {ctaClick } from '../dl.js';
+import { ctaClick } from '../dl.js';
 import {
   sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks, loadCSS, fetchPlaceholders,
   getMetadata,
@@ -104,7 +104,7 @@ export async function decoratePlaceholder(block, path) {
     block.querySelectorAll('*').forEach((el, index) => {
       if (el.firstChild instanceof Text) {
         Object.keys(resp).forEach((key) => {
-          var value = resp[key];
+          const value = resp[key];
           if (value && value.trim() && el.firstChild.textContent.trim() && el.firstChild.textContent.includes(`{${key}}`)) {
             el.innerHTML = el.firstChild.textContent.replaceAll(`{${key}}`, value);
           }
@@ -164,11 +164,10 @@ export async function decoratePlaceholder(block, path) {
   }
 } */
 
-
 export async function decorateAnchorTag(main) {
   try {
     main.querySelectorAll('a').forEach((anchor) => {
-      const body = document.body;
+      const { body } = document;
       processAnchor(anchor, body);
     });
   } catch (error) {
@@ -251,8 +250,9 @@ async function loadEager(doc) {
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
-    document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
+    await loadHeader(doc.querySelector('header'));
+    document.body.classList.add('appear');
   }
 
   try {
@@ -279,7 +279,7 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector("header"));
+  // loadHeader(doc.querySelector("header"));
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
@@ -297,7 +297,7 @@ async function loadLazy(doc) {
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => import('./delayed.js'), 3000);
-  const startEvent = new Event("load-event");
+  const startEvent = new Event('load-event');
   document.dispatchEvent(startEvent);
   // load anything that can be postponed to the latest here
   import('./sidekick.js').then(({ initSidekick }) => initSidekick());
@@ -334,7 +334,7 @@ async function loadPage() {
   const templateName = getMetadata('template');
   if (templateName) {
     await loadTemplate(document, templateName);
-  }else{
+  } else {
     await loadingCustomCss();
   }
   await loadResetCss();
@@ -345,7 +345,6 @@ async function loadPage() {
 
 loadPage();
 
-
 async function loadingCustomCss() {
   // load custom css files
   // const loadCssArray = [
@@ -353,7 +352,7 @@ async function loadingCustomCss() {
   // ];
   const loadCssArray = [];
   if (!getMetadata('template')) {
-    loadCssArray.push(`${window.hlx.codeBasePath}/styles/common/common${getExtension('css')}`)
+    loadCssArray.push(`${window.hlx.codeBasePath}/styles/common/common${getExtension('css')}`);
   }
   loadCssArray.forEach(async (eachCss) => {
     await loadCSS(eachCss);
@@ -364,7 +363,7 @@ async function loadResetCss() {
   const resetCssPath = `${window.hlx.codeBasePath}/styles/reset${getExtension('css')}`;
   await loadCSS(resetCssPath);
 }
-/* 
+/*
 async function loadingCustomCss() {
   // load custom css files
   const loadCssArray = [
@@ -595,26 +594,25 @@ body?.addEventListener('click', (e) => {
 
 export function handleReadAll(el) {
   try {
-    const readAllBTNSection = el.querySelector(".section.carousel-articles-wrapper")
-    let readAllBTN = readAllBTNSection.querySelector(".default-content-wrapper p a");
-    readAllBTN.addEventListener("click", onClickReadAllBtn)
+    const readAllBTNSection = el.querySelector('.section.carousel-articles-wrapper');
+    const readAllBTN = readAllBTNSection.querySelector('.default-content-wrapper p a');
+    readAllBTN.addEventListener('click', onClickReadAllBtn);
   } catch (error) {
   }
 }
 
 function onClickReadAllBtn(e) {
   try {
-    if (e.target.closest(".section.read-all-dl")) {
+    if (e.target.closest('.section.read-all-dl')) {
       const click_text = e.target.textContent.trim();
       const cta_position = e.target.closest('.section').querySelector('.default-content-wrapper').querySelector('h1, h2, h3, h4, h5, h6').textContent.trim();
       const cta_category = '';
       ctaClick(click_text, cta_category, cta_position, targetObject.pageName);
     }
   } catch (error) {
-    console.log("read all not found Analytics")
+    console.log('read all not found Analytics');
   }
 }
-
 
 /* export function handleOpenFormOnClick(el) {
   const formButtons = el.querySelectorAll('.open-form-on-click .button-container');
@@ -640,7 +638,7 @@ function onClickReadAllBtn(e) {
  */
 function getNeeyatButtonIndex(element) {
   return Array.from(element.classList)
-    .find(className => className.startsWith('neeyat-button-'))
+    .find((className) => className.startsWith('neeyat-button-'))
     ?.replace('neeyat-button-', '') || 0;
 }
 
@@ -668,7 +666,6 @@ function getNeeyatButtonIndex(element) {
   e.preventDefault();
 } */
 
-
 /* export function branchURLStr(location = '', city = '', state = '', urlstrhand, locationcode = '') {
   const locationAdd = location?.replace(/\s+/g, '-').replace(/[()/]/g, '').trim().toLowerCase();
   const cityStr = city?.replace(/\s+/g, '-').replace(/[()/]/g, '').trim().toLowerCase();
@@ -689,7 +686,6 @@ function getNeeyatButtonIndex(element) {
 
 // Main function
 const processAnchor = (anchor, body) => {
-
   // Handle target attribute
   if (anchor.innerHTML.includes('<sub>')) {
     anchor.target = '_blank';
@@ -699,9 +695,7 @@ const processAnchor = (anchor, body) => {
   if (anchor.href.includes('/modal-popup/')) {
     handleModalPopup(anchor, body);
   }
-
 };
-
 
 const handleModalPopup = (anchor, body) => {
   const dataid = anchor.href.split('/').pop();
@@ -716,7 +710,7 @@ const handleModalPopup = (anchor, body) => {
     targetObject.models = models;
     if (!models.length) return;
     // Handle models
-    models.forEach(model => {
+    models.forEach((model) => {
       model.classList.add('dp-none');
       model.remove();
       body.prepend(model);
@@ -736,4 +730,3 @@ const handleModalPopup = (anchor, body) => {
     body.style.overflow = 'hidden';
   });
 };
-

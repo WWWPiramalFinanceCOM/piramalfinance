@@ -50,16 +50,14 @@ export default {
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
     WebImporter.rules.convertIcons(main, document);
 
-    const breadcrumbSection = document.createElement('hr');
-    document.querySelector('.breadcrumb_wrapp').prepend(breadcrumbSection);
     const breadcrumb = new BlockBuilder({
       name: 'Breadcrumb',
       block: '.breadcrumb_wrapp',
       blockRows: [
-        [() => false],
-        [() => ''],
-        [() => false],
-        [() => ''],
+        ['false'],
+        [''],
+        ['false'],
+        [''],
         [(el) => [...el.querySelector('.breadcrumb').children].map((li) => {
           console.log('li.textContent', li.textContent.trim());
           return li.textContent.trim();
@@ -70,29 +68,120 @@ export default {
           return anchors;
         }],
       ],
+      sectionMeta: [
+        ['Section Metadata'],
+        ['style', 'rosewhite,page-container, breadcrumb-handle,multi-calculator-wrapper ,document-required-banner,breadcrumb-handle-mob,mb-70, mob-mb-40, 23'],
+      ],
     }).cellMaker(main, document);
 
-    const breadcrumbMetaDat = WebImporter.DOMUtils.createTable([
-      ['Section Metadata'],
-      ['style', 'rosewhite,page-container, breadcrumb-handle,multi-calculator-wrapper ,document-required-banner,breadcrumb-handle-mob,mb-70, mob-mb-40, 23'],
-    ], document);
-    breadcrumbSection.before(breadcrumbMetaDat);
+    const HeroTeaser = new BlockBuilder({
+      name: 'Teaser',
+      block: '.article_wraper',
+      blockRows: [
+        ['.article_wraper img'],
+        [''],
+        ['.tag'],
+        ['h1'],
+        [(el) => {
+          const description = el.querySelector('.article_caption .d-md-flex');
+          const ul = document.createElement('ul');
+          if (description) {
+            [...description.children].forEach((child) => {
+              const li = document.createElement('li');
+              li.append(child);
+              ul.appendChild(li);
+            });
+            description.replaceWith(ul);
+          }
+          return ul;
+        },
+        ],
+        [''],
+        [(el) => {
+          const teaserLinks = document.createElement('ul');
+          [...el.querySelectorAll('.article_caption a')].forEach((a) => {
+            const li = document.createElement('li');
+            li.append(a);
+            teaserLinks.appendChild(li);
+          });
+          return teaserLinks;
+        }],
+      ],
+    }).cellMaker(main, document);
+
+    const blogCards = new BlockBuilder({
+      name: 'Cards',
+      block: 'body > div.wrapper > main > div:nth-child(3) > div > div',
+      blockRows: ['.row .col', '.row a'],
+      blockItem: '.col-sm-12.col-md-6.col-lg-4.mb-4',
+      itemRows: [
+        [
+          (item, document) => {
+            const imgAnchor = item.querySelector('.article_img a');
+            if (!imgAnchor) return '';
+
+            const img = imgAnchor.querySelector('img');
+            if (!img) return '';
+
+            // remove image from anchor and place anchor above image
+            imgAnchor.replaceWith(img);
+            item.querySelector('.article_img').prepend(imgAnchor);
+
+            return img;
+          },
+        ],
+        ['.tag'],
+        [
+          (el, document) => {
+            // find the caption
+            const caption = el.querySelector('.article_caption');
+            if (!caption) return '';
+            const linkCard = caption.querySelector('.linkCard');
+            if (linkCard) {
+              linkCard.outerHTML = linkCard.innerHTML;
+            }
+
+            // find the bottom row inside caption
+            const row = caption.querySelector('.row.align-items-end');
+            if (row) {
+              const ul = document.createElement('ul');
+
+              // take each child div and wrap into <li>
+              [...row.children].forEach((div) => {
+                const li = document.createElement('li');
+                li.innerHTML = div.innerHTML; // preserve inner content
+                ul.appendChild(li);
+              });
+
+              // replace row with ul
+              row.replaceWith(ul);
+            }
+
+            return caption;
+          },
+        ],
+      ],
+      sectionMeta: [
+        ['Section Metadata'],
+        ['style', 'articles-cards, page-container, mb-70, mob-mb-40, 23'],
+      ],
+    }).cellMaker(main, document);
 
     sectionMaker('h2', main, document);
     return main;
   },
 
   /**
-         * Return a path that describes the document being transformed (file name, nesting...).
-         * The path is then used to create the corresponding Word document.
-         * @param {HTMLDocument} document The document
-         * @param {string} url The url of the page imported
-         * @param {string} html The raw html (the document is cleaned up during preprocessing)
-         * @param {object} params Object containing some parameters given by the import process.
-         * @return {string} The path
-         */
+       * Return a path that describes the document being transformed (file name, nesting...).
+       * The path is then used to create the corresponding Word document.
+       * @param {HTMLDocument} document The document
+       * @param {string} url The url of the page imported
+       * @param {string} html The raw html (the document is cleaned up during preprocessing)
+       * @param {object} params Object containing some parameters given by the import process.
+       * @return {string} The path
+       */
   generateDocumentPath: ({
-    // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
     document, url, html, params,
   }) => {
     let p = new URL(url).pathname;

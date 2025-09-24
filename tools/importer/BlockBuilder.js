@@ -5,8 +5,8 @@ export default class BlockBuilder {
     this.blockItem = config.blockItem || null;
     this.blockRows = Array.isArray(config.blockRows) ? config.blockRows : [];
     this.itemRows = Array.isArray(config.itemRows) ? config.itemRows : [];
-    this.section = config.section || null;
     this.removeAfterInsert = !!config.removeAfterInsert;
+    this.sectionMeta = config.sectionMeta || null; // <-- Added this
   }
 
   /**
@@ -39,9 +39,13 @@ export default class BlockBuilder {
    * Extract value based on selector or function
    */
   static extractValue(context, rowDef, document) {
-    if (!context) return '';
+    if (!context || !rowDef) return '';
+
     if (typeof rowDef === 'string') {
-      const found = context.querySelector(rowDef);
+      const htmlSelectorRegex = /^([#\.]?[a-zA-Z_][a-zA-Z0-9_-]*)(::?[a-zA-Z0-9_-]+)?$/;
+      const found = context.querySelector(rowDef) || (htmlSelectorRegex.test(rowDef) ? '' : rowDef);
+
+      // const found = context.querySelector(rowDef) || rowDef;
       return found || '';
     }
     if (typeof rowDef === 'function') {
@@ -55,11 +59,15 @@ export default class BlockBuilder {
   }
 
   /**
-   * Create cells for each block and insert before original element.
+   * Create cells for each block, insert them as tables, and return the created tables.
    */
   cellMaker(main, document) {
     const matches = this.find(main);
-    if (!matches.length) return;
+    if (!matches.length) {
+      return null;
+    }
+
+    const createdTables = [];
 
     matches.forEach(({ el, parent, isRootFallback }) => {
       const cells = [[this.name]];
@@ -68,18 +76,11 @@ export default class BlockBuilder {
       if (this.blockRows.length) {
         this.blockRows.forEach((rowDef) => {
           if (Array.isArray(rowDef)) {
-            // row with multiple columns
             const row = rowDef.map((def) => this.constructor.extractValue(el, def, document));
-            // if (row.some((v) => v && v !== '')) {
-            //   cells.push(row);
-            // }
             cells.push(row);
           } else {
             // single selector/function = one-column row
             const value = this.constructor.extractValue(el, rowDef, document);
-            // if (value) {
-            //   cells.push([value]);
-            // }
             cells.push([value]);
           }
         });
@@ -91,7 +92,6 @@ export default class BlockBuilder {
         items.forEach((item) => {
           const row = this.itemRows.map((rowDef) => {
             if (Array.isArray(rowDef)) {
-              // nested array → treat as multiple cols in one row
               return rowDef.map((def) => this.constructor.extractValue(item, def, document));
             }
             return this.constructor.extractValue(item, rowDef, document);
@@ -108,13 +108,44 @@ export default class BlockBuilder {
 
       const table = WebImporter.DOMUtils.createTable(cells, document);
 
-      if (isRootFallback) {
-        main.insertBefore(table, main.firstChild);
-      } else if (parent) {
-        parent.insertBefore(table, el);
+      // === UPDATED INSERTION LOGIC ===
+      if (this.sectionMeta) {
+        const hr = document.createElement('hr');
+        const sectionMetaTable = WebImporter.DOMUtils.createTable(this.sectionMeta, document);
+
+        // 1. Insert the HR where the original element was
+        if (isRootFallback) {
+          main.insertBefore(hr, main.firstChild);
+        } else if (parent) {
+          parent.insertBefore(hr, el);
+        }
+
+        // 2. Insert the main table AFTER the HR
+        hr.after(table);
+
+        // 3. Insert the metadata table AFTER the main table
+        table.after(sectionMetaTable);
+      } else {
+        // Original behavior if no sectionMeta is present
+        if (isRootFallback) {
+          main.insertBefore(table, main.firstChild);
+        } else if (parent) {
+          parent.insertBefore(table, el);
+        }
       }
+      // === END UPDATED LOGIC ===
+
+      createdTables.push(table);
 
       if (this.removeAfterInsert) el.remove();
     });
+
+    if (createdTables.length === 0) {
+      return null;
+    }
+    if (createdTables.length === 1) {
+      return createdTables[0];
+    }
+    return createdTables;
   }
 }

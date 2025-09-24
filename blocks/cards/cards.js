@@ -6,8 +6,19 @@ import { moveInstrumentation } from '../../scripts/common.js';
 export default async function decorate(block) {
   /* change to ul, li */
   block.innerHTML = await decoratePlaceholder(block);
+  const [title, viewAll, ...blockChildren] = [...block.children];
+  const headingDiv = document.createElement('div');
+  if (title.textContent) {
+    const h2 = document.createElement('h2');
+    h2.textContent = title.textContent;
+    headingDiv.append(h2);
+    if (viewAll) {
+      headingDiv.append(viewAll);
+    }
+  }
+
   const ul = document.createElement('ul');
-  [...block.children].forEach((row) => {
+  blockChildren.forEach((row) => {
     const li = document.createElement('li');
     moveInstrumentation(row, li);
     while (row.firstElementChild) li.append(row.firstElementChild);
@@ -23,6 +34,7 @@ export default async function decorate(block) {
     img.closest('picture').replaceWith(optimizedPic);
   });
   block.textContent = '';
+  block.append(headingDiv);
   block.append(ul);
 
   try {

@@ -1,6 +1,6 @@
-const mySection = [
+export const mySection = [
   ['Section Metadata'],
-  ['style', 'list-content-wrapper, three-col-table, fees-charges-wrapper, page-container, mb-70 mob-mb-40, list-content-wrapper, code-container'],
+  ['style', 'list-content-wrapper, three-col-table, fees-charges-wrapper, page-container, mb-70 mob-mb-40, list-content-wrapper, code-container']
 ];
 
 function sectionMaker(selector, main, document) {

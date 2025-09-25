@@ -9,6 +9,7 @@ export default async function decorate(block) {
   const [title, viewAll, ...blockChildren] = [...block.children];
   const headingDiv = document.createElement('div');
   if (title.textContent) {
+    headingDiv.className = 'cards-heading';
     const h2 = document.createElement('h2');
     h2.textContent = title.textContent;
     headingDiv.append(h2);

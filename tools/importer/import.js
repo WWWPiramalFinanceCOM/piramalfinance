@@ -13,7 +13,7 @@
 /* eslint-disable no-console, class-methods-use-this */
 
 import BlockBuilder from './BlockBuilder.js';
-import sectionMaker from './utils/sectionMaker.js';
+import sectionMaker, { mySection } from './utils/sectionMaker.js';
 
 console.log(WebImporter);
 
@@ -163,11 +163,23 @@ export default {
       ],
       sectionMeta: [
         ['Section Metadata'],
-        ['style', 'articles-cards, page-container, mb-70, mob-mb-40, 23'],
+        ['style', 'articles-cards, page-container, 23'],
       ],
     }).cellMaker(main, document);
 
     sectionMaker('h2', main, document);
+    // Select the specific element
+    const wrapper = document.querySelector('.paragraph.p-4');
+
+    if (wrapper) {
+      const firstChild = wrapper.firstElementChild;
+      if (firstChild && firstChild.tagName.toLowerCase() === 'p') {
+        const hr = document.createElement('hr');
+        wrapper.insertBefore(hr, firstChild);
+        const sectionTable = WebImporter.DOMUtils.createTable(mySection, document);
+        hr.after(sectionTable);
+      }
+    }
     return main;
   },
 
@@ -181,7 +193,7 @@ export default {
        * @return {string} The path
        */
   generateDocumentPath: ({
-  // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line no-unused-vars
     document, url, html, params,
   }) => {
     let p = new URL(url).pathname;

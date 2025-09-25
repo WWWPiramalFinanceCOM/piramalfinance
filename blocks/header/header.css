@@ -360,7 +360,7 @@ body.modal-open footer {
 .header nav#nav .nav-hamburger-icon::after {
   content: "";
   position: absolute;
-  background: var(--hamburger-color);
+  background: var(--white);
 }
 
 .header nav#nav[aria-expanded="false"] .nav-hamburger-icon,
@@ -416,6 +416,13 @@ body.modal-open footer {
   font-weight: 700;
   line-height: 1;
   font-family: "Nunito-Bold",sans-serif;
+  margin-top: 15px;
+}
+
+@media screen and (max-width:767px) {
+  .header .nav-brand {
+    margin-top: 0;
+  }
 }
 
 /* sections */
@@ -603,6 +610,12 @@ body.modal-open footer {
   align-items: center;
   background-color: #20303F;
   margin-top: 15px;
+}
+
+@media screen and (max-width:767px) {
+  .header .nav-wrapper #nav .section.nav-sections {
+    margin-top: 0;
+  }
 }
 
 .header .nav-wrapper #nav .section.nav-sections>div.default-content-wrapper {

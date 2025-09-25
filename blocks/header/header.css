@@ -602,6 +602,7 @@ body.modal-open footer {
   flex-grow: 1;
   align-items: center;
   background-color: #20303F;
+  margin-top: 15px;
 }
 
 .header .nav-wrapper #nav .section.nav-sections>div.default-content-wrapper {

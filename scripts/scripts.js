@@ -36,6 +36,8 @@ export function createElement(tagName, classes, props, html) {
     });
   }
 
+  console.log("checking sdsd");
+
   if (html) {
     const appendEl = (el) => {
       if (el instanceof HTMLElement || el instanceof SVGElement) {

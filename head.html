@@ -1,9 +1,28 @@
-<!-- <link as="image" crossorigin="" href="/images/WhatsAppBannerDesktop.png" rel="preload" /> -->
-<!-- <link as="image" crossorigin="" href="/images/WhatsappBannerMobile.png" rel="preload" /> -->
-<link rel="apple-touch-icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico">
-<link rel="icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" type="image/x-icon">
-<link rel="shortcut icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+  var extJs = 'js';
+  var extCss = 'css';
+  function getMetadata(name, doc = document) {
+    const attr = name && name.includes(":") ? "property" : "name";
+    const meta = [...doc.head.querySelectorAll(`meta[${attr}="${name}"]`)]
+      .map((m) => m.content)
+      .join(", ");
+    return meta || "";
+  }
+  function getExtension(type) {
+    const isMinify = getMetadata("minify") === "true";
+    // const isMinify = false
+    if (type === "js") {
+      return isMinify ? `.min.${extJs}` : `.${extJs}`;
+    } else if (type === "css") {
+      return isMinify ? `.min.${extCss}` : `.${extCss}`;
+    }
+  }
+</script>
+<script type="module">
+  import(`/scripts/aem${window.getExtension("js")}`);
+  import(`/scripts/scripts${window.getExtension("js")}`);
+</script>
 <link as="font" crossorigin="" href="/fonts/Nunito-Light.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoRegular.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/Nunito-Medium.woff2" rel="preconnect" type="font/woff2" />
@@ -11,14 +30,11 @@
 <link as="font" crossorigin="" href="/fonts/NunitoBold.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoExtraBold.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoExtraLight.woff2" rel="preconnect" type="font/woff2" />
-<!-- <link as="style" crossorigin="" href="/blocks/carousel/carousel.css" rel="preload" type="text/css" /> -->
-<!-- <link as="style" crossorigin="" href="/blocks/teaser/teaser.css" rel="preload" type="text/css" /> -->
-<!-- <link as="script" crossorigin="" href="/blocks/carousel/carousel.js" rel="preload" type="application/javascript" /> -->
 
-<script src="/scripts/aem.min.js" type="module"></script>
-<script src="/scripts/scripts.min.js" type="module"></script>
-<link rel="stylesheet" href="/styles/styles.min.css" />
+<script>
+  document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
+</script>
 
-<!-- <script src="/scripts/aem.js" type="module"></script>
-<script src="/scripts/scripts.js" type="module"></script>
-<link rel="stylesheet" href="/styles/styles.css" /> -->
+<link rel="apple-touch-icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" />
+<link rel="icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" />

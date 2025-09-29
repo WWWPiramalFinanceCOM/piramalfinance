@@ -7,7 +7,7 @@
       .join(", ");
     return meta || "";
   }
-  export function getExtension(type) {
+function getExtension(type) {
     const isMinify = getMetadata("minify") === "true";
     // const isMinify = false
     if (type === "js") {
@@ -18,8 +18,8 @@
   }
 </script>
 <script type="module">
-  import(`/scripts/aem${window.getExtension("js")}`);
-  import(`/scripts/scripts${window.getExtension("js")}`);
+  import(`/scripts/aem${window.get("js")}`);
+  import(`/scripts/scripts${getExtension("js")}`);
 </script>
 <link as="font" crossorigin="" href="/fonts/Nunito-Light.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoRegular.woff2" rel="preconnect" type="font/woff2" />
@@ -30,7 +30,7 @@
 <link as="font" crossorigin="" href="/fonts/NunitoExtraLight.woff2" rel="preconnect" type="font/woff2" />
 
 <script>
-  document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
+  document.write(`<link rel="stylesheet" href="/styles/styles${getExtension('css')}" />`);
 </script>
 
 <link rel="apple-touch-icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" />

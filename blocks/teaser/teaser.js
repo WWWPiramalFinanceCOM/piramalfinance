@@ -42,15 +42,12 @@ export function generateTeaserDOM(props, classes) {
     firstCta,
     secondCta,
     ctaImage,
-    ctaImageAlt,
     ctaImageUrl,
     imageText,
     ctaImage2,
-    ctaImageAlt2,
     ctaImageUrl2,
     imageText2,
     ctaImage3,
-    ctaImageAlt3,
     ctaImageUrl3,
     imageText3,
     mobileImage,
@@ -68,13 +65,12 @@ export function generateTeaserDOM(props, classes) {
   ctaImageAnchor3.innerHTML = ctaImage3.innerHTML;
   // const bgPictureStyle = bgPicture?.querySelector("img")?.src || '';
   let bgPictureStyle;
-  if ([...classes].includes("original-img")) {
-    bgPictureStyle = bgPicture?.querySelector('img')?.src && bgPicture?.querySelector('img').src ? ` style='background-image:url(${bgPicture?.querySelector('img').src.split("?")[0]})' ` : '';
+  if ([...classes].includes('original-img')) {
+    bgPictureStyle = bgPicture?.querySelector('img')?.src && bgPicture?.querySelector('img').src ? ` style='background-image:url(${bgPicture?.querySelector('img').src.split('?')[0]})' ` : '';
   }
   else {
     bgPictureStyle = bgPicture?.querySelector('img')?.src && bgPicture?.querySelector('img').src ? ` style='background-image:url(${bgPicture?.querySelector('img').src})' ` : '';
   }
-  // const bgPictureStyle = bgPicture?.querySelector('img')?.src && bgPicture?.querySelector('img').src ? ` style='background-image:url(${bgPicture?.querySelector('img').src})' ` : '';
   const mobileImageStyle = mobileImage?.querySelector('img')?.src ? ` style='background-image:url(${mobileImage?.querySelector('img')?.src})' ` : '';
   let bgImageAllow = bgPictureStyle;
   if (targetObject.isTab) {
@@ -89,28 +85,28 @@ export function generateTeaserDOM(props, classes) {
       <div class='foreground'>
         <div class='text'>
           ${eyebrow.textContent.trim() !== ''
-      ? `<div class='eyebrow'>${eyebrow.textContent.trim()}</div>`
-      : ''
-    }
+    ? `<div class='eyebrow'>${eyebrow.textContent.trim()}</div>`
+    : ''
+}
           <div class='title'>${title.innerHTML}</div>
           <div class='long-description'>${longDescr.innerHTML}</div>
           <!-- <div class='short-description'>${hasShortDescr ? shortDescr.innerHTML : longDescr.innerHTML
-    }</div>-->
+}</div>-->
           <div class='short-description'>${shortDescr.innerHTML}</div>
           <div class='cta-image-wrapper'>
             <div class="img-with-text-wrap">
               <div class="cta-image">${ctaImageAnchor ? ctaImageAnchor.outerHTML : ''
-    }</div>
+}</div>
               <p class="cta-text">${imageText.innerText}</p>
             </div>
             <div class="img-with-text-wrap">
               <div class="cta-image">${ctaImageAnchor2 ? ctaImageAnchor2.outerHTML : ''
-    }</div>
+}</div>
               <p class="cta-text">${imageText2.innerText}</p>
             </div>
             <div class="img-with-text-wrap">
               <div class="cta-image">${ctaImageAnchor3 ? ctaImageAnchor3.outerHTML : ''
-    }</div>
+}</div>
               <p class="cta-text">${imageText3.innerText}</p>
             </div>
           </div>
@@ -137,12 +133,12 @@ export function generateTeaserDOM(props, classes) {
     el.addEventListener('click', function (e) {
       try {
         if (!e.target.closest('.calc-desktop-carousel-wrapper')) {
-          if (!e.target.closest(".multi-calc-teaser-wrapper")) {
+          if (!e.target.closest('.multi-calc-teaser-wrapper')) {
             if (index || e.target.closest('.cta')) {
               bannerClick(e.target.innerText, targetObject.pageName);
             }
           }
-          if (e.target.closest(".multi-calc-teaser-wrapper")) {
+          if (e.target.closest('.multi-calc-teaser-wrapper')) {
             const click_text = e.target.textContent.trim();
             const cta_position = '';
             const cta_category = e.target.closest('.foreground').querySelector('.long-description').querySelector('p').textContent.trim()

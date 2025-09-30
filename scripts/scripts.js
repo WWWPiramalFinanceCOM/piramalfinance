@@ -3,7 +3,18 @@
 // import { validationJSFunc } from '../blocks/applyloanform/validation.js';
 import { ctaClick } from '../dl.js';
 import {
-  sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks, loadCSS, fetchPlaceholders,
+  sampleRUM,
+  loadHeader,
+  loadFooter,
+  decorateButtons,
+  decorateIcons,
+  decorateSections,
+  decorateBlocks,
+  decorateTemplateAndTheme,
+  waitForLCP,
+  loadBlocks,
+  loadCSS,
+  fetchPlaceholders,
   getMetadata,
   getExtension,
 } from './aem.js';

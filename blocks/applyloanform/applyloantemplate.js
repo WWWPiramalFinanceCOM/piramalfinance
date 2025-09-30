@@ -1,73 +1,7 @@
-import { getMetadata } from "../../scripts/aem.js";
+import { getMetadata } from '../../scripts/aem.js';
+
 export function appplyLoanTemplate(properties) {
-    properties.checkboxAnchorTextLink = getMetadata('lang-path') + properties.checkboxAnchorTextLink;
-  /* const properties = {
-    rupeeIcon: "/images/rupee-icon.svg",
-    mainFormHeading: "Apply Loan In A Minute",
-    crossOne: "/images/close-icon.svg",
-    loanType: "I am looking for? ",
-    loanTypePlaceholder: "Select Loan Type",
-    loanAmount: "I need loan amount of ",
-    fullNames: "My full name is ",
-    fullNamesPlaceholder: "Enter Full Name",
-    mobileNumber: "My contact number is",
-    mobileNumberPlaceholder: "Enter Mobile Number",
-    checkboxTitle: "I am",
-    firstCheckText: "Salaried",
-    secondCheckText: "Doing business",
-    monthlyIncome: "My monthy income is",
-    datePicker: "My year of birth is",
-    datePickerPlaceholder: "DD/MM/YYYY",
-    state: "State",
-    statePlaceholder: "Enter State",
-    branch: "Branch",
-    branchPlaceholder: "Enter Branch",
-    checkboxText: "I accept the ",
-    checkboxAnchorText: "terms and conditions",
-    checkboxAnchorTextLink: "http://example.com",
-    verifyHead: "Verify Your Mobile Number",
-    sucessFirstImg: "/images/loan-sucess.png",
-    crossTwo: "/images/close-icon.svg",
-    FirstLineText: "Your request has been submitted successfully!",
-    SecondLineText: "Here is your QR code",
-    sucessSecondImg: "/images/scanner.svg",
-    MobileLineText: "Scan the QR code with your mobile app",
-    scanImgOne: "/content/dam/piramalfinance/homepage/banner-images/playstore.png",
-    scanImgTwo: "/content/dam/piramalfinance/homepage/banner-images/appstore.png",
-    errorImage: "/images/loan-error.png",
-    crossThree: "/images/close-icon.svg",
-    errorhead: "Request Failed",
-    errorSubhead: "There was an error processing your request.",
-    RedBoxText: "Please try again later.",
-    errorImage2: "/images/loan-error.png",
-    crossFour: " /images/close-icon.svg",
-    errorMessageOne: "Something went wrong",
-    errorMessageTwo: "Please try again.",
-    buttonOne: "Submit",
-    buttonTwo: "Verify OTP",
-    buttonThree: "Try Again",
-    options: [
-      {
-        "Personal Loans": [
-          { litext: "Loan less than 5 Lacs", loantype: "pl" },
-          { litext: "Loan more than 5 Lacs", loantype: "pl" },
-        ],
-      },
-      {
-        "Housing Loans": [{ litext: "Home Loan", loantype: "hl" }],
-      },
-      {
-        "Business Loans": [
-          { litext: "Business Loan", loantype: "ubl" },
-          { litext: "Loan against property", loantype: "msme" },
-          { litext: "Secured business loan", loantype: "msme" },
-        ],
-      },
-      {
-        "Other Loans": [{ litext: "Pre-owned Car Loan", loantype: "ucl" }],
-      },
-    ],
-  }; */
+  properties.checkboxAnchorTextLink = getMetadata('lang-path') + properties.checkboxAnchorTextLink;
 
   function createLoanTypeDropDown() {
     const container = document.createElement('div');
@@ -93,7 +27,6 @@ export function appplyLoanTemplate(properties) {
       }
       container.appendChild(ul);
     });
-
     return container.innerHTML;
   }
 

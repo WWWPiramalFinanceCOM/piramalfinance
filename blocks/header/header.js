@@ -236,7 +236,7 @@ export default async function decorate(block) {
   if (navSections) {
     let loginNav = navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').length - 1;
     loginNav = navSections.querySelectorAll(':scope .default-content-wrapper > ul > li')[loginNav];
-    loginNav.addEventListener('click', (e) => {
+    loginNav.addEventListener('click', () => {
       navlogin(targetObject.pageName);
       loginFlag = false;
     });
@@ -294,7 +294,7 @@ export default async function decorate(block) {
       <span class="nav-hamburger-icon"></span>
     </button>`;
   let mobFragment = null;
-  hamburger.addEventListener('click', async (e) => {
+  hamburger.addEventListener('click', async () => {
     if (!mobFragment) {
       mobFragment = await loadFragment(getMetadata('mobilenav'));
       const mobNav = mobFragment.querySelector('.default-content-wrapper');

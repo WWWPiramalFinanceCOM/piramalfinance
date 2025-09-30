@@ -1,9 +1,9 @@
-import { setLocationObj } from "./branchlocator-init.js";
+import { setLocationObj } from './branchlocator-init.js';
 
 export function initMap(sortedLat, sortedLng) {
   const directionsService = new window.google.maps.DirectionsService();
   const directionsRenderer = new window.google.maps.DirectionsRenderer();
-  const map = new google.maps.Map(document.querySelector(".map-container"), {
+  const map = new google.maps.Map(document.querySelector('.map-container'), {
     zoom: 8,
     center: { lat: 19.07596, lng: 72.87764 },
   });
@@ -14,7 +14,7 @@ export function initMap(sortedLat, sortedLng) {
     provideRouteAlternatives: true,
   };
   directionsService.route(request, (result, status) => {
-    if (status == "OK") {
+    if (status == 'OK') {
       directionsRenderer.setDirections(result);
     }
   });
@@ -24,7 +24,7 @@ export function initMap(sortedLat, sortedLng) {
 export async function searchBranchByURL() {
   const url = new URL(location.href);
   const pathSegments = url.pathname.split('/').filter(Boolean);
-  
+
   if (!pathSegments.includes('branch-locator')) {
     return false;
   }
@@ -37,23 +37,21 @@ export async function searchBranchByURL() {
     return false;
   }
 
-  const formatString = (str) => 
-    str.charAt(0).toUpperCase() + 
-    str.slice(1).replaceAll('-', ' ');
+  const formatString = (str) => str.charAt(0).toUpperCase() + str.slice(1).replaceAll('-', ' ');
 
   setLocationObj.geoInfo = {
     state: formatString(state),
     city: city ? formatString(city) : '',
-    country: 'India'
+    country: 'India',
   };
 
   if (setLocationObj.geoInfo.state && setLocationObj.geoInfo.city) {
     const stateData = setLocationObj.getExcelData[setLocationObj.geoInfo.state];
     const cityData = stateData?.find(
-      entry => entry.City.toLowerCase() === setLocationObj.geoInfo.city.toLowerCase()
+      (entry) => entry.City.toLowerCase() === setLocationObj.geoInfo.city.toLowerCase()
     );
 
-    if(!cityData){
+    if (!cityData) {
       return false;
     }
 
@@ -66,4 +64,3 @@ export async function searchBranchByURL() {
 
   return true;
 }
-

@@ -37,9 +37,9 @@ export function statemasterGetStatesApi(loanType) {
   const allowedtype = ['pl', 'las', 'lamf'].includes(loanType);
   const fetchUrl = '/api/state-city-master/personal-loan-state-city-master.json';
 
-  const graphqlUrl = window.location.href.includes('localhost') 
-  ? 'https://www.piramalfinance.com/graphql/execute.json/piramalfinance/State%20City%20Master'
-  : '/graphql/execute.json/piramalfinance/State%20City%20Master';
+  const graphqlUrl = window.location.href.includes('localhost')
+    ? 'https://www.piramalfinance.com/graphql/execute.json/piramalfinance/State%20City%20Master'
+    : '/graphql/execute.json/piramalfinance/State%20City%20Master';
 
   const url = allowedtype ? fetchUrl : graphqlUrl;
 
@@ -48,8 +48,8 @@ export function statemasterGetStatesApi(loanType) {
       .then(async (response) => {
         const responseJson = await response.json();
         const statemaster = allowedtype 
-        ? stateMasterProcessApiData(responseJson.data) 
-        : stateMasterProcessGraphqlData(responseJson.data.statemasterList.items);
+          ? stateMasterProcessApiData(responseJson.data) 
+          : stateMasterProcessGraphqlData(responseJson.data.statemasterList.items);
 
         workFlowStatemaster(statemaster);
       })

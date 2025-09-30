@@ -1,4 +1,4 @@
-import { calculatorFlatStrLogic, CFApiCall, currenyCommaSeperation, fetchAPI } from '../../scripts/common.js';
+import { calculatorFlatStrLogic, CFApiCall, currenyCommaSeperation } from '../../scripts/common.js';
 import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js';
 import { homeloanCalHTML } from '../homeloancalculatorv2/templatehtmlv2.js';
 
@@ -11,7 +11,7 @@ export default async function decorate(block) {
 
   block.innerHTML = homeloanCalHTML(jsonResponseData);
 
-let elgCalDiv; let elgOverlay;
+  let elgCalDiv; let elgOverlay;
 
   try {
     elgCalDiv = document.querySelector('.home-page-calculator-call-xf');
@@ -21,8 +21,6 @@ let elgCalDiv; let elgOverlay;
 
     if (document.querySelector('.home-loan-calculator-parent').classList.contains('combined-emi-eligibility')) {
       document.querySelector('.home-loan-calculator-parent').classList.remove('combined-emi-eligibility');
-      /* document.querySelector(".homeloancalculator").querySelector(".eligibilitycalculator") &&
-        (document.querySelector(".homeloancalculator").querySelector(".eligibilitycalculator").style.display = "block"); */
     }
 
     homeLoanCalcFunc(currentSection);
@@ -32,7 +30,6 @@ let elgCalDiv; let elgOverlay;
     console.warn(error);
   }
 }
-
 
 function onloadGSTCalc() {
   const isGstCalculator = document.querySelector('.homeloancalculator .gst');

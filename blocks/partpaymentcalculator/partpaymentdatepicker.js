@@ -1,10 +1,8 @@
 import { currenyCommaSeperation } from '../../scripts/common.js';
 import { updatePartPayment } from './partpaymentlogic.js';
-// import { nextMonth, firstElem, secondEle, parentContainer, count, array, partpaymentArra, datepickerObjFirstLoan, airDatePickerObj } from "./partpaymentcalculator.js";
 
 export let nextMonth;
-export let firstElem; export let secondEle; export let
-  parentContainer;
+export let firstElem; export let secondEle; export let parentContainer;
 export let count = 2;
 export let array = [];
 export const partpaymentArra = {};
@@ -333,7 +331,7 @@ export function onloadDatePickerCalls() {
 
   const firstLoan = document.querySelector('#firstLoan');
   let seleVal;
-  firstLoan.addEventListener('change', (event) => {
+  firstLoan.addEventListener('change', () => {
     document.querySelector('#partpayment1').disabled = true;
     // document.querySelector('#partpayment1').parentElement.classList.add('disabled');
     document.querySelector('.add-more-part-payment-btn').classList.add('disabled');
@@ -503,7 +501,6 @@ export function onloadDatePickerCalls() {
 
   document.querySelector('.emicalculator .inputDiv').addEventListener('change', (event) => {
     const { target } = event;
-    // let isDesiredElement = target.matches("[data-cal-input=loanamt], [data-cal-input=roi], [data-cal-input=tenure]");
 
     // if (isDesiredElement) {
     const principal_outstanding = document.querySelector('[data-cal-input=loanamt]').value;

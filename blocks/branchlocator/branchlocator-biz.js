@@ -1,13 +1,13 @@
-import { locateMeInteraction, selectBranchInteraction } from "../../dl.js";
-import { getMetadata, loadScript } from "../../scripts/aem.js";
-import { branchURLStr, fetchAPI, selectBranchDetails } from "../../scripts/common.js";
-import returnLatLan from "./sort.js";
-import { initMap, searchBranchByURL } from "./branchlocator-api.js";
-import { setLocationObj } from "./branchlocator-init.js";
-import { renderCity, renderState } from "./branchlocator-render.js";
-import { innerBranchFunc } from "./branchlocator.js";
+import { locateMeInteraction, selectBranchInteraction } from '../../dl.js';
+import { getMetadata, loadScript } from '../../scripts/aem.js';
+import { branchURLStr, fetchAPI, selectBranchDetails } from '../../scripts/common.js';
+import returnLatLan from './sort.js';
+import { initMap, searchBranchByURL } from './branchlocator-api.js';
+import { setLocationObj } from './branchlocator-init.js';
+import { renderCity, renderState } from './branchlocator-render.js';
+import { innerBranchFunc } from './branchlocator.js';
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyDx1HwnCLjSSIm_gADqaYAZhSBh7hgcwTQ";
+const GOOGLE_MAPS_API_KEY = 'AIzaSyDx1HwnCLjSSIm_gADqaYAZhSBh7hgcwTQ';
 
 export const dropDownStateCity = (response) => {
   return response.reduce((acc, location) => {
@@ -21,7 +21,7 @@ export const dropDownStateCity = (response) => {
 export async function onloadBranchLocator(block) {
   try {
     if (await searchBranchByURL()) {
-      console.log("Search By URL");
+      console.log('Search By URL');
     } else if (setLocationObj.lat && setLocationObj.lng) {
       await getStateCity(setLocationObj.lat, setLocationObj.lng);
     } else {
@@ -33,22 +33,22 @@ export async function onloadBranchLocator(block) {
     await loadGoogleMapsAndRender(branchList);
     updateUI(block, branchList);
   } catch (error) {
-    console.error("Error in onloadBranchLocator:", error);
+    console.error('Error in onloadBranchLocator:', error);
   }
 }
 
 function setDefaultLocation() {
   const { geoInfo, getExcelData } = setLocationObj;
-  geoInfo.city = "Mumbai";
-  geoInfo.state = "Maharashtra";
-  geoInfo.country = "India";
+  geoInfo.city = 'Mumbai';
+  geoInfo.state = 'Maharashtra';
+  geoInfo.country = 'India';
 
   const defaultLatLng = getExcelData[geoInfo.state]?.find((city) => city.City === geoInfo.city);
   if (defaultLatLng) {
     Object.assign(setLocationObj, {
       lat: defaultLatLng.Latitude,
       lng: defaultLatLng.Longitude,
-      "geoInfo.location": defaultLatLng.Location,
+      'geoInfo.location': defaultLatLng.Location,
     });
   }
 }
@@ -58,11 +58,11 @@ async function updateURL() {
   const URLstate = formatURLString(geoInfo.state);
   const URLcity = formatURLString(geoInfo.city);
 
-  if (!location.href.includes("author") && !location.href.includes(URLstate)) {
+  if (!location.href.includes('author') && !location.href.includes(URLstate)) {
     var branchUrl = geoInfo.state && geoInfo.city ? branchURLStr(geoInfo.location, geoInfo.city, geoInfo.state, "shorthand") : branchURLStr(geoInfo.location, geoInfo.city, geoInfo.state, "shorthandstate");
     const resp = await fetch(branchUrl);
     if (resp.ok) {
-      location.href = branchUrl
+      location.href = branchUrl;
     } else {
       location.href = getMetadata("lang-path")+'/branch-locator/maharashtra/mumbai';
     }
@@ -97,7 +97,7 @@ async function loadGoogleMapsAndRender(branchList) {
 }
 
 async function updateUI(block, branchList) {
-  const section = block.closest(".section");
+  const section = block.closest('.section');
   bizStateDD(setLocationObj.getExcelData, block);
   bizCityDD(setLocationObj.getExcelData, block);
   defaultSelectedCityState(block);
@@ -105,15 +105,15 @@ async function updateUI(block, branchList) {
   renderState(block, setLocationObj);
 
   const multipleBranch = await innerBranchFunc(branchList);
-  section.querySelector(".title-to-show").textContent = `Find all ${setLocationObj.geoInfo.city} Branches here`;
-  section.querySelector(".branch-list-wrapper").innerHTML = multipleBranch;
+  section.querySelector('.title-to-show').textContent = `Find all ${setLocationObj.geoInfo.city} Branches here`;
+  section.querySelector('.branch-list-wrapper').innerHTML = multipleBranch;
 
   selectBranchDetails(block);
 
   if (setLocationObj.geoInfo.state && !setLocationObj.geoInfo.city) {
-    const cityWrapper = section.querySelector(".city-wrapper");
-    cityWrapper.classList.remove("dp-none");
-    cityWrapper.querySelector("input").focus();
+    const cityWrapper = section.querySelector('.city-wrapper');
+    cityWrapper.classList.remove('dp-none');
+    cityWrapper.querySelector('input').focus();
   }
 }
 
@@ -123,14 +123,14 @@ async function getStateCity(lat, lng) {
     const { results } = await response.json();
 
     if (!results || results.length < 2) {
-      throw new Error("No results found");
+      throw new Error('No results found');
     }
 
     const addressComponents = results[1].address_components;
     const locationInfo = {
-      city: "",
-      state: "",
-      country: "",
+      city: '',
+      state: '',
+      country: '',
     };
 
     for (const component of addressComponents) {
@@ -149,20 +149,15 @@ async function getStateCity(lat, lng) {
     }
 
     setLocationObj.geoInfo = locationInfo;
-
-    // Uncomment and modify if needed:
-    /* setLocationObj.getExcelData[locationInfo.state] = setLocationObj.getExcelData[locationInfo.state].filter((each) => {
-      return each['Location'].includes(locationInfo.city);
-    }); */
   } catch (error) {
-    console.error("Error in getStateCity:", error);
+    console.error('Error in getStateCity:', error);
     throw error;
   }
 }
 
 function getStateName(lat, lan) {
   return new Promise((resolve, reject) => {
-    fetchAPI("GET", `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lan}&sensor=true&key=AIzaSyDx1HwnCLjSSIm_gADqaYAZhSBh7hgcwTQ`)
+    fetchAPI('GET', `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lan}&sensor=true&key=AIzaSyDx1HwnCLjSSIm_gADqaYAZhSBh7hgcwTQ`)
       .then((res) => {
         resolve(res);
       })
@@ -171,21 +166,6 @@ function getStateName(lat, lan) {
       });
   });
 }
-
-/* function sortingNearestBranch(lat, lng, data) {
-  const filteredLocations = Object.values(data)
-    .flat()
-    .map((location) => ({
-      ...location,
-      distance: calculateDistance(lat, lng, location.Latitude, location.Longitude),
-    }))
-    .filter((location) => location.distance <= 40)
-    .sort((a, b) => a.distance - b.distance);
-
-  console.log(filteredLocations);
-
-  return filteredLocations;
-} */
 
 function calculateDistance(lat1, lng1, lat2, lng2) {
   const R = 6371; // Radius of the Earth in km
@@ -202,7 +182,9 @@ function deg2rad(deg) {
 }
 
 function myMap(lat, long, sortedBranch) {
-  const center = lat && long ? new google.maps.LatLng(lat, long) : new google.maps.LatLng(22.0, 75.0);
+  const center = lat && long
+    ? new google.maps.LatLng(lat, long)
+    : new google.maps.LatLng(22.0, 75.0);
 
   const zoom = lat && long ? 10 : 5;
 
@@ -236,8 +218,8 @@ function addMarkers(map, sortedBranch, userLat, userLong) {
 
 export function bizStateDD(data) {
   setLocationObj.stateLi = Object.keys(data)
-    .map((state) => `<a href="${branchURLStr("", "", state, "shorthandstate")}"><li class="state-option option" data-info="${state}">${state}</li></a>`)
-    .join("");
+    .map((state) => `<a href="${branchURLStr('', '', state, 'shorthandstate')}"><li class="state-option option" data-info="${state}">${state}</li></a>`)
+    .join('');
 }
 
 export function bizCityDD(data) {
@@ -245,43 +227,43 @@ export function bizCityDD(data) {
   setLocationObj.cityLi = Object.values(data[setLocationObj.geoInfo.state]).reduce((acc, { City }) => {
     if (!setLocationObj.cityhash[City]) {
       setLocationObj.cityhash[City] = City;
-      acc += `<a href="${branchURLStr("", City, setLocationObj.geoInfo.state, "shorthand")}"><li class="city-option option" data-info="${City}">${City}</li></a>`;
+      acc += `<a href="${branchURLStr('', City, setLocationObj.geoInfo.state, 'shorthand')}"><li class="city-option option" data-info="${City}">${City}</li></a>`;
     }
     return acc;
-  }, "");
+  }, '');
 }
 
 function defaultSelectedCityState(block) {
-  const section = block.closest(".section");
-  section.querySelector(".default-state-selected").textContent = setLocationObj.geoInfo.state;
-  section.querySelector(".default-city-selected").textContent = setLocationObj.geoInfo.city;
+  const section = block.closest('.section');
+  section.querySelector('.default-state-selected').textContent = setLocationObj.geoInfo.state;
+  section.querySelector('.default-city-selected').textContent = setLocationObj.geoInfo.city;
 }
 
 export function onClickState(block) {
   block
-    .closest(".section")
-    .querySelectorAll(".state-option")
+    .closest('.section')
+    .querySelectorAll('.state-option')
     .forEach((eachState) => {
-      eachState.addEventListener("click", (e) => handleStateClick(e, block));
+      eachState.addEventListener('click', (e) => handleStateClick(e, block));
     });
 }
 
 export function onClickCity(block) {
   block
-    .closest(".section")
-    .querySelectorAll(".city-option")
+    .closest('.section')
+    .querySelectorAll('.city-option')
     .forEach((eachCity) => {
-      eachCity.addEventListener("click", (e) => handleCityClick(e, block));
+      eachCity.addEventListener('click', (e) => handleCityClick(e, block));
     });
 }
 
 export function locateMeClick(block) {
-  const locateMeEvent = block.closest(".section").querySelector(".btn-locate");
-  locateMeEvent.addEventListener("click", (e) => handleLocateMeClick(e, block));
+  const locateMeEvent = block.closest('.section').querySelector('.btn-locate');
+  locateMeEvent.addEventListener('click', (e) => handleLocateMeClick(e, block));
 
   try {
-    const branchDetailBtn = block.closest(".section").querySelector(".btn-locate-details");
-    branchDetailBtn.addEventListener("click", handleBranchDetailClick);
+    const branchDetailBtn = block.closest('.section').querySelector(".btn-locate-details");
+    branchDetailBtn.addEventListener('click', handleBranchDetailClick);
   } catch (error) {
     console.warn(error);
   }
@@ -305,17 +287,16 @@ async function handleStateClick(e, block) {
     defaultSelectedCityState(block);
     renderCity(block);
 
-    // const branchList = sortingNearestBranch(setLocationObj.lat, setLocationObj.lng, setLocationObj.getExcelData);
     const branchList = sortByCityandState(setLocationObj.getExcelData[setLocationObj.geoInfo.state]);
 
     await loadGoogleMapsAndRender(branchList);
 
     const multipleBranch = await innerBranchFunc(branchList);
-    block.closest(".section").querySelector(".branch-list-wrapper").innerHTML = multipleBranch;
+    block.closest('.section').querySelector('.branch-list-wrapper').innerHTML = multipleBranch;
 
-    e.target.closest("ul").classList.add("dp-none");
+    e.target.closest('ul').classList.add('dp-none');
   } catch (error) {
-    console.error("Error in handleStateClick:", error);
+    console.error('Error in handleStateClick:', error);
   }
 }
 
@@ -331,19 +312,18 @@ async function handleCityClick(e, block) {
 
     defaultSelectedCityState(block);
 
-    // const branchList = sortingNearestBranch(setLocationObj.lat, setLocationObj.lng, setLocationObj.getExcelData);
     const branchList = sortByCityandState(setLocationObj.getExcelData[setLocationObj.geoInfo.state]);
 
     await loadGoogleMapsAndRender(branchList);
 
     const multipleBranch = await innerBranchFunc(branchList);
-    const section = block.closest(".section");
-    section.querySelector(".branch-list-wrapper").innerHTML = multipleBranch;
-    section.querySelector(".title-to-show").textContent = `Find all ${city} Branches here`;
+    const section = block.closest('.section');
+    section.querySelector('.branch-list-wrapper').innerHTML = multipleBranch;
+    section.querySelector('.title-to-show').textContent = `Find all ${city} Branches here`;
 
-    e.target.closest("ul").classList.add("dp-none");
+    e.target.closest('ul').classList.add('dp-none');
   } catch (error) {
-    console.error("Error in handleCityClick:", error);
+    console.error('Error in handleCityClick:', error);
   }
 }
 
@@ -364,15 +344,17 @@ async function handleLocateMeClick(e, block) {
 
     await getStateCity(lat, lng);
     // const branchList = sortingNearestBranch(lat, lng, setLocationObj.getExcelData);
-    setLocationObj.geoInfo.state = setLocationObj.geoInfo.state ? firstLetterCap(setLocationObj.geoInfo.state) : setLocationObj.geoInfo.state;
-    
+    setLocationObj.geoInfo.state = setLocationObj.geoInfo.state
+      ? firstLetterCap(setLocationObj.geoInfo.state) 
+      : setLocationObj.geoInfo.state;
+
     let branchList = sortByCityandState(setLocationObj.getExcelData[setLocationObj.geoInfo.state]);
 
-    if(branchList.length == 0){
-      Object.assign(setLocationObj.geoInfo, { 
-        state : perviousState,
-        city : perviousCity
-       });
+    if (branchList.length == 0) {
+      Object.assign(setLocationObj.geoInfo, {
+        state: perviousState,
+        city: perviousCity,
+      });
       branchList = sortByCityandState(setLocationObj.getExcelData[setLocationObj.geoInfo.state]);
     }
 
@@ -388,15 +370,14 @@ async function handleLocateMeClick(e, block) {
 
     renderBranchList(block, branchList);
     selectBranchDetails(block);
-
   } catch (error) {
-    console.error("Error in handleLocateMeClick:", error);
+    console.error('Error in handleLocateMeClick:', error);
     // Consider adding user-friendly error handling here
   }
 }
 
 function updateUIForNoLocation(block, target) {
-  block.closest(".section").querySelector(".nearest-txt").textContent = "Kindly enable your Location and Refresh the page";
+  block.closest('.section').querySelector('.nearest-txt').textContent = 'Kindly enable your Location and Refresh the page';
   target.closest('.btn-locate > span').classList.add('dsp-none');
 }
 
@@ -410,39 +391,38 @@ async function updateDropdownsAndRender(block) {
 
 async function renderBranchList(block, branchList) {
   const multipleBranch = await innerBranchFunc(branchList);
-  block.closest(".section").querySelector(".branch-list-wrapper").innerHTML = multipleBranch;
+  block.closest('.section').querySelector('.branch-list-wrapper').innerHTML = multipleBranch;
 }
-
 
 function handleBranchDetailClick(e) {
   try {
-    const container = e.target.closest(".branch-info-container");
+    const container = e.target.closest('.branch-info-container');
     const dataAnalytics = {
-      cta_position: container?.querySelector(".nearest-txt")?.textContent.trim(),
-      branch_name: container?.querySelector(".branch-deatils .branch-addr")?.textContent.trim().split("-")[1]?.trim(),
+      cta_position: container?.querySelector('.nearest-txt')?.textContent.trim(),
+      branch_name: container?.querySelector('.branch-deatils .branch-addr')?.textContent.trim().split('-')[1]?.trim(),
     };
     selectBranchInteraction(dataAnalytics);
   } catch (error) {
-    console.warn("Error in handleBranchDetailClick:", error);
+    console.warn('Error in handleBranchDetailClick:', error);
   }
 }
 
 // Helper functions
 
 function updateUIAfterLocateMe(block, nearestBranch, currentDistance) {
-  const section = block.closest(".section");
-  section.querySelector(".branch-addr").textContent = `Branch - ${nearestBranch.Location}`;
-  section.querySelector(".branch-distance").textContent = `Distance - ${currentDistance.toFixed(1)} km`;
-  section.querySelector(".title-to-show").textContent = `Find all ${setLocationObj.geoInfo.city} Branches here`;
-  section.querySelector(".btn-locate").classList.add("dp-none");
-  section.querySelector(".btn-locate-details").classList.remove("dp-none");
-  section.querySelector(".branch-deatils").classList.remove("dp-none");
+  const section = block.closest('.section');
+  section.querySelector('.branch-addr').textContent = `Branch - ${nearestBranch.Location}`;
+  section.querySelector('.branch-distance').textContent = `Distance - ${currentDistance.toFixed(1)} km`;
+  section.querySelector('.title-to-show').textContent = `Find all ${setLocationObj.geoInfo.city} Branches here`;
+  section.querySelector('.btn-locate').classList.add('dp-none');
+  section.querySelector('.btn-locate-details').classList.remove('dp-none');
+  section.querySelector('.branch-deatils').classList.remove('dp-none');
 
-  setLocationObj.geoInfo.locationcode = nearestBranch["Location Code"];
+  setLocationObj.geoInfo.locationcode = nearestBranch['Location Code'];
   setLocationObj.geoInfo.location = nearestBranch.Location;
 
   const settingBranchURL = branchURLStr(setLocationObj.geoInfo.location, setLocationObj.geoInfo.city, setLocationObj.geoInfo.state, "loans", setLocationObj.geoInfo.locationcode);
-  section.querySelector(".btn-locate-details").setAttribute("href", settingBranchURL);
+  section.querySelector('.btn-locate-details').setAttribute('href', settingBranchURL);
 }
 
 function sortByState(data) {
@@ -452,4 +432,3 @@ function sortByState(data) {
 function firstLetterCap(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
-

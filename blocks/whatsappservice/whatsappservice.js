@@ -309,16 +309,16 @@ function otpPopupWhatsAppHTML({
 }
  */
 
-import { onloadLoginCall } from "./login.js";
-import { otpPopupCall } from "./otppopup.js";
+import { onloadLoginCall } from './login.js';
+import { otpPopupCall } from './otppopup.js';
 
 // Helper functions
-const getImageSrc = (element) => element?.querySelector("img")?.getAttribute("src");
+const getImageSrc = (element) => element?.querySelector('img')?.getAttribute('src');
 const getText = (element) => element?.textContent.trim();
 const getValueAthor = (element) => getImageSrc(element) || getText(element);
 
 function createCheckboxHTML(checkbox, tnc) {
-  if (getText(checkbox) !== "true") return "";
+  if (getText(checkbox) !== 'true') return '';
 
   return `
 <div class="checkbox-field">
@@ -349,7 +349,19 @@ function createInputFieldHTML(uppertext, spantext, placeholder, submitText) {
 }
 
 function renderWhatsAppSection(props) {
-  const [frontImage, description, buttonText, buttonHref, placeholder, spantext, uppertext, submitText, tnc, checkbox, ...rest] = props;
+  const [
+    frontImage,
+    description,
+    buttonText,
+    buttonHref,
+    placeholder,
+    spantext,
+    uppertext,
+    submitText,
+    tnc,
+    checkbox,
+    ...rest
+  ] = props;
 
   return `
 <div class="whats-app-service">
@@ -366,16 +378,6 @@ function renderWhatsAppSection(props) {
 function createOtpPopupHTML(props) {
   // Extract required props
   const [
-    frontImage,
-    description,
-    buttonText,
-    buttonHref,
-    placeholder,
-    spantext,
-    uppertext,
-    submitText,
-    tnc,
-    checkbox,
     whatsapplock,
     whatsapplockalt,
     otphead,
@@ -528,6 +530,6 @@ export default function decorate(block) {
     onloadLoginCall(block);
     otpPopupCall(block);
   } catch (error) {
-    console.warn("WhatsApp service initialization error:", error);
+    console.warn('WhatsApp service initialization error:', error);
   }
 }

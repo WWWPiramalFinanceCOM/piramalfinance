@@ -1,8 +1,6 @@
 // eslint-disable-next-line import/no-cycle
-import { fetchPlaceholders, getMetadata, sampleRUM } from './aem.js';
+import { fetchPlaceholders, sampleRUM } from './aem.js';
 import eventInit from './events.js';
-
-
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
@@ -95,10 +93,9 @@ async function loadAdobeScript() {
   const placeholders = await fetchPlaceholders();
   const checkingEnv = location.href;
   let adobeScript;
-  if (checkingEnv.includes("uatmarketing.piramalfinance") || checkingEnv.includes("main--piramalfinance")) {
+  if (checkingEnv.includes('uatmarketing.piramalfinance') || checkingEnv.includes('main--piramalfinance')) {
     adobeScript = placeholders.adobescriptstage;
-  }
-  else if (checkingEnv.includes("www.piramalfinance") || checkingEnv.includes("main--prodpiramalfinance")) {
+  } else if (checkingEnv.includes('www.piramalfinance') || checkingEnv.includes('main--prodpiramalfinance')) {
     adobeScript = placeholders.adobescriptprod;
   }
   // Create a script element

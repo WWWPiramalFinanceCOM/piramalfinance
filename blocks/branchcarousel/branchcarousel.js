@@ -6,9 +6,9 @@ export default async function decorate(block) {
   const linkURL = block.textContent.trim();
 
   let jsonResponseData = '';
-  if(sessionStorage.getItem('branchloanmapping')){
+  if (sessionStorage.getItem('branchloanmapping')) {
     jsonResponseData = JSON.parse(sessionStorage.getItem('branchloanmapping'));
-  }else{
+  } else {
     if (!linkURL) {
       return false;
     }
@@ -32,4 +32,3 @@ export default async function decorate(block) {
 
   block.classList.add('dp-none');
 }
-

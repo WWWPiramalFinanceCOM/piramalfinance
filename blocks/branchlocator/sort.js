@@ -1,4 +1,4 @@
-import { locationInLatLan } from "./branchlocator-init.js";
+import { locationInLatLan } from './branchlocator-init.js';
 
 function comparator(a, b) {
   if (a.innerText < b.innerText) {
@@ -19,7 +19,7 @@ export function sortElements(el) {
 
 export default function returnLatLan() {
   return new Promise((resolve, reject) => {
-    if ("geolocation" in navigator) {
+    if ('geolocation' in navigator) {
       // Prompt user for permission to access their location
       navigator.geolocation.getCurrentPosition(
         // Success callback function
@@ -35,12 +35,12 @@ export default function returnLatLan() {
         (error) => {
           resolve(error);
           // Handle errors, e.g. user denied location sharing permissions
-          console.error("Error getting user location:", error);
-        }
+          console.error('Error getting user location:', error);
+        },
       );
     } else {
       // Geolocation is not supported by the browser
-      console.error("Geolocation is not supported by this browser.");
+      console.error('Geolocation is not supported by this browser.');
     }
   });
 }

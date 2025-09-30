@@ -9,7 +9,7 @@ export default function overlayCalculator() {
 
   let calculatorType = '';
   if (emiCalDiv) {
-    emiCalDiv.addEventListener('click', (element) => {
+    emiCalDiv.addEventListener('click', () => {
       if (!emiOverlay.classList.contains('show')) {
         calculatorType = 'emi';
         emiOverlay.classList.add('show');
@@ -29,7 +29,7 @@ export default function overlayCalculator() {
     });
   }
   if (elgCalDiv) {
-    elgCalDiv.addEventListener('click', (element) => {
+    elgCalDiv.addEventListener('click', () => {
       if (!elgOverlay.classList.contains('show')) {
         calculatorType = 'eligibility';
         elgOverlay.classList.add('show');

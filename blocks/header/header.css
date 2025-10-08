@@ -836,6 +836,7 @@ body.modal-open footer {
 
 /* Tabs */
 .header nav#nav .section.tabs-header{
+  display: none;
   position: absolute;
   top: 0px;
   left: 50%;
@@ -1335,3 +1336,27 @@ body.modal-open footer {
     padding: unset;
   }
 }
+
+
+/* ****new cr header **** */
+
+.header-wrapper.primary .nav-wrapper{
+  background-color:  #134f7f;
+} 
+
+.header-wrapper.primary .nav-wrapper  #nav .section.nav-sections{
+  background-color:  #134f7f;
+}
+
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a:hover{
+  color: orange; 
+}
+
+@media only screen and (max-width: 1200px){
+
+  .header-wrapper.primary .nav-wrapper #nav .section.nav-sections{
+    height: unset;
+  }
+}
+
+

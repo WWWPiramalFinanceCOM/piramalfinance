@@ -1352,6 +1352,15 @@ body.modal-open footer {
   color: orange; 
 }
 
+.header-wrapper.primary .nav-wrapper #nav .section.nav-brand{
+  margin-top: unset;
+}
+
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections {
+  margin-top: unset;
+}
+
+
 @media only screen and (max-width: 1200px){
 
   .header-wrapper.primary .nav-wrapper #nav .section.nav-sections{

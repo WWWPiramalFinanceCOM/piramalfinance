@@ -132,9 +132,9 @@ header {
 
 
 .header nav#nav a:any-link {
-  /* color: var(--piramal-black-40); */
+  color: var(--piramal-black-40);
   display: block;
-  color: var(--white);
+  /* color: var(--white); */
 }
 /* .header nav#nav a:nth-child(2):any-link {
       padding-left: 20px;
@@ -1364,8 +1364,24 @@ body.modal-open footer {
 @media only screen and (max-width: 1200px){
 
   .header-wrapper.primary .nav-wrapper #nav .section.nav-sections{
-    height: unset;
+    /* height: unset; */
   }
+
+  .header-wrapper.primary .nav-wrapper #nav .section.nav-brand{
+  margin-top: auto;
+}
 }
 
+.header-wrapper.primary nav#nav .nav-hamburger button{
+  background-color: #134f7f;;
+  
+}
+
+.header-wrapper.primary nav#nav a:any-link {
+  color: white;
+
+  @media only screen and (max-width: 1200px){
+    color: black;
+}
+}
 

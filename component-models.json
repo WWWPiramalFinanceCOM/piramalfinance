@@ -1125,7 +1125,7 @@
                 "name": "Button Bottom",
                 "value": "btn-bottom"
               },
-               {
+              {
                 "name": "Two Button Bottom",
                 "value": "two-btn-bottom"
               }
@@ -2805,6 +2805,39 @@
       {
         "component": "richtext",
         "name": "text",
+        "value": "",
+        "label": "Branch Detail Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "banner-carousel-item",
+    "fields": [
+      {
+        "component": "Image",
+        "name": "image",
+        "value": "",
+        "label": "Branch Detail Description",
+        "valueType": "string"
+      },
+      {
+        "component": "Image",
+        "name": "image_alt",
+        "value": "",
+        "label": "Branch Detail Description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobimage",
+        "value": "",
+        "label": "Branch Detail Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "mobimage_alt",
         "value": "",
         "label": "Branch Detail Description",
         "valueType": "string"

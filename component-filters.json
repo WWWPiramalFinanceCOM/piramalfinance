@@ -109,7 +109,8 @@
       "formformatpdf",
       "branchcarousel",
       "branchkeyfeatures",
-      "branches"
+      "branches",
+      "banner-carousel"
     ]
   },
   {
@@ -192,5 +193,9 @@
   {
     "id": "container",
     "components": []
+  },
+    {
+    "id": "banner-coursel",
+    "components": ["banner-coursel-item"]
   }
 ]

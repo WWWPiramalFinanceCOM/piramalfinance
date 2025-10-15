@@ -1,5 +1,3 @@
-// import { ProductLogics } from "./loadformlogic";
-// import { otpPopupFailureFun, removeLoader } from "../../../../clientlibs/support/otppopup/js/otppopup";
 import {
   errorPopUp, formInteraction, generateLead, lpOtpValidate, resendOtp, thankYouPopUp, verifyOtp,
 } from '../../dl.js';
@@ -341,11 +339,7 @@ function verifyOtpBtnClick() {
           if (ProductLogics(loanFormCriteria())) {
             loaninnerform.classList.add('loan-form-success');
             loanStatus = 'Approved';
-            // try {
-            //   generateLead(formName, formLoanType, formLoanAmount, formState, formBranchCity, targetObject.pageName);
-            // } catch (error) {
-            //   console.warn(error);
-            // }
+
             try {
               thankYouPopUp(formName, formLoanType, targetObject.pageName);
             } catch (error) {
@@ -361,7 +355,6 @@ function verifyOtpBtnClick() {
             }
           }
 
-          
           //   leadAPI(sessionStorage.getItem('accesstoken'), sessionStorage.getItem('otpAuthId'))
           leadAPI(sessionStorage.getItem('accesstoken'), authUniqueId)
             .catch((error) => {
@@ -430,10 +423,9 @@ function getProductMap(product, occupation) {
   if (product == 'pl') return occupation == 'salaried' ? 'personalLoan' : false;
   // if (product == 'pl') return occupation == 'salaried' ? 'personalLoan' : true;
 
-
   if (product == 'ucl') return occupation == 'salaried' ? 'preOwnedCarLoanSAL' : 'preOwnedCarLoanSE';
 
-  if(product == 'las' || product == 'lamf') return 'loanAgainstSecurity' ;
+  if (product == 'las' || product == 'lamf') return 'loanAgainstSecurity';
 
   return false;
 }

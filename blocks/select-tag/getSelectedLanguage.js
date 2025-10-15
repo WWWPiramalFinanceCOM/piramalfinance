@@ -3,7 +3,6 @@ import { fetchAPI } from '../../scripts/common.js';
 let data;
 const gooleMapKey = "AIzaSyDx1HwnCLjSSIm_gADqaYAZhSBh7hgcwTQ";
 
-
 export async function getSelectedLanguage(selectedLanguage = '', apiUrl = '/api/neeyat-muti-lang.json') {
   if (!data) {
     const resp = await fetchAPI('GET', apiUrl);

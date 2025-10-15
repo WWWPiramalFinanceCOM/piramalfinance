@@ -3,7 +3,7 @@ import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js
 import { CalcHTM } from '../emiandeligiblitycalc/templatehtml1.js';
 import { firstTabActive } from '../emiandeligiblitycalc/commonfile.js';
 import { targetObject } from '../../scripts/scripts.js';
-import { calculatorFlatStrLogic, CFApiCall, fetchAPI } from '../../scripts/common.js';
+import { calculatorFlatStrLogic, CFApiCall } from '../../scripts/common.js';
 
 let calculatorType; let elgCalDiv; let elgOverlay; let overlay;
 
@@ -189,8 +189,6 @@ export default async function decorate(block) {
     console.warn(error);
   }
 }
-
-
 
 export function eligibilityCalculatorCallXf() {
   document.querySelectorAll("[data-teaserv2-xf='homepage-eligibility-calculator-call-xf']")

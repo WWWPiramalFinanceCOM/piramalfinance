@@ -1,6 +1,6 @@
 // Import external script from MoEngage CDN
 
-import { fetchPlaceholders } from "./aem.js";
+import { fetchPlaceholders } from './aem.js';
 
 const placeholders = await fetchPlaceholders();
 

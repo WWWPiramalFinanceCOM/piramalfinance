@@ -34,7 +34,9 @@ export default function decorate(block) {
         generateOtherComponent = carouselContainerMapping[className];
       }
     });
-    generateOtherComponent = generateOtherComponent ? generateOtherComponent([imagebg, image, ...rest], classes) : generateTeaserDOM([imagebg, image, ...rest], classes);
+    generateOtherComponent = generateOtherComponent
+      ? generateOtherComponent([imagebg, image, ...rest], classes)
+      : generateTeaserDOM([imagebg, image, ...rest], classes);
     panel.textContent = '';
     panel.classList.add(blockType, 'block');
     classes.forEach((c) => panel.classList.add(c.trim()));

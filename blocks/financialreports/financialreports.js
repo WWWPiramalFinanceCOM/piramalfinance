@@ -3,7 +3,7 @@ import { fetchAPI, getProps, renderHelper } from '../../scripts/common.js';
 
 export default async function decorate(block) {
   const props = getProps(block);
-  const [url, type, sortType] = props;
+  const [url, sortType] = props;
   block.innerHTML = '';
   try {
     const resp = await fetchAPI('GET', url);
@@ -30,9 +30,9 @@ export default async function decorate(block) {
       }
       let monthsli = '';
       // Object.keys(months).forEach(function (month) {
-        sortedMonths.forEach((month) => {
-          const listData = months[month].sort((a, b) => new Date(b.pdfDate) - new Date(a.pdfDate));;
-          // console.log( year ,  " - ",month , " : " , listData);
+      sortedMonths.forEach((month) => {
+        const listData = months[month].sort((a, b) => new Date(b.pdfDate) - new Date(a.pdfDate));;
+        // console.log( year ,  " - ",month , " : " , listData);
 
         monthsli += `  
                                 <div class="subAccordianContent" style="display: nona;">

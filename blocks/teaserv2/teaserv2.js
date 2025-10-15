@@ -1,7 +1,6 @@
 import { ctaClick, ctaClickInteraction } from '../../dl.js';
 import { autoLinkLangPath } from '../../scripts/aem.js';
 import { targetObject } from '../../scripts/scripts.js';
-import { renderHelper } from '../../scripts/common.js';
 import { loanProductsAnalytics } from './teaserv2-analytics.js';
 
 export default async function decorate(block) {
@@ -54,7 +53,18 @@ export function renderTeaserHTMLFactory(props, block) {
   const isDesktop = window.matchMedia('(min-width: 768px)');
   const isMobile = window.matchMedia('(max-width: 767px)');
 
-  const [mainHref, bgImage, frontImage, title, description, mobileDescription, button, buttonHref, bgColor, teaserv2Attr, textwithinnerhtml, mobileImg] = props;
+  const [
+    mainHref,
+    bgImage,
+    frontImage,
+    title,
+    description,
+    button,
+    buttonHref,
+    bgColor,
+    teaserv2Attr,
+    textwithinnerhtml,
+    mobileImg] = props;
 
   const createElement = (tag, className, content) => {
     const element = document.createElement(tag);

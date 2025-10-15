@@ -61,7 +61,14 @@ const createLink = (path) => {
 };
 
 export default async function decorate(block) {
-  const [hideBreadcrumbVal, startLevelVal, hideCurrentPageVal, classNameVal, multiText, multiUrl] = block.children;
+  const [
+    hideBreadcrumbVal,
+    startLevelVal,
+    hideCurrentPageVal,
+    classNameVal,
+    multiText,
+    multiUrl,
+  ] = block.children;
 
   const hideBreadcrumb = hideBreadcrumbVal?.textContent.trim() || 'false';
   const hideCurrentPage = hideCurrentPageVal?.textContent.trim() || 'false';
@@ -143,8 +150,7 @@ function generateBreadcrumbSchema(breadcrumbsText) {
     return;
   }
 
-  div.querySelectorAll("a").forEach((ele, index) => {
-
+  div.querySelectorAll('a').forEach((ele, index) => {
     listItems.push({
       "@type": "ListItem",
       "position": index + 1,
@@ -157,13 +163,10 @@ function generateBreadcrumbSchema(breadcrumbsText) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": listItems
-  }
+  };
 
   const script = document.createElement('script');
   script.type = 'application/ld+json';
   script.innerHTML = JSON.stringify(breadCrumbSchema);
   document.head.append(script);
-
-
 }
-

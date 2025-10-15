@@ -1,18 +1,18 @@
-import returnLatLan from "./sort.js";
+import returnLatLan from './sort.js';
 
 export const locationInLatLan = {};
 export const setLocationObj = {
   lat: 0,
   lng: 0,
-  stateLi: "",
-  cityLi: "",
+  stateLi: '',
+  cityLi: '',
   cityhash: {},
   geoInfo: {
-    city: "",
-    state: "",
-    country: "",
-    location: "",
-    locationcode: "",
+    city: '',
+    state: '',
+    country: '',
+    location: '',
+    locationcode: '',
   },
 };
 
@@ -21,7 +21,7 @@ async function initializeLocation() {
     const { lat, lng } = await returnLatLan();
     Object.assign(setLocationObj, { lat, lng });
   } catch (error) {
-    console.error("Error initializing location:", error);
+    console.error('Error initializing location:', error);
   }
 }
 

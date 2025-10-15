@@ -34,4 +34,3 @@ function settingCurrentLoct(setLocationObj) {
     myMap(setLocationObj.lat, setLocationObj.lng);
   });
 }
-

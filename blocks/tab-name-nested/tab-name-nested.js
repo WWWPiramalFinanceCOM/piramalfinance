@@ -1,8 +1,13 @@
-import { createButton, createCarousle, getProps } from '../../scripts/common.js';
+import { getProps } from '../../scripts/common.js';
 import { generateTabName } from '../tab-name/tab-name.js';
 
 export default function decorate(block) {
-  const [parentTabName, parentTabId, child1TabName, child1TabId, child2TabName, child2TabId, prev, next, child1Type, child2Type] = getProps(block, {
+  const [
+    parentTabId,
+    prev,
+    next,
+    child1Type,
+    child2Type] = getProps(block, {
     picture: true,
   });
   // const names = parentTabName.split(",");

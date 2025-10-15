@@ -1,4 +1,9 @@
-import { ctaClick, ctaClickInteraction, documentRequiredInteraction, faqInteraction } from '../../dl.js';
+import {
+  ctaClick,
+  ctaClickInteraction,
+  documentRequiredInteraction,
+  faqInteraction,
+} from '../../dl.js';
 import { fetchPlaceholders } from '../../scripts/aem.js';
 import { targetObject } from '../../scripts/scripts.js';
 import { documentRequired, generateAccordionDOM } from '../accordion/accordion.js';
@@ -20,9 +25,9 @@ export default async function decorate(block) {
     accordion.append(accordionDOM);
 
     if (accordion.closest('.section.faq-section-wrapper')) {
-      let faqQuestion = accordion?.querySelector("summary >div >p")?.textContent?.trim()|| "";
-      let faqAnsText = accordion?.querySelector("details >div")?.textContent?.trim() || "";
-      let faqAns= faqAnsText?.replace(/\s+/g, ' ')?.trim()?.replace(/\n/g, ' ') || "";
+      let faqQuestion = accordion?.querySelector('summary >div >p')?.textContent?.trim() || '';
+      let faqAnsText = accordion?.querySelector('details >div')?.textContent?.trim() || '';
+      let faqAns= faqAnsText?.replace(/\s+/g, ' ')?.trim()?.replace(/\n/g, ' ') || '';
       faqQA.push({
         "@type": "Question",
         "name": faqQuestion,
@@ -30,7 +35,7 @@ export default async function decorate(block) {
           "@type": "Answer",
           "text": faqAns
         }
-      })
+      });
     }
 
     try {
@@ -59,7 +64,7 @@ function openFunctionFAQ(block) {
   const titles = block.querySelectorAll('details summary');
 
   titles.forEach((title) => {
-    title.addEventListener('click', function (e) {
+    title.addEventListener('click', function () {
       if (this.classList.contains('active')) {
         setTimeout(() => {
           this.closest('details').removeAttribute('open');
@@ -151,15 +156,14 @@ function mediaLiClickAnalytics(accordionDOM) {
   });
 }
 
-
 function faqSchemaQA(faqQA) {
   let faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": faqQA
-  }
+  };
   const script = document.createElement('script');
   script.type = 'application/ld+json';
-  script.innerHTML = JSON.stringify(faqSchema) || "";
+  script.innerHTML = JSON.stringify(faqSchema) || '';
   document.head.append(script);
 }

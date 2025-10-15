@@ -1,14 +1,14 @@
-import { decorateIcons } from "../../scripts/aem.js";
-import { decoratePlaceholder } from "../../scripts/scripts.js";
-import { decodeHtmlSymbols } from "../../scripts/common.js";
-import { mobileHeaderAnalytics } from "./code-analytics.js";
-import { decorateTable } from "./table.js";
+import { decoratePlaceholder } from '../../scripts/scripts.js';
+import { decodeHtmlSymbols } from '../../scripts/common.js';
+import { mobileHeaderAnalytics } from './code-analytics.js';
+import { decorateTable } from './table.js';
+
 export default async function decorate(block) {
   // console.log(block.classList.toString());
   block.innerHTML = await decoratePlaceholder(block);
   if (block.classList.contains('table')) {
-    decorateTable(block)
-    return block
+    decorateTable(block);
+    return block;
   }
   const titleData = decodeHtmlSymbols(block.children[0]?.querySelector('p')?.innerHTML.trim() || '');
   block.innerHTML = '';

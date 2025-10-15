@@ -20,7 +20,7 @@ export default function decorate(block) {
       el.classList.add('carousel-inner');
       el.id = 'carouselInner';
     });
-    block.querySelectorAll('li').forEach((el, index) => {
+    block.querySelectorAll('li').forEach((el) => {
       el.classList.add('carousel-item');
     });
     const prevButton = createButton('prev', prev?.outerHTML);
@@ -149,13 +149,6 @@ export default function decorate(block) {
     });
   }
   )
-  // setTimeout(() => {
-  //   block.querySelector('.tab-link ul').scroll({
-  //     left: block.querySelector('.tab-link ul li strong').getBoundingClientRect().left - block.querySelector('.tab-link ul li').getBoundingClientRect().width - 45,
-  //     behavior: 'smooth',
-  //   });
-  // }, 100);
-
 
   try {
     if (block.closest('.section.company-details-wrapper') && block.querySelector('.compony-details')) {
@@ -170,13 +163,4 @@ export default function decorate(block) {
   } catch (error) {
     console.warn(error);
   }
-
-  // document.addEventListener('load-event', hoverhandler);
-  // // document.removeEventListener('load-event', hoverhandler);
-  // function hoverhandler() {
-  //   block.querySelector('.tab-link ul').scroll({
-  //     left: block.querySelector('.tab-link ul li strong').getBoundingClientRect().left - block.querySelector('.tab-link ul li').getBoundingClientRect().width - 45,
-  //     behavior: 'smooth',
-  //   });
-  // }
 }

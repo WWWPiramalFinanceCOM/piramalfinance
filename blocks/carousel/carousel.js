@@ -1,13 +1,7 @@
 import { targetObject } from '../../scripts/scripts.js';
 import { body, createCarousle } from '../../scripts/common.js';
-import { applyLoanFormClick, formOpen } from '../applyloanform/applyloanforms.js';
-import { buttonCLick } from '../applyloanform/loanformapi.js';
-import { loanutmForm } from '../applyloanform/loanutm.js';
-import { stateMasterApi, statemasterGetStatesApi } from '../applyloanform/statemasterapi.js';
-import { validationJSFunc } from '../applyloanform/validation.js';
 import { generateDetailedTeaserDOM } from '../detailed-teaser/detailed-teaser.js';
 import { generateTeaserDOM } from '../teaser/teaser.js';
-import gliderMin from './glider.js';
 
 const carouselContainerMapping = {};
 carouselContainerMapping['detailed-teaser'] = generateDetailedTeaserDOM;
@@ -19,7 +13,6 @@ function updateButtons(entries) {
     // if panel has become > 60% visible
     if (entry.isIntersecting) {
       // get the buttons
-      // const carouselButtons = entry.target.parentNode.parentNode.querySelector('.button-container');
       const carouselButtons = entry.target.parentNode.parentNode.lastChild;
       // remove selected state from whatever button has it
       [...carouselButtons.querySelectorAll(':scope button')].forEach((b) => b.classList.remove('selected'));
@@ -47,7 +40,7 @@ export default function decorate(block) {
   } catch (error) {
     console.warn(error);
   }
-  
+
   // the panels container
   const panelContainer = document.createElement('div');
   panelContainer.classList.add('panel-container', 'carousel-inner');
@@ -61,9 +54,9 @@ export default function decorate(block) {
   slideNavButtons.classList.add('carousel-navigation-buttons');
   slideNavButtons.innerHTML = `
     <button type="button" class="slide-prev glider-prev" aria-label="${'Previous Slide'
-    }">${block.children[0].outerHTML || '<'}</button>
+}">${block.children[0].outerHTML || '<'}</button>
     <button type="button" class="slide-next glider-next" aria-label="${'Next Slide'
-    }">${block.children[1].outerHTML || '>'}</button>
+}">${block.children[1].outerHTML || '>'}</button>
   `;
   // block.appendChild(slideNavButtons);
 
@@ -103,7 +96,9 @@ export default function decorate(block) {
         generateOtherComponent = carouselContainerMapping[className];
       }
     });
-    generateOtherComponent = generateOtherComponent ? generateOtherComponent([imagebg, image, ...rest], classes) : generateTeaserDOM([imagebg, image, ...rest], classes);
+    generateOtherComponent = generateOtherComponent
+      ? generateOtherComponent([imagebg, image, ...rest], classes)
+      : generateTeaserDOM([imagebg, image, ...rest], classes);
     panel.textContent = '';
     panel.classList.add(blockType, 'block', 'carousel-item');
     classes.forEach((c) => panel.classList.add(c.trim()));
@@ -191,25 +186,12 @@ export default function decorate(block) {
         }
       }
     }
-    slidePrev?.addEventListener('click', (e) => {
+    slidePrev?.addEventListener('click', () => {
       slidePrevEventHandler();
     });
-    slideNext.addEventListener('click', (e) => {
+    slideNext.addEventListener('click', () => {
       slideNextEventHandler();
     });
-
-    /* try {
-      document.querySelectorAll('.open-form-on-click') && document.querySelectorAll('.open-form-on-click .button-container').forEach(function (eachApplyFormClick) {
-        eachApplyFormClick.addEventListener('click', async (e) => {
-          statemasterGetStatesApi();
-          validationJSFunc();
-          formOpen();
-          e.preventDefault();
-        });
-      });
-    } catch (error) {
-      console.warn(error);
-    } */
 
     if (buttonContainer.children.length) {
       block.append(buttonContainer);

@@ -1440,3 +1440,12 @@ body.modal-open footer {
   background: #F26E24;
   color: white;
 }
+
+.header-wrapper.primary .nav-wrapper .section.nav-sections .default-content-wrapper .icon.icon-login-icon img{
+  padding: 7px;
+}
+
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"],
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li>p>a[title="Login"] {
+  color: white;
+}

@@ -2844,10 +2844,10 @@
       // },
 
          {
-        "component": "richtext",
+        "component": "Banner Image Text",
         "name": "text",
         "value": "",
-        "label": "Branch Detail Description",
+        "label": "Banner Image Description",
         "valueType": "string"
       }
 

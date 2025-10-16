@@ -2814,13 +2814,7 @@
    {
     "id": "banner-carousel-item",
     "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
+     
       {
         "component": "richtext",
         "name": "text",
@@ -2829,47 +2823,6 @@
         "valueType": "string"
       }
     ]
-  },
-  // {
-  //   "id": "banner-carousel-item",
-  //   "fields": [
-  //     {
-  //       "component": "Image",
-  //       "name": "image",
-  //       "value": "",
-  //       "label": "Branch Detail Description",
-  //       "valueType": "string"
-  //     },
-  //     {
-  //       "component": "Image",
-  //       "name": "image_alt",
-  //       "value": "",
-  //       "label": "Branch Detail Description",
-  //       "valueType": "string"
-  //     },
-  //     {
-  //       "component": "reference",
-  //       "name": "mobimage",
-  //       "value": "",
-  //       "label": "Branch Detail Description",
-  //       "valueType": "string"
-  //     },
-  //     {
-  //       "component": "text",
-  //       "name": "mobimage_alt",
-  //       "value": "",
-  //       "label": "Branch Detail Description",
-  //       "valueType": "string"
-  //     },
-
-  //     //    {
-  //     //   "component": "Banner Image Text",
-  //     //   "name": "text",
-  //     //   "value": "",
-  //     //   "label": "Banner Image Description",
-  //     //   "valueType": "string"
-  //     // }
-
-  //   ]
-  // }
+  }
+ 
 ]

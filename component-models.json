@@ -2814,7 +2814,6 @@
    {
     "id": "banner-carousel-item",
     "fields": [
-     
       {
         "component": "richtext",
         "name": "text",

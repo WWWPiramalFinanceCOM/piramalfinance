@@ -2843,19 +2843,12 @@
       //   "valueType": "string"
       // },
 
-        {
-        "component": "reference",
-        "valueType": "string",
-        "name": "Iamge",
-        "label": "Image",
-        "multi": true
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "alt",
-        "value": "Default alt",
-        "label": "Alt Text"
+         {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Branch Detail Description",
+        "valueType": "string"
       }
 
     ]

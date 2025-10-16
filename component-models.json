@@ -2818,28 +2818,28 @@
         "component": "Image",
         "name": "image",
         "value": "",
-        "label": "Branch Detail Description",
+        "label": "Desktop Image",
         "valueType": "string"
       },
       {
         "component": "Image",
         "name": "image_alt",
         "value": "",
-        "label": "Branch Detail Description",
+        "label": "Desktop Image Alt",
         "valueType": "string"
       },
       {
         "component": "reference",
         "name": "mobimage",
         "value": "",
-        "label": "Branch Detail Description",
+        "label": "Mobile Image",
         "valueType": "string"
       },
       {
         "component": "text",
         "name": "mobimage_alt",
         "value": "",
-        "label": "Branch Detail Description",
+        "label": "Mobile Image Alt",
         "valueType": "string"
       }
     ]

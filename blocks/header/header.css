@@ -1422,3 +1422,21 @@ body.modal-open footer {
     color: black;
   }
 }
+
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p{
+  padding: unset;
+}
+
+.header-wrapper.primary .nav-wrapper #nav>.section.nav-sections>.default-content-wrapper>ul {
+  @media only screen and (max-width: 1200px){
+    padding-top: unset;
+
+  }
+}
+
+.header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p a{
+  border-radius: 8px;
+  border: 1px solid #F26E24;
+  background: #F26E24;
+  color: white;
+}

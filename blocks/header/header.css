@@ -1387,6 +1387,11 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-brand {
   margin-top: unset;
+  padding-right: 68px;
+
+  @media only screen and (max-width: 1200px) {
+    padding-right: unset
+}
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections {
@@ -1441,6 +1446,14 @@ body.modal-open footer {
   color: white;
 }
 
+.header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child{
+  padding-left: 68px;
+
+  @media only screen and (max-width: 1200px) {
+    padding-left: unset;
+  }
+}
+
 .header-wrapper.primary .nav-wrapper .section.nav-sections .default-content-wrapper .icon.icon-login-icon img{
   padding: 7px;
 }
@@ -1448,4 +1461,38 @@ body.modal-open footer {
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"],
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li>p>a[title="Login"] {
   color: white;
+}
+
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a,
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>a {
+      display: flex;
+    gap: 12px;
+}
+
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper .icon.icon-resources img{
+  width: 19px;
+  height: 19px;
+}
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper .icon.icon-existing-customer img{
+  width: 19px;
+  height: 19px;
+}
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper .icon.icon-help-support img{
+  width: 19px;
+  height: 19px;
+}
+
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>p{
+  display: flex;
+  gap: 12px;
+}
+
+.header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child span img {
+  @media only screen and (max-width: 1200px) {
+    left: 30px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+  }
 }

@@ -195,7 +195,7 @@
     "components": []
   },
     {
-    "id": "banner-coursel",
-    "components": ["banner-coursel-item"]
+    "id": "banner-carousel",
+    "components": ["banner-carousel-item"]
   }
 ]

@@ -1446,13 +1446,13 @@ body.modal-open footer {
   color: white;
 }
 
-.header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child{
+/* .header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child{
   padding-left: 68px;
 
   @media only screen and (max-width: 1200px) {
     padding-left: unset;
   }
-}
+} */
 
 .header-wrapper.primary .nav-wrapper .section.nav-sections .default-content-wrapper .icon.icon-login-icon img{
   padding: 7px;

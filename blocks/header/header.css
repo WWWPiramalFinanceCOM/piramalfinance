@@ -39,7 +39,8 @@ header {
 }
 
 
-.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li>p {
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li>p,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li >a {
   position: relative;
   color: var(--darkcharcoal);
   cursor: pointer;
@@ -52,7 +53,12 @@ header {
   text-decoration: none;
 }
 
-.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>p {
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections >.default-content-wrapper >ul>li>ul>li >a,
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections >.default-content-wrapper >ul>li>ul>li >p{
+  font-family: "Nunito-Bold", sans-serif;
+}
+
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul>li>p {
   margin-right: 1rem;
   padding: 8px;
   position: relative;
@@ -67,7 +73,7 @@ header {
 }
 
 
-.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>p>a{
+.header .nav-wrapper #nav .section.nav-sections >.default-content-wrapper>ul>li>p>a{
   color: white;
   font-size: 16px;
 }
@@ -786,6 +792,29 @@ body.modal-open footer {
   padding-left: 33px;
 }
 
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li:not(:has(span img))>ul {
+  padding-left: 0;
+}
+
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul:has(li span img){
+  margin: unset;
+  padding: unset;
+}
+
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul:has(li span img) li{
+  font-weight: 700;
+    font-family: Nunito-Bold, sans-serif;
+}
+
+
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li p {}
+
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li p span img,
+.header nav#nav .nav-sections .default-content-wrapper>ul>li>ul>li span img {
+  width: 20px;
+  height: 20px;
+}
+
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.nav-drop[aria-expanded="true"]>p::after {
   top: unset;
   /* bottom: 13px; */
@@ -870,10 +899,6 @@ body.modal-open footer {
 
 .header .nav-wrapper #nav>div.section.nav-brand>div:nth-child(1) {
   display: none;
-}
-
-.header nav#nav .nav-sections .default-content-wrapper>ul>li>ul>li{
-
 }
 
 /* Tabs */
@@ -976,7 +1001,7 @@ body.modal-open footer {
     justify-content: center;
   }
 
-  .header .section.nav-brand .default-content-wrapper>ul>li>ul>li>p {
+  .header .section.nav-brand .default-content-wrapper>ul>li>ul>li:has(ul)>p {
     position: relative;
   }
 
@@ -1005,7 +1030,7 @@ body.modal-open footer {
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(1)>ul>li:nth-child(4)>p,
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(4)>p,
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(3)>ul>li:nth-child(4) p {
-    border-bottom: unset;
+    /* border-bottom: unset; */
   }
 
   .header nav#nav .section.nav-brand>.default-content-wrapper.desk-dp-none {
@@ -1179,7 +1204,7 @@ body.modal-open footer {
     position: relative;
   }
 
-  .header .section.nav-brand .default-content-wrapper>ul>li>ul>li>p:after {
+  .header .section.nav-brand .default-content-wrapper>ul>li>ul>li:has(ul)>p::after {
     content: "";
     position: absolute;
     background-repeat: no-repeat;
@@ -1303,7 +1328,7 @@ body.modal-open footer {
     display: none;
   }
 
-  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"] p::after {
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"]:has(ul) p::after {
     transition: transform 0.6s ease-in-out;
     transform: rotate(225deg);
     border: solid var(--orange);
@@ -1318,11 +1343,11 @@ body.modal-open footer {
     position: relative;
   }
 
-  .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(4)>p::after,
+  /* .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(4)>p::after,
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(2)>p::after,
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(1)>p::after {
     content: none;
-  }
+  } */
 
   .header nav#nav .nav-hamburger {
     display: block;

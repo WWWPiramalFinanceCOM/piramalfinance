@@ -1,3 +1,6 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable camelcase */
+/* eslint-disable max-len */
 import { headerInteraction, navlogin } from '../../dl.js';
 import { autoLinkLangPath, fetchPlaceholders, getMetadata } from '../../scripts/aem.js';
 import { targetObject } from '../../scripts/scripts.js';
@@ -204,6 +207,9 @@ async function buildBreadcrumbs() {
  */
 export default async function decorate(block) {
   const path = getMetadata('nav') || '/nav';
+  if (path.endsWith('/nav-1')) {
+    document.querySelector('header').classList.add('primary');
+  }
   const fragment = await loadFragment(path);
   block.classList.add('dp-none');
   // decorate nav DOM
@@ -223,6 +229,7 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
+  const navtools = nav.querySelector('.nav-tools');
 
   const a = document.createElement('a');
   const image = navBrand.querySelector('picture');
@@ -241,11 +248,12 @@ export default async function decorate(block) {
       loginFlag = false;
     });
     navSections
-      .querySelectorAll(':scope .default-content-wrapper > ul > li')
+      .querySelectorAll(':scope .default-content-wrapper > ul > li:has(ul)')
       .forEach((navSection) => {
         wrapListUE(navSection);
         if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-        navSection.addEventListener('click', (e) => {
+        navSection.addEventListener('mouseenter', (e) => {
+          // debugger;
           if (isDesktop.matches) {
             if (loginFlag) {
               try {
@@ -263,20 +271,51 @@ export default async function decorate(block) {
               }
             }
             loginFlag = true;
-            const expanded = navSection.getAttribute('aria-expanded') === 'true';
+            // const expanded = navSection.getAttribute('aria-expanded') === 'true';
             toggleAllNavSections(navSections);
             if (navSection.classList.contains('nav-drop')) {
-              navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-              navSections.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-              if (expanded) {
-                body.classList.remove('modal-open');
-              } else {
-                body.classList.add('modal-open');
+              // navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+              // navSections.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+              navSection.setAttribute('aria-expanded', 'true');
+              navSections.setAttribute('aria-expanded', 'true');
+              body.classList.add('modal-open');
+              // if (expanded) {
+              //   body.classList.remove('modal-open');
+              // } else {
+              //   body.classList.add('modal-open');
+              // }
+            }
+            // else {
+            //   body.classList.remove('modal-open');
+            //   navSection.setAttribute('aria-expanded', 'false');
+            //   navSections.setAttribute('aria-expanded', 'false');
+            // }
+          }
+        });
+        navSection.addEventListener('mouseleave', (e) => {
+          if (isDesktop.matches) {
+            if (loginFlag) {
+              try {
+                let click_text = '';
+                if (e.target.tagName == 'IMG' || e.target.querySelector('icon-language')) {
+                  click_text = e.target.getAttribute('data-icon-name');
+                } else {
+                  click_text = e.target.textContent.trim();
+                }
+                const menu_category = e.target.closest('ul').closest('li')?.querySelector('p')?.innerText || '';
+                targetObject.ctaPosition = 'Top Menu Bar';
+                headerInteraction(click_text, menu_category, targetObject.ctaPosition, targetObject.pageName);
+              } catch (error) {
+                console.warn(error);
               }
-            } else {
-              body.classList.remove('modal-open');
+            }
+            loginFlag = true;
+            if (navSection.classList.contains('nav-drop')) {
+              // navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+              // navSections.setAttribute('aria-expanded', expanded ? 'false' : 'true');
               navSection.setAttribute('aria-expanded', 'false');
               navSections.setAttribute('aria-expanded', 'false');
+              body.classList.remove('modal-open');
             }
           }
         });
@@ -367,4 +406,16 @@ export default async function decorate(block) {
   mobileLogo.classList.add('mobile-logo');
   mobileSections?.prepend(mobileLogo);
   block.classList.remove('dp-none');
+
+
+  try {
+    if (getMetadata('category-type') === 'retails-finance') {
+      navtools.querySelectorAll('li')[0].classList.add('active');
+    } else {
+      navtools.querySelectorAll('li')[1].classList.add('active');
+    }
+  } catch (error) {
+    console.warn(error);
+  }
+
 }

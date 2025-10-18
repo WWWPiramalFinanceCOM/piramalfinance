@@ -839,7 +839,7 @@ body.modal-open footer {
 }
 
 .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7)>ul {
-  grid-template-columns: repeat(8, minmax(0, 1fr));
+  /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
   text-align: center;
 }
 
@@ -880,7 +880,8 @@ body.modal-open footer {
 }
 
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li:hover,
-.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>a:hover {
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>a:hover,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>p>a:hover  {
   color: var(--orange);
 }
 
@@ -893,9 +894,9 @@ body.modal-open footer {
   display: none;
 }
 
-.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li.nav-drop:nth-child(6)>ul {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
+/* .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li.nav-drop:nth-child(6)>ul {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+} */
 
 .header .nav-wrapper #nav>div.section.nav-brand>div:nth-child(1) {
   display: none;
@@ -1481,6 +1482,8 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p{
   padding: unset;
+  font-size: 16px;
+  color: #fff;
 }
 
 .header-wrapper.primary .nav-wrapper #nav>.section.nav-sections>.default-content-wrapper>ul {
@@ -1516,9 +1519,11 @@ body.modal-open footer {
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a,
-.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>a {
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>a,
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>p>a {
       display: flex;
     gap: 12px;
+    text-decoration: unset;
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper .icon.icon-resources img{
@@ -1551,12 +1556,12 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav > .nav-sections .default-content-wrapper > ul > li:first-child[aria-expanded="true"] > ul {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .header-wrapper.primary .nav-wrapper #nav > .nav-sections .default-content-wrapper > ul > li:nth-child(5)[aria-expanded="true"] > ul {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a, .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>a:first-child

@@ -1480,7 +1480,7 @@ body.modal-open footer {
 
 }
 
-.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p{
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul >li:nth-child(7) >p {
   padding: unset;
   font-size: 16px;
   color: #fff;

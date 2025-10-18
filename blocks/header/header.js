@@ -326,6 +326,23 @@ export default async function decorate(block) {
     });
   }
 
+  try {
+    if (isDesktop.matches) {
+      navSections
+        .querySelectorAll(':scope .default-content-wrapper > ul >li:has(ul li)')
+        .forEach((navSection) => {
+          if (navSection?.querySelector(':scope >ul >li >ul >li')) {
+            const ul = navSection.querySelector('ul');
+            // const subul = ul.querySelectorAll(":scope >li");
+            const liLenght = ul.children.length;
+            ul.style.gridTemplateColumns = `repeat(${liLenght}, minmax(0, 1fr))`;
+          }
+        });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');

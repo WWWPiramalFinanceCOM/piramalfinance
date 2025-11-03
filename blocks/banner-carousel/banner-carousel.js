@@ -1,3 +1,5 @@
+import Swiper from "./swiper-bundle.min.js";
+
 export default function decorate(block) {
     // debugger;
     block;

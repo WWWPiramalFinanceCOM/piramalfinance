@@ -107,7 +107,7 @@ header {
   font-size: var(--body-font-size-xs);
 }
 
-.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p {
+/* .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p {
   color: var(--piramal-neutral-80);
   cursor: pointer;
   font-size: var(--body-font-size-s);
@@ -116,7 +116,7 @@ header {
   font-family: "Nunito-Semibold", sans-serif;
   text-decoration: none;
   padding: 15px 10px 0 3px;
-}
+} */
 
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:last-child p {
   padding: unset;
@@ -240,10 +240,10 @@ header {
   padding-top: 0;
 }
 
-.header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:nth-child(7) span img {
+/* .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:nth-child(7) span img {
   width: 27px;
   height: 19px;
-}
+} */
 
 .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li p:last-child img {
   /* position: absolute;
@@ -268,9 +268,9 @@ header {
   width: 20px;
 }
 
-.header .nav-wrapper #nav section.nav-sections[aria-expanded="true"] .default-content-wrapper ul>li:nth-child(7) p span img {
+/* .header .nav-wrapper #nav section.nav-sections[aria-expanded="true"] .default-content-wrapper ul>li:nth-child(7) p span img {
   opacity: 1;
-}
+} */
 
 .header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"],
 .header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li>p>a {
@@ -687,21 +687,21 @@ body.modal-open footer {
   position: unset;
 }
 
-.header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7).nav-drop {
+/* .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7).nav-drop {
   padding-right: 28px;
-}
+} */
 
 .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(6)>ul>li>p>span {
   width: fit-content;
 }
 
-.header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper ul li:nth-child(7) p span img {
+/* .header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper ul li:nth-child(7) p span img {
   opacity: 0.3;
-}
+} */
 
-.header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper ul li[aria-expanded="true"]:nth-child(7) p span img {
+/* .header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper ul li[aria-expanded="true"]:nth-child(7) p span img {
   opacity: 1;
-}
+} */
 
 .header .nav-wrapper #nav .section.nav-sections>.default-content-wrapper>ul>li.nav-drop>p::after {
   content: "";
@@ -838,12 +838,11 @@ body.modal-open footer {
   text-decoration: none;
 }
 
-.header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7)>ul {
-  /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
+/* .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7)>ul {
   text-align: center;
-}
+} */
 
-.header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7)>ul>li {
+/* .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7)>ul>li {
   font-size: var(--body-font-size-xs);
   font-weight: 700;
   line-height: 1.5rem;
@@ -852,7 +851,7 @@ body.modal-open footer {
 
 .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7)>ul>li>a {
   text-decoration: none;
-}
+} */
 
 .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(6)>ul>li:nth-child(1)>ul>li:nth-child(4) {
   position: relative;
@@ -1401,9 +1400,9 @@ body.modal-open footer {
     font-size: 0.75rem;
   }
 
-  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p {
+  /* .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p {
     padding: 14px 10px 0 3px;
-  }
+  } */
 
   .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:last-child p {
     padding: unset;
@@ -1480,11 +1479,11 @@ body.modal-open footer {
 
 }
 
-.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul >li:nth-child(7) >p {
+/* .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul >li:nth-child(7) >p {
   padding: unset;
   font-size: 16px;
   color: #fff;
-}
+} */
 
 .header-wrapper.primary .nav-wrapper #nav>.section.nav-sections>.default-content-wrapper>ul {
   @media only screen and (max-width: 1200px){

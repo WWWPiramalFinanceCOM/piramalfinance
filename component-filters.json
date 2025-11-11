@@ -110,7 +110,8 @@
       "branchcarousel",
       "branchkeyfeatures",
       "branches",
-      "banner-carousel"
+      "banner-carousel",
+      "our-commitment-cards"
     ]
   },
   {
@@ -197,5 +198,9 @@
     {
     "id": "banner-carousel",
     "components": ["banner-carousel-item"]
+  },
+  {
+    "id": "our-commitment-cards",
+    "components": ["our-commitment"]
   }
 ]

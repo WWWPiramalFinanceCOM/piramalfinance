@@ -2811,10 +2811,10 @@
       }
     ]
   },
-   {
+  {
     "id": "banner-carousel-item",
     "fields": [
-    {
+      {
         "component": "reference",
         "name": "image",
         "label": "Desktop Image",
@@ -2843,7 +2843,7 @@
   },
   {
     "id": "our-commitment-cards",
-     "fields": [
+    "fields": [
       {
         "component": "reference",
         "valueType": "string",
@@ -2860,5 +2860,4 @@
       }
     ]
   }
- 
 ]

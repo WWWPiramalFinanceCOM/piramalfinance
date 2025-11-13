@@ -306,7 +306,10 @@
                     "title": "Teaser Title",
                     "titleType": "h3",
                     "longDescr": "<p>Teaser Description</p>",
-                    "classes": ["light", "left"]
+                    "classes": [
+                      "light",
+                      "left"
+                    ]
                   }
                 }
               }
@@ -338,7 +341,9 @@
                 "template": {
                   "name": "Tab Name",
                   "model": "tab-name",
-                  "classes": ["tab-name"]
+                  "classes": [
+                    "tab-name"
+                  ]
                 }
               }
             }
@@ -354,7 +359,9 @@
                 "template": {
                   "name": "Tab Name Nested",
                   "model": "tab-name-nested",
-                  "classes": ["tab-name-nested"]
+                  "classes": [
+                    "tab-name-nested"
+                  ]
                 }
               }
             }
@@ -378,7 +385,10 @@
                     "title": "Teaser Title",
                     "titleType": "h3",
                     "longDescr": "<p>Teaser Description</p>",
-                    "classes": ["light", "left"]
+                    "classes": [
+                      "light",
+                      "left"
+                    ]
                   }
                 }
               }
@@ -399,7 +409,10 @@
                   "title": "Teaser Title",
                   "titleType": "h3",
                   "longDescr": "<p>Teaser Description</p>",
-                  "classes": ["light", "left"]
+                  "classes": [
+                    "light",
+                    "left"
+                  ]
                 }
               }
             }
@@ -464,7 +477,11 @@
                   "titleType": "h3",
                   "description": "Description",
                   "subject": "/content/dam/summit-subject.png",
-                  "classes": ["light", "left", "detailed-teaser"]
+                  "classes": [
+                    "light",
+                    "left",
+                    "detailed-teaser"
+                  ]
                 }
               }
             }
@@ -1127,7 +1144,6 @@
             }
           }
         }
-        
       ]
     }
   ]

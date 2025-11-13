@@ -2810,37 +2810,37 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "banner-carousel-item",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Desktop Image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "image_alt",
-        "value": "",
-        "label": "Desktop Image Alt",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "mobimage",
-        "label": "Mobile Image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "mobimage_alt",
-        "label": "Mobile Image Alt",
-        "valueType": "string"
-      }
-    ]
   }
+  // {
+  //   "id": "banner-carousel-item",
+  //   "fields": [
+  //     {
+  //       "component": "reference",
+  //       "name": "image",
+  //       "label": "Desktop Image",
+  //       "valueType": "string"
+  //     },
+  //     {
+  //       "component": "text",
+  //       "name": "image_alt",
+  //       "value": "",
+  //       "label": "Desktop Image Alt",
+  //       "valueType": "string"
+  //     },
+  //     {
+  //       "component": "reference",
+  //       "name": "mobimage",
+  //       "label": "Mobile Image",
+  //       "valueType": "string"
+  //     },
+  //     {
+  //       "component": "text",
+  //       "name": "mobimage_alt",
+  //       "label": "Mobile Image Alt",
+  //       "valueType": "string"
+  //     }
+  //   ]
+  // }
   // {
   //   "id": "our-commitment-cards",
   //   "fields": [

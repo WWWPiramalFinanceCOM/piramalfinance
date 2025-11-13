@@ -109,9 +109,9 @@
       "formformatpdf",
       "branchcarousel",
       "branchkeyfeatures",
-      "branches",
-      "banner-carousel",
-      "our-commitment-cards"
+      "branches"
+      // "banner-carousel",
+      // "our-commitment-cards"
     ]
   },
   {
@@ -194,9 +194,9 @@
   {
     "id": "container",
     "components": []
-  },
-    {
-    "id": "banner-carousel",
-    "components": ["banner-carousel-item"]
   }
+  //   {
+  //   "id": "banner-carousel",
+  //   "components": ["banner-carousel-item"]
+  // }
 ]

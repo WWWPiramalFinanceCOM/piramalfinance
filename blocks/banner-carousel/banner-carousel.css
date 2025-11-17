@@ -40,7 +40,7 @@
 
 .section.banner-carousel-container.cards-container .cards-wrapper {
     position: absolute;
-    top: 70%;
+    top: 50%;
     left: 50%;
     z-index: 9;
     transform: translate(-50%, -50%);
@@ -64,7 +64,7 @@
     grid-template-columns: none;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
 }
 .section.banner-carousel-container.cards-container .cards-wrapper .cards-block li .cards-card-image img {
     max-width: 152px;

@@ -816,3 +816,27 @@ footer:has(.neeyat-footer) {
 .font-size-change p {
     font-size: 12px !important
 }
+
+/* OUR COMMITMENT */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.section.commitment-wrap .default-content-wrapper p{
+    padding: 100px 0px 60px 0px;
+    max-width: 1216px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: Nunito;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 40px;
+    /* leading-trim: NONE; */
+    line-height: 40px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+}

@@ -12,9 +12,7 @@
   },
   {
     "id": "columns",
-    "components": [
-      "cards"
-    ]
+    "components": []
   },
   {
     "id": "column",

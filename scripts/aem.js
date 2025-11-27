@@ -384,7 +384,10 @@ function createOptimizedPicture(
 function decorateTemplateAndTheme() {
     const addClasses = (element, classes) => {
         classes.split(',').forEach((c) => {
-            element.classList.add(toClassName(c.trim()));
+              const className = toClassName(c.trim());
+      if (className) {
+        element.classList.add(className);
+      }  
         });
     };
     const template = getMetadata('template');
@@ -636,7 +639,8 @@ function decorateSections(main) {
                         const styles = meta.style
                             .split(',')
                             .filter((style) => style)
-                            .map((style) => toClassName(style.trim()));
+                            .map((style) => toClassName(style.trim()))
+                            .filter((style) => style);
                         styles.forEach((style) => {if (style) section.classList.add(style)});
                     } else {
                         section.dataset[toCamelCase(key)] = meta[key];

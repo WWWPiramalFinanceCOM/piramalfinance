@@ -1561,3 +1561,329 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     margin: auto;
 }
 
+.section.esg-commit.rte-container > div > div > div > div > ul{
+        display: flex;
+    gap: 50px;
+
+    @media only screen and (max-width:767px){
+        flex-wrap: wrap;
+    }
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li{
+    padding: 20px;
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > p{
+        padding-bottom: 18px;
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > p{
+    font-family: Nunito;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    /* leading-trim: NONE; */
+    line-height: 49px;
+    letter-spacing: 20%;
+    text-transform: uppercase;
+    color: #184E7D;
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > ul > li > p{
+    font-family: Montserrat;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #184E7D;
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > ul > li > ul{
+    font-family: Montserrat;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #184E7D;
+}
+
+
+/* TABS END */
+
+.section.stay-informed{
+    background: #184E7D;
+    color: white;
+} 
+
+.section.stay-informed.tabs-container #stay-informed{
+    padding-top: 100px;
+    padding-bottom: 44px;
+    margin-bottom: unset;
+}
+
+.section.stay-informed.tabs-container .tabs.block{
+    margin: unset;
+}
+
+.section.stay-informed.tabs-container{
+    background: #184E7D;
+}
+
+.section.stay-informed.tabs-container > div.tabs-wrapper > div > div.tab-content{
+    margin: unset !important;
+}
+
+.section.cards-container.press-release-cards{
+    background: #184E7D;
+
+}
+
+.section.stay-informed.tabs-container .default-content-wrapper{
+    max-width: 1216px;
+    margin: auto;
+    text-align: center;
+}
+
+.section.stay-informed.tabs-container #stay-informed + p{
+    margin-bottom: 60px;
+}
+
+.section.stay-informed.tabs-container > .tabs-wrapper{
+    max-width: 1216px;
+    margin: auto;
+    /* display: flex;
+    justify-content: center; */
+}
+
+.section.stay-informed.tabs-container > div.tabs-wrapper > div > div.tab-list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#tab-panel-0-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-image > picture > img,
+#tab-panel-0-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-image > picture > img{
+    height: 337px;
+    width: 379px;
+    border-radius: 16px;
+}
+
+#tab-panel-0-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-image,
+#tab-panel-0-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-image{
+    border-radius: 16px;
+}
+
+#tab-panel-0-0 > div > div.cards-wrapper > div > ul > li,
+#tab-panel-0-1 > div > div.cards-wrapper > div > ul > li{
+    border-radius: 31px;
+    /* border-left-radius: 95px; */
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#tab-panel-0-0 > div > div.cards-wrapper > div > ul > li,
+#tab-panel-0-1 > div > div.cards-wrapper > div > ul > li{
+    background-color: unset;
+    border: unset;
+}
+
+#tab-panel-0-0 > div > div.default-content-wrapper > p > a,
+#tab-panel-0-1 > div > div.default-content-wrapper > p > a{
+    border-radius: 8px;
+    background: #F26E24;
+    padding: 15px 22px;
+    margin: 60px 0px;
+}
+#tab-panel-0-0 > div > div.cards-wrapper > div > ul,
+#tab-panel-0-1 > div > div.cards-wrapper > div > ul{
+    display: flex;
+}
+
+#tab-panel-0-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-body,
+#tab-panel-0-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-body{
+    padding: unset;
+}
+
+#tab-panel-0-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-body > p,
+#tab-panel-0-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-body > p{
+    padding: 18px 0px;
+}
+
+
+.piramal-foundation::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(24, 78, 125, 80%);
+    z-index: -1;
+}
+.piramal-foundation {
+    padding: 100px 112px;
+    position: relative;
+}
+@media (max-width: 767px) {
+    .piramal-foundation {
+        padding: 30px;
+    }
+}
+.piramal-foundation .rte-wrapper div div div p,
+.piramal-foundation .rte-wrapper div div div h2 {
+    text-align: center;
+}
+.piramal-foundation .rte-wrapper div div div p:nth-child(1) {
+    line-height: 69.87px;
+    margin-bottom: 12px;
+    letter-spacing: 4px;
+    color: rgba(249, 182, 130, 1);
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 500;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div p:nth-child(1) {
+        line-height: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 0 10px;
+        letter-spacing: 2.4px;
+    }
+}
+.piramal-foundation .rte-wrapper div div div h2 {
+    line-height: 40px;
+    margin-bottom: 30px;
+    position: relative;
+    color: white;
+    font-size: 40px;
+    font-weight: 600;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div h2 {
+        font-size: 26px;
+    }
+}
+.piramal-foundation .rte-wrapper div div div h2::before {
+    content: "";
+    position: absolute;
+    height: 8px;
+    width: 86px;
+    border-radius: 37px;
+    background: rgba(242, 110, 36, 1);
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.piramal-foundation .rte-wrapper div div div p:nth-of-type(2) {
+    font-size: 16px;
+    margin-bottom: 60px;
+    color: white;
+    padding: 0 30px;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div p:nth-of-type(2) {
+        font-size: 14px;
+        line-height: 2;
+        padding: 0;
+    }
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(1) {
+    list-style: none;
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(1) li {
+    text-align: center;
+    font-size: 16px;
+    line-height: 65px;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) {
+    list-style: none;
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul {
+    list-style: none;
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 70px;
+    margin-bottom: 60px;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul ul {
+        padding: 0;
+        margin-bottom: 50px;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul ul li {
+    line-height: 30px;
+    border: 1px solid white;
+    padding: 8px 18px;
+    border-radius: 150px;
+    font-size: 16px;
+    color: white;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul ul li {
+        width: max-content;
+    }
+}
+.piramal-foundation .default-content-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .default-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.piramal-foundation .default-content-wrapper img {
+    position: absolute;
+    z-index: -2;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+}
+.piramal-foundation .default-content-wrapper .button-container {
+    display: contents;
+}
+.piramal-foundation .default-content-wrapper .button-container a {
+    font-size: 16px;
+    line-height: 27.2px;
+    color: rgba(24, 78, 125, 1);
+    padding: 15px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    font-weight: 500;
+    background-color: white;
+    color: rgba(24, 78, 125, 1);
+    text-align: center;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .default-content-wrapper .button-container a {
+        width: 231px;
+    }
+}
+.piramal-foundation .default-content-wrapper .button-container + .button-container a {
+    background-color: rgba(242, 110, 36, 1);
+    color: white;
+}

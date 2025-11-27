@@ -280,11 +280,36 @@ async function loadEager(doc) {
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
+/**
+ * Safely move card sections into tab panels
+ */
+function moveCardsToTabPanels() {
+  try {
+    const generatedSection = document.querySelector('.press-release-cards.cards-container');
+    const tabPanel = document.querySelector('#tab-panel-0-0');
+    if (generatedSection && tabPanel) {
+      tabPanel.appendChild(generatedSection);
+    }
+
+    const generatedSectiontwo = document.querySelector('.media-mention-cards.cards-container');
+    const tabPanelTwo = document.querySelector('#tab-panel-0-1');
+    if (generatedSectiontwo && tabPanelTwo) {
+      tabPanelTwo.appendChild(generatedSectiontwo);
+    }
+  } catch (error) {
+    console.warn('Error moving cards to tab panels:', error);
+  }
+}
+
+
 async function loadLazy(doc) {
   autolinkModals(doc);
 
   const main = doc.querySelector('main');
   await loadBlocks(main);
+
+  // Move cards to tab panels
+  moveCardsToTabPanels();
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

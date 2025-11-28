@@ -207,7 +207,7 @@ async function buildBreadcrumbs() {
  */
 export default async function decorate(block) {
   const path = getMetadata('nav') || '/nav';
-  if (path.endsWith('/nav')) {
+  if (path.endsWith('/nav-1')) {
     document.querySelector('header').classList.add('primary');
   }
   const fragment = await loadFragment(path);

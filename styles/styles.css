@@ -1295,7 +1295,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 .section.esg-commit.rte-container h3{
-    font-family: Nunito;
+    /* font-family: Nunito; */
     font-weight: 600;
     font-style: SemiBold;
     font-size: 40px;
@@ -1308,7 +1308,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     margin-bottom: 44px;
 }
 .section.esg-commit.rte-container #our-esg-commitment + p{
-       font-family: Montserrat;
+       /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -1344,7 +1344,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 .section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > p{
-    font-family: Nunito;
+    /* font-family: Nunito; */
     font-weight: 500;
     font-style: Medium;
     font-size: 24px;
@@ -1356,7 +1356,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 .section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > ul > li > p{
-    font-family: Montserrat;
+    /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -1368,7 +1368,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 .section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > ul > li > ul{
-    font-family: Montserrat;
+    /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -1408,6 +1408,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 
 .section.stay-informed.tabs-container .tabs.block{
     margin: unset;
+    padding-bottom: 100px;
 }
 
 .section.stay-informed.tabs-container{
@@ -1416,6 +1417,10 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 
 .section.stay-informed.tabs-container > div.tabs-wrapper > div > div.tab-content{
     margin: unset !important;
+    padding: unset;
+}
+.section.stay-informed.tabs-container#tab-1-0{
+    margin-right: unset;
 }
 
 .section.cards-container.press-release-cards{
@@ -1427,6 +1432,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     max-width: 1216px;
     margin: auto;
     text-align: center;
+    /* padding-bottom: 100px; */
 }
 
 .section.stay-informed.tabs-container #stay-informed + p{
@@ -1474,6 +1480,8 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 .section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li{
     background-color: unset;
     border: unset;
+    margin-right: unset !important;
+    max-width: 379px;
 }
 
 .section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > p > a,
@@ -1865,6 +1873,9 @@ CARDS GRID (Directors & Management)
     /* padding-left: 300px; */
     /* display: flex; */
     gap: 88px;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
 
     @media only screen and (max-width:767px){
         display: flex;
@@ -2160,7 +2171,7 @@ CARDS GRID (Directors & Management)
         flex-direction: row;
         align-items: flex-start;
         justify-content: space-between;
-        gap: 4rem;
+        gap: 2rem;
     }
 }
 
@@ -2249,27 +2260,27 @@ CARDS GRID (Directors & Management)
 
 .section.connect-us .form-card {
     background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     padding: 2rem;
-    border: 1px solid #f0f0f0;
+    border: 1px solid #e8edf2;
 }
 
 @media (min-width: 768px) {
     .section.connect-us .form-card {
-        padding: 2.5rem;
+        padding: 2.5rem 2rem;
     }
 }
 
 .section.connect-us .form-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
 }
 
 .section.connect-us .form-header h4 {
-    font-size: 0.9rem;
-    font-weight: 700;
+    font-size: 0.875rem;
+    font-weight: 600;
     color: #1e3a5f;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     margin: 0;
 }
@@ -2278,24 +2289,28 @@ CARDS GRID (Directors & Management)
 .section.connect-us .custom-form {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 1rem;
 }
 
 @media (min-width: 768px) {
     .section.connect-us .custom-form {
         grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        column-gap: 1rem;
     }
 }
 
 /* Full Width classes for certain fields */
-
+.section.connect-us .form-group.full-width {
+    grid-column: 1 / -1;
+}
 
 .section.connect-us .form-control {
     width: 100%;
-    padding: 0.85rem 1rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d9e1e8;
+    border-radius: 4px;
+    font-size: 0.875rem;
     color: #333;
     font-family: inherit;
     background-color: #fff;
@@ -2306,7 +2321,8 @@ CARDS GRID (Directors & Management)
 }
 
 .section.connect-us .form-control::placeholder {
-    color: #999;
+    color: #9ca3af;
+    font-size: 0.875rem;
 }
 
 .section.connect-us .form-control:focus {
@@ -2323,7 +2339,7 @@ CARDS GRID (Directors & Management)
 
 .section.connect-us textarea.form-control {
     resize: vertical;
-    min-height: 100px;
+    min-height: 90px;
 }
 
 /* Submit Button */
@@ -2331,28 +2347,27 @@ CARDS GRID (Directors & Management)
     background-color: #f37021;
     color: #ffffff;
     border: none;
-    padding: 1rem 2rem;
-    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    width: 100%;
+    width: auto;
+    min-width: 140px;
 }
 
 .section.connect-us .btn-submit:hover {
     background-color: #d95d13;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
     .section.connect-us .btn-submit {
-        width: auto;
-        padding-left: 3rem;
-        padding-right: 3rem;
+        width: 100%;
     }
 }
 
@@ -2609,12 +2624,6 @@ CARDS GRID (Directors & Management)
 }
 
 /* #tab-panel-0-0 */
-
-
-
-
-
-
 
 .bussiness-offerings {
     padding: 100px 112px;

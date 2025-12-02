@@ -1206,13 +1206,12 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     font-weight: 500;
     font-style: Medium;
     font-size: 16px;
-    leading-trim: NONE;
+    /* leading-trim: NONE; */
     line-height: 27.2px;
     letter-spacing: 0.2px;
     vertical-align: middle;
     padding-top: 60px;
     padding-bottom: 100px;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1501,8 +1500,8 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     margin: unset;
 }
 
-#tab-panel-1-0 > div > div.default-content-wrapper > .button-container,
-#tab-panel-1-1 > div > div.default-content-wrapper > .button-container{
+ .section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > .button-container,
+ .section.stay-informed #tab-panel-1-1 > div > div.default-content-wrapper > .button-container{
     display: flex;
     justify-content: center;
 }
@@ -1511,6 +1510,11 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 .section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul{
     display: flex;
     gap: 39px;
+    margin-top: 60px;
+    
+    @media only screen and (max-width:767px){
+        margin-top: 30px;
+    }
 }
 
 .section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-body,
@@ -1524,7 +1528,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 .section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title[aria-selected=true] {
-    font-family: Montserrat;
+    /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
     font-size: 20px;
@@ -1539,7 +1543,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 .section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title{
-    font-family: Montserrat;
+    /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
     font-size: 20px;
@@ -1706,8 +1710,8 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     box-shadow: unset;
 }
 
-#tab-panel-0-0 > div > div.default-content-wrapper,
-#tab-panel-0-1 > div > div.default-content-wrapper{
+.section.leadership-wrapper #tab-panel-0-0 > div > div.default-content-wrapper,
+ .section.leadership-wrapper #tab-panel-0-1 > div > div.default-content-wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1757,7 +1761,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
   padding: 0 1rem;
 }
 
-#tab-panel-0-0 > div > div.default-content-wrapper > .button-container{
+.section.leadership-wrapper #tab-panel-0-0 > div > div.default-content-wrapper > .button-container{
     max-width: 177px;
 }
 /* ============================================================================
@@ -1765,13 +1769,13 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
    ============================================================================ */
 
 /* No dashed border in the final design images, removing it for pixel perfection */
-.tabs-wrapper {
+.section.leadership-wrapper .tabs-wrapper {
   margin-bottom: 3rem;
   padding: 0;
   border: none; 
 }
 
-.tabs-wrapper .tab-list {
+ .section.leadership-wrapper .tabs-wrapper .tab-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -1781,14 +1785,14 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 @media (min-width: 768px) {
-  .tabs-wrapper .tab-list {
+  .section.leadership-wrapper .tabs-wrapper .tab-list {
     flex-direction: row;
     gap: 1rem;
   }
 }
 
 /* Tab Buttons (Pills) */
-.tabs-wrapper .tab-title {
+.section.leadership-wrapper .tabs-wrapper .tab-title {
   padding: 0.75rem 2.5rem;
   font-size: 0.9rem;
   font-weight: 600;
@@ -1800,19 +1804,19 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 /* ACTIVE STATE - Dark Navy */
-.tabs-wrapper .tab-title[aria-selected="true"] {
+.section.leadership-wrapper .tabs-wrapper .tab-title[aria-selected="true"] {
   background-color: #1a3b5d;
   color: #ffffff;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 /* INACTIVE STATE - Light Blue/Grey */
-.tabs-wrapper .tab-title[aria-selected="false"] {
+.section.leadership-wrapper .tabs-wrapper .tab-title[aria-selected="false"] {
   background-color: #dcebf7; /* Light Blue from image */
   color: #5b7da1;
 }
 
-.tabs-wrapper .tab-title[aria-selected="false"]:hover {
+.section.leadership-wrapper .tabs-wrapper .tab-title[aria-selected="false"]:hover {
   background-color: #cfe2f0;
 }
 
@@ -1867,8 +1871,8 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 CARDS GRID (Directors & Management)
 ============================================================================ */
 
-#tab-panel-0-0 ul,
-#tab-panel-0-1 ul
+.section.leadership-wrapper #tab-panel-0-0 ul,
+.section.leadership-wrapper #tab-panel-0-1 ul
 {
     /* padding-left: 300px; */
     /* display: flex; */
@@ -1883,12 +1887,12 @@ CARDS GRID (Directors & Management)
     }
 }
 /* Animation for switching tabs */
-.tabs-wrapper .tabpanel {
+.section.leadership-wrapper .tabs-wrapper .tabpanel {
   display: none;
   animation: fadeIn 0.4s ease-in-out;
 }
 
-.tabs-wrapper .tabpanel.active {
+.section.leadership-wrapper .tabs-wrapper .tabpanel.active {
   display: block;
 }
 
@@ -2000,7 +2004,7 @@ CARDS GRID (Directors & Management)
    ============================================================================ */
 
 /* Select the specific default-content-wrapper inside the tab panel */
-.tabs-wrapper .tabpanel > .default-content-wrapper {
+.section.leadership-wrapper .tabs-wrapper .tabpanel > .default-content-wrapper {
   margin-top: 3rem;
   display: flex;
   flex-direction: column;
@@ -2010,25 +2014,25 @@ CARDS GRID (Directors & Management)
 }
 
 @media (min-width: 768px) {
-  .tabs-wrapper .tabpanel > .default-content-wrapper {
+  .section.leadership-wrapper .tabs-wrapper .tabpanel > .default-content-wrapper {
     flex-direction: row;
     gap: 1.5rem;
   }
 }
 
-.button-container {
+.section.leadership-wrapper .button-container {
   margin: 0;
   width: 100%; /* Full width on mobile */
 }
 
 @media (min-width: 768px) {
-  .button-container {
+  .section.leadership-wrapper .button-container {
     width: auto;
   }
 }
 
 /* Base Button Style */
-.button-container a.button {
+.section.leadership-wrapper .button-container a.button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2043,35 +2047,35 @@ CARDS GRID (Directors & Management)
 }
 
 @media (min-width: 768px) {
-  .button-container a.button {
+  .section.leadership-wrapper .button-container a.button {
     width: auto;
   }
 }
 
 /* 1. Outline Button (Meet the Management) */
-.button-container a.button[title="Meet the Management"] {
+.section.leadership-wrapper .button-container a.button[title="Meet the Management"] {
   background-color: transparent;
   border: 1px solid #ff6b35;
   color: #ff6b35;
 }
 
-.button-container a.button[title="Meet the Management"]:hover {
+.section.leadership-wrapper .button-container a.button[title="Meet the Management"]:hover {
   background-color: #fff5f0;
 }
 
 /* 2. Filled Button (Meet the Directors) */
-.button-container a.button[title="Meet the Directors"] {
+.section.leadership-wrapper .button-container a.button[title="Meet the Directors"] {
   background-color: #ff6b35;
   border: 1px solid #ff6b35;
   color: #ffffff;
 }
 
-.button-container a.button[title="Meet the Directors"]:hover {
+.section.leadership-wrapper .button-container a.button[title="Meet the Directors"]:hover {
   background-color: #e55a2b;
 }
 
 /* Arrow for the Filled Button */
-.button-container a.button[title="Meet the Directors"]::after {
+.section.leadership-wrapper .button-container a.button[title="Meet the Directors"]::after {
   content: '→';
   margin-left: 8px;
   font-size: 1.1em;
@@ -2079,7 +2083,7 @@ CARDS GRID (Directors & Management)
   transition: transform 0.2s;
 }
 
-.button-container a.button[title="Meet the Directors"]:hover::after {
+.section.leadership-wrapper .button-container a.button[title="Meet the Directors"]:hover::after {
   transform: translateX(4px);
 }
 

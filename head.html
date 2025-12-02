@@ -32,6 +32,9 @@
 <link as="font" crossorigin="" href="/fonts/NunitoExtraLight.woff2" rel="preconnect" type="font/woff2" />
 
 <script>
+   if(window.location.pathname.includes("/investor")){
+    document.write(`<link rel="stylesheet" href="/styles/investors/investors${window.getExtension('css')}" />`);
+  }
   document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
 </script>
 

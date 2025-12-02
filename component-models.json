@@ -31,6 +31,11 @@
         "component": "text",
         "name": "canonical",
         "label": "Canonical URL"
+      },
+      {
+        "component": "text",
+        "name": "json-ld",
+        "label": "Schema JSON"
       }
     ]
   },

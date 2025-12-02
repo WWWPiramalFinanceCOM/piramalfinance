@@ -19,6 +19,17 @@ import {
   getMetadata,
   getExtension,
 } from './aem.js';
+import {
+  div,
+  h4,
+  form,
+  select,
+  option,
+  input,
+  textarea,
+  button,
+  span,
+} from './dom-helper.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
@@ -533,83 +544,79 @@ function renderContactForm() {
         // Check if form is already rendered to prevent duplicates if init runs twice
         if (formContainer.querySelector('.form-card')) return;
 
-        const formHTML = `
-            <div class="form-card">
-                <div class="form-header">
-                    <h4>Send Us A Message</h4>
-                </div>
-                <form class="custom-form" id="contactForm" onsubmit="return false;">
-                    
-                    <!-- Enquiry Type -->
-                    <div class="form-group">
-                        <select class="form-control" name="enquiryType" required>
-                            <option value="" disabled selected>Select Enquiry Type</option>
-                            <option value="investor">Investor Relations</option>
-                            <option value="general">General Inquiry</option>
-                            <option value="media">Media</option>
-                        </select>
-                    </div>
+        // Create the form card using DOM helpers
+        const formCard = div({ class: 'form-card' },
+            div({ class: 'form-header' },
+                h4('Send Us A Message')
+            ),
+            form({ class: 'custom-form', id: 'contactForm', onsubmit: (e) => { e.preventDefault(); return false; } },
+                // Enquiry Type
+                div({ class: 'form-group' },
+                    select({ class: 'form-control', name: 'enquiryType', required: true },
+                        option({ value: '', disabled: true, selected: true }, 'Select Enquiry Type'),
+                        option({ value: 'investor' }, 'Investor Relations'),
+                        option({ value: 'general' }, 'General Inquiry'),
+                        option({ value: 'media' }, 'Media')
+                    )
+                ),
+                // Country
+                div({ class: 'form-group' },
+                    select({ class: 'form-control', name: 'country' },
+                        option({ value: '', disabled: true, selected: true }, 'Select Country'),
+                        option({ value: 'india' }, 'India'),
+                        option({ value: 'usa' }, 'USA'),
+                        option({ value: 'uk' }, 'UK')
+                    )
+                ),
+                // State
+                div({ class: 'form-group' },
+                    select({ class: 'form-control', name: 'state' },
+                        option({ value: '', disabled: true, selected: true }, 'Select State'),
+                        option({ value: 'maharashtra' }, 'Maharashtra'),
+                        option({ value: 'delhi' }, 'Delhi')
+                    )
+                ),
+                // City
+                div({ class: 'form-group' },
+                    select({ class: 'form-control', name: 'city' },
+                        option({ value: '', disabled: true, selected: true }, 'Select City'),
+                        option({ value: 'mumbai' }, 'Mumbai'),
+                        option({ value: 'pune' }, 'Pune')
+                    )
+                ),
+                // First Name
+                div({ class: 'form-group' },
+                    input({ type: 'text', class: 'form-control', name: 'firstName', placeholder: 'First Name', required: true })
+                ),
+                // Last Name
+                div({ class: 'form-group' },
+                    input({ type: 'text', class: 'form-control', name: 'lastName', placeholder: 'Last Name', required: true })
+                ),
+                // Email
+                div({ class: 'form-group' },
+                    input({ type: 'email', class: 'form-control', name: 'email', placeholder: 'Email ID', required: true })
+                ),
+                // Contact Number
+                div({ class: 'form-group' },
+                    input({ type: 'tel', class: 'form-control', name: 'contactNumber', placeholder: 'Contact Number' })
+                ),
+                // Message
+                div({ class: 'form-group full-width' },
+                    textarea({ class: 'form-control', name: 'message', placeholder: 'Message', rows: '4' })
+                ),
+                // Submit Button
+                div({ class: 'form-group' },
+                    button({ type: 'button', class: 'btn-submit', onclick: function() { handleFormSubmit(this); } },
+                        'Submit ',
+                        span({ class: 'btn-arrow' }, '→')
+                    )
+                )
+            )
+        );
 
-                    <!-- Location Selects -->
-                    <div class="form-group">
-                        <select class="form-control" name="country">
-                            <option value="" disabled selected>Select Country</option>
-                            <option value="india">India</option>
-                            <option value="usa">USA</option>
-                            <option value="uk">UK</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <select class="form-control" name="state">
-                            <option value="" disabled selected>Select State</option>
-                            <option value="maharashtra">Maharashtra</option>
-                            <option value="delhi">Delhi</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                         <select class="form-control" name="city">
-                            <option value="" disabled selected>Select City</option>
-                            <option value="mumbai">Mumbai</option>
-                            <option value="pune">Pune</option>
-                        </select>
-                    </div>
-
-                    <!-- Personal Info -->
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="email" class="form-control" name="email" placeholder="Email ID" required>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="tel" class="form-control" name="contactNumber" placeholder="Contact Number">
-                    </div>
-
-                    <!-- Message -->
-                    <div class="form-group full-width">
-                        <textarea class="form-control" name="message" placeholder="Message" rows="4"></textarea>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="form-group">
-                        <button type="button" class="btn-submit" onclick="handleFormSubmit(this)">
-                            Submit <span class="btn-arrow">→</span>
-                        </button>
-                    </div>
-
-                </form>
-            </div>
-        `;
-
-        formContainer.innerHTML = formHTML;
+        // Clear and append the form
+        formContainer.innerHTML = '';
+        formContainer.appendChild(formCard);
 
     } catch (error) {
         console.error('Error rendering contact form:', error);

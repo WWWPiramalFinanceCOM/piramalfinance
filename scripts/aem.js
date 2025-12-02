@@ -374,6 +374,7 @@ function createOptimizedPicture(
       img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
     }
   });
+  
   return picture;
 }
 
@@ -381,15 +382,18 @@ function createOptimizedPicture(
  * Set template (page structure) and theme (page styles).
  */
 function decorateTemplateAndTheme() {
-  const addClasses = (element, classes) => {
-    classes.split(',').forEach((c) => {
-      element.classList.add(toClassName(c.trim()));
-    });
-  };
-  const template = getMetadata('template');
-  if (template) addClasses(document.body, template);
-  const theme = getMetadata('theme');
-  if (theme) addClasses(document.body, theme);
+    const addClasses = (element, classes) => {
+        classes.split(',').forEach((c) => {
+              const className = toClassName(c.trim());
+      if (className) {
+        element.classList.add(className);
+      }  
+        });
+    };
+    const template = getMetadata('template');
+    if (template) addClasses(document.body, template);
+    const theme = getMetadata('theme');
+    if (theme) addClasses(document.body, theme);
 }
 
 /**
@@ -463,7 +467,7 @@ export function autoLinkLangPaths(anchors) {
 }
 export function autoLinkLangPath(anchor) {
   try {
-    if (anchor.href) {
+    if(anchor.href){
       addRefAttribute(anchor);
       const anchorUrl = new URL(anchor.href);
       const currentUrl = new URL(window.location.href);
@@ -522,6 +526,7 @@ function decorateButtons(element) {
     a.title = a.title || a.textContent;
 
     // Clean Rel from href
+    
     autoLinkLangPath(a);
 
     if (a.href !== a.textContent) {
@@ -563,8 +568,7 @@ export function removeRelParam(a) {
   } catch (e) {
     return url; // If not a valid URL, return as is
   }
-}
-
+};
 export function getRelParam(a) {
   try {
     const parsedUrl = new URL(a.href);
@@ -572,7 +576,7 @@ export function getRelParam(a) {
   } catch (e) {
     return url; // If not a valid URL, return as is
   }
-}
+};
 /**
  * Add <img> for icon, prefixed with codeBasePath and optional prefix.
  * @param {Element} [span] span element with icon classes
@@ -608,41 +612,46 @@ function decorateIcons(element, prefix = '') {
  * @param {Element} main The container element
  */
 function decorateSections(main) {
-  main.querySelectorAll(':scope > div:not([data-section-status])').forEach((section) => {
-    const wrappers = [];
-    let defaultContent = false;
-    [...section.children].forEach((e) => {
-      if (e.tagName === 'DIV' || !defaultContent) {
-        const wrapper = document.createElement('div');
-        wrappers.push(wrapper);
-        defaultContent = e.tagName !== 'DIV';
-        if (defaultContent) wrapper.classList.add('default-content-wrapper');
-      }
-      wrappers[wrappers.length - 1].append(e);
-    });
-    wrappers.forEach((wrapper) => section.append(wrapper));
-    section.classList.add('section');
-    section.dataset.sectionStatus = 'initialized';
-    section.style.display = 'none';
-
-    // Process section metadata
-    const sectionMeta = section.querySelector('div.section-metadata');
-    if (sectionMeta) {
-      const meta = readBlockConfig(sectionMeta);
-      Object.keys(meta).forEach((key) => {
-        if (key === 'style') {
-          const styles = meta.style
-            .split(',')
-            .filter((style) => style)
-            .map((style) => toClassName(style.trim()));
-          styles.forEach((style) => section.classList.add(style));
-        } else {
-          section.dataset[toCamelCase(key)] = meta[key];
-        }
-      });
-      sectionMeta.parentNode.remove();
+    try {
+        main.querySelectorAll(':scope > div:not([data-section-status])').forEach((section) => {
+            const wrappers = [];
+            let defaultContent = false;
+            [...section.children].forEach((e) => {
+                if (e.tagName === 'DIV' || !defaultContent) {
+                    const wrapper = document.createElement('div');
+                    wrappers.push(wrapper);
+                    defaultContent = e.tagName !== 'DIV';
+                    if (defaultContent) wrapper.classList.add('default-content-wrapper');
+                }
+                wrappers[wrappers.length - 1].append(e);
+            });
+            wrappers.forEach((wrapper) => section.append(wrapper));
+            section.classList.add('section');
+            section.dataset.sectionStatus = 'initialized';
+            section.style.display = 'none';
+    
+            // Process section metadata
+            const sectionMeta = section.querySelector('div.section-metadata');
+            if (sectionMeta) {
+                const meta = readBlockConfig(sectionMeta);
+                Object.keys(meta).forEach((key) => {
+                    if (key === 'style') {
+                        const styles = meta.style
+                            .split(',')
+                            .filter((style) => style)
+                            .map((style) => toClassName(style.trim()))
+                            .filter((style) => style);
+                        styles.forEach((style) => {if (style) section.classList.add(style)});
+                    } else {
+                        section.dataset[toCamelCase(key)] = meta[key];
+                    }
+                });
+                sectionMeta.parentNode.remove();
+            }
+        });
+    } catch (error) {
+        console.log("block got::", error,"::::",main)
     }
-  });
 }
 
 /**
@@ -762,7 +771,7 @@ async function loadBlock(block) {
     block.dataset.blockStatus = 'loading';
     const { blockName } = block.dataset;
     try {
-      if (!blockName) { throw Error(`Block Name is ${blockName}`); }
+      if(!blockName) {throw Error(`Block Name is ${blockName}`)}
       const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}${getExtension('css')}`);
       const decorationComplete = new Promise((resolve) => {
         (async () => {

@@ -20,10 +20,11 @@
   }
 </script>
 <script type="module">
-  const categoryTemplate = window.getMetadata('category-template');
+  const categoryTemplate = window.getMetadata('category-type');
+  debugger;
   if (categoryTemplate) {
     import(`/scripts/${categoryTemplate}/aem${window.getExtension("js")}`);
-    import(`/scripts/${categoryTemplate}/scripts${window.getExtension("js")}`);
+    import(`/scripts/${categoryTemplate}/script${window.getExtension("js")}`);
   }
   else {
     import(`/scripts/aem${window.getExtension("js")}`);

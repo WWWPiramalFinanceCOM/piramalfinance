@@ -2843,25 +2843,25 @@
       {
         "component": "reference",
         "name": "image",
-        "label": "Desktop Image",
+        "label": "Image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "name": "image_alt",
+        "name": "Image Alt",
         "value": "",
         "label": "Desktop Image Alt",
         "valueType": "string"
       },
       {
         "component": "reference",
-        "name": "mobimage",
+        "name": "Mobile Image",
         "label": "Mobile Image",
         "valueType": "string"
       },
       {
         "component": "text",
-        "name": "mobimage_alt",
+        "name": "Mobile Image Alt",
         "label": "Mobile Image Alt",
         "valueType": "string"
       }

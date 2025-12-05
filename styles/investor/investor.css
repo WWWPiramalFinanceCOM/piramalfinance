@@ -1296,6 +1296,10 @@ CARDS GRID (Directors & Management)
 .section.leadership-wrapper .button-container {
   margin: 0;
   width: 100%; /* Full width on mobile */
+
+  @media only screen and (max-width:767px){
+        padding: 0px 15px;
+  }
 }
 
 @media (min-width: 768px) {

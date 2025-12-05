@@ -480,6 +480,60 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 .section.esg-commit.rte-container{
         background: #FDECDF;
        padding: 100px  0px;
+
+       @media only screen and (max-width:767px){
+        padding-top: 50px;
+        padding-bottom: 50px;
+       }
+}
+.section.esg-commit.rte-container .default-content-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    @media only screen and (max-width:767px){
+        flex-wrap: wrap;
+    }
+}
+
+.section.esg-commit.rte-container .default-content-wrapper .button-container a.button[title="ESG Report 2024"]{
+        padding: 15px;
+    border-radius: 8px;
+    /* font-family: Nunito; */
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 27.2px;
+    letter-spacing: 0.2px;
+    display: flex;
+    max-width: 177px;
+    background: white;
+    color: #F26E24;
+}
+.section.esg-commit.rte-container .default-content-wrapper .button-container a.button[title="View Sustainability Initiatives"]{
+       color: #FFFFFF;
+    padding: 15px;
+    border-radius: 8px;
+    /* font-family: Nunito; */
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 27.2px;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+    background: #F26E24;
+    display: flex;
+}
+.section.esg-commit.rte-container .default-content-wrapper .button-container a.button[title="View Sustainability Initiatives"]::after{
+        content: "";
+    background-image: url(../../icons/lucide_arrow-up.svg);
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
 }
 
 .section.esg-commit.rte-container h3{
@@ -499,7 +553,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
        /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
-    font-size: 16px;
+    font-size: 18px;
     /* leading-trim: NONE; */
     line-height: 30px;
     letter-spacing: 0px;
@@ -512,6 +566,10 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 .section.esg-commit.rte-container .rte-wrapper{
         max-width: 1216px;
     margin: auto;
+
+    @media only screen and (max-width:767px){
+        padding: 0px 20px;
+    }
 }
 
 .section.esg-commit.rte-container > div > div > div > div > ul{
@@ -547,7 +605,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
-    font-size: 16px;
+    font-size: 18px;
     /* leading-trim: NONE; */
     line-height: 30px;
     letter-spacing: 0px;
@@ -640,6 +698,10 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     align-items: center;
     gap: 20px;
     /* padding-bottom: 60px; */
+
+    @media only screen and (max-width:767px){
+        padding: 0px 15px;
+    }
 }
 
 
@@ -670,6 +732,10 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     border: unset;
     margin-right: unset !important;
     max-width: 379px;
+
+    @media only screen and (max-width:767px){
+        padding: 0px 15px;
+    }
 }
 
 .section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > p > a,
@@ -687,7 +753,21 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     text-decoration: none;
     max-width: 177px;
     margin: unset;
+    display: flex;
+    align-items: center;
 }
+
+.section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > p > a::after,
+ .section.stay-informed #tab-panel-1-1 > div > div.default-content-wrapper > p > a ::after{
+          content: "";
+    background-image: url(../../icons/lucide_arrow-up.svg);
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
+ }
 
  .section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > .button-container,
  .section.stay-informed #tab-panel-1-1 > div > div.default-content-wrapper > .button-container{
@@ -703,6 +783,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     
     @media only screen and (max-width:767px){
         margin-top: 30px;
+        gap: unset;
     }
 }
 
@@ -729,6 +810,8 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     border-radius: 150px;
     color: #184E7D;
     margin-right: unset;
+        border-bottom: unset;
+    border: unset;
 }
 
 .section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title{
@@ -743,6 +826,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     background: #3B6D94;
     padding: 16px 28px;
     border-radius: 150px;
+    margin-right: unset;
     
 }
 
@@ -1734,6 +1818,17 @@ CARDS GRID (Directors & Management)
     color: rgba(24, 78, 125, 1);
     text-align: center;
 }
+
+.piramal-foundation .default-content-wrapper .button-container a::after{
+          content: "";
+    background-image: url(../../icons/lucide_arrow-up.svg);
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
+}
 @media (max-width: 767px) {
     .piramal-foundation .default-content-wrapper .button-container a {
         width: 231px;
@@ -1741,6 +1836,8 @@ CARDS GRID (Directors & Management)
 }
 .piramal-foundation .default-content-wrapper .button-container + .button-container a {
     background-color: rgba(242, 110, 36, 1);
+    display: flex;
+    align-items: center;
     color: white;
 }
 
@@ -1883,7 +1980,22 @@ CARDS GRID (Directors & Management)
     text-decoration: none;
     max-width: 177px;
     margin: unset;
+    display: flex;
+    align-items: center;
 }
+
+.bussiness-offerings .default-content-wrapper .button-container a::after{
+          content: "";
+    background-image: url(../../icons/lucide_arrow-up.svg);
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
+}
+
+
 .bussiness-offerings .cards.block > ul {
     display: grid;
     grid-template-columns: 1fr 1fr;

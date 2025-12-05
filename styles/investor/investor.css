@@ -284,10 +284,18 @@ max-width: 1216px;
     margin: auto;
 }
 .section.performance-snapshot .cards-wrapper{
-   
 max-width: 1216px;
     margin: auto;
 }
+
+.section.performance-snapshot .cards-wrapper ul{
+      @media only screen and (max-width:767px){
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
 .section.performance-snapshot .cards-wrapper .cards-card-body{
    padding: unset;
    margin: unset !important;
@@ -1992,6 +2000,9 @@ CARDS GRID (Directors & Management)
     font-size: 16px;
     line-height: 30px;
     color: #F26E24;
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .d-none{

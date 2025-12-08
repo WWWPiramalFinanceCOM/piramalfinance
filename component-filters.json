@@ -25,6 +25,7 @@
       "cards",
       "columns",
       "rte",
+      "image-text-block",
       "imgwithlink",
       "carousel",
       "teaser",
@@ -56,6 +57,7 @@
       "breadcrumb",
       "boards",
       "rte",
+      "image-text-block",
       "city-list",
       "imgwithlink",
       "testimonial",
@@ -109,7 +111,8 @@
       "formformatpdf",
       "branchcarousel",
       "branchkeyfeatures",
-      "branches"
+      "branches",
+      "banner-carousel"
     ]
   },
   {
@@ -192,5 +195,9 @@
   {
     "id": "container",
     "components": []
+  },
+    {
+    "id": "banner-carousel",
+    "components": ["banner-carousel-item"]
   }
 ]

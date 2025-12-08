@@ -1,5 +1,5 @@
 import { targetObject } from '../../scripts/scripts.js';
-import { CFApiCall, fetchAPI } from '../../scripts/common.js';
+import { CFApiCall } from '../../scripts/common.js';
 
 export default async function decorate(block) {
   const cfURL = block.textContent.trim();
@@ -17,16 +17,16 @@ export default async function decorate(block) {
   let onceScroll = false;
 
   window.onscroll = () => {
-      if (!onceScroll) {
-          makeTable(block, repsonseData);  
-          onceScroll = true;  
-      }
+    if (!onceScroll) {
+      makeTable(block, repsonseData);
+      onceScroll = true;
+    }
   };
 }
 
 function makeTable(block, repsonseData, count) {
-  let headLi = ''
-  let rowLi = ''
+  let headLi = '';
+  let rowLi = '';
   let key = [];
   repsonseData.slice(0, count).forEach(function (eachData, index) {
     if (!index) {

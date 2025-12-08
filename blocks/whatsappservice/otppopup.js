@@ -21,7 +21,6 @@ export function otpPopupCall(block) {
   const nullDOm = document.createElement('div');
   const whatsappButton = section.querySelector('.input-field .desktopButton button');
   const inputField = section.querySelector('.input-field input');
-  //   let whatsappButton = document.querySelector(".whatsappBannerLeft .desktopButton button") || nullDOm;
   const whatsappTryBtn = document.querySelector('.failureTryAgain') || nullDOm;
   // on click on button generate otp call
 

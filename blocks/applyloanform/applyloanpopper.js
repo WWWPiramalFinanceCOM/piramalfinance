@@ -1,27 +1,26 @@
-import { formDobInput, loanFromBtn, loanProduct } from './loanformdom.js';
+import { formDobInput, loanProduct } from './loanformdom.js';
 import { calculateAgeFromInput, checkAllFieldValidation } from './validation.js';
 
 export let dpObj;
 export function validateDOBForPL() {
-    const loanTypeAttr = loanProduct()?.dataset.loanType;
-    if (!["pl", "las", "lamf"].includes(loanTypeAttr)) {
-      return;
-    }
-     const loanType = document.querySelector('#form-loan-type')?.value;
-     const formattedDate = formDobInput()?.value;
-        const dobInput = formDobInput();
-        if(!loanType || !dobInput) return;
-        if (!["personal loan", "loan against security", "loan against mutual fund"].includes(loanType.trim().toLowerCase())) {
-          return;
-        }
-        
-       const age =  calculateAgeFromInput(formattedDate);
-       dobInput.dataset.validdate = age < 23 ? "false" : "true";
+  const loanTypeAttr = loanProduct()?.dataset.loanType;
+  if (!["pl", "las", "lamf"].includes(loanTypeAttr)) {
+    return;
+  }
+  const loanType = document.querySelector('#form-loan-type')?.value;
+  const formattedDate = formDobInput()?.value;
+  const dobInput = formDobInput();
+  if (!loanType || !dobInput) return;
+  if (!['personal loan', 'loan against security', 'loan against mutual fund'].includes(loanType.trim().toLowerCase())) {
+    return;
+  }
 
-       const errMsg = document.querySelector('.invalid-date-msg');
-       dobInput.dataset.validdate == "true" ? errMsg.style.display = "none" : errMsg.style.display = "block";
-       checkAllFieldValidation();
-     
+  const age = calculateAgeFromInput(formattedDate);
+  dobInput.dataset.validdate = age < 23 ? 'false' : 'true';
+
+  const errMsg = document.querySelector('.invalid-date-msg');
+  dobInput.dataset.validdate == "true" ? errMsg.style.display = "none" : errMsg.style.display = "block";
+  checkAllFieldValidation();
 }
 export function applyLoanPopper() {
   const reference = document.getElementById('stateparent');
@@ -115,7 +114,6 @@ export function applyLoanPopper() {
 
       onSelect({ formattedDate }) {
         validateDOBForPL();
-        //  dobInput.dataset.validdate == "true" ?  loanFromBtn().classList.add('loan-form-button-active') :  loanFromBtn().classList.remove('loan-form-button-active');
       },
 
       locale: {
@@ -175,8 +173,7 @@ export function applyLoanPopper() {
       maxDate: new Date(),
 
       onSelect({ formattedDate }) {
-       validateDOBForPL();
-        //  dobInput.dataset.validdate == "true" ?  loanFromBtn().classList.add('loan-form-button-active') :  loanFromBtn().classList.remove('loan-form-button-active');
+        validateDOBForPL();
       },
 
       locale: {

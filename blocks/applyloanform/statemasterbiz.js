@@ -2,7 +2,7 @@ import {
   brachDropDownUl, branchInput, loanProduct, stateDropDownUL, stateInput,
 } from './loanformdom.js';
 import { statemasterDataMap } from './statemasterDataMapping.js';
-import { clearPLLoanError, checkAllFieldValidation, validatePLLoan } from './validation.js';
+import { clearPLLoanError, validatePLLoan } from './validation.js';
 import { statemasterGetStatesApi } from './statemasterapi.js';
 
 let statemasterGlobal = statemasterDataMap.get('statemasterGlobal') || {};
@@ -11,7 +11,7 @@ let productStates = [];
 let loanProductListenerAttached = false;
 
 let ulFormBranch = document.createElement('li');
-ulFormBranch.textContent = "No options";
+ulFormBranch.textContent = 'No options';
 ulFormBranch.classList.add('orangepoints');
 
 const defaultCityLi = brachDropDownUl()?.querySelector('.orangepoints') || ulFormBranch;
@@ -54,7 +54,7 @@ export function stateMasterProcessApiData(rawData) {
     statemaster[stateName].data.push({
       city: cityName,
       locationID: null,
-      product: entry["Product Code"] ? entry["Product Code"].toLowerCase() : null
+      product: entry['Product Code'] ? entry['Product Code'].toLowerCase() : null
     });
   });
   return statemaster;
@@ -171,7 +171,6 @@ function renderCities(state) {
       const isCity = cities
         .map((city) => normalize(city))
         .includes(normalize(currentTarget.value));
-
 
       // const isCity = cities.map((city) => city.toLocaleLowerCase()).includes(currentTarget.value.trim().toLocaleLowerCase());
       if (isCity) {

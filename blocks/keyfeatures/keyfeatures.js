@@ -1,7 +1,6 @@
 import { ctaClick, ctaClickInteraction, keyFeaturesInteraction } from '../../dl.js';
-import { autoLinkLangPath, fetchPlaceholders } from '../../scripts/aem.js';
+import { autoLinkLangPath } from '../../scripts/aem.js';
 import { decoratePlaceholder, targetObject } from '../../scripts/scripts.js';
-import { renderHelper } from '../../scripts/common.js';
 
 export default async function decorate(block) {
   block.innerHTML = await decoratePlaceholder(block);
@@ -318,7 +317,7 @@ function keyFeaturesAnalytics(block) {
         const cta_category = data.cta_position;
         ctaClick(data.click_text, cta_category, cta_position, targetObject.pageName);
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
     });
   });

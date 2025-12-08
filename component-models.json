@@ -338,6 +338,32 @@
     ]
   },
   {
+    "id": "image-text-block",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "backgroundImage",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": "Image description"
+      },
+      {
+        "component": "text",
+        "name": "text",
+        "value": "Enter your text here",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "city-list",
     "fields": [
       {
@@ -1125,7 +1151,7 @@
                 "name": "Button Bottom",
                 "value": "btn-bottom"
               },
-               {
+              {
                 "name": "Two Button Bottom",
                 "value": "two-btn-bottom"
               }
@@ -2810,5 +2836,36 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "banner-carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Image Alt",
+        "value": "",
+        "label": "Desktop Image Alt",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "Mobile Image",
+        "label": "Mobile Image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "Mobile Image Alt",
+        "label": "Mobile Image Alt",
+        "valueType": "string"
+      }
+    ]
   }
+ 
 ]

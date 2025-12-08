@@ -4,10 +4,8 @@ import { applyLoanPopper } from './applyloanpopper.js';
 import { loanutmForm } from './loanutm.js';
 import { stateMasterApi } from './statemasterapi.js';
 import { validationJSFunc } from './validation.js';
-import AirDatepicker from '../datepickerlib/datepickerlib.js';
-import Popper from '../datepickerlib/popper.js';
 import { buttonCLick } from './loanformapi.js';
-import { CFApiCall, fetchAPI } from '../../scripts/common.js';
+import { CFApiCall } from '../../scripts/common.js';
 
 export default async function decorate(block) {
   const cfURL = block.textContent.trim();
@@ -15,9 +13,6 @@ export default async function decorate(block) {
   const cfRepsonse = await CFApiCall(cfURL);
   const repsonseData = cfRepsonse.data;
   const jsonResponseData = applyLoanFormJson(repsonseData);
-  // const jsonResponseData = JSON.parse(repsonseData);
-
-
 
   block.innerHTML = appplyLoanTemplate(jsonResponseData);
   try {
@@ -72,6 +67,6 @@ function applyLoanFormJson(data) {
     obj[category] = loanCategories[category]; // Assign the category's loan items
     mainObj.options.push(obj);
   }
-  
+
   return mainObj; // Return the structured object
 }

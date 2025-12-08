@@ -1,4 +1,6 @@
-html {
+@import url(investor/investor.css);
+
+tml {
     scroll-behavior: smooth
 }
 
@@ -816,3 +818,4 @@ footer:has(.neeyat-footer) {
 .font-size-change p {
     font-size: 12px !important
 }
+

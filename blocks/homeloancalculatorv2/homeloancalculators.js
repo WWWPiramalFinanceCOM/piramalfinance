@@ -1,7 +1,6 @@
 import { ctaClick } from '../../dl.js';
 import { targetObject } from '../../scripts/scripts.js';
 import { currenyCommaSeperation } from '../../scripts/common.js';
-import { renderCalculatorData } from './renderhpcal.js';
 import { resetCalculator } from './resetCalculator.js';
 
 /* document.addEventListener("DOMContentLoaded", function () {
@@ -31,7 +30,7 @@ export function homeLoanCalcFunc(currentSection) {
     try {
       const click_text = tabDiv.textContent.trim();
       const cta_position = '';
-      const cta_category = tabDiv.closest('.section')?.previousElementSibling.querySelector(".default-content-wrapper").querySelector('h1, h2, h3, h4, h5, h6').textContent.trim() || '';
+      const cta_category = tabDiv.closest('.section')?.previousElementSibling.querySelector('.default-content-wrapper').querySelector('h1, h2, h3, h4, h5, h6').textContent.trim() || '';
       ctaClick(click_text, cta_category, cta_position, targetObject.pageName);
     } catch (error) {
         console.log(error);

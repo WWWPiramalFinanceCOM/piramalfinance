@@ -6,14 +6,14 @@ export default async function decorate(block) {
   const cfURL = block.textContent.trim();
   const cfRepsonse = await CFApiCall(cfURL);
   const repsonseData = cfRepsonse.data;
-  
+
   const groupedLocations = groupAndSortLocations(repsonseData);
   renderLocationSelection(block, groupedLocations);
   initEventListeners(block, groupedLocations);
   if (targetObject.isTab || targetObject.isMobile) {
-    displayCards(block,"",groupedLocations.grouped, 1);
+    displayCards(block, '', groupedLocations.grouped, 1);
   } else {
-    displayCards(block, "", groupedLocations.grouped, 2);
+    displayCards(block, '', groupedLocations.grouped, 2);
   }
 }
 
@@ -85,26 +85,18 @@ function initEventListeners(block, groupedLocations) {
     displayCards(block, selectedCity, groupedLocations.grouped);
   });
 
-  /* block.closest('body').addEventListener('click', (e) => {
-    if (!e.target.closest('.toggleCityContainer') && !e.target.closest('.select-container') && !e.target.closest('fieldset') && !e.target.closest('cityBlack')) {
-      if (selectContainer.classList.contains('open')) {
-        citiesContainer.style.display = 'none';
-        selectContainer.classList.remove('open');
-      }
-    }
-  }); */
-
   window.onscroll = () => displayCards(block, inputLocationValue, groupedLocations.grouped);
 }
 
-
-function displayCards(block, selectedCityName, groupedLocations,index) {
+function displayCards(block, selectedCityName, groupedLocations, index) {
   const cardContainer = block.querySelector('.card-container') || document.createElement('div');
   cardContainer.className = 'card-container';
-  cardContainer.innerHTML = ''; 
+  cardContainer.innerHTML = '';
   block.appendChild(cardContainer);
 
-  const dataToDisplay = selectedCityName ? { [selectedCityName]: groupedLocations[selectedCityName] } : groupedLocations;
+  const dataToDisplay = selectedCityName
+    ? { [selectedCityName]: groupedLocations[selectedCityName] }
+    : groupedLocations;
 
   Object.keys(dataToDisplay).slice(0, index).forEach((city) => {
     dataToDisplay[city].forEach((data) => {
@@ -146,17 +138,15 @@ function displayCards(block, selectedCityName, groupedLocations,index) {
           </div>
         </div>
       `;
-      cardContainer.innerHTML += cardHTML; 
+      cardContainer.innerHTML += cardHTML;
     });
   });
 }
 
 function formatLocation(location) {
   const arr = location.split(' ');
-  return arr.map(item => {
+  return arr.map((item) => {
     const lowercased = item.toLowerCase();
     return lowercased.charAt(0).toUpperCase() + lowercased.slice(1);
   }).join(' ');
 }
-
-

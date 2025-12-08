@@ -1,19 +1,16 @@
 import {
   applyLoanInteraction,
-  applyLoanNow, ctaClick, formInteraction, resendOtp, talkToExpert,
+  applyLoanNow, ctaClick, formInteraction, talkToExpert,
 } from '../../dl.js';
 import { targetObject } from '../../scripts/scripts.js';
 import {
   branchInput,
-  cutomerEmployment,
   cutomerIncome,
   cutomerName,
   cutomerNo,
   formDobInput,
   formLoanAmt,
   formTc,
-  loanFormContainer,
-  loanFormOtpBtn,
   loanOtpInput,
   loanProduct,
   otpNumChange,
@@ -24,18 +21,20 @@ import { statemasterGetStatesApi } from './statemasterapi.js';
 import { loanTypeDropdownSelect } from './utm.js';
 import { validationJSFunc } from './validation.js';
 
-export let overlay; export let emiOverlay; export let elgOverlay; export let loaninnerform; export let
-  bodyElement;
+export let overlay;
+export let emiOverlay;
+export let elgOverlay;
+export let loaninnerform;
+export let bodyElement;
 
-  export function handleOpenFormOnClick(el) {
-    const formButtons = el.querySelectorAll('.open-form-on-click .button-container');
-    formButtons.forEach(button => {
-      console.log(button);
-      button.addEventListener('click', onCLickApplyFormOpen);
-    });
-  }
+export function handleOpenFormOnClick(el) {
+  const formButtons = el.querySelectorAll('.open-form-on-click .button-container');
+  formButtons.forEach((button) => {
+    button.addEventListener('click', onCLickApplyFormOpen);
+  });
+}
 
-  function onCLickApplyFormOpen(e) {
+function onCLickApplyFormOpen(e) {
   statemasterGetStatesApi();
   validationJSFunc();
   formOpen();
@@ -134,7 +133,8 @@ export function applyLoanFormClick() {
           const link = anchor.getAttribute('href');
           const target = anchor.getAttribute('target');
           if (target === '_blank') {
-            window.open(link, target); // Open the link using the target attribute specified by the user
+            // Open the link using the target attribute specified by the user
+            window.open(link, target);
           } else {
             // Default behavior: open the link in the same tab
             window.location.href = link;
@@ -149,22 +149,15 @@ export function applyLoanFormClick() {
             const ctaPos = e.target?.closest('.section')?.querySelector('.calculator-parent p')?.textContent.trim();
             if (e.target.innerText.trim() === 'Talk to loan expert') {
               talkToExpert('calculator', emiName, ctaPos, targetObject.pageName);
-              formInteraction(emiName,"Form Open",targetObject.pageName)
+              formInteraction(emiName, 'Form Open', targetObject.pageName);
             } else if (e.target.innerText.trim() === 'Apply loan now') {
               applyLoanNow('calculator', emiName, ctaPos, targetObject.pageName);
-              formInteraction(targetObject.pageName,"Form Open",targetObject.pageName)
+              formInteraction(targetObject.pageName, 'Form Open', targetObject.pageName);
             }
           } catch (error) {
             console.warn(error);
           }
         }
-
-        /* if(loaninnerform){
-          let ulFormBranch = document.createElement('li');
-          ulFormBranch.textContent = "No options";
-          ulFormBranch.classList.add('orangepoints');
-          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
-        } */
 
         loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
         loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
@@ -234,7 +227,6 @@ export function applyLoanFormClick() {
           if (emiOverlay.classList.contains("show") || elgOverlay.classList.contains("show")) { */
         if (checkingFormopen) {
           if (checkingFormopen.querySelector('.homeloancalculator-wrapper .show') || checkingFormopen.querySelector('.eligibilitycalculator-wrapper .show')) {
-            
             loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
             loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
 
@@ -277,20 +269,12 @@ export function applyLoanFormClick() {
 
           bodyElement.style.overflowY = 'auto';
           loaninnerform.style.visibility = 'hidden';
-          // resetLoanForm();
-          // loaninnerform.classList.remove("loan-form-sub-otp", "loan-form-success", "loan-form-request-fail", "loan-form-something-wrong");
+
           if (loaninnerform.classList.contains('loan-form-success')) {
             loaninnerform.classList.remove('loan-form-success');
             loaninnerform.classList.remove('loan-form-sub-otp');
           }
         }
-
-        /* if(loaninnerform){
-          let ulFormBranch = document.createElement('li');
-          ulFormBranch.textContent = "No options";
-          ulFormBranch.classList.add('orangepoints');
-          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
-        } */
 
         resetLoanForm();
         loaninnerform.classList.remove('loan-form-sub-otp', 'loan-form-success', 'loan-form-request-fail', 'loan-form-something-wrong');
@@ -387,18 +371,10 @@ export function applyLoanFormClick() {
           loanOtpInput().value = '';
           loaninnerform.classList.remove('loan-form-sub-otp', 'loan-form-success', 'loan-form-request-fail', 'loan-form-something-wrong');
         }
-
-        /* if(loaninnerform){
-          let ulFormBranch = document.createElement('li');
-          ulFormBranch.textContent = "No options";
-          ulFormBranch.classList.add('orangepoints');
-          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
-        } */
-
       }
     });
 
-    overlay.addEventListener('click', (event) => {
+    overlay.addEventListener('click', () => {
       if (window.matchMedia('(max-width: 1024px)').matches) {
         // overlay.classList.remove("show");
         document.querySelector('.modal-overlay').classList.remove('overlay');
@@ -407,17 +383,8 @@ export function applyLoanFormClick() {
         loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
         loaninnerform.style.visibility = 'hidden';
         bodyElement.style.overflowY = 'auto';
-
-        /* if(loaninnerform){
-          let ulFormBranch = document.createElement('li');
-          ulFormBranch.textContent = "No options";
-          ulFormBranch.classList.add('orangepoints');
-          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
-        } */
       }
     });
-
-    // })
 
     function toggleOptionForm(optionFormParent) {
       if (optionFormParent.style.display === 'block') {
@@ -572,11 +539,6 @@ export function applyLoanFormClick() {
       loanOtpInput().value = '';
     });
 
-    // loanFormOtpBtn().addEventListener('click', () => {
-    //   clearInterval(intervalTime);
-    // });
-    
-
     function startTimer(footer_time_limit, footer_time_out) {
       clearInterval(footer_time_out);
       clearInterval(intervalTime);
@@ -644,5 +606,4 @@ window.addEventListener('pageshow', (event) => {
   }
 });
 
-
-  handleOpenFormOnClick(document);
+handleOpenFormOnClick(document);

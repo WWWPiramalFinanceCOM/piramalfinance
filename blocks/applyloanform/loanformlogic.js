@@ -40,7 +40,7 @@ const loadProduct = {
     location: 'branch selected', age:  { min: 23 }, income: { min: 25000 }, loan: { min: 100000 },
   },
 };
- 
+
 export function ProductLogics(loanType) {
   const obj = {};
   const loanObj = loadProduct[loanType];

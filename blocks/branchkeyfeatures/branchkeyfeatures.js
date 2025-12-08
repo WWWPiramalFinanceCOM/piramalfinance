@@ -11,9 +11,9 @@ export default async function decorate(block) {
   const keyFeatureDiv = document.createElement('div');
 
   let jsonResponseData = '';
-  if(sessionStorage.getItem('branchloanmapping')){
+  if (sessionStorage.getItem('branchloanmapping')) {
     jsonResponseData = JSON.parse(sessionStorage.getItem('branchloanmapping'));
-  }else{
+  } else {
     if (!linkURL) {
       return false;
     }
@@ -21,9 +21,6 @@ export default async function decorate(block) {
     const reponseData = cfRepsonse && cfRepsonse.data;
     jsonResponseData = groupAllKeys(reponseData);
     sessionStorage.setItem('branchloanmapping', JSON.stringify(jsonResponseData));
-  
-    /* const repsonseData = cfRepsonse && cfRepsonse.data[0].branchloanmapping;
-    const jsonResponseData = repsonseData && JSON.parse(repsonseData); */
   }
 
   Object.keys(jsonResponseData).forEach((eachKey) => {
@@ -34,7 +31,7 @@ export default async function decorate(block) {
           keyFeatureDiv.append(eachKeyFeatureEle);
         });
       }
-    }else{
+    } else {
       if(eachKey == 'personal-loan'){
         document.querySelector('.personal-loan-key-feature').querySelector('.wrapper-creation-container').querySelectorAll('.keyfeatures-wrapper').forEach(function (eachfeature) {
           eachfeature.remove();
@@ -49,10 +46,9 @@ export default async function decorate(block) {
 
   document.querySelector('.view-more-less-js .wrapper-creation-container').insertAdjacentHTML('beforeend', keyFeatureDiv.innerHTML);
 
-
   let mainFeatureDiv = document.querySelector('.view-more-less-js.wrappercreation-container');
   let featureWrapperCheck = document.querySelectorAll('.view-more-less-js .wrapper-creation-container .keyfeatures-wrapper').length;
-  if(featureWrapperCheck > 0){
+  if (featureWrapperCheck > 0) {
     document.querySelectorAll('.view-more-less-js .wrapper-creation-container .keyfeatures-wrapper').forEach((eackfeatures, index) => {
       if (index <= 2) {
         eackfeatures.classList.remove('dp-none');
@@ -60,7 +56,7 @@ export default async function decorate(block) {
         eackfeatures.classList.add('dp-none');
       }
     });
-  }else{
+  } else {
     mainFeatureDiv.classList.add('dp-none');
   }
 

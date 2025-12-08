@@ -1,4 +1,4 @@
-import { calculatorFlatStrLogic, CFApiCall, fetchAPI } from '../../scripts/common.js';
+import { calculatorFlatStrLogic, CFApiCall } from '../../scripts/common.js';
 import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js';
 import { homeloanCalHTML } from '../homeloancalculatorv2/templatehtmlv2.js';
 
@@ -11,8 +11,8 @@ export default async function decorate(block) {
 
   block.innerHTML = homeloanCalHTML(jsonResponseData);
 
-  let elgCalDiv; let
-    elgOverlay;
+  let elgCalDiv;
+  let elgOverlay;
 
   try {
     elgCalDiv = document.querySelector('.home-page-calculator-call-xf');

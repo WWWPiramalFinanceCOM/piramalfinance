@@ -90,19 +90,19 @@ export default function () {
     let a;
     const f = r(n);
     const c = r(n)
-        && (function (e) {
-          const t = e.getBoundingClientRect();
-          const n = s(t.width) / e.offsetWidth || 1;
-          const r = s(t.height) / e.offsetHeight || 1;
-          return n !== 1 || r !== 1;
-        }(n));
+      && (function (e) {
+        const t = e.getBoundingClientRect();
+        const n = s(t.width) / e.offsetWidth || 1;
+        const r = s(t.height) / e.offsetHeight || 1;
+        return n !== 1 || r !== 1;
+      }(n));
     const m = d(n);
     const y = p(e, c, o);
     let g = { scrollLeft: 0, scrollTop: 0 };
     let b = { x: 0, y: 0 };
     return (
       (f || (!f && !o))
-        && ((l(n) !== 'body' || v(m)) && (g = (i = n) !== t(i) && r(i) ? { scrollLeft: (a = i).scrollLeft, scrollTop: a.scrollTop } : u(i)),
+      && ((l(n) !== 'body' || v(m)) && (g = (i = n) !== t(i) && r(i) ? { scrollLeft: (a = i).scrollLeft, scrollTop: a.scrollTop } : u(i)),
         r(n) ? (((b = p(n, !0)).x += n.clientLeft), (b.y += n.clientTop)) : m && (b.x = h(m))),
       {
         x: y.left + g.scrollLeft - b.x, y: y.top + g.scrollTop - b.y, width: y.width, height: y.height,
@@ -144,25 +144,25 @@ export default function () {
     return i && (l(i) === 'html' || (l(i) === 'body' && m(i).position === 'static'))
       ? n
       : i
-          || (function (e) {
-            const t = /firefox/i.test(f());
-            if (/Trident/i.test(f()) && r(e) && m(e).position === 'fixed') return null;
-            let n = b(e);
-            for (o(n) && (n = n.host); r(n) && ['html', 'body'].indexOf(l(n)) < 0;) {
-              const i = m(n);
-              if (
-                i.transform !== 'none'
-                || i.perspective !== 'none'
-                || i.contain === 'paint'
-                || ['transform', 'perspective'].indexOf(i.willChange) !== -1
-                || (t && i.willChange === 'filter')
-                || (t && i.filter && i.filter !== 'none')
-              ) { return n; }
-              n = n.parentNode;
-            }
-            return null;
-          }(e))
-          || n;
+      || (function (e) {
+        const t = /firefox/i.test(f());
+        if (/Trident/i.test(f()) && r(e) && m(e).position === 'fixed') return null;
+        let n = b(e);
+        for (o(n) && (n = n.host); r(n) && ['html', 'body'].indexOf(l(n)) < 0;) {
+          const i = m(n);
+          if (
+            i.transform !== 'none'
+            || i.perspective !== 'none'
+            || i.contain === 'paint'
+            || ['transform', 'perspective'].indexOf(i.willChange) !== -1
+            || (t && i.willChange === 'filter')
+            || (t && i.filter && i.filter !== 'none')
+          ) { return n; }
+          n = n.parentNode;
+        }
+        return null;
+      }(e))
+      || n;
   }
   const D = 'top';
   const A = 'bottom';
@@ -183,13 +183,13 @@ export default function () {
     const r = [];
     function o(e) {
       n.add(e.name),
-      [].concat(e.requires || [], e.requiresIfExists || []).forEach((e) => {
-        if (!n.has(e)) {
-          const r = t.get(e);
-          r && o(r);
-        }
-      }),
-      r.push(e);
+        [].concat(e.requires || [], e.requiresIfExists || []).forEach((e) => {
+          if (!n.has(e)) {
+            const r = t.get(e);
+            r && o(r);
+          }
+        }),
+        r.push(e);
     }
     return (
       e.forEach((e) => {
@@ -420,13 +420,13 @@ export default function () {
             ), []);
           }(
             ((s = [].concat(o, f.options.modifiers)),
-            (p = s.reduce((e, t) => {
-              const n = e[t.name];
-              return (e[t.name] = n ? ({
-                ...n, ...t, options: { ...n.options, ...t.options }, data: { ...n.data, ...t.data },
-              }) : t), e;
-            }, {})),
-            Object.keys(p).map((e) => p[e])),
+              (p = s.reduce((e, t) => {
+                const n = e[t.name];
+                return (e[t.name] = n ? ({
+                  ...n, ...t, options: { ...n.options, ...t.options }, data: { ...n.data, ...t.data },
+                }) : t), e;
+              }, {})),
+              Object.keys(p).map((e) => p[e])),
           ));
           return (
             (f.orderedModifiers = d.filter((e) => e.enabled)),
@@ -439,7 +439,7 @@ export default function () {
                 const i = o({
                   state: f, name: t, instance: u, options: r,
                 });
-                const a = function () {};
+                const a = function () { };
                 c.push(i || a);
               }
             }),
@@ -453,9 +453,9 @@ export default function () {
             const n = e.popper;
             if (Q(t, n)) {
               (f.rects = { reference: y(t, E(n), f.options.strategy === 'fixed'), popper: g(n) }),
-              (f.reset = !1),
-              (f.placement = f.options.placement),
-              f.orderedModifiers.forEach((e) => (f.modifiersData[e.name] = { ...e.data }));
+                (f.reset = !1),
+                (f.placement = f.options.placement),
+                f.orderedModifiers.forEach((e) => (f.modifiersData[e.name] = { ...e.data }));
               for (let r = 0; r < f.orderedModifiers.length; r++) {
                 if (!0 !== f.reset) {
                   const o = f.orderedModifiers[r];
@@ -472,19 +472,19 @@ export default function () {
           }
         },
         update:
-            ((i = function () {
-              return new Promise((e) => {
-                u.forceUpdate(), e(f);
-              });
-            }),
+          ((i = function () {
+            return new Promise((e) => {
+              u.forceUpdate(), e(f);
+            });
+          }),
             function () {
               return (
                 s
-                  || (s = new Promise((e) => {
-                    Promise.resolve().then(() => {
-                      (s = void 0), e(i());
-                    });
-                  })),
+                || (s = new Promise((e) => {
+                  Promise.resolve().then(() => {
+                    (s = void 0), e(i());
+                  });
+                })),
                 s
               );
             }),
@@ -495,7 +495,7 @@ export default function () {
       if (!Q(e, t)) return u;
       function l() {
         c.forEach((e) => e()),
-        (c = []);
+          (c = []);
       }
       return (
         u.setOptions(r).then((e) => {
@@ -510,7 +510,7 @@ export default function () {
     name: 'eventListeners',
     enabled: !0,
     phase: 'write',
-    fn() {},
+    fn() { },
     effect(e) {
       const n = e.state;
       const r = e.instance;
@@ -523,16 +523,16 @@ export default function () {
       const p = [].concat(n.scrollParents.reference, n.scrollParents.popper);
       return (
         a
-          && p.forEach((e) => {
-            e.addEventListener('scroll', r.update, $);
-          }),
+        && p.forEach((e) => {
+          e.addEventListener('scroll', r.update, $);
+        }),
         f && c.addEventListener('resize', r.update, $),
         function () {
           a
             && p.forEach((e) => {
               e.removeEventListener('scroll', r.update, $);
             }),
-          f && c.removeEventListener('resize', r.update, $);
+            f && c.removeEventListener('resize', r.update, $);
         }
       );
     },
@@ -602,9 +602,9 @@ export default function () {
 
           ...S,
           ...(((R = {})[M] = O ? '0' : ''),
-          (R[j] = w ? '0' : ''),
-          (R.transform = (k.devicePixelRatio || 1) <= 1 ? `translate(${y}px, ${b}px)` : `translate3d(${y}px, ${b}px, 0)`),
-          R),
+            (R[j] = w ? '0' : ''),
+            (R.transform = (k.devicePixelRatio || 1) <= 1 ? `translate(${y}px, ${b}px)` : `translate3d(${y}px, ${b}px, 0)`),
+            R),
         })
         : ({ ...S, ...(((n = {})[M] = O ? `${b}px` : ''), (n[j] = w ? `${y}px` : ''), (n.transform = ''), n) })
     );
@@ -632,14 +632,14 @@ export default function () {
             ...c, offsets: t.modifiersData.popperOffsets, position: t.options.strategy, adaptive: a, roundOffsets: f,
           }),
         }),
-      t.modifiersData.arrow != null
-          && (t.styles.arrow = {
-            ...t.styles.arrow,
-            ...re({
-              ...c, offsets: t.modifiersData.arrow, position: 'absolute', adaptive: !1, roundOffsets: f,
-            }),
+        t.modifiersData.arrow != null
+        && (t.styles.arrow = {
+          ...t.styles.arrow,
+          ...re({
+            ...c, offsets: t.modifiersData.arrow, position: 'absolute', adaptive: !1, roundOffsets: f,
           }),
-      (t.attributes.popper = { ...t.attributes.popper, 'data-popper-placement': t.placement });
+        }),
+        (t.attributes.popper = { ...t.attributes.popper, 'data-popper-placement': t.placement });
     },
     data: {},
   };
@@ -656,10 +656,10 @@ export default function () {
         r(i)
           && l(i)
           && (Object.assign(i.style, n),
-          Object.keys(o).forEach((e) => {
-            const t = o[e];
-            !1 === t ? i.removeAttribute(e) : i.setAttribute(e, !0 === t ? '' : t);
-          }));
+            Object.keys(o).forEach((e) => {
+              const t = o[e];
+              !1 === t ? i.removeAttribute(e) : i.setAttribute(e, !0 === t ? '' : t);
+            }));
       });
     },
     effect(e) {
@@ -683,9 +683,9 @@ export default function () {
             r(o)
               && l(o)
               && (Object.assign(o.style, a),
-              Object.keys(i).forEach((e) => {
-                o.removeAttribute(e);
-              }));
+                Object.keys(i).forEach((e) => {
+                  o.removeAttribute(e);
+                }));
           });
         }
       );
@@ -764,36 +764,36 @@ export default function () {
       if (!t.modifiersData[r]._skip) {
         for (
           var o = n.mainAxis,
-            i = void 0 === o || o,
-            a = n.altAxis,
-            s = void 0 === a || a,
-            f = n.fallbackPlacements,
-            c = n.padding,
-            p = n.boundary,
-            u = n.rootBoundary,
-            l = n.altBoundary,
-            d = n.flipVariations,
-            h = void 0 === d || d,
-            m = n.allowedAutoPlacements,
-            v = t.options.placement,
-            y = F(v),
-            g = f
-              || (y === v || !h
-                ? [fe(v)]
-                : (function (e) {
-                  if (F(e) === M) return [];
-                  const t = fe(e);
-                  return [pe(e), t, pe(t)];
-                }(v))),
-            b = [v].concat(g).reduce((e, n) => e.concat(F(n) === M ? ue(t, {
-              placement: n, boundary: p, rootBoundary: u, padding: c, flipVariations: h, allowedAutoPlacements: m,
-            }) : n), []),
-            x = t.rects.reference,
-            w = t.rects.popper,
-            O = new Map(),
-            j = !0,
-            E = b[0],
-            k = 0;
+          i = void 0 === o || o,
+          a = n.altAxis,
+          s = void 0 === a || a,
+          f = n.fallbackPlacements,
+          c = n.padding,
+          p = n.boundary,
+          u = n.rootBoundary,
+          l = n.altBoundary,
+          d = n.flipVariations,
+          h = void 0 === d || d,
+          m = n.allowedAutoPlacements,
+          v = t.options.placement,
+          y = F(v),
+          g = f
+            || (y === v || !h
+              ? [fe(v)]
+              : (function (e) {
+                if (F(e) === M) return [];
+                const t = fe(e);
+                return [pe(e), t, pe(t)];
+              }(v))),
+          b = [v].concat(g).reduce((e, n) => e.concat(F(n) === M ? ue(t, {
+            placement: n, boundary: p, rootBoundary: u, padding: c, flipVariations: h, allowedAutoPlacements: m,
+          }) : n), []),
+          x = t.rects.reference,
+          w = t.rects.popper,
+          O = new Map(),
+          j = !0,
+          E = b[0],
+          k = 0;
           k < b.length;
           k++
         ) {
@@ -811,8 +811,8 @@ export default function () {
           const N = [];
           if (
             (i && N.push(V[H] <= 0),
-            s && N.push(V[q] <= 0, V[C] <= 0),
-            N.every((e) => e))
+              s && N.push(V[q] <= 0, V[C] <= 0),
+              N.every((e) => e))
           ) {
             (E = B), (j = !1);
             break;
@@ -822,15 +822,15 @@ export default function () {
         if (j) {
           for (
             let I = function (e) {
-                const t = b.find((t) => {
-                  const n = O.get(t);
-                  if (n) {
-                    return n.slice(0, e).every((e) => e);
-                  }
-                });
-                if (t) return (E = t), 'break';
-              },
-              _ = h ? 3 : 1;
+              const t = b.find((t) => {
+                const n = O.get(t);
+                if (n) {
+                  return n.slice(0, e).every((e) => e);
+                }
+              });
+              if (t) return (E = t), 'break';
+            },
+            _ = h ? 3 : 1;
             _ > 0;
             _--
           ) {
@@ -1006,27 +1006,28 @@ export default function () {
       (t.modifiersData[n] = {
         referenceClippingOffsets: f, popperEscapeOffsets: c, isReferenceHidden: p, hasPopperEscaped: u,
       }),
-      (t.attributes.popper = { ...t.attributes.popper, 'data-popper-reference-hidden': p, 'data-popper-escaped': u });
+        (t.attributes.popper = { ...t.attributes.popper, 'data-popper-reference-hidden': p, 'data-popper-escaped': u });
     },
   };
   const be = Z({ defaultModifiers: [ee, te, oe, ie] });
   const xe = [ee, te, oe, ie, ae, le, he, me, ge];
   const we = Z({ defaultModifiers: xe });
   (e.applyStyles = ie),
-  (e.arrow = me),
-  (e.computeStyles = oe),
-  (e.createPopper = we),
-  (e.createPopperLite = be),
-  (e.defaultModifiers = xe),
-  (e.detectOverflow = J),
-  (e.eventListeners = ee),
-  (e.flip = le),
-  (e.hide = ge),
-  (e.offset = ae),
-  (e.popperGenerator = Z),
-  (e.popperOffsets = te),
-  (e.preventOverflow = he),
-  Object.defineProperty(e, '__esModule', { value: !0 });
+    (e.arrow = me),
+    (e.computeStyles = oe),
+    (e.createPopper = we),
+    (e.createPopperLite = be),
+    (e.defaultModifiers = xe),
+    (e.detectOverflow = J),
+    (e.eventListeners = ee),
+    (e.flip = le),
+    (e.hide = ge),
+    (e.offset = ae),
+    (e.popperGenerator = Z),
+    (e.popperOffsets = te),
+    (e.preventOverflow = he),
+    Object.defineProperty(e, '__esModule', { value: !0 });
 }));
 // # sourceMappingURL=popper.min.js.map
 // }
+

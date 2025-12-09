@@ -327,6 +327,9 @@ export default async function decorate(block) {
   }
 
   try {
+    let hasMoreBtn = false;
+    let hasMoreBtnliLenght = 4;
+    let isShowMoreActive = true;
     if (isDesktop.matches) {
       navSections
         .querySelectorAll(':scope .default-content-wrapper > ul >li:has(ul li)')
@@ -335,7 +338,40 @@ export default async function decorate(block) {
             const ul = navSection.querySelector('ul');
             // const subul = ul.querySelectorAll(":scope >li");
             const liLenght = ul.children.length;
-            ul.style.gridTemplateColumns = `repeat(${liLenght}, minmax(0, 1fr))`;
+            Array.from(ul.children).map((ele, ind) => {
+              let u = ele?.querySelector('p >em>strong>u');
+              if (u) {
+                // if (ul.childElementCount >= 4) {
+                //   ele.previousSibling
+                // };
+                let uText = u.textContent.trim().split("--");
+                u.textContent = uText[0];
+                hasMoreBtn = true;
+                hasMoreBtnliLenght = ind;
+                ele.onclick = function (e) {
+                  Array.from(ul?.children)?.slice(ind + 1)?.forEach((el) => {
+                    if (isShowMoreActive) {
+                      u.textContent = uText[1];
+                      el.style.display = 'block';
+                    } else {
+                      u.textContent = uText[0];
+                      el.style.display = 'none';
+                    }
+                  });
+                  isShowMoreActive = !isShowMoreActive;
+                };
+                return 1;
+              }
+            });
+            if (hasMoreBtn) {
+              Array.from(ul.children)?.slice(hasMoreBtnliLenght + 1)?.forEach((el) => {
+                el.style.display = 'none';
+              });
+              ul.style.gridTemplateColumns = `repeat(${hasMoreBtnliLenght}, minmax(0, 1fr))`;
+              hasMoreBtn = false;
+            } else {
+              ul.style.gridTemplateColumns = `repeat(${liLenght}, minmax(0, 1fr))`;
+            }
           }
         });
     }
@@ -351,11 +387,13 @@ export default async function decorate(block) {
     </button>`;
   let mobFragment = null;
   hamburger.addEventListener('click', async (e) => {
+    let mobNav = null;
     if (!mobFragment) {
       mobFragment = await loadFragment(getMetadata('mobilenav'));
-      const mobNav = mobFragment.querySelector('.default-content-wrapper');
+      mobNav = mobFragment.querySelector('.default-content-wrapper');
       mobNav.classList.add('desk-dp-none');
       navBrand.prepend(mobNav);
+
       // navSections.prepend(mobFragment.lastElementChild.lastElementChild);
       mobNav.querySelectorAll(':scope > ul > li').forEach((navSection) => {
         wrapListUE(navSection);
@@ -402,6 +440,31 @@ export default async function decorate(block) {
       });
     }
     toggleMenu(nav, navSections);
+    mobNav
+      .querySelectorAll(':scope  > ul')
+      .forEach((navSection) => {
+        const target = navSection?.querySelector('*:has(p >em>strong>u)');
+        let u = target?.querySelector('p >em>strong>u');
+        if (u) {
+          let uText = u.textContent.trim().split("--");
+          let parentLi = u.closest("li");
+          parentLi.previousElementSibling.querySelector('p').style.borderBottom = "none";
+          // debugger;
+          let isClosed = parentLi.querySelector("ul").getAttribute("aria-expanded") == 'true';
+          parentLi.onclick = (e) => {
+            if (isClosed) {
+              u.textContent = uText[0];
+              isClosed = !isClosed;
+            }
+            else {
+              u.textContent = uText[1];
+              isClosed = !isClosed;
+            }
+          };
+          if (isClosed) u.textContent = uText[0];
+          else u.textContent = uText[1];
+        }
+      });
   });
   nav.prepend(hamburger);
 
@@ -424,7 +487,6 @@ export default async function decorate(block) {
   mobileSections?.prepend(mobileLogo);
   block.classList.remove('dp-none');
 
-
   try {
     if (getMetadata('category-type') === 'retails-finance') {
       navtools.querySelectorAll('li')[0].classList.add('active');
@@ -434,5 +496,4 @@ export default async function decorate(block) {
   } catch (error) {
     console.warn(error);
   }
-
 }

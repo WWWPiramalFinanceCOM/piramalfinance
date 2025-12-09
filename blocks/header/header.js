@@ -353,9 +353,11 @@ export default async function decorate(block) {
                     if (isShowMoreActive) {
                       u.textContent = uText[1];
                       el.style.display = 'block';
+                      u.classList.add("open")
                     } else {
                       u.textContent = uText[0];
                       el.style.display = 'none';
+                      u.classList.remove("open")
                     }
                   });
                   isShowMoreActive = !isShowMoreActive;

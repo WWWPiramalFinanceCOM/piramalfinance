@@ -1563,6 +1563,12 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li:has(p >em>strong>u) u {
   font-style: normal;
+  text-decoration: none;
+}
+
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li:has(p >em>strong>u) u.open {
+  /* font-style: normal; */
+  color: #F26E24;
 }
 
 .header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child span img {

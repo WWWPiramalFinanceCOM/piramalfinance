@@ -1556,7 +1556,7 @@ body.modal-open footer {
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li:has(p >em>strong>u) {
   position: absolute;
   right: -52px;
-  bottom: 5px;
+  /* bottom: 5px; */
   width: 141px;
 }
 
@@ -1570,7 +1570,7 @@ body.modal-open footer {
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li:has(p >em>strong>u) u::after,
 .header-wrapper.primary .nav-wrapper #nav .default-content-wrapper>ul>li>ul>li:has(p >em>strong>u) u::after {
   content: "";
-  background-image: url(../../images/two_down-arrow.png);
+  background-image: url(../../images/two_up-arrow.png);
   position: absolute;
   width: 20px;
   height: 20px;
@@ -1585,7 +1585,7 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li:has(p >em>strong>u) u.open::after,
 .header-wrapper.primary .nav-wrapper #nav .default-content-wrapper>ul>li>ul>li:has(p >em>strong>u) u.open::after {
-  background-image: url("../../images/two_up-arrow.png");
+  background-image: url("../../images/two_down-arrow.png");
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li:has(p >em>strong>u) u.open {

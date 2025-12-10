@@ -247,6 +247,7 @@ export default async function decorate(block) {
       navlogin(targetObject.pageName);
       loginFlag = false;
     });
+    let isFirst = true;
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li:has(ul)')
       .forEach((navSection) => {
@@ -279,6 +280,11 @@ export default async function decorate(block) {
               navSection.setAttribute('aria-expanded', 'true');
               navSections.setAttribute('aria-expanded', 'true');
               body.classList.add('modal-open');
+              if (isFirst) {
+                let ulHeight = e.currentTarget.querySelector("ul").offsetHeight;
+                e.currentTarget.querySelector(".show-more-btn").closest("li").style.top = `${ulHeight - 60}px`;
+                isFirst = false;
+              }
               // if (expanded) {
               //   body.classList.remove('modal-open');
               // } else {
@@ -334,6 +340,7 @@ export default async function decorate(block) {
       navSections
         .querySelectorAll(':scope .default-content-wrapper > ul >li:has(ul li)')
         .forEach((navSection) => {
+          // debugger;
           if (navSection?.querySelector(':scope >ul >li >ul >li')) {
             const ul = navSection.querySelector('ul');
             // const subul = ul.querySelectorAll(":scope >li");
@@ -346,6 +353,7 @@ export default async function decorate(block) {
                 // };
                 let uText = u.textContent.trim().split("--");
                 u.textContent = uText[0];
+                u.classList.add("show-more-btn");
                 hasMoreBtn = true;
                 hasMoreBtnliLenght = ind;
                 ele.onclick = function (e) {

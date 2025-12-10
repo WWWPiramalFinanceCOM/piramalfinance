@@ -335,7 +335,11 @@ export default async function decorate(block) {
             const ul = navSection.querySelector('ul');
             // const subul = ul.querySelectorAll(":scope >li");
             const liLenght = ul.children.length;
-            ul.style.gridTemplateColumns = `repeat(${liLenght}, minmax(0, 1fr))`;
+            if (liLenght < 5) {
+              ul.style.gridTemplateColumns = `repeat(${liLenght}, minmax(0, 1fr))`;
+            } else {
+              ul.style.gridTemplateColumns = `repeat(4, minmax(0, 1fr))`;
+            }
           }
         });
     }

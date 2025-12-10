@@ -349,15 +349,17 @@ export default async function decorate(block) {
                 hasMoreBtn = true;
                 hasMoreBtnliLenght = ind;
                 ele.onclick = function (e) {
+                  e.stopPropagation();
                   Array.from(ul?.children)?.slice(ind + 1)?.forEach((el) => {
                     if (isShowMoreActive) {
                       u.textContent = uText[1];
-                      el.style.display = 'block';
-                      u.classList.add("open")
+                      u.classList.add("open");
+                      el.classList.add("open");
                     } else {
+                      e.currentTarget.closest('li[tabindex="0"].nav-drop').focus();
                       u.textContent = uText[0];
-                      el.style.display = 'none';
                       u.classList.remove("open")
+                      el.classList.remove("open")
                     }
                   });
                   isShowMoreActive = !isShowMoreActive;
@@ -367,7 +369,8 @@ export default async function decorate(block) {
             });
             if (hasMoreBtn) {
               Array.from(ul.children)?.slice(hasMoreBtnliLenght + 1)?.forEach((el) => {
-                el.style.display = 'none';
+                el.classList.add("show-more-btn");
+                el.parentElement.style.paddingBottom = '35px';
               });
               ul.style.gridTemplateColumns = `repeat(${hasMoreBtnliLenght}, minmax(0, 1fr))`;
               hasMoreBtn = false;
@@ -452,19 +455,21 @@ export default async function decorate(block) {
           let parentLi = u.closest("li");
           parentLi.previousElementSibling.querySelector('p').style.borderBottom = "none";
           // debugger;
-          let isClosed = parentLi.querySelector("ul").getAttribute("aria-expanded") == 'true';
+          let isClosed = parentLi.querySelector("ul").getAttribute("aria-expanded") == 'false';
           parentLi.onclick = (e) => {
             if (isClosed) {
               u.textContent = uText[0];
               isClosed = !isClosed;
+              u.classList.add("open");
             }
             else {
               u.textContent = uText[1];
               isClosed = !isClosed;
+              u.classList.remove("open");
             }
           };
-          if (isClosed) u.textContent = uText[0];
-          else u.textContent = uText[1];
+          if (isClosed) { u.textContent = uText[0]; u.classList.remove("open"); }
+          else { u.textContent = uText[1]; u.classList.add("open"); }
         }
       });
   });

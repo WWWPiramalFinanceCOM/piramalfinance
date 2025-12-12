@@ -378,6 +378,16 @@ function renderWhatsAppSection(props) {
 function createOtpPopupHTML(props) {
   // Extract required props
   const [
+    frontImage,
+    description,
+    buttonText,
+    buttonHref,
+    placeholder,
+    spantext,
+    uppertext,
+    submitText,
+    tnc,
+    checkbox,
     whatsapplock,
     whatsapplockalt,
     otphead,

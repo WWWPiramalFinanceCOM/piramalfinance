@@ -2,7 +2,7 @@ import {
   brachDropDownUl, branchInput, loanProduct, stateDropDownUL, stateInput,
 } from './loanformdom.js';
 import { statemasterDataMap } from './statemasterDataMapping.js';
-import { clearPLLoanError, validatePLLoan } from './validation.js';
+import { clearPLLoanError,checkAllFieldValidation ,validatePLLoan } from './validation.js';
 import { statemasterGetStatesApi } from './statemasterapi.js';
 
 let statemasterGlobal = statemasterDataMap.get('statemasterGlobal') || {};

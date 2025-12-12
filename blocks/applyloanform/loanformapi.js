@@ -1,3 +1,6 @@
+// import { ProductLogics } from "./loadformlogic";
+// import { otpPopupFailureFun, removeLoader } from "../../../../clientlibs/support/otppopup/js/otppopup";
+
 import {
   errorPopUp, formInteraction, generateLead, lpOtpValidate, resendOtp, thankYouPopUp, verifyOtp,
 } from '../../dl.js';
@@ -339,6 +342,12 @@ function verifyOtpBtnClick() {
           if (ProductLogics(loanFormCriteria())) {
             loaninnerform.classList.add('loan-form-success');
             loanStatus = 'Approved';
+
+               // try {
+            //   generateLead(formName, formLoanType, formLoanAmount, formState, formBranchCity, targetObject.pageName);
+            // } catch (error) {
+            //   console.warn(error);
+            // }
 
             try {
               thankYouPopUp(formName, formLoanType, targetObject.pageName);

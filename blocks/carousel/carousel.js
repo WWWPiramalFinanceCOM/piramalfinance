@@ -1,7 +1,13 @@
 import { targetObject } from '../../scripts/scripts.js';
 import { body, createCarousle } from '../../scripts/common.js';
+import { applyLoanFormClick, formOpen } from '../applyloanform/applyloanforms.js';
+import { buttonCLick } from '../applyloanform/loanformapi.js';
+import { loanutmForm } from '../applyloanform/loanutm.js';
+import { stateMasterApi, statemasterGetStatesApi } from '../applyloanform/statemasterapi.js';
+import { validationJSFunc } from '../applyloanform/validation.js';
 import { generateDetailedTeaserDOM } from '../detailed-teaser/detailed-teaser.js';
 import { generateTeaserDOM } from '../teaser/teaser.js';
+import gliderMin from './glider.js';
 
 const carouselContainerMapping = {};
 carouselContainerMapping['detailed-teaser'] = generateDetailedTeaserDOM;
@@ -13,6 +19,7 @@ function updateButtons(entries) {
     // if panel has become > 60% visible
     if (entry.isIntersecting) {
       // get the buttons
+            // const carouselButtons = entry.target.parentNode.parentNode.querySelector('.button-container');
       const carouselButtons = entry.target.parentNode.parentNode.lastChild;
       // remove selected state from whatever button has it
       [...carouselButtons.querySelectorAll(':scope button')].forEach((b) => b.classList.remove('selected'));
@@ -186,12 +193,25 @@ export default function decorate(block) {
         }
       }
     }
-    slidePrev?.addEventListener('click', () => {
+    slidePrev?.addEventListener('click', (e) => {
       slidePrevEventHandler();
     });
-    slideNext.addEventListener('click', () => {
+    slideNext.addEventListener('click', (e) => {
       slideNextEventHandler();
     });
+
+     /* try {
+      document.querySelectorAll('.open-form-on-click') && document.querySelectorAll('.open-form-on-click .button-container').forEach(function (eachApplyFormClick) {
+        eachApplyFormClick.addEventListener('click', async (e) => {
+          statemasterGetStatesApi();
+          validationJSFunc();
+          formOpen();
+          e.preventDefault();
+        });
+      });
+    } catch (error) {
+      console.warn(error);
+    } */
 
     if (buttonContainer.children.length) {
       block.append(buttonContainer);

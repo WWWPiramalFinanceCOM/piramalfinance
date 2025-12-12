@@ -90,6 +90,8 @@ export async function innerBranchFunc(branchhList) {
               <p class='card-gmail'> <span> <img src='/images/gmail.svg' alt='gmail-icon'/> </span> ${placeholders.branchlocatorgmail} </p> 
               <a href="${branchURLStr(eachLocation, eachCity, eachState, 'loans', eachLocationCode)}" id='more-details-btn'>${placeholders.moredetailtext}  </a> 
             </div>`;
+         // <a href="/branch-locator/${eachState}/${eachCity}/loans-in-${eachCity}-${eachState}-${eachLocationCode}" id='more-details-btn'> More details </a>
+
   });
   return innerBranch;
 }
@@ -119,6 +121,21 @@ export default async function decorate(block) {
   onloadBranchLocator(block);
   locateMeClick(block);
   BLNavUpdate(block);
+
+  /* function myMap(lat, long) {
+      var mapProp = {
+          center: new google.maps.LatLng(lat, long),
+          zoom: 15,
+      };
+      var map = new google.maps.Map(block.closest('.section').querySelector('.map-container'), mapProp);
+  }
+
+    returnLatLan().then(function ({ lat, lng }) {
+        loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDx1HwnCLjSSIm_gADqaYAZhSBh7hgcwTQ").then((resolve) => {
+            myMap(lat, lng);
+        });
+    }); */
+
 }
 
 function BLNavUpdate(block) {

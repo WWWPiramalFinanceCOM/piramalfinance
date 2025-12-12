@@ -21,6 +21,10 @@ export default async function decorate(block) {
     const reponseData = cfRepsonse && cfRepsonse.data;
     jsonResponseData = groupAllKeys(reponseData);
     sessionStorage.setItem('branchloanmapping', JSON.stringify(jsonResponseData));
+
+     /* const repsonseData = cfRepsonse && cfRepsonse.data[0].branchloanmapping;
+    const jsonResponseData = repsonseData && JSON.parse(repsonseData); */
+
   }
 
   Object.keys(jsonResponseData).forEach((eachKey) => {

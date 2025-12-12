@@ -85,6 +85,15 @@ function initEventListeners(block, groupedLocations) {
     displayCards(block, selectedCity, groupedLocations.grouped);
   });
 
+    /* block.closest('body').addEventListener('click', (e) => {
+    if (!e.target.closest('.toggleCityContainer') && !e.target.closest('.select-container') && !e.target.closest('fieldset') && !e.target.closest('cityBlack')) {
+      if (selectContainer.classList.contains('open')) {
+        citiesContainer.style.display = 'none';
+        selectContainer.classList.remove('open');
+      }
+    }
+  }); */
+
   window.onscroll = () => displayCards(block, inputLocationValue, groupedLocations.grouped);
 }
 
@@ -145,7 +154,7 @@ function displayCards(block, selectedCityName, groupedLocations, index) {
 
 function formatLocation(location) {
   const arr = location.split(' ');
-  return arr.map((item) => {
+  return arr.map(item => {
     const lowercased = item.toLowerCase();
     return lowercased.charAt(0).toUpperCase() + lowercased.slice(1);
   }).join(' ');

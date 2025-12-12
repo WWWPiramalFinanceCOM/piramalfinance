@@ -1,16 +1,19 @@
 import {
   applyLoanInteraction,
-  applyLoanNow, ctaClick, formInteraction, talkToExpert,
+  applyLoanNow, ctaClick, formInteraction, resendOtp , talkToExpert,
 } from '../../dl.js';
 import { targetObject } from '../../scripts/scripts.js';
 import {
   branchInput,
+  cutomerEmployment,
   cutomerIncome,
   cutomerName,
   cutomerNo,
   formDobInput,
   formLoanAmt,
   formTc,
+    loanFormContainer,
+  loanFormOtpBtn,
   loanOtpInput,
   loanProduct,
   otpNumChange,
@@ -159,6 +162,13 @@ export function applyLoanFormClick() {
           }
         }
 
+          /* if(loaninnerform){
+          let ulFormBranch = document.createElement('li');
+          ulFormBranch.textContent = "No options";
+          ulFormBranch.classList.add('orangepoints');
+          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
+        } */
+
         loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
         loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
       });
@@ -269,12 +279,20 @@ export function applyLoanFormClick() {
 
           bodyElement.style.overflowY = 'auto';
           loaninnerform.style.visibility = 'hidden';
-
+            // resetLoanForm();
+          // loaninnerform.classList.remove("loan-form-sub-otp", "loan-form-success", "loan-form-request-fail", "loan-form-something-wrong");
           if (loaninnerform.classList.contains('loan-form-success')) {
             loaninnerform.classList.remove('loan-form-success');
             loaninnerform.classList.remove('loan-form-sub-otp');
           }
         }
+
+           /* if(loaninnerform){
+          let ulFormBranch = document.createElement('li');
+          ulFormBranch.textContent = "No options";
+          ulFormBranch.classList.add('orangepoints');
+          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
+        } */
 
         resetLoanForm();
         loaninnerform.classList.remove('loan-form-sub-otp', 'loan-form-success', 'loan-form-request-fail', 'loan-form-something-wrong');
@@ -371,10 +389,18 @@ export function applyLoanFormClick() {
           loanOtpInput().value = '';
           loaninnerform.classList.remove('loan-form-sub-otp', 'loan-form-success', 'loan-form-request-fail', 'loan-form-something-wrong');
         }
+
+          /* if(loaninnerform){
+          let ulFormBranch = document.createElement('li');
+          ulFormBranch.textContent = "No options";
+          ulFormBranch.classList.add('orangepoints');
+          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
+        } */
+
       }
     });
 
-    overlay.addEventListener('click', () => {
+    overlay.addEventListener('click', (event) => {
       if (window.matchMedia('(max-width: 1024px)').matches) {
         // overlay.classList.remove("show");
         document.querySelector('.modal-overlay').classList.remove('overlay');
@@ -383,8 +409,18 @@ export function applyLoanFormClick() {
         loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
         loaninnerform.style.visibility = 'hidden';
         bodyElement.style.overflowY = 'auto';
+
+             /* if(loaninnerform){
+          let ulFormBranch = document.createElement('li');
+          ulFormBranch.textContent = "No options";
+          ulFormBranch.classList.add('orangepoints');
+          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
+        } */
+
       }
     });
+
+  // })
 
     function toggleOptionForm(optionFormParent) {
       if (optionFormParent.style.display === 'block') {
@@ -538,6 +574,11 @@ export function applyLoanFormClick() {
       clearInterval(intervalTime);
       loanOtpInput().value = '';
     });
+
+
+    // loanFormOtpBtn().addEventListener('click', () => {
+    //   clearInterval(intervalTime);
+    // });
 
     function startTimer(footer_time_limit, footer_time_out) {
       clearInterval(footer_time_out);

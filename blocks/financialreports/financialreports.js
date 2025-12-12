@@ -3,7 +3,7 @@ import { fetchAPI, getProps, renderHelper } from '../../scripts/common.js';
 
 export default async function decorate(block) {
   const props = getProps(block);
-  const [url, sortType] = props;
+  const [url, type, sortType] = props;
   block.innerHTML = '';
   try {
     const resp = await fetchAPI('GET', url);

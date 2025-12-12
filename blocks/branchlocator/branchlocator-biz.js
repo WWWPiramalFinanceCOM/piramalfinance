@@ -149,6 +149,11 @@ async function getStateCity(lat, lng) {
     }
 
     setLocationObj.geoInfo = locationInfo;
+
+    // Uncomment and modify if needed:
+    /* setLocationObj.getExcelData[locationInfo.state] = setLocationObj.getExcelData[locationInfo.state].filter((each) => {
+      return each['Location'].includes(locationInfo.city);
+    }); */
   } catch (error) {
     console.error('Error in getStateCity:', error);
     throw error;
@@ -166,6 +171,21 @@ function getStateName(lat, lan) {
       });
   });
 }
+
+/* function sortingNearestBranch(lat, lng, data) {
+  const filteredLocations = Object.values(data)
+    .flat()
+    .map((location) => ({
+      ...location,
+      distance: calculateDistance(lat, lng, location.Latitude, location.Longitude),
+    }))
+    .filter((location) => location.distance <= 40)
+    .sort((a, b) => a.distance - b.distance);
+
+  console.log(filteredLocations);
+
+  return filteredLocations;
+} */
 
 function calculateDistance(lat1, lng1, lat2, lng2) {
   const R = 6371; // Radius of the Earth in km
@@ -285,7 +305,9 @@ async function handleStateClick(e, block) {
 
     bizCityDD(setLocationObj.getExcelData);
     defaultSelectedCityState(block);
-    renderCity(block);
+      renderCity(block);
+
+        // const branchList = sortingNearestBranch(setLocationObj.lat, setLocationObj.lng, setLocationObj.getExcelData);
 
     const branchList = sortByCityandState(setLocationObj.getExcelData[setLocationObj.geoInfo.state]);
 
@@ -311,6 +333,8 @@ async function handleCityClick(e, block) {
     setLocationObj.lng = excelValueObj.Longitude;
 
     defaultSelectedCityState(block);
+
+    // const branchList = sortingNearestBranch(setLocationObj.lat, setLocationObj.lng, setLocationObj.getExcelData);
 
     const branchList = sortByCityandState(setLocationObj.getExcelData[setLocationObj.geoInfo.state]);
 

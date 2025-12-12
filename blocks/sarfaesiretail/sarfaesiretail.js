@@ -1,5 +1,5 @@
 import { targetObject } from '../../scripts/scripts.js';
-import { CFApiCall } from '../../scripts/common.js';
+import { CFApiCall, fetchAPI } from '../../scripts/common.js';
 
 export default async function decorate(block) {
   const cfURL = block.textContent.trim();

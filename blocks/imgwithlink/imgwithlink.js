@@ -1,5 +1,5 @@
 import { ctaClick, ctaClickInteraction, outboundClick } from '../../dl.js';
-import { autoLinkLangPaths } from '../../scripts/aem.js';
+import { autoLinkLangPath, autoLinkLangPaths } from '../../scripts/aem.js';
 import { targetObject } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
@@ -14,6 +14,7 @@ export default function decorate(block) {
       autoLinkLangPaths(mobileLinks);
       const anchor_class = desktopLinks.length > 0 ? desktopLinks : mobileLinks;
       anchor_class.length > 0 && anchor_class[0].removeAttribute('href');
+      // document.querySelectorAll('.download-piramal-wrapper .image-href-desktop a')[0].removeAttribute('href');
     }
     aTagPreventDefault();
   }

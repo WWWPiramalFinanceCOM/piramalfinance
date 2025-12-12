@@ -1,3 +1,4 @@
+import { decorateIcons } from "../../scripts/aem.js";
 import { decoratePlaceholder } from '../../scripts/scripts.js';
 import { decodeHtmlSymbols } from '../../scripts/common.js';
 import { mobileHeaderAnalytics } from './code-analytics.js';

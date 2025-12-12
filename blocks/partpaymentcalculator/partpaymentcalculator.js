@@ -1,4 +1,4 @@
-import { CFApiCall } from '../../scripts/common.js';
+import { CFApiCall, fetchAPI } from '../../scripts/common.js';
 import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js';
 import { onloadDatePickerCalls } from './partpaymentdatepicker.js';
 import { partPaymentCalHTML } from './partpaymenttemplate.js';
@@ -23,6 +23,8 @@ export default async function decorate(block) {
 
     if (document.querySelector('.home-loan-calculator-parent').classList.contains('combined-emi-eligibility')) {
       document.querySelector('.home-loan-calculator-parent').classList.remove('combined-emi-eligibility');
+        /* document.querySelector(".homeloancalculator").querySelector(".eligibilitycalculator") &&
+        (document.querySelector(".homeloancalculator").querySelector(".eligibilitycalculator").style.display = "block"); */
     }
 
     homeLoanCalcFunc(currentSection);

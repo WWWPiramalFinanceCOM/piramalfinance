@@ -3,7 +3,7 @@ import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js
 import { CalcHTM } from '../emiandeligiblitycalc/templatehtml1.js';
 import { firstTabActive } from '../emiandeligiblitycalc/commonfile.js';
 import { targetObject } from '../../scripts/scripts.js';
-import { calculatorFlatStrLogic, CFApiCall } from '../../scripts/common.js';
+import { calculatorFlatStrLogic, CFApiCall, fetchAPI } from '../../scripts/common.js';
 
 let calculatorType; let emiCalDiv; let emiOverlay; let overlay;
 

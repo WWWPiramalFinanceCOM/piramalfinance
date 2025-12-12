@@ -132,6 +132,11 @@ export default async function decorate(block) {
           try {
             const click_text = e.target.innerText;
             const menu_category = e.target.closest('ul').closest('li')?.querySelector('p')?.innerText;
+             // console.log("click_text :: ", e.target.innerText);
+            // console.log("menu_category :: ", e.target.closest("ul").closest("li")?.querySelector("p")?.innerText);
+            // console.log("menu_category :: ", e.target.closest(".navigation-level-active")?.querySelector("p")?.innerText);
+            // console.log(targetObject.ctaPosition);
+            // console.log(targetObject.pageName);
             headerInteraction(
               click_text,
               menu_category,

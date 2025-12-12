@@ -122,6 +122,7 @@ function renderHelper(data, template, callBack) {
           copyTemplate = copyTemplate.replace(`{${key}}`, value);
         });
         templates += copyTemplate;
+         // });
       }
     }
     eachLoop.outerHTML = templates;

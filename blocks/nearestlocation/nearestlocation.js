@@ -22,6 +22,7 @@ export function nearestLoction(placeholders) {
         <p class='card-gmail'> <span> <img src='/images/gmail.svg' alt='gmail-icon'/> </span> ${placeholders.branchlocatorgmail}</p> 
         <a href="${branchURLStr(eachLocationAdd, eachCity, eachState, 'loans', eachLocationCode)}" id='more-details-btn'> ${placeholders.moredetailtext} </a> 
         </div>`;
+        // <a href="/branch-locator/${eachState}/${eachCity}/loans-in-${eachCity}-${eachState}-${eachLocationCode}" id='more-details-btn'> More details </a>
   });
 
   const mainWrapperNearest = `<div class='cards-branches cards-branches-container mt-45 mb-40 mob-mb-45'>

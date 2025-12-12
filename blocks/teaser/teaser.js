@@ -42,12 +42,15 @@ export function generateTeaserDOM(props, classes) {
     firstCta,
     secondCta,
     ctaImage,
+    ctaImageAlt,
     ctaImageUrl,
     imageText,
     ctaImage2,
+    ctaImageAlt2,
     ctaImageUrl2,
     imageText2,
     ctaImage3,
+    ctaImageAlt3,
     ctaImageUrl3,
     imageText3,
     mobileImage,
@@ -71,6 +74,7 @@ export function generateTeaserDOM(props, classes) {
   else {
     bgPictureStyle = bgPicture?.querySelector('img')?.src && bgPicture?.querySelector('img').src ? ` style='background-image:url(${bgPicture?.querySelector('img').src})' ` : '';
   }
+    // const bgPictureStyle = bgPicture?.querySelector('img')?.src && bgPicture?.querySelector('img').src ? ` style='background-image:url(${bgPicture?.querySelector('img').src})' ` : '';
   const mobileImageStyle = mobileImage?.querySelector('img')?.src ? ` style='background-image:url(${mobileImage?.querySelector('img')?.src})' ` : '';
   let bgImageAllow = bgPictureStyle;
   if (targetObject.isTab) {

@@ -23,6 +23,8 @@ export default async function decorate(block) {
     block.querySelectorAll('li,p').forEach((el) => {
       el.addEventListener('click', (e) => {
         if (e.target.closest('.footer-section-first') || e.target.closest('.footer-section-second')) {
+          // console.log("click_text :: ", e.target.innerText);
+          // console.log("menu_category :: ", e.target.closest("ul")?.closest("li")?.querySelector("p")?.innerText);
           try {
             const click_text = e.target.innerText;
             const menu_category = e.target.closest('ul')?.closest('li')?.querySelector('p')?.innerText;

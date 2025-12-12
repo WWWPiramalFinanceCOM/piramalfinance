@@ -64,7 +64,7 @@ function openFunctionFAQ(block) {
   const titles = block.querySelectorAll('details summary');
 
   titles.forEach((title) => {
-    title.addEventListener('click', function () {
+    title.addEventListener('click', function (e) {
       if (this.classList.contains('active')) {
         setTimeout(() => {
           this.closest('details').removeAttribute('open');

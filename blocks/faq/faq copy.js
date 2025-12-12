@@ -2,7 +2,7 @@ export default function decorate(block) {
   let count = 0;
   let className = '';
   const parents = Array.from(block.querySelector('h2').parentElement.children);
-  parents.forEach((eachEl) => {
+  parents.forEach((eachEl, index) => {
     if (eachEl instanceof HTMLHeadingElement) {
       // eachEl.setAttribute('aria-hidden', 'false')
       // toggleHidden(eachEl)

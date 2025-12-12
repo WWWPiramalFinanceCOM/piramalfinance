@@ -1,6 +1,5 @@
 import { ctaClickInteraction } from '../../dl.js';
 import { createCarousle, getProps } from '../../scripts/common.js';
-
 function createButton(text, picture) {
   const button = document.createElement('button');
   button.classList.add('carousel-control', text);
@@ -8,19 +7,16 @@ function createButton(text, picture) {
   return button;
 }
 export function generateTabName(block) {
-  const [
-    name,
-    id,
-    classes,
-    prev,
-    next,
-    ...imageSrc] = getProps(block, {
+  // const [name, id, type] = block.children;
+  // const names = name.innerText.split(",");
+  // const ids = id.innerText.split(",");
+  // const classes = type.innerText.trim();
+  const [name, id, typename, classes, prev, next, nestedTabId, nestedTabActive, ...imageSrc] = getProps(block, {
     index: [4, 5],
   });
   const names = name.split(',');
   const ids = id.split(',');
   const imagesSrc = [...imageSrc];
-
   const tabsTemplate = '';
   block.innerHTML = '';
   block.classList.add(classes || 'normal');
@@ -45,7 +41,6 @@ export function generateTabName(block) {
     // observer.observe(div);
     // tabsTemplate += `<div id="${ids[index].trim().replace(/ /g, '-')}">${eachName.trim()}</div>`
   });
-
   const prevButton = createButton('prev', prev?.outerHTML);
   const nextButton = createButton('next', next?.outerHTML);
   prevButton.classList.add(classes === 'normal' ? 'dp-none' : 'dp-normal');
@@ -55,11 +50,10 @@ export function generateTabName(block) {
   block.append(carouselInner);
   // classes = classes == "normal" ? "glider" : classes; // Line to removed
   if (classes == 'glider') {
-    // console.log('glider');
+    console.log('glider');
   } else if (classes === 'carousel') {
     createCarousle(block, prevButton, nextButton);
   }
-
   block.addEventListener('click', (e) => {
     let currentEl = e.target;
     if (classes == 'glider' && (currentEl.closest('.glider-prev') || currentEl.closest('.glider-next'))) {
@@ -88,6 +82,7 @@ export function generateTabName(block) {
       section.querySelector(`.tab-container[data-id=${firsttab.id}]`).classList.add('active');
       section.querySelector(`.tab-container[data-id=${firsttab.id}]`).classList.remove('dp-none');
       section.querySelectorAll('.nested-tab-name-child').forEach((el, index) => {
+        // section.querySelector(".tab-name").children[0].children[index].classList.remove("active");
         section.querySelector('.tab-name-nested').children[0].children[0].children[index].classList.remove('active');
         el.classList.add('dp-none');
         el.classList.remove('active');
@@ -100,6 +95,7 @@ export function generateTabName(block) {
     } else if (tabContainer) {
       const section = tabContainer.closest('.section');
       section.querySelectorAll('.tab-container').forEach((el, index) => {
+        // section.querySelector(".tab-name").children[0].children[index].classList.remove("active");
         section.querySelector('.tab-name')?.children[0].children[index].classList.remove('active');
         if (classes == 'glider') {
           section.querySelector('.nested-tab-name-child.active')?.children[0]?.children[0]?.children[index]?.classList.remove('active');
@@ -121,7 +117,6 @@ export function generateTabName(block) {
         document.querySelector('.section.partnerships-cards-wrapper').classList.remove('dp-none');
       }
     }
-
     /* Corporate Analytics */
     try {
       if (e.target.closest('.tab-name-wrapper')) {
@@ -136,7 +131,6 @@ export function generateTabName(block) {
   });
   return block;
 }
-
 export default function decorate(block) {
   return generateTabName(block);
 }

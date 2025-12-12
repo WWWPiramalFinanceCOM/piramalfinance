@@ -1,3 +1,4 @@
+import { toBase64 } from './base-64.js';
 import createField from './form-fields.js';
 
 async function createForm(formHref, submitHref) {

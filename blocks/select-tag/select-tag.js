@@ -83,7 +83,7 @@ export default async function decorate(block) {
     });
   });
 
-  innerDiv.addEventListener('click', () => {
+  innerDiv.addEventListener('click', (e) => {
     if (selectTag.classList.contains('dp-none')) {
       selectTag.classList.remove('dp-none');
     } else {

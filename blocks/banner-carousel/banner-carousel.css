@@ -24,7 +24,7 @@
     margin: auto;
 
     @media only screen and (max-width: 767px) {
-        top: 45%;
+        top: 23%;
         padding: 0px 63px;
         justify-content: flex-start;
         align-items: center;
@@ -77,8 +77,9 @@
 
     @media only screen and (max-width: 767px) {
         /* top: 60%; */
-        top: 75%; 
+        /* top: 75%;  */
         margin-top: unset;
+        bottom: 21%;
     }
 }
 .section.banner-carousel-container.cards-container .cards-wrapper .cards-block {
@@ -139,12 +140,14 @@ section.banner-carousel-container .cards-wrapper .cards-card-body p {
 
     @media only screen and (max-width: 767px) {
         width: 33px;
+        height: 39px;
     }
 }
 .section.banner-carousel-container.cards-container .cards-wrapper .cards-card-image {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 12px;
 }
 .section.banner-carousel-container.cards-container .cards-wrapper .cards-card-image picture {
     margin-bottom: 20px;

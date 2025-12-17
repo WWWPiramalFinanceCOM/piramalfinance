@@ -120,7 +120,7 @@
 .section.commitment-wrap .cards-wrapper .cards.block ul {
       display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 220px 80px 220px;
+    /* grid-template-rows: 220px 80px 220px; */
 }
 
 /* Common Card Styles */
@@ -497,6 +497,8 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     }
 }
 
+
+
 .section.esg-commit.rte-container .default-content-wrapper .button-container a.button[title="ESG Report 2024"]{
         padding: 15px;
     border-radius: 8px;
@@ -507,9 +509,10 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     line-height: 27.2px;
     letter-spacing: 0.2px;
     display: flex;
-    max-width: 177px;
     background: white;
     color: #F26E24;
+    justify-content: center;
+    border: 1px solid #F26E24
 }
 .section.esg-commit.rte-container .default-content-wrapper .button-container a.button[title="View Sustainability Initiatives"]{
        color: #FFFFFF;
@@ -625,6 +628,28 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     color: #184E7D;
 }
 
+section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(1){
+
+    @media only screen and (max-width:767px){
+
+        max-width: 297px;
+        width: 100%;
+    }
+}
+section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
+
+    @media only screen and (max-width:767px){
+
+        max-width: 297px;
+        width: 100%;
+    }
+}
+
+.section.esg-commit.rte-container > div.rte-wrapper > div > div > div > ul > li:nth-child(1) > ul > li > ul > li:nth-child(1) > p > .icon.icon-environmental-icon{
+        width: 40px;
+    height: 40px;
+}
+
 
 /* TABS END */
 
@@ -733,9 +758,9 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     margin-right: unset !important;
     max-width: 379px;
 
-    @media only screen and (max-width:767px){
+    /* @media only screen and (max-width:767px){
         padding: 0px 15px;
-    }
+    } */
 }
 
 .section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > p > a,
@@ -801,7 +826,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
-    font-size: 20px;
+    /* font-size: 20px; */
     line-height: 30px;
     letter-spacing: 0px;
     vertical-align: middle;
@@ -818,7 +843,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     /* font-family: Montserrat; */
     font-weight: 400;
     font-style: Regular;
-    font-size: 20px;
+    /* font-size: 20px; */
     /* leading-trim: NONE; */
     line-height: 30px;
     letter-spacing: 0px;
@@ -927,11 +952,76 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 @media (max-width: 767px) {
+    /* Add padding to container for button space */
+    .section.stay-informed .cards.block {
+        position: relative;
+        padding-bottom: 70px;
+        overflow: hidden;
+        width: 100%;
+        /* padding-left: 16px; */
+        /* padding-right: 16px; */
+    }
+    
+    /* Center the swiper wrapper */
+    .section.stay-informed .cards.block .swiper-wrapper {
+        display: flex;
+        align-items: center;
+        transition-timing-function: ease-out;
+    }
+    
+    /* Make each slide centered and full width */
+    .section.stay-informed .cards.block .swiper-slide {
+        width: 343px !important;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+    }
+    
+    /* Ensure cards take proper width */
+    .section.stay-informed .cards.block .swiper-slide > * {
+        width: 100%;
+    }
+    
+    /* Ensure proper card sizing */
+    .section.stay-informed .cards.block .swiper-slide li,
+    .section.stay-informed .cards.block .swiper-slide > div {
+        max-width: 343px;
+        width: 100%;
+    }
+    
     .section.stay-informed .cards.block .swiper-button-next,
     .section.stay-informed .cards.block .swiper-button-prev {
-        /* ... your other styles ... */
-        z-index: 100; /* Increased to be safe */
+        background-color: #f37021; /* Piramal Orange */
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        z-index: 100;
         cursor: pointer;
+        top: auto;
+        bottom: 10px;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    /* Arrow icon styling */
+    .section.stay-informed .cards.block .swiper-button-next::after,
+    .section.stay-informed .cards.block .swiper-button-prev::after {
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+    }
+    
+    /* Position buttons centered at bottom */
+    .section.stay-informed .cards.block .swiper-button-prev {
+        left: 35%;
+        transform: translateX(-50%);
+    }
+    
+    .section.stay-informed .cards.block .swiper-button-next {
+        right: 35%;
+        transform: translateX(50%);
     }
 }
 
@@ -1035,7 +1125,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 }
 
 .section.leadership-wrapper #tab-panel-0-0 > div > div.default-content-wrapper > .button-container{
-    max-width: 177px;
+    max-width: 202px;
 }
 /* ============================================================================
    TABS NAVIGATION
@@ -1297,9 +1387,7 @@ CARDS GRID (Directors & Management)
   margin: 0;
   width: 100%; /* Full width on mobile */
 
-  @media only screen and (max-width:767px){
-        padding: 0px 15px;
-  }
+
 }
 
 @media (min-width: 768px) {
@@ -1459,6 +1547,11 @@ CARDS GRID (Directors & Management)
 .section.connect-us .columns.block > div {
     flex: 1;
     width: 100%;
+}
+
+.section.connect-us .columns.block > div:nth-child(2){
+    box-shadow: 0px 0px 16px 6px #11182721;
+    border-radius: 24px;
 }
 
 /* ============================================================================
@@ -1822,7 +1915,6 @@ CARDS GRID (Directors & Management)
     color: rgba(24, 78, 125, 1);
     text-align: center;
 }
-
 .piramal-foundation .default-content-wrapper .button-container a::after{
           content: "";
     background-image: url(../../icons/lucide_arrow-up.svg);
@@ -1833,6 +1925,8 @@ CARDS GRID (Directors & Management)
     background-repeat: no-repeat;
     margin-left: 8px;
 }
+
+
 @media (max-width: 767px) {
     .piramal-foundation .default-content-wrapper .button-container a {
         width: 231px;
@@ -2111,7 +2205,7 @@ CARDS GRID (Directors & Management)
     }
 }
 .bussiness-offerings .cards.block > ul li ul + p + p {
-    padding: 15px 22px;
+    /* padding: 15px 22px; */
     font-weight: 500;
     font-size: 16px;
     line-height: 30px;

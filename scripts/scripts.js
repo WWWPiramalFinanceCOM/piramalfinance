@@ -394,6 +394,9 @@ async function initSwiperForCards(block) {
     if (isMobile) {
       swiperConfig.slidesPerView = 1;
       swiperConfig.spaceBetween = 20;
+      swiperConfig.centeredSlides = true;
+      swiperConfig.slidesOffsetBefore = 25;
+      swiperConfig.slidesOffsetAfter = 25;
       swiperConfig.loop = false;
       swiperConfig.allowTouchMove = true;
       swiperConfig.simulateTouch = true;

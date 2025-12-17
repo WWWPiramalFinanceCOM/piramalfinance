@@ -3,7 +3,7 @@
   <sitemap>
     <loc>https://uatmarketing.piramalfinance.com/en/sitemap-index.xml</loc>
   </sitemap>
-   <sitemap>
+   <!-- <sitemap>
     <loc>https://uatmarketing.piramalfinance.com/hi/sitemap-index.xml</loc>
   </sitemap>
    <sitemap>
@@ -23,5 +23,5 @@
   </sitemap>
    <sitemap>
     <loc>https://uatmarketing.piramalfinance.com/ml/sitemap-index.xml</loc>
-  </sitemap>
+  </sitemap> -->
 </sitemapindex>

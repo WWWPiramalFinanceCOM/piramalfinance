@@ -756,7 +756,8 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     background-color: unset;
     border: unset;
     margin-right: unset !important;
-    max-width: 379px;
+    /* max-width: 379px; */
+    align-items: center;
 
     /* @media only screen and (max-width:767px){
         padding: 0px 15px;

@@ -475,6 +475,18 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     color: #134F7F;
 }
 
+.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul > li > p sub{
+    /* font-family: Montserrat; */
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+}
+
 /* ESG COMMIT */
 
 .section.esg-commit.rte-container{
@@ -588,9 +600,9 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     padding: 20px;
 }
 
-.section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > p{
+/* .section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > p{
         padding-bottom: 18px;
-}
+} */
 
 .section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > p{
     /* font-family: Nunito; */
@@ -645,10 +657,17 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     }
 }
 
-.section.esg-commit.rte-container > div.rte-wrapper > div > div > div > ul > li:nth-child(1) > ul > li > ul > li:nth-child(1) > p > .icon.icon-environmental-icon{
+
+.section.esg-commit.rte-container > div.rte-wrapper ul > li > ul > li > ul > li > p > span.icon{
+    /* border: 1px solid red; */
+    width: 60px;
+    height: 60px;
+}
+
+/* .section.esg-commit.rte-container > div.rte-wrapper > div > div > div > ul > li:nth-child(1) > ul > li > ul > li:nth-child(1) > p > .icon.icon-environmental-icon{
         width: 40px;
     height: 40px;
-}
+} */
 
 
 /* TABS END */

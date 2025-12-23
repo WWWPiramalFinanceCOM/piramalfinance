@@ -831,3 +831,72 @@ footer:has(.neeyat-footer) {
     display: flex;
     justify-content: center;
 }
+
+/* VIDYA PAGES CSS */
+.section.articles-cards .cards-wrapper .cards-card-body:nth-child(2){
+    display: flex;
+    flex-direction: column;
+} 
+
+.section.articles-cards .cards-wrapper .cards-card-body h3{
+    font-size: 10px;
+    padding: 6px 8px;
+    font-weight: 600;
+    display: inline-block;
+    color: #ffffff;
+    background: #f26841;
+    border-radius: 6px;
+    float: left;
+    margin-right: 8px;
+    /* max-width: 153px; */
+    /* width: 100px; */
+    display: inline-block;
+    display: inline;
+    width: 75px;
+}
+
+.section.articles-cards .cards-wrapper .cards-card-body h5{
+    padding: 12px 0px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.section.articles-cards .cards-wrapper .cards-card-body  h5 + p{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    line-height: 1.4;
+}
+
+.section.articles-cards .cards-wrapper .cards-card-body ul{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.section.articles-cards .cards-wrapper .cards-card-body  ul h4{
+    background: none !important;
+    text-decoration: none;
+    border: none;
+    color: #f26841;
+    font-size: 18px;
+    padding: 0;
+    box-shadow: none !important;
+    font-weight: bold;
+}
+ 
+.section.articles-cards .cards-wrapper .cards.block ul:nth-child(1) > li{
+        overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 12px #21252929;
+    background: #fff;
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    color: #000;
+}
+

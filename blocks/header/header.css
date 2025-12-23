@@ -829,28 +829,6 @@ body.modal-open footer {
   padding: unset;
 }
 
-
-/* 1. Define the width of the scrollbar */
-.header .nav-wrapper #nav>.section.nav-sections>div>ul>li:nth-child(7)>ul>li:nth-child(8)>ul::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* 2. Style the track (the background) */
-.header .nav-wrapper #nav>.section.nav-sections>div>ul>li:nth-child(7)>ul>li:nth-child(8)>ul::-webkit-scrollbar-track {
-  background-color: #f1f1f1; 
-}
-
-/* 3. Style the thumb (the part you drag) - MAKE THIS DARKER */
-.header .nav-wrapper #nav>.section.nav-sections>div>ul>li:nth-child(7)>ul>li:nth-child(8)>ul::-webkit-scrollbar-thumb {
-  background-color: #888; /* Darker grey for better visibility */
-  border-radius: 5px;
-}
-
-/* 4. Change color on hover so users know it's interactive */
-.header .nav-wrapper #nav>.section.nav-sections>div>ul>li:nth-child(7)>ul>li:nth-child(8)>ul::-webkit-scrollbar-thumb:hover {
-  background-color: #555; 
-}
-
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul:has(li span img) li{
   font-weight: 700;
     font-family: Nunito-Bold, sans-serif;

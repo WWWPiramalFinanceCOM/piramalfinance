@@ -790,11 +790,11 @@ body.modal-open footer {
 }
 
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li:nth-child(7)>ul{
-    height: 475px;
+    max-height: 475px;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 20px 200px;
-    max-width: unset;
+    max-width: 100%;
 }
 
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li:nth-child(7)>ul::-webkit-scrollbar{

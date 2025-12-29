@@ -816,3 +816,18 @@ footer:has(.neeyat-footer) {
 .font-size-change p {
     font-size: 12px !important
 }
+
+.section.btn-orange .default-content-wrapper .button-container a{
+    background: var(--orange);
+    border-radius: 8px;
+    color: var(--white);
+    font-family: 'Nunito-Bold', sans-serif;
+    font-size: 0.875rem;
+    padding: 15px;
+    margin: unset;
+}
+
+.section.btn-orange .default-content-wrapper{
+    display: flex;
+    justify-content: center;
+}

@@ -11982,3 +11982,8 @@ dialog[open] .modal-content .section.embed-carousel-youtube-video .embed-wrapper
         height: 22px
     }
 }
+
+.section.press-release-list-wrapper.flex .default-content-wrapper ul>li>a {
+    display: flex;
+    flex-direction: column;
+}

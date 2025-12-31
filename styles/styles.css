@@ -900,3 +900,6 @@ footer:has(.neeyat-footer) {
     color: #000;
 }
 
+.container.article-cards-aem .cmp-container .teaser .cmp-teaser{
+    border: 1px solid red;
+}

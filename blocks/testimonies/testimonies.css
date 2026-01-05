@@ -306,3 +306,66 @@
 .block.testimonies.no-float .testimony.unselected {
   display: none;
 }
+
+
+/* section metadata */
+main .section.light,
+main .section.background-light-gray {
+  background-color: var(--light-color);
+}
+
+main .section.background-light-yellow {
+  background-color: var(--background-light-yellow);
+}
+
+main .section.background-light-pink {
+  background-color: var(--background-light-pink);
+}
+
+main .section.text-centered {
+  text-align: center;
+}
+
+  /* section margin for >= tablet */
+  main .section.testimonies-wrap  {
+    padding: 60px 16px;
+  }
+
+main .section.testimonies-wrap .default-content-wrapper h2 {
+    color: var(--black);
+    display: block;
+    font-family: Nunito-Extrabold, sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 2.5rem;
+    /* padding-bottom: 8px; */
+    text-align: center;
+}
+
+main .section.testimonies-wrap .testimonies-wrapper .testimony-desc{
+      font-family: Nunito-Regular, sans-serif;
+    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: var(--darkcharcoal);
+    margin-bottom: 20px;
+    display: block;
+}
+
+main .section.testimonies-wrap .testimonies-wrapper .testimony-name{
+      font-family: Nunito-Bold, sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color: var(--darkcharcoal);
+    margin-bottom: 4px;
+    display: block;
+}
+
+main .section.testimonies-wrap .testimonies-wrapper .testimony-content em{
+      font-family: Nunito-Regular, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: gray;
+}

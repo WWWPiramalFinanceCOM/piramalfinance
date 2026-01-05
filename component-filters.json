@@ -109,7 +109,8 @@
       "formformatpdf",
       "branchcarousel",
       "branchkeyfeatures",
-      "branches"
+      "branches",
+      "testimonies"
     ]
   },
   {
@@ -192,5 +193,11 @@
   {
     "id": "container",
     "components": []
+  },
+  {
+    "id": "testimonies",
+    "components": [
+      "testimony"
+    ]
   }
 ]

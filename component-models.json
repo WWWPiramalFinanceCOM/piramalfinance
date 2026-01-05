@@ -2810,5 +2810,74 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "happy-customers",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Section Title",
+        "description": "Sets the title of the section (e.g., 'Our Happy Customers')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "dataUrl",
+        "value": "",
+        "label": "Data URL",
+        "description": "Sets the path to the JSON data containing customer testimonials."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "rotationTime",
+        "value": "5000",
+        "label": "Rotation Time (ms)",
+        "description": "Sets the auto-rotation interval in milliseconds (e.g., 5000 for 5 seconds)."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "ribbonImg1",
+        "label": "Ribbon Image 1 (Left Top)",
+        "description": "Decorative ribbon image positioned at left top.",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "ribbonImg2",
+        "label": "Ribbon Image 2 (Right Top)",
+        "description": "Decorative ribbon image positioned at right top.",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "ribbonImg3",
+        "label": "Ribbon Image 3 (Left Bottom)",
+        "description": "Decorative ribbon image positioned at left bottom.",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "ribbonImg4",
+        "label": "Ribbon Image 4 (Right Bottom)",
+        "description": "Decorative ribbon image positioned at right bottom.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customClass",
+        "value": "",
+        "label": "Custom CSS Class",
+        "description": "Optional custom CSS class for styling."
+      }
+    ]
   }
 ]

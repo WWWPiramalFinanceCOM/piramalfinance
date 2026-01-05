@@ -1,0 +1,326 @@
+/* Happy Customers Block Styles */
+
+.happy-customers-wrapper {
+  padding: 64px 0;
+  background: #fff;
+}
+
+.happy-customers-title {
+  font-family: "Nunito-Extrabold", sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  color: var(--darkcharcoal, #2C2C2C);
+  text-align: center;
+  margin: 0 0 100px;
+}
+
+.happy-customers-container {
+  max-width: 743px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  min-height: 400px;
+}
+
+/* Ribbon Decorations */
+.ribbon-decoration {
+  position: absolute;
+  z-index: 1;
+}
+
+.ribbon-left-top {
+  width: 15px;
+  height: 19px;
+  left: 255px;
+  top: -20px;
+}
+
+.ribbon-right-top {
+  width: 58px;
+  height: 58px;
+  right: 200px;
+  top: -20px;
+}
+
+.ribbon-left-bottom {
+  width: 37px;
+  height: 31px;
+  left: 185px;
+  top: 140px;
+}
+
+.ribbon-right-bottom {
+  width: 62px;
+  height: 67px;
+  right: 190px;
+  top: 140px;
+}
+
+/* Customer Cards */
+.happy-customer-card {
+  position: absolute;
+  transition: all 0.6s ease-in-out;
+}
+
+.customer-image-wrapper {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: visible;
+}
+
+.customer-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
+}
+
+/* Animated Rings */
+.customer-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(230, 81, 0, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.customer-ring.ring-1 {
+  width: 100px;
+  height: 100px;
+  animation-delay: 0s;
+}
+
+.customer-ring.ring-2 {
+  width: 120px;
+  height: 120px;
+  animation-delay: 0.3s;
+}
+
+.customer-ring.ring-3 {
+  width: 140px;
+  height: 140px;
+  animation-delay: 0.6s;
+}
+
+@keyframes pulse-ring {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+/* Main/Center Customer */
+.happy-customer-card:nth-child(6) .customer-image-wrapper {
+  width: 200px;
+  height: 200px;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* Position other customers in circle */
+.happy-customer-card:nth-child(7) .customer-image-wrapper {
+  left: 100px;
+  top: 50px;
+}
+
+.happy-customer-card:nth-child(8) .customer-image-wrapper {
+  right: 100px;
+  top: 50px;
+}
+
+.happy-customer-card:nth-child(9) .customer-image-wrapper {
+  left: 50px;
+  top: 150px;
+}
+
+.happy-customer-card:nth-child(10) .customer-image-wrapper {
+  right: 50px;
+  top: 150px;
+}
+
+/* Testimonial Box */
+.customer-testimonial-box {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #F8F8F8;
+  border-radius: 16px;
+  padding: 32px 40px;
+  max-width: 680px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.testimonial-arrow {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid #F8F8F8;
+}
+
+.testimonial-content {
+  position: relative;
+}
+
+.customer-details {
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  color: #666;
+  margin: 0 0 24px;
+}
+
+.customer-name {
+  font-family: "Nunito-Bold", sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--darkcharcoal, #2C2C2C);
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.customer-profession {
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #999;
+  margin: 0;
+}
+
+/* Tablet Responsive */
+@media screen and (max-width: 1024px) {
+  .happy-customers-wrapper {
+    padding: 40px 16px;
+  }
+  
+  .happy-customers-title {
+    font-size: 1.25rem;
+    line-height: 2rem;
+    margin-bottom: 60px;
+  }
+  
+  .happy-customers-container {
+    max-width: 624px;
+  }
+  
+  .ribbon-left-top {
+    left: 35px;
+    top: 15px;
+  }
+  
+  .ribbon-right-top {
+    right: 10px;
+    top: 15px;
+  }
+  
+  .ribbon-left-bottom {
+    left: 15px;
+    top: 155px;
+  }
+  
+  .ribbon-right-bottom {
+    right: 15px;
+    top: 155px;
+  }
+  
+  .customer-testimonial-box {
+    padding: 24px 28px;
+    max-width: 90%;
+  }
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 767px) {
+  .happy-customers-title {
+    font-size: 1.125rem;
+    margin-bottom: 40px;
+  }
+  
+  .happy-customers-container {
+    max-width: 100%;
+  }
+  
+  .happy-customer-card:nth-child(6) .customer-image-wrapper {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .happy-customer-card:nth-child(7) .customer-image-wrapper,
+  .happy-customer-card:nth-child(8) .customer-image-wrapper {
+    width: 60px;
+    height: 60px;
+    top: 30px;
+  }
+  
+  .happy-customer-card:nth-child(7) .customer-image-wrapper {
+    left: 20px;
+  }
+  
+  .happy-customer-card:nth-child(8) .customer-image-wrapper {
+    right: 20px;
+  }
+  
+  .happy-customer-card:nth-child(9) .customer-image-wrapper,
+  .happy-customer-card:nth-child(10) .customer-image-wrapper {
+    width: 60px;
+    height: 60px;
+    top: 100px;
+  }
+  
+  .happy-customer-card:nth-child(9) .customer-image-wrapper {
+    left: 10px;
+  }
+  
+  .happy-customer-card:nth-child(10) .customer-image-wrapper {
+    right: 10px;
+  }
+  
+  .customer-testimonial-box {
+    top: 140px;
+    padding: 20px 24px;
+    max-width: 95%;
+  }
+  
+  .customer-details {
+    font-size: 0.875rem;
+    line-height: 1.4rem;
+    margin-bottom: 16px;
+  }
+  
+  .customer-name {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  
+  .customer-profession {
+    font-size: 0.75rem;
+  }
+  
+  .ribbon-decoration {
+    width: 25px !important;
+    height: auto !important;
+  }
+}

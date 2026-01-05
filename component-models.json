@@ -2871,28 +2871,12 @@
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
-        "name": "customer1Details",
+        "name": "customer1Testimonial",
         "value": "",
         "label": "Customer 1 Testimonial",
-        "description": "Testimonial text from the first customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer1Name",
-        "value": "",
-        "label": "Customer 1 Name",
-        "description": "Name of the first customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer1Profession",
-        "value": "",
-        "label": "Customer 1 Profession",
-        "description": "Profession or designation of the first customer."
+        "description": "Testimonial content with name, profession and feedback. Use h1 for name, h2 for profession, and p for testimonial text."
       },
       {
         "component": "reference",
@@ -2903,28 +2887,12 @@
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
-        "name": "customer2Details",
+        "name": "customer2Testimonial",
         "value": "",
         "label": "Customer 2 Testimonial",
-        "description": "Testimonial text from the second customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer2Name",
-        "value": "",
-        "label": "Customer 2 Name",
-        "description": "Name of the second customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer2Profession",
-        "value": "",
-        "label": "Customer 2 Profession",
-        "description": "Profession or designation of the second customer."
+        "description": "Testimonial content with name, profession and feedback. Use h1 for name, h2 for profession, and p for testimonial text."
       },
       {
         "component": "reference",
@@ -2935,28 +2903,12 @@
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
-        "name": "customer3Details",
+        "name": "customer3Testimonial",
         "value": "",
         "label": "Customer 3 Testimonial",
-        "description": "Testimonial text from the third customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer3Name",
-        "value": "",
-        "label": "Customer 3 Name",
-        "description": "Name of the third customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer3Profession",
-        "value": "",
-        "label": "Customer 3 Profession",
-        "description": "Profession or designation of the third customer."
+        "description": "Testimonial content with name, profession and feedback. Use h1 for name, h2 for profession, and p for testimonial text."
       },
       {
         "component": "reference",
@@ -2967,28 +2919,12 @@
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
-        "name": "customer4Details",
+        "name": "customer4Testimonial",
         "value": "",
         "label": "Customer 4 Testimonial",
-        "description": "Testimonial text from the fourth customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer4Name",
-        "value": "",
-        "label": "Customer 4 Name",
-        "description": "Name of the fourth customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer4Profession",
-        "value": "",
-        "label": "Customer 4 Profession",
-        "description": "Profession or designation of the fourth customer."
+        "description": "Testimonial content with name, profession and feedback. Use h1 for name, h2 for profession, and p for testimonial text."
       },
       {
         "component": "reference",
@@ -2999,28 +2935,12 @@
         "multi": false
       },
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
-        "name": "customer5Details",
+        "name": "customer5Testimonial",
         "value": "",
         "label": "Customer 5 Testimonial",
-        "description": "Testimonial text from the fifth customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer5Name",
-        "value": "",
-        "label": "Customer 5 Name",
-        "description": "Name of the fifth customer."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customer5Profession",
-        "value": "",
-        "label": "Customer 5 Profession",
-        "description": "Profession or designation of the fifth customer."
+        "description": "Testimonial content with name, profession and feedback. Use h1 for name, h2 for profession, and p for testimonial text."
       }
     ]
   }

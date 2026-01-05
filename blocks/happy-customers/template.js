@@ -15,7 +15,7 @@ export const happyCustomersTemplate = `
 export const customerCardTemplate = `
 <div class="happy-customer-card {customerClass}" id="{customerId}">
   <div class="customer-image-wrapper">
-    <img src="{customerImage}" loading="lazy" alt="{customerName}" class="customer-image">
+    <img src="{customerImage}" loading="lazy" alt="Customer" class="customer-image">
     <div class="customer-ring ring-1"></div>
     <div class="customer-ring ring-2"></div>
     <div class="customer-ring ring-3"></div>
@@ -23,9 +23,7 @@ export const customerCardTemplate = `
   <div class="customer-testimonial-box">
     <div class="testimonial-arrow"></div>
     <div class="testimonial-content">
-      <p class="customer-details">{customerDetails}</p>
-      <p class="customer-name">{customerName}</p>
-      <p class="customer-profession">{customerProfession}</p>
+      {customerTestimonial}
     </div>
   </div>
 </div>

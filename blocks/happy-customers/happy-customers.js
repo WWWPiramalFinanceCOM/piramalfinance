@@ -7,11 +7,11 @@ export default async function decorate(block) {
     title, 
     rotationTime, 
     ribbonImg1, ribbonImg2, ribbonImg3, ribbonImg4,
-    customer1Image, customer1Details, customer1Name, customer1Profession,
-    customer2Image, customer2Details, customer2Name, customer2Profession,
-    customer3Image, customer3Details, customer3Name, customer3Profession,
-    customer4Image, customer4Details, customer4Name, customer4Profession,
-    customer5Image, customer5Details, customer5Name, customer5Profession
+    customer1Image, customer1Testimonial,
+    customer2Image, customer2Testimonial,
+    customer3Image, customer3Testimonial,
+    customer4Image, customer4Testimonial,
+    customer5Image, customer5Testimonial
   ] = props;
   
   block.innerHTML = '';
@@ -23,41 +23,31 @@ export default async function decorate(block) {
   const customersData = [
     {
       customerImage: customer1Image,
-      customerDetails: customer1Details,
-      customerName: customer1Name,
-      customerProfession: customer1Profession,
+      customerTestimonial: customer1Testimonial,
       customerId: 'customer1',
       customerClass: 'customer-one'
     },
     {
       customerImage: customer2Image,
-      customerDetails: customer2Details,
-      customerName: customer2Name,
-      customerProfession: customer2Profession,
+      customerTestimonial: customer2Testimonial,
       customerId: 'customer2',
       customerClass: 'customer-two'
     },
     {
       customerImage: customer3Image,
-      customerDetails: customer3Details,
-      customerName: customer3Name,
-      customerProfession: customer3Profession,
+      customerTestimonial: customer3Testimonial,
       customerId: 'customer3',
       customerClass: 'customer-three'
     },
     {
       customerImage: customer4Image,
-      customerDetails: customer4Details,
-      customerName: customer4Name,
-      customerProfession: customer4Profession,
+      customerTestimonial: customer4Testimonial,
       customerId: 'customer4',
       customerClass: 'customer-four'
     },
     {
       customerImage: customer5Image,
-      customerDetails: customer5Details,
-      customerName: customer5Name,
-      customerProfession: customer5Profession,
+      customerTestimonial: customer5Testimonial,
       customerId: 'customer5',
       customerClass: 'customer-five'
     }
@@ -99,9 +89,7 @@ function rotateCustomers() {
   customerDivs.forEach((div) => {
     const customerData = {
       imageSrc: div.querySelector('.customer-image').src,
-      details: div.querySelector('.customer-details').textContent,
-      name: div.querySelector('.customer-name').textContent,
-      profession: div.querySelector('.customer-profession').textContent,
+      testimonialHTML: div.querySelector('.testimonial-content').innerHTML,
     };
     customerDataArray.push(customerData);
   });
@@ -113,8 +101,6 @@ function rotateCustomers() {
   // Update DOM
   customerDivs.forEach((div, i) => {
     div.querySelector('.customer-image').src = customerDataArray[i].imageSrc;
-    div.querySelector('.customer-details').textContent = customerDataArray[i].details;
-    div.querySelector('.customer-name').textContent = customerDataArray[i].name;
-    div.querySelector('.customer-profession').textContent = customerDataArray[i].profession;
+    div.querySelector('.testimonial-content').innerHTML = customerDataArray[i].testimonialHTML;
   });
 }

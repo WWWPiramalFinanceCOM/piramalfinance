@@ -8,10 +8,7 @@ export default async function decorate(block) {
     rotationTime, 
     ribbonImg1, ribbonImg2, ribbonImg3, ribbonImg4,
     customer1Image, customer1Testimonial,
-    customer2Image, customer2Testimonial,
-    customer3Image, customer3Testimonial,
-    customer4Image, customer4Testimonial,
-    customer5Image, customer5Testimonial
+    ...additionalCustomersData
   ] = props;
   
   block.innerHTML = '';
@@ -19,39 +16,38 @@ export default async function decorate(block) {
   let mainTemplate = happyCustomersTemplate;
   const cardTemplate = customerCardTemplate;
   
-  // Create customer data array from authorable fields
+  // Start with mandatory first customer
   const customersData = [
     {
       customerImage: customer1Image,
       customerTestimonial: customer1Testimonial,
       customerId: 'customer1',
       customerClass: 'customer-one'
-    },
-    {
-      customerImage: customer2Image,
-      customerTestimonial: customer2Testimonial,
-      customerId: 'customer2',
-      customerClass: 'customer-two'
-    },
-    {
-      customerImage: customer3Image,
-      customerTestimonial: customer3Testimonial,
-      customerId: 'customer3',
-      customerClass: 'customer-three'
-    },
-    {
-      customerImage: customer4Image,
-      customerTestimonial: customer4Testimonial,
-      customerId: 'customer4',
-      customerClass: 'customer-four'
-    },
-    {
-      customerImage: customer5Image,
-      customerTestimonial: customer5Testimonial,
-      customerId: 'customer5',
-      customerClass: 'customer-five'
     }
   ];
+  
+  // Process additional customers (multifield data)
+  // additionalCustomersData comes as pairs: [image2, testimonial2, image3, testimonial3, ...]
+  if (additionalCustomersData && additionalCustomersData.length > 0) {
+    const customerClasses = ['customer-two', 'customer-three', 'customer-four', 'customer-five'];
+    
+    for (let i = 0; i < additionalCustomersData.length; i += 2) {
+      const customerImage = additionalCustomersData[i];
+      const customerTestimonial = additionalCustomersData[i + 1];
+      
+      if (customerImage && customerTestimonial) {
+        const customerIndex = Math.floor(i / 2);
+        if (customerIndex < 4) { // Max 4 additional customers (total 5)
+          customersData.push({
+            customerImage,
+            customerTestimonial,
+            customerId: `customer${customerIndex + 2}`,
+            customerClass: customerClasses[customerIndex]
+          });
+        }
+      }
+    }
+  }
   
   // Generate customer cards
   const cards = renderHelper(customersData, cardTemplate);

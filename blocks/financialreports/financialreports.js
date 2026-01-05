@@ -4,35 +4,62 @@ import { fetchAPI, getProps, renderHelper } from '../../scripts/common.js';
 export default async function decorate(block) {
   const props = getProps(block);
   const [url, type, sortType] = props;
+  const isAscending = sortType === 'ascending';
   block.innerHTML = '';
+  
+  if (!url) {
+    console.error('API URL is required for financialreports block');
+    return;
+  }
+  
   try {
+    // const resp = await fetchAPI('GET', '/mocks/datathree.json');
     const resp = await fetchAPI('GET', url);
     const data = await resp.json();
-    const years = data.result[0];
-    let sortedYears;
-    if (sortType === 'ascending') {
-      sortedYears = Object.keys(years).sort((a, b) => a - b);
-    } else {
-      sortedYears = Object.keys(years).sort((a, b) => b - a);
-    }
-    // Object.keys(years).forEach(function (year) {
+    const years = data.result && Array.isArray(data.result) ? data.result[0] : data;
+    
+    // Sort years based on sortType
+    const sortedYears = Object.keys(years).sort((a, b) => {
+      // Extract numeric year from formats like "2024-2025" or "2024"
+      const yearA = parseInt(a.split('-')[0]);
+      const yearB = parseInt(b.split('-')[0]);
+      return isAscending ? yearA - yearB : yearB - yearA;
+    });
+    
     const monthOrder = [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December',
     ];
+    
+    const quarterOrder = ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'];
+    
     sortedYears.forEach((year) => {
-      const months = years[year][0];
-      let sortedMonths;
-      if (sortType === 'ascending') {
-        sortedMonths = Object.keys(months).sort((a, b) => monthOrder.indexOf(a) - monthOrder.indexOf(b));
-      } else {
-        sortedMonths = Object.keys(months).sort((a, b) => monthOrder.indexOf(b) - monthOrder.indexOf(a));
-      }
+      const months = Array.isArray(years[year]) ? years[year][0] : years[year];
+      
+      // Sort months/quarters based on sortType
+      const sortedMonths = Object.keys(months).sort((a, b) => {
+        let comparison = 0;
+        // Check if it's a quarter format - always keep quarters in ascending order
+        if (a.startsWith('Quarter') && b.startsWith('Quarter')) {
+          comparison = quarterOrder.indexOf(a) - quarterOrder.indexOf(b);
+          return comparison; // Always ascending for quarters
+        } else {
+          // Check if it's a month format (case-insensitive)
+          const monthA = monthOrder.findIndex(m => m.toLowerCase() === a.toLowerCase());
+          const monthB = monthOrder.findIndex(m => m.toLowerCase() === b.toLowerCase());
+          if (monthA !== -1 && monthB !== -1) {
+            comparison = monthA - monthB;
+          } else {
+            // Fallback to string comparison
+            comparison = a.localeCompare(b);
+          }
+        }
+        return isAscending ? comparison : -comparison;
+      });
+      
       let monthsli = '';
-      // Object.keys(months).forEach(function (month) {
-        sortedMonths.forEach((month) => {
-          const listData = months[month].sort((a, b) => new Date(b.pdfDate) - new Date(a.pdfDate));;
-          // console.log( year ,  " - ",month , " : " , listData);
+      sortedMonths.forEach((month) => {
+        const listData = months[month].sort((a, b) => new Date(b.pdfDate) - new Date(a.pdfDate));
 
         monthsli += `  
                                 <div class="subAccordianContent" style="display: nona;">

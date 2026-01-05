@@ -40,6 +40,11 @@
   z-index: 0;
   margin-top: 10px;
   box-shadow: 0 0 31px -8px rgb(10 10 10 / 30%);
+
+  @media only screen and (max-width:1024px){
+    padding: 16px;
+  }
+
 }
 
 /* make a triangle that points upwards in the center of the div */
@@ -71,11 +76,20 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-color-dark-gray);
+
+  @media only screen and (max-width:1024px){
+            font-size: .875rem;
+        line-height: 1.25rem;
+  }
 }
 
 .block.testimonies .testimony.selected .testimony-content .testimony-title {
   color: var(--text-color-light-gray);
   font-size: 1rem;
+   @media only screen and (max-width:1024px){
+            font-size: .75rem;
+    line-height: 1rem;
+  }
 }
 
 .block.testimonies .testimony.selected .testimony-img picture img {
@@ -321,6 +335,9 @@ main .section.background-light-yellow {
 main .section.background-light-pink {
   background-color: var(--background-light-pink);
 }
+main .section.background-off-white {
+  background-color: #ebeef04d;
+}
 
 main .section.text-centered {
   text-align: center;
@@ -340,6 +357,12 @@ main .section.testimonies-wrap .default-content-wrapper h2 {
     line-height: 2.5rem;
     /* padding-bottom: 8px; */
     text-align: center;
+
+    @media only screen and (max-width:767px){
+              font-size: 1.25rem;
+        line-height: 1.75rem;
+        padding-bottom: 4px;
+    }
 }
 
 main .section.testimonies-wrap .testimonies-wrapper .testimony-desc{
@@ -350,6 +373,12 @@ main .section.testimonies-wrap .testimonies-wrapper .testimony-desc{
     color: var(--darkcharcoal);
     margin-bottom: 20px;
     display: block;
+
+    @media only screen and (max-width:1024px){
+              font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
 }
 
 main .section.testimonies-wrap .testimonies-wrapper .testimony-name{
@@ -368,4 +397,10 @@ main .section.testimonies-wrap .testimonies-wrapper .testimony-content em{
     font-size: 1rem;
     line-height: 1.5rem;
     color: gray;
+}
+
+.section.testimonies-wrap .testimonies-wrapper{
+  @media only screen and (max-width:1024px){
+    padding: unset;
+  }
 }

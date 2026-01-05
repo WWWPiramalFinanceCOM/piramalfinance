@@ -2825,14 +2825,6 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "dataUrl",
-        "value": "",
-        "label": "Data URL",
-        "description": "Sets the path to the JSON data containing customer testimonials."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
         "name": "rotationTime",
         "value": "5000",
         "label": "Rotation Time (ms)",
@@ -2871,12 +2863,164 @@
         "multi": false
       },
       {
+        "component": "reference",
+        "valueType": "string",
+        "name": "customer1Image",
+        "label": "Customer 1 Image",
+        "description": "Profile image for the first customer.",
+        "multi": false
+      },
+      {
         "component": "text",
         "valueType": "string",
-        "name": "customClass",
+        "name": "customer1Details",
         "value": "",
-        "label": "Custom CSS Class",
-        "description": "Optional custom CSS class for styling."
+        "label": "Customer 1 Testimonial",
+        "description": "Testimonial text from the first customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer1Name",
+        "value": "",
+        "label": "Customer 1 Name",
+        "description": "Name of the first customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer1Profession",
+        "value": "",
+        "label": "Customer 1 Profession",
+        "description": "Profession or designation of the first customer."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "customer2Image",
+        "label": "Customer 2 Image",
+        "description": "Profile image for the second customer.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer2Details",
+        "value": "",
+        "label": "Customer 2 Testimonial",
+        "description": "Testimonial text from the second customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer2Name",
+        "value": "",
+        "label": "Customer 2 Name",
+        "description": "Name of the second customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer2Profession",
+        "value": "",
+        "label": "Customer 2 Profession",
+        "description": "Profession or designation of the second customer."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "customer3Image",
+        "label": "Customer 3 Image",
+        "description": "Profile image for the third customer.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer3Details",
+        "value": "",
+        "label": "Customer 3 Testimonial",
+        "description": "Testimonial text from the third customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer3Name",
+        "value": "",
+        "label": "Customer 3 Name",
+        "description": "Name of the third customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer3Profession",
+        "value": "",
+        "label": "Customer 3 Profession",
+        "description": "Profession or designation of the third customer."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "customer4Image",
+        "label": "Customer 4 Image",
+        "description": "Profile image for the fourth customer.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer4Details",
+        "value": "",
+        "label": "Customer 4 Testimonial",
+        "description": "Testimonial text from the fourth customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer4Name",
+        "value": "",
+        "label": "Customer 4 Name",
+        "description": "Name of the fourth customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer4Profession",
+        "value": "",
+        "label": "Customer 4 Profession",
+        "description": "Profession or designation of the fourth customer."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "customer5Image",
+        "label": "Customer 5 Image",
+        "description": "Profile image for the fifth customer.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer5Details",
+        "value": "",
+        "label": "Customer 5 Testimonial",
+        "description": "Testimonial text from the fifth customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer5Name",
+        "value": "",
+        "label": "Customer 5 Name",
+        "description": "Name of the fifth customer."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customer5Profession",
+        "value": "",
+        "label": "Customer 5 Profession",
+        "description": "Profession or designation of the fifth customer."
       }
     ]
   }

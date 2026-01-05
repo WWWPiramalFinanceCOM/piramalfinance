@@ -23,9 +23,9 @@ export const customerCardTemplate = `
   <div class="customer-testimonial-box">
     <div class="testimonial-arrow"></div>
     <div class="testimonial-content">
-      <p class="customer-details {customerDetailsClass}">{customerDetails}</p>
-      <p class="customer-name {customerNameClass}">{customerName}</p>
-      <p class="customer-profession {customerProfessionClass}">{customerProfession}</p>
+      <p class="customer-details">{customerDetails}</p>
+      <p class="customer-name">{customerName}</p>
+      <p class="customer-profession">{customerProfession}</p>
     </div>
   </div>
 </div>

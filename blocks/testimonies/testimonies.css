@@ -51,7 +51,7 @@
   transform: translateX(-50%);
   border-left: 30px solid transparent;
   border-right: 30px solid transparent;
-  border-bottom: 30px solid white;
+  border-bottom: 30px solid white; 
 }
 
 .block.testimonies .testimony.selected .testimony-content p {

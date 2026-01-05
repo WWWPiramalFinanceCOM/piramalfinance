@@ -793,8 +793,8 @@ body.modal-open footer {
     max-height: 475px;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 20px 200px;
     max-width: 100%;
+    padding: 20px calc((100% - 1218px) / 2);
 }
 
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li:nth-child(7)>ul::-webkit-scrollbar{

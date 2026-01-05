@@ -3,13 +3,23 @@ import { happyCustomersTemplate, customerCardTemplate } from './template.js';
 
 export default async function decorate(block) {
   const props = getProps(block);
-  const [
-    title, 
-    rotationTime, 
-    ribbonImg1, ribbonImg2, ribbonImg3, ribbonImg4,
-    customer1Image, customer1Testimonial,
-    ...additionalCustomersData
-  ] = props;
+  
+  // Debug: Log all props to see the data structure
+  console.log('Happy Customers Props:', props);
+  
+  // Extract all props - multifield container will be one of the props
+  const title = props[0];
+  const rotationTime = props[1];
+  const ribbonImg1 = props[2];
+  const ribbonImg2 = props[3];
+  const ribbonImg3 = props[4];
+  const ribbonImg4 = props[5];
+  const customer1Image = props[6];
+  const customer1Testimonial = props[7];
+  const additionalCustomersContainer = props[8]; // This will be the container object or array
+  
+  console.log('Additional Customers Container:', additionalCustomersContainer);
+  console.log('All props length:', props.length);
   
   block.innerHTML = '';
   
@@ -17,36 +27,55 @@ export default async function decorate(block) {
   const cardTemplate = customerCardTemplate;
   
   // Start with mandatory first customer
-  const customersData = [
-    {
+  const customersData = [];
+  
+  if (customer1Image && customer1Testimonial) {
+    customersData.push({
       customerImage: customer1Image,
       customerTestimonial: customer1Testimonial,
       customerId: 'customer1',
       customerClass: 'customer-one'
-    }
-  ];
+    });
+  }
   
-  // Process additional customers (multifield data)
-  // additionalCustomersData comes as pairs: [image2, testimonial2, image3, testimonial3, ...]
-  if (additionalCustomersData && additionalCustomersData.length > 0) {
+  // Process additional customers from multifield container
+  // The container might be an array of objects or a string that needs parsing
+  if (additionalCustomersContainer) {
     const customerClasses = ['customer-two', 'customer-three', 'customer-four', 'customer-five'];
+    let additionalCustomers = [];
     
-    for (let i = 0; i < additionalCustomersData.length; i += 2) {
-      const customerImage = additionalCustomersData[i];
-      const customerTestimonial = additionalCustomersData[i + 1];
-      
-      if (customerImage && customerTestimonial) {
-        const customerIndex = Math.floor(i / 2);
-        if (customerIndex < 4) { // Max 4 additional customers (total 5)
-          customersData.push({
-            customerImage,
-            customerTestimonial,
-            customerId: `customer${customerIndex + 2}`,
-            customerClass: customerClasses[customerIndex]
+    // Handle if it's already an array
+    if (Array.isArray(additionalCustomersContainer)) {
+      additionalCustomers = additionalCustomersContainer;
+    } 
+    // Handle if it's an object with array property
+    else if (typeof additionalCustomersContainer === 'object' && additionalCustomersContainer.items) {
+      additionalCustomers = additionalCustomersContainer.items;
+    }
+    // Handle if remaining props are the additional customers (fallback)
+    else {
+      // Collect remaining props as pairs
+      for (let i = 8; i < props.length; i += 2) {
+        if (props[i] && props[i + 1]) {
+          additionalCustomers.push({
+            customerImage: props[i],
+            customerTestimonial: props[i + 1]
           });
         }
       }
     }
+    
+    // Add each additional customer
+    additionalCustomers.forEach((customer, index) => {
+      if (index < 4 && customer.customerImage && customer.customerTestimonial) {
+        customersData.push({
+          customerImage: customer.customerImage,
+          customerTestimonial: customer.customerTestimonial,
+          customerId: `customer${index + 2}`,
+          customerClass: customerClasses[index]
+        });
+      }
+    });
   }
   
   // Generate customer cards

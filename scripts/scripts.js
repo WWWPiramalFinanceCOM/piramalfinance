@@ -7,6 +7,17 @@ import {
   getMetadata,
   getExtension,
 } from './aem.js';
+import {
+  div,
+  h4,
+  form,
+  select,
+  option,
+  input,
+  textarea,
+  button,
+  span,
+} from './dom-helper.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
@@ -269,11 +280,480 @@ async function loadEager(doc) {
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
+
+/**
+ * Safely move card sections into tab panels
+ */
+function moveCardsToTabPanels() {
+  try {
+    const generatedSection = document.querySelector('.press-release-cards.cards-container');
+    const tabPanel = document.querySelector('.stay-informed #tab-panel-1-0');
+    if (generatedSection && tabPanel) {
+      tabPanel.appendChild(generatedSection);
+    }
+
+    const generatedSectiontwo = document.querySelector('.media-mention-cards.cards-container');
+    const tabPanelTwo = document.querySelector('.stay-informed #tab-panel-1-1');
+    if (generatedSectiontwo && tabPanelTwo) {
+      tabPanelTwo.appendChild(generatedSectiontwo);
+    }
+  } catch (error) {
+    console.warn('Error moving cards to tab panels:', error);
+  }
+}
+
+
+async function initSwiperForCards(block) {
+  if (!block) return;
+
+  const ul = block.querySelector('ul');
+  const lis = block.querySelectorAll('li');
+
+  if (!ul || !lis.length) return;
+
+  const isMobile = window.innerWidth <= 767;
+  const cardCount = lis.length;
+
+  // Add Swiper Classes dynamically
+  block.classList.add('swiper', 'piramal-swiper');
+  ul.classList.add('swiper-wrapper');
+
+  lis.forEach((li) => {
+    li.classList.add('swiper-slide');
+  });
+
+  // Inject Navigation Arrows & Pagination only if needed
+  // For mobile: always show. For desktop: only if more than 3 cards
+  const shouldShowNavigation = isMobile || cardCount > 3;
+
+  if (shouldShowNavigation && !block.querySelector('.swiper-button-next')) {
+    const navHTML = `
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    `;
+    block.insertAdjacentHTML('beforeend', navHTML);
+  }
+
+  // Load Swiper library if not already loaded
+  if (typeof Swiper === 'undefined') {
+    try {
+      await loadCSS(`${window.hlx.codeBasePath}/blocks/banner-carousel/swiper-bundle.min.css`);
+      const { default: SwiperModule } = await import(`${window.hlx.codeBasePath}/blocks/banner-carousel/swiper-bundle.min.js`);
+      window.Swiper = SwiperModule;
+    } catch (error) {
+      console.error('Error loading Swiper library:', error);
+      return;
+    }
+  }
+
+  // Initialize Swiper with responsive configuration
+  try {
+    const swiperConfig = {
+      observer: true, 
+      observeParents: true,
+      pagination: {
+        el: block.querySelector('.swiper-pagination'),
+        clickable: true,
+      },
+      navigation: {
+        nextEl: block.querySelector('.swiper-button-next'),
+        prevEl: block.querySelector('.swiper-button-prev'),
+      },
+      on: {
+        init: function() {
+          console.log('Swiper initialized successfully for cards');
+          // Add class if swiper is disabled
+          if (this.params.enabled === false) {
+            this.el.classList.add('swiper-disabled');
+          }
+        },
+        update: function() {
+          // Update disabled class based on state
+          if (this.params.enabled === false || !this.allowSlideNext) {
+            this.el.classList.add('swiper-disabled');
+          } else {
+            this.el.classList.remove('swiper-disabled');
+          }
+        },
+      },
+    };
+
+    // Mobile configuration
+    if (isMobile) {
+      swiperConfig.slidesPerView = 1;
+      swiperConfig.spaceBetween = 20;
+      swiperConfig.centeredSlides = true;
+      swiperConfig.slidesOffsetBefore = 25;
+      swiperConfig.slidesOffsetAfter = 25;
+      swiperConfig.loop = false;
+      swiperConfig.allowTouchMove = true;
+      swiperConfig.simulateTouch = true;
+      swiperConfig.touchRatio = 1;
+      swiperConfig.touchAngle = 45;
+      swiperConfig.grabCursor = true;
+    } else {
+      // Desktop configuration
+      swiperConfig.slidesPerView = 3;
+      swiperConfig.spaceBetween = 30;
+      swiperConfig.slidesPerGroup = 3;
+      swiperConfig.allowTouchMove = true;
+      swiperConfig.simulateTouch = true;
+      swiperConfig.touchRatio = 1;
+      swiperConfig.grabCursor = true;
+
+      // Enable navigation only if more than 3 cards
+      if (cardCount > 3) {
+        swiperConfig.loop = false;
+      } else {
+        swiperConfig.enabled = false;
+        swiperConfig.loop = false;
+      }
+    }
+
+    const swiperInstance = new Swiper(block, swiperConfig);
+    console.log('Swiper instance created:', swiperInstance);
+  } catch (error) {
+    console.error('Error initializing Swiper:', error);
+  }
+}
+
+async function initPiramalCards() {
+  // Initialize for stay-informed section
+  const stayInformedBlock = document.querySelector('.section.stay-informed .cards.block');
+  if (stayInformedBlock) {
+    await initSwiperForCards(stayInformedBlock);
+  }
+
+  // Initialize for press-release-cards in tab panel
+  const pressReleaseCards = document.querySelector('#tab-panel-1-0 .cards.block');
+  if (pressReleaseCards) {
+    await initSwiperForCards(pressReleaseCards);
+  }
+
+  // Initialize for media-mention-cards in tab panel
+  const mediaMentionCards = document.querySelector('#tab-panel-1-1 .cards.block');
+  if (mediaMentionCards) {
+    await initSwiperForCards(mediaMentionCards);
+  }
+
+  // Initialize for any other tab panels that contain cards
+  const otherTabPanelCards = document.querySelectorAll('.section.stay-informed .tab-panel .cards.block');
+  if (otherTabPanelCards.length > 0) {
+    for (const cardBlock of otherTabPanelCards) {
+      // Skip if already initialized
+      if (!cardBlock.classList.contains('swiper')) {
+        await initSwiperForCards(cardBlock);
+      }
+    }
+  }
+}
+
+// async function initLeadershipCards() {
+//   // Select the main wrapper
+//   const leadershipWrapper = document.querySelector('.section.leadership-wrapper');
+
+//   if (!leadershipWrapper) return;
+
+//   // Find card blocks in Directors tab (tab-panel-0-0)
+//   const directorsCards = leadershipWrapper.querySelectorAll('#tab-panel-0-0 .cards.block');
+//   if (directorsCards.length > 0) {
+//     for (const cardBlock of directorsCards) {
+//       // Avoid double initialization
+//       if (!cardBlock.classList.contains('swiper')) {
+//         await initSwiperForCards(cardBlock);
+//       }
+//     }
+//   }
+
+//   // Find card blocks in Management Team tab (tab-panel-0-1)
+//   const managementCards = leadershipWrapper.querySelectorAll('#tab-panel-0-1 .cards.block');
+//   if (managementCards.length > 0) {
+//     for (const cardBlock of managementCards) {
+//       // Avoid double initialization
+//       if (!cardBlock.classList.contains('swiper')) {
+//         await initSwiperForCards(cardBlock);
+//       }
+//     }
+//   }
+// }
+
+function moveDirectorsToTabPanel() {
+  try {
+    // 1. Move Directors content to Tab 1
+    const directorsSection = document.querySelector('.directors-wrapper.cards-container');
+    const directorsTabPanel = document.querySelector('#tab-panel-0-0');
+    if (directorsSection && directorsTabPanel) {
+      directorsTabPanel.appendChild(directorsSection);
+    }
+
+    // 2. Move Management Team content to Tab 2
+    const managementSection = document.querySelector('.management-team.cards-container');
+    const managementTabPanel = document.querySelector('#tab-panel-0-1');
+    if (managementSection && managementTabPanel) {
+      managementTabPanel.appendChild(managementSection);
+    }
+
+  } catch (error) {
+    console.warn('Error moving cards to tab panels:', error);
+  }
+}
+
+/**
+ * Main initialization function for the Connect Us section
+ */
+function initConnectUsSection() {
+    try {
+        // 1. Render the Form in the Right Column
+        renderContactForm();
+
+        // 2. Format the Contact Info in the Left Column
+        formatContactInfo();
+    } catch (error) {
+        console.error('Error initializing Connect Us section:', error);
+    }
+}
+
+/**
+ * Renders the HTML form into the second column of the block
+ */
+function renderContactForm() {
+    try {
+        // Scope selection to the specific section to avoid conflicts
+        const section = document.querySelector('.section.connect-us');
+        if (!section) return;
+
+        const columns = section.querySelectorAll('.columns.block > div');
+
+        // Ensure we have at least 2 columns before trying to access index 1
+        if (!columns || columns.length < 2) {
+            console.warn('Connect Us: Columns structure mismatch. Expected at least 2 columns.');
+            return;
+        }
+
+        const formContainer = columns[1]; // The second column
+
+        // Check if form is already rendered to prevent duplicates if init runs twice
+        if (formContainer.querySelector('.form-card')) return;
+
+        // Create the form card using DOM helpers
+        const formCard = div({ class: 'form-card' },
+            div({ class: 'form-header' },
+                h4('Send Us A Message')
+            ),
+            form({ class: 'custom-form', id: 'contactForm', onsubmit: (e) => { e.preventDefault(); return false; } },
+                // Enquiry Type
+                div({ class: 'form-group' },
+                    select({ class: 'form-control', name: 'enquiryType', required: true },
+                        option({ value: '', disabled: true, selected: true }, 'Select Enquiry Type'),
+                        option({ value: 'investor' }, 'Investor Relations'),
+                        option({ value: 'general' }, 'General Inquiry'),
+                        option({ value: 'media' }, 'Media')
+                    )
+                ),
+                // Country
+                div({ class: 'form-group' },
+                    select({ class: 'form-control', name: 'country' },
+                        option({ value: '', disabled: true, selected: true }, 'Select Country'),
+                        option({ value: 'india' }, 'India'),
+                        option({ value: 'usa' }, 'USA'),
+                        option({ value: 'uk' }, 'UK')
+                    )
+                ),
+                // State
+                div({ class: 'form-group' },
+                    select({ class: 'form-control', name: 'state' },
+                        option({ value: '', disabled: true, selected: true }, 'Select State'),
+                        option({ value: 'maharashtra' }, 'Maharashtra'),
+                        option({ value: 'delhi' }, 'Delhi')
+                    )
+                ),
+                // City
+                div({ class: 'form-group' },
+                    select({ class: 'form-control', name: 'city' },
+                        option({ value: '', disabled: true, selected: true }, 'Select City'),
+                        option({ value: 'mumbai' }, 'Mumbai'),
+                        option({ value: 'pune' }, 'Pune')
+                    )
+                ),
+                // First Name
+                div({ class: 'form-group' },
+                    input({ type: 'text', class: 'form-control', name: 'firstName', placeholder: 'First Name', required: true })
+                ),
+                // Last Name
+                div({ class: 'form-group' },
+                    input({ type: 'text', class: 'form-control', name: 'lastName', placeholder: 'Last Name', required: true })
+                ),
+                // Email
+                div({ class: 'form-group' },
+                    input({ type: 'email', class: 'form-control', name: 'email', placeholder: 'Email ID', required: true })
+                ),
+                // Contact Number
+                div({ class: 'form-group' },
+                    input({ type: 'tel', class: 'form-control', name: 'contactNumber', placeholder: 'Contact Number' })
+                ),
+                // Message
+                div({ class: 'form-group full-width' },
+                    textarea({ class: 'form-control', name: 'message', placeholder: 'Message', rows: '4' })
+                ),
+                // Submit Button
+                div({ class: 'form-group' },
+                    button({ type: 'button', class: 'btn-submit', onclick: function() { handleFormSubmit(this); } },
+                        'Submit ',
+                        span({ class: 'btn-arrow' }, '→')
+                    )
+                )
+            )
+        );
+
+        // Clear and append the form
+        formContainer.innerHTML = '';
+        formContainer.appendChild(formCard);
+
+    } catch (error) {
+        console.error('Error rendering contact form:', error);
+    }
+}
+
+/**
+ * Formats the raw text content in the first column into styled icons and text
+ */
+function formatContactInfo() {
+    try {
+        const section = document.querySelector('.section.connect-us');
+        if (!section) return;
+
+        const columns = section.querySelectorAll('.columns.block > div');
+        if (!columns || columns.length < 1) return;
+
+        const infoContainer = columns[0];
+        const pTag = infoContainer.querySelector('p');
+
+        if (!pTag) return;
+
+        // Get raw html to preserve <br> tags
+        const rawContent = pTag.innerHTML;
+
+        // Split by double break (<br><br>) which indicates a new section in the AEM authoring
+        const sections = rawContent.split('<br><br>');
+
+        const icons = {
+            phone: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>`,
+            email: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+            map: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`
+        };
+
+        let newHTML = '<div class="contact-info-list">';
+
+        // 1. Phone Section (First block)
+        if (sections[0]) {
+            newHTML += createContactItem(icons.phone, sections[0]);
+        }
+
+        // 2. Email Section (Second block)
+        if (sections[1]) {
+            // Regex to make emails clickable
+            let emailContent = sections[1].replace(
+                /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, 
+                '<a href="mailto:$1">$1</a>'
+            );
+            newHTML += createContactItem(icons.email, emailContent);
+        }
+
+        // 3. Address Section (Third block)
+        if (sections[2]) {
+            newHTML += createContactItem(icons.map, sections[2]);
+        }
+
+        newHTML += '</div>';
+
+        infoContainer.innerHTML = newHTML;
+
+    } catch (error) {
+        console.error('Error formatting contact info:', error);
+    }
+}
+
+/**
+ * Helper to create HTML string for a single item
+ */
+function createContactItem(iconSvg, content) {
+    try {
+        return `
+            <div class="contact-item">
+                <div class="contact-icon-box">
+                    ${iconSvg}
+                </div>
+                <div class="contact-text">
+                    ${content}
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        console.error('Error creating contact item:', error);
+        return '';
+    }
+}
+
+/**
+ * Handles form submission
+ */
+function handleFormSubmit(buttonElement) {
+    try {
+        const form = buttonElement.closest('form');
+
+        // Basic validation check
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // Gather form data
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        console.log('Form Submitted with data:', data);
+        alert("Form submitted successfully! (Check console for data)");
+
+        // Optional: Reset form
+        form.reset();
+
+    } catch (error) {
+        console.error('Error handling form submission:', error);
+        alert('An error occurred while submitting the form. Please try again.');
+    }
+}
+
+// Call the function
+// moveCardsToTabPanels();
+
+// Execute the function
+
+
+// 5. Call the function when DOM is ready
+// document.addEventListener('DOMContentLoaded', initPiramalCards);
+
+// document.addEventListener('DOMContentLoaded', initPiramalCards);
+
+
+
+// Run logic
+
+
+
+
 async function loadLazy(doc) {
   autolinkModals(doc);
 
   const main = doc.querySelector('main');
   await loadBlocks(main);
+
+   // Move cards to tab panels
+  moveCardsToTabPanels();
+  initPiramalCards();
+  moveDirectorsToTabPanel();
+  // initLeadershipCards();
+   initConnectUsSection();
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

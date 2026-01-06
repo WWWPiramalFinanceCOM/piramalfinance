@@ -110,6 +110,7 @@
       "branchcarousel",
       "branchkeyfeatures",
       "branches",
+      "banner-carousel",
       "testimonies"
     ]
   },
@@ -193,6 +194,10 @@
   {
     "id": "container",
     "components": []
+  },
+   {
+    "id": "banner-carousel",
+    "components": ["banner-carousel-item"]
   },
   {
     "id": "testimonies",

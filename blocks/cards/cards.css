@@ -30,3 +30,278 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* Desktop View - Grid Layout (768px and above) - Only for stay-informed and leadership-wrapper tab-panel cards */
+@media (min-width: 768px) {
+  .section.stay-informed .cards.block > ul,
+  .section.leadership-wrapper .tab-panel .cards.block > ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  /* Swiper on desktop when more than 3 cards */
+  .section.stay-informed .cards.block.swiper,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper {
+    padding-bottom: 80px;
+    position: relative;
+  }
+
+  /* Pagination dots on desktop - shown and positioned below cards */
+  .section.stay-informed .cards.block.swiper .swiper-pagination,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-pagination {
+    display: block;
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    text-align: center;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-pagination .swiper-pagination-bullet,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-pagination .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: #ddd;
+    opacity: 1;
+    margin: 0 5px;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-pagination .swiper-pagination-bullet-active,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-pagination .swiper-pagination-bullet-active {
+    background: #ff6b35;
+  }
+
+  /* Navigation buttons for stay-informed - below cards, between pagination dots */
+  .section.stay-informed .cards.block.swiper .swiper-button-next,
+  .section.stay-informed .cards.block.swiper .swiper-button-prev {
+    width: 44px;
+    height: 44px;
+    background: #ff6b35;
+    border-radius: 50%;
+    color: white;
+    position: absolute;
+    bottom: 15px;
+    top: auto;
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease, opacity 0.3s ease;
+    z-index: 100;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-next:after,
+  .section.stay-informed .cards.block.swiper .swiper-button-prev:after {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-prev {
+    left: calc(50% - 120px);
+    right: auto;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-next {
+    right: calc(50% - 120px);
+    left: auto;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-next:hover,
+  .section.stay-informed .cards.block.swiper .swiper-button-prev:hover {
+    background: #e55a2b;
+  }
+
+  /* Navigation buttons for leadership-wrapper - on sides of cards, show on hover */
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev {
+    width: 50px;
+    height: 50px;
+    background: #ff6b35;
+    border-radius: 50%;
+    color: white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Show navigation on hover for leadership-wrapper only */
+  .section.leadership-wrapper .tab-panel .cards.block.swiper:hover .swiper-button-next,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper:hover .swiper-button-prev {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next:after,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev:after {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev {
+    left: 20px;
+    right: auto;
+  }
+
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next {
+    right: 20px;
+    left: auto;
+  }
+
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next:hover,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev:hover {
+    background: #e55a2b;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  /* Disabled state for navigation buttons */
+  .section.stay-informed .cards.block.swiper .swiper-button-next.swiper-button-disabled,
+  .section.stay-informed .cards.block.swiper .swiper-button-prev.swiper-button-disabled,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next.swiper-button-disabled,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* Hide navigation when swiper is disabled (3 or fewer cards) */
+  .section.stay-informed .cards.block.swiper.swiper-disabled .swiper-button-next,
+  .section.stay-informed .cards.block.swiper.swiper-disabled .swiper-button-prev,
+  .section.stay-informed .cards.block.swiper.swiper-disabled .swiper-pagination,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper.swiper-disabled .swiper-button-next,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper.swiper-disabled .swiper-button-prev,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper.swiper-disabled .swiper-pagination {
+    display: none;
+  }
+}
+
+/* Mobile View - Swiper (max-width: 767px) - Only for stay-informed and leadership-wrapper tab-panel cards */
+@media (max-width: 767px) {
+  .section.stay-informed .cards.block.swiper,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper {
+    padding-bottom: 80px;
+    position: relative;
+  }
+
+  /* Center align cards wrapper */
+  .section.stay-informed .cards.block.swiper .swiper-wrapper,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-slide,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-slide {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100% !important;
+    margin-right: 0 !important;
+  }
+
+  /* Pagination dots on mobile - positioned below cards */
+  .section.stay-informed .cards.block.swiper .swiper-pagination,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-pagination {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-pagination .swiper-pagination-bullet,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-pagination .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    opacity: 1;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-pagination .swiper-pagination-bullet-active,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-pagination .swiper-pagination-bullet-active {
+    background: #ff6b35;
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Navigation buttons on mobile - positioned on left and right sides */
+  .section.stay-informed .cards.block.swiper .swiper-button-next,
+  .section.stay-informed .cards.block.swiper .swiper-button-prev,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev {
+    width: 44px;
+    height: 44px;
+    background: #ff6b35;
+    border-radius: 50%;
+    color: white;
+    position: absolute;
+    top: 98%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+    opacity: 0.7;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-next:active,
+  .section.stay-informed .cards.block.swiper .swiper-button-prev:active,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next:active,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev:active {
+    opacity: 1;
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-next:after,
+  .section.stay-informed .cards.block.swiper .swiper-button-prev:after,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next:after,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev:after {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-prev,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev {
+    left: 10px;
+    right: auto;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-next,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next {
+    right: 10px;
+    left: auto;
+  }
+
+  .section.stay-informed .cards.block.swiper .swiper-button-next:hover,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next:hover {
+    background: #e55a2b;
+  }
+
+  /* Disabled state for navigation buttons */
+  .section.stay-informed .cards.block.swiper .swiper-button-next.swiper-button-disabled,
+  .section.stay-informed .cards.block.swiper .swiper-button-prev.swiper-button-disabled,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-next.swiper-button-disabled,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-button-prev.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}

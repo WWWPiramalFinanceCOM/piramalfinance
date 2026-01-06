@@ -107,10 +107,13 @@
 
 /* Nested Text inside List Items */
 .section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul > li > ul > li {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 30px;
-  letter-spacing: 0;
+    font-family: Montserrat;
+    font-weight: 400;
+    font-style: regular;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: 0;
+    vertical-align: middle;
   text-transform: none;
 }
 

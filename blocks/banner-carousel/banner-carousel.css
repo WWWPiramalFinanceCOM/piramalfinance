@@ -116,11 +116,12 @@
     max-width: 152px;
 }
 
-section.banner-carousel-container .cards-wrapper .cards.block .cards-card-body {
-    margin: unset !important;
+.section.banner-carousel-container .cards-wrapper .cards.block .cards-card-body {
+    margin-top: unset !important;
+    padding: 0px 22px;;
 }
 
-section.banner-carousel-container .cards-wrapper .cards-card-body p {
+.section.banner-carousel-container .cards-wrapper .cards-card-body p {
     color: white;
     font-weight: 700;
     font-style: Bold;
@@ -155,11 +156,10 @@ section.banner-carousel-container .cards-wrapper .cards-card-body p {
     }
 }
 .section.banner-carousel-container.cards-container .cards-wrapper .cards-card-body p {
-    font-family: Montserrat;
+    font-family: "Montserrat";
     font-weight: 700;
     font-style: Bold;
     font-size: 18px;
-    leading-trim: NONE;
     line-height: 30px;
     letter-spacing: 0px;
     text-align: center;
@@ -167,15 +167,9 @@ section.banner-carousel-container .cards-wrapper .cards-card-body p {
     color: #ffffff;
 
     @media only screen and (max-width: 767px) {
-        font-family: Montserrat;
-        font-weight: 700;
-        font-style: Bold;
         font-size: 14px;
-        leading-trim: NONE;
         line-height: 100%;
         letter-spacing: 0px;
-        text-align: center;
-        vertical-align: middle;
     }
 }
 

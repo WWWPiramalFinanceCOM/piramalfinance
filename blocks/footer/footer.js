@@ -9,14 +9,36 @@ import { loadFragment } from '../fragment/fragment.js';
  */
 export default async function decorate(block) {
   // load footer as fragment
-  const footerMeta = getMetadata('footer');
+  /* const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
+  const fragment = await loadFragment(footerPath); */
 
+  // Get footer sections by their specific class names
+  const footerClassNames = [
+    'footer-section-first',
+    'footer-section-second',
+    'footer-section-third',
+    'mobile-footer-section-third',
+    'mobile-left-side-footer',
+    'footer-follow-us-wrapper',
+    'footer-last-wrapper',
+    'risk-gradation',
+    'modal-overlay'
+  ];
+  
+  const footerSections = [...document.querySelectorAll('.section')].filter(section => {
+    return footerClassNames.some(className => section.classList.contains(className));
+  });
+  
+  block.classList.add('dp-none');
   // decorate footer DOM
   block.textContent = '';
   const footer = document.createElement('div');
-  while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
+  // while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
+  footerSections.forEach((section) => {
+    section.style.display = '';
+    footer.append(section);
+  });
 
   block.append(footer);
   try {
@@ -46,4 +68,6 @@ export default async function decorate(block) {
   } catch (error) {
     console.warn(error);
   }
+  
+  block.classList.remove('dp-none');
 }

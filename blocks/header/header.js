@@ -206,21 +206,31 @@ async function buildBreadcrumbs() {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  /* 
   const path = getMetadata('nav') || '/nav';
   if (path.endsWith('/nav-1')) {
+    }
+    const fragment = await loadFragment(path); 
+    // */
     document.querySelector('header').classList.add('primary');
-  }
-  const fragment = await loadFragment(path);
+  const firstThreeSection = [...document.querySelectorAll('.section')].splice(0,3)
+
   block.classList.add('dp-none');
   // decorate nav DOM
   const nav = document.createElement('nav');
   nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
-  if (path.includes('/neeyat/')) {
+  // while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  while (firstThreeSection.length){
+    const section = firstThreeSection.shift();
+    section.style.display = ''
+     nav.append(section);
+    }
+
+  /* if (path.includes('/neeyat/')) {
     block.classList.remove('header');
     block.classList.add('header-neeyat-nav');
     // return block;
-  }
+  } */
 
   const classes = ['brand', 'sections', 'tools'];
   classes.forEach((c, i) => {
@@ -356,7 +366,10 @@ export default async function decorate(block) {
   let mobFragment = null;
   hamburger.addEventListener('click', async (e) => {
     if (!mobFragment) {
-      mobFragment = await loadFragment(getMetadata('mobilenav'));
+      // mobFragment = await loadFragment(getMetadata('mobilenav'));
+      const div = document.createElement('div');
+      div.append(document.querySelector('main .section'));
+      mobFragment = div;
       const mobNav = mobFragment.querySelector('.default-content-wrapper');
       mobNav.classList.add('desk-dp-none');
       navBrand.prepend(mobNav);

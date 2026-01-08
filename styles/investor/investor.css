@@ -302,6 +302,10 @@ max-width: 1216px;
 .section.performance-snapshot .cards-wrapper .cards-card-body{
    padding: unset;
    margin: unset !important;
+
+   @media only screen and (max-width:767px){
+    padding: 5px;
+   }
 }
 
 div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul{
@@ -436,6 +440,10 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 
 .section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li{
     border-radius: 12px;
+
+    @media only screen and (max-width:767px){
+        width: 180px;
+    }
 }
 
 .section.performance-snapshot .default-content-wrapper .button-container a{
@@ -476,6 +484,11 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     letter-spacing: 20%;
     text-transform: uppercase;
     color: #134F7F;
+
+    @media only screen and (max-width:767px){
+        text-align: center;
+
+    }
 }
 
 .section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul > li > p sub{

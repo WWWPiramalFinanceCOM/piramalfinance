@@ -204,9 +204,23 @@
   .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-slide {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     width: 100% !important;
-    margin-right: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  /* Ensure list items inside slides take full width */
+  .section.stay-informed .cards.block.swiper .swiper-slide > li,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-slide > li {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid var(--dark-color);
+    background-color: var(--background-color);
   }
 
   /* Pagination dots on mobile - positioned below cards */

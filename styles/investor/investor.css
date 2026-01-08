@@ -315,7 +315,11 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul{
     padding: 20px;
     display: flex;
-    flex-direction: column;    
+    flex-direction: column; 
+    
+    @media only screen and (max-width:767px){
+        padding: unset;
+    }
 }
 
 .section.performance-snapshot #performance-snapshot{
@@ -422,6 +426,10 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     gap: 8px;
     align-items: center;
 
+    @media only screen and (max-width:767px){
+        gap: unset;
+    }
+
 }
 .section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul > li > ul > li {
   padding-bottom: 18px;
@@ -442,7 +450,8 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     border-radius: 12px;
 
     @media only screen and (max-width:767px){
-        width: 180px;
+        width: 169px;
+        max-height: 118px;
     }
 }
 

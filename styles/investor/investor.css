@@ -1,12 +1,4 @@
-/* =========================================
-   1. GLOBAL & VARIABLES
-   ========================================= */
-:root {
-  --primary-blue: #184E7D;
-  --accent-orange: var(--orange, #F58220); /* Fallback color added */
-  --font-main: 'Nunito', sans-serif;
-  --shadow-light: 0px 0px 16px 6px #11182721;
-}
+
 
 * {
   margin: 0;
@@ -55,11 +47,11 @@
   max-width: 1216px;
   margin: 0 auto;
   text-align: center;
-  font-family: var(--font-main);
+  font-family: 'Nunito', sans-serif;
   font-weight: 600;
   font-size: 40px;
   line-height: 40px;
-  color: var(--primary-blue);
+  color: #184E7D;
 }
 
 /* Heading (H2) Styling */
@@ -70,7 +62,7 @@
   text-align: center;
   padding-top: 100px;
   margin-bottom: 60px;
-  color: var(--primary-blue);
+  color: #184E7D;
   position: relative;
 }
 
@@ -84,7 +76,7 @@
   width: 7%;
   height: 8px;
   border-radius: 37px;
-  background-color: var(--accent-orange);
+  background-color: #F58220;
   transition: all ease 0.3s;
 }
 
@@ -95,8 +87,8 @@
   line-height: 49px;
   letter-spacing: 0.2em; /* Converted 20% to em */
   text-transform: uppercase;
-  color: var(--primary-blue);
-  box-shadow: var(--shadow-light);
+  color: #184E7D;
+  box-shadow: 0px 0px 16px 6px #11182721;
   border-radius: 24px;
   padding: 44px;
 }
@@ -141,7 +133,7 @@
   left: 20px;
   z-index: 10;
   color: white;
-  font-family: var(--font-main);
+  font-family: 'Nunito', sans-serif;
   line-height: 1.3;
   pointer-events: none;
 }

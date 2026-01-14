@@ -1566,7 +1566,7 @@ body.modal-open footer {
   gap: 12px;
 }
 
-.header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child span img {
+.header-wrapper.primary .nav-wrapper #nav .nav-sections >.default-content-wrapper >ul >li:last-child span img {
   position: absolute;
   height: 25px;
   width: 25px;

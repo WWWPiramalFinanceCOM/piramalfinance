@@ -73,11 +73,12 @@
   left: 50%;
   transform: translateX(-50%); /* Better centering method */
   bottom: -16px;
-  width: 7%;
-  height: 8px;
   border-radius: 37px;
   background-color: #F58220;
   transition: all ease 0.3s;
+      background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 
 /* Left Column: Numbered/Bulleted List Styling */
@@ -90,11 +91,13 @@
   color: #184E7D;
   box-shadow: 0px 0px 16px 6px #11182721;
   border-radius: 24px;
-  padding: 44px;
+  /* padding: 44px; */
+  padding: 33px;
 }
 
 .section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul > li:nth-child(2) {
   margin-top: 24px;
+  padding: 49px;
 }
 
 /* Nested Text inside List Items */
@@ -116,6 +119,7 @@
       display: grid;
     grid-template-columns: 1fr 1fr;
     /* grid-template-rows: 220px 80px 220px; */
+    grid-gap: 21px;
 }
 
 /* Common Card Styles */
@@ -124,6 +128,8 @@
   border-radius: 15px;
   overflow: hidden;
   width: 100%;
+    background-color: #D3E2F4;
+    padding: 20px;
 }
 
 /* Text Overlay on Cards */
@@ -132,16 +138,25 @@
   bottom: 20px;
   left: 20px;
   z-index: 10;
-  color: white;
   font-family: 'Nunito', sans-serif;
   line-height: 1.3;
   pointer-events: none;
+  padding: unset;
+
+     
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-body h4{
+         font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #164E7D;
+    font-family: 'Nunito', sans-serif;
 }
 
 /* Image Handling */
 .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture img {
-  width: 100%;
-  height: 100%;
+    height: 100px;
+    width: auto;
   object-fit: cover;
   border-radius: 15px;
   display: block; /* Removes bottom spacing whitespace */
@@ -153,14 +168,72 @@
 .section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(1) {
   grid-column: 1;
     grid-row: 1 / 3;
-}
+        padding: 20px;
+    /* max-width: 292px;
+    max-height: 279px; */
+        display: flex;
+    justify-content: center;
+          width: 292px;
+    height: 272px;
 
+    @media only screen and (max-width:767px){
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        height: unset;
+    }
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(1) .cards-card-body p{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+
+    @media only screen and (max-width:767px){
+            display: flex;
+    justify-content: flex-start;
+    }
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(2) .cards-card-body p{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+
+      @media only screen and (max-width:767px){
+            display: flex;
+    justify-content: flex-start;
+    }
+
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(3) .cards-card-body p{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(4) .cards-card-body p{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+}
 /* Card 2: Short (Right Top) */
 .section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(2) {
-  /* grid-area: box-2; */
-  /* height: 198px; */
       grid-column: 2;
     grid-row: 1 / 2;
+        display: flex;
+    justify-content: flex-end;
+        width: 292px;
+    height: 175px;
+
+    @media only screen and (max-width:767px){
+        width: 100%;
+    }
 }
 
 /* Card 3: Short (Left Bottom) */
@@ -170,12 +243,27 @@
 
       grid-column: 1;
     grid-row: 3 / 4;
+    width: 292px;
+    height: 175px;
+    display: flex;
+    justify-content: flex-end;
+
+    @media only screen and (max-width:767px){
+        width: 100%;
+    }
+
 }
 
 /* Card 4: Tall (Right Bottom) */
 .section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(4) {
       grid-column: 2;
     grid-row: 2 / 4;
+    display: flex;
+    justify-content: center;
+
+    @media only screen and (max-width:767px){
+        justify-content: flex-end;
+    }
 }
 
 /* =========================================
@@ -249,8 +337,10 @@
   .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image,
   .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture,
   .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture img {
-    width: 100%;
-    max-height: 200px;;
+    /* width: 100%;
+    max-height: 200px;; */
+            height: 100px;
+        width: auto;
   }
 }
 
@@ -345,11 +435,12 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     position: absolute;
     left: 47%;
     bottom: -16px;
-    width: calc(7% + 0px);
-    height: 8px;
     border-radius: 37px;
     background-color: var(--orange);
     transition: all ease 0.3s;
+    background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 
 .section.performance-snapshot #performance-snapshot + p{
@@ -580,6 +671,21 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     vertical-align: middle;
     color: #184E7D;
     margin-bottom: 44px;
+    position: relative;
+}
+
+.section.esg-commit.rte-container h3::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -16px;
+    border-radius: 37px;
+    background-color: #F58220;
+    transition: all ease 0.3s;
+    background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 .section.esg-commit.rte-container #our-esg-commitment + p{
        /* font-family: Montserrat; */
@@ -711,6 +817,9 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     border-radius: 37px;
     background-color: var(--orange);
     transition: all ease 0.3s;
+        background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 
 .section.stay-informed.tabs-container .tabs.block{
@@ -1141,9 +1250,10 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
   background-color: #ff6b35; /* Vibrant Orange */
+     background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
   border-radius: 2px;
 }
 
@@ -1328,6 +1438,36 @@ CARDS GRID (Directors & Management)
   align-items: center;
   text-align: center;
   border: unset;
+    position: relative;
+    transition: transform 0.25s ease;
+}
+
+.directors-wrapper .cards ul li:hover,
+.management-team .cards ul li:hover {
+    transform: scale(1.1);
+}
+
+.directors-wrapper .cards ul li::after,
+.management-team .cards ul li::after {
+    content: none; /* only create on hover */
+    position: absolute;
+    bottom: -10px;
+    right: 40px;
+    opacity: 0;
+    transition: all 0.25s ease;
+    color: #365069;
+    pointer-events: none;
+}
+
+.directors-wrapper .cards ul li:hover::after,
+.management-team .cards ul li:hover::after {
+    content: '→';
+    font-weight: 900;
+    font-size: 30px;
+    color: #365069;
+    opacity: 1;
+    transform: translateX(6px);
+    transform: translateY(-105px);
 }
 
 /* ============================================================================
@@ -1846,13 +1986,14 @@ CARDS GRID (Directors & Management)
 .piramal-foundation .rte-wrapper div div div h2::before {
     content: "";
     position: absolute;
-    height: 8px;
-    width: 86px;
     border-radius: 37px;
     background: rgba(242, 110, 36, 1);
     bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
+        background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 .piramal-foundation .rte-wrapper div div div p:nth-of-type(2) {
     font-size: 16px;
@@ -1980,7 +2121,8 @@ CARDS GRID (Directors & Management)
 .section.leadership-wrapper .swiper {
   position: relative;
   overflow: hidden;
-  margin-left: 200px;
+    padding: 0 80px 30px 120px; /* leading padding to mimic design spacing */
+    margin-left: 0;
 }
 
 .section.leadership-wrapper .swiper-slide {
@@ -2080,14 +2222,15 @@ CARDS GRID (Directors & Management)
 .bussiness-offerings .default-content-wrapper > h2::before {
     content: "";
     position: absolute;
-    width: 86px;
-    height: 8px;
     border-radius: 37px;
     background-color: rgba(242, 110, 36, 1);
     display: block;
     left: 50%;
     transform: translateX(-50%);
     bottom: 0;
+    background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 .bussiness-offerings .default-content-wrapper p {
     font-size: 16px;

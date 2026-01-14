@@ -249,18 +249,13 @@ header {
   height: 19px;
 } */
 
-.header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li p:last-child img {
-  /* position: absolute;
-  height: 25px;
-  width: 25px;
-  top: 7px;
-  right: 7px; */
+/* .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li p:last-child img {
   position: absolute;
   height: 25px;
   width: 25px;
   top: 35%;
   left: 59px;
-}
+} */
 
 .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(6)>ul>li>p>span>img {
   width: 20px;
@@ -1571,7 +1566,12 @@ body.modal-open footer {
   gap: 12px;
 }
 
-.header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child span img {
+.header-wrapper.primary .nav-wrapper #nav .nav-sections >.default-content-wrapper >ul >li:last-child span img {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  top: 35%;
+  left: 59px;
   @media only screen and (max-width: 1200px) {
     left: 30px;
     right: 0px;

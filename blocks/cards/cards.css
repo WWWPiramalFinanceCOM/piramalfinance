@@ -206,10 +206,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 100% !important;
-    max-width: 100% !important;
+    width: auto !important;
+    max-width: 85% !important;
     margin: 0 !important;
-    padding: 0 24px;
+    padding: 0;
     box-sizing: border-box;
   }
 
@@ -217,10 +217,10 @@
   .section.stay-informed .cards.block.swiper .swiper-slide > li,
   .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-slide > li {
     width: 100%;
-    max-width: 400px;
+    max-width: 343px;
     margin: 0 auto;
-    border: 1px solid var(--dark-color);
-    background-color: var(--background-color);
+    border: none;
+    background-color: transparent;
   }
 
   /* Pagination dots on mobile - positioned below cards */

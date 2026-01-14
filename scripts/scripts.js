@@ -381,8 +381,9 @@ async function initSwiperForCards(block) {
 
     // Mobile configuration
     if (isMobile) {
-      swiperConfig.slidesPerView = 1;
-      swiperConfig.spaceBetween = 16;
+      swiperConfig.slidesPerView = 1.2;
+      swiperConfig.slidesPerGroup = 1;
+      swiperConfig.spaceBetween = 20;
       swiperConfig.centeredSlides = true;
       swiperConfig.loop = false;
       swiperConfig.allowTouchMove = true;
@@ -390,12 +391,12 @@ async function initSwiperForCards(block) {
       swiperConfig.touchRatio = 1;
       swiperConfig.touchAngle = 45;
       swiperConfig.grabCursor = true;
-      swiperConfig.centerInsufficientSlides = true;
+      swiperConfig.speed = 300;
     } else {
       // Desktop configuration
       swiperConfig.slidesPerView = 3;
       swiperConfig.spaceBetween = 30;
-      swiperConfig.slidesPerGroup = 3;
+      swiperConfig.slidesPerGroup = 1;
       swiperConfig.allowTouchMove = true;
       swiperConfig.simulateTouch = true;
       swiperConfig.touchRatio = 1;

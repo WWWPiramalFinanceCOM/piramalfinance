@@ -56,6 +56,7 @@
 
 /* Heading (H2) Styling */
 .section.commitment-wrap h2 {
+font-family: "Nunito-Semibold";
   font-weight: 600;
   font-size: 40px;
   line-height: 40px;
@@ -406,9 +407,9 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 
 .section.performance-snapshot #performance-snapshot{
     margin-bottom: 44px;
-    /* font-family: Nunito; */
-    font-weight: 600;
-    font-style: SemiBold;
+    font-family: "Nunito-Semibold";
+    /* font-weight: 600; */
+    /* font-style: SemiBold; */
     font-size: 40px;
     /* leading-trim: NONE; */
     line-height: 40px;
@@ -419,9 +420,9 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     position: relative;
 
     @media only screen and (max-width:767px){
-    font-family: Nunito;
-    font-weight: 600;
-    font-style: SemiBold;
+    /* font-family: Nunito; */
+    /* font-weight: 600; */
+    /* font-style: SemiBold; */
     font-size: 26px;
     line-height: 40px;
     letter-spacing: 0px;
@@ -800,14 +801,18 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     color: white;
 } 
 
-.section.stay-informed.tabs-container #stay-informed{
-    padding-top: 100px;
+.section.stay-informed.tabs-container > .default-content-wrapper > h3{
+    padding-top: 70px;
     padding-bottom: 12px;
      margin-bottom: 44px;
     position: relative;
+
+    /* @media only screen and (max-width:767px){
+
+    } */
 }
 
-.section.stay-informed.tabs-container #stay-informed::after{
+.section.stay-informed.tabs-container .default-content-wrapper > h3::after{
     content: "";
     position: absolute;
     left: 47%;
@@ -851,8 +856,18 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     /* padding-bottom: 100px; */
 }
 
-.section.stay-informed.tabs-container #stay-informed + p{
+.section.stay-informed.tabs-container .default-content-wrapper h3 + p{
     margin-bottom: 60px;
+    font-family: Montserrat;
+font-weight: 400;
+font-style: Regular;
+font-size: 16px;
+/* leading-trim: NONE; */
+line-height: 30px;
+letter-spacing: 0px;
+text-align: center;
+vertical-align: middle;
+
 }
 
 .section.stay-informed.tabs-container > .tabs-wrapper{
@@ -966,13 +981,14 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
 .section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-body > p,
 .section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-body > p{
     padding: 18px 0px;
+    text-align: left;
 }
 
 .section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title[aria-selected=true] {
-    /* font-family: Montserrat; */
+    font-family: Montserrat;
     font-weight: 400;
     font-style: Regular;
-    /* font-size: 20px; */
+    font-size: 20px;
     line-height: 30px;
     letter-spacing: 0px;
     vertical-align: middle;
@@ -1180,8 +1196,12 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
 /* Main Container Spacing */
 .section.leadership-wrapper.tabs-container {
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   background-color: #ffffff;
   padding-top: 200px;
+  position: relative;
 
   @media only screen and (max-width:767px){
     padding-top: 60px;
@@ -1381,20 +1401,14 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
 CARDS GRID (Directors & Management)
 ============================================================================ */
 
+/* Leadership tab panel ul - Let Swiper handle layout */
 .section.leadership-wrapper #tab-panel-0-0 ul,
 .section.leadership-wrapper #tab-panel-0-1 ul
 {
-    /* padding-left: 300px; */
-    /* display: flex; */
-    gap: 88px;
-    overflow: hidden;
-    display: flex;
-    justify-content: flex-end;
-
-    @media only screen and (max-width:767px){
-        display: flex;
-        flex-direction: column;
-    }
+    /* Swiper wrapper will handle display and layout */
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 /* Animation for switching tabs */
 .section.leadership-wrapper .tabs-wrapper .tabpanel {
@@ -1420,6 +1434,19 @@ CARDS GRID (Directors & Management)
   /* MOBILE: 1 Column (Pixel match to mobile screenshot) */
   grid-template-columns: 1fr; 
   gap: 3rem;
+}
+
+/* Swiper wrapper override for leadership cards */
+.section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-wrapper {
+  display: flex !important;
+  align-items: center;
+}
+
+.section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 @media (min-width: 768px) {
@@ -1485,8 +1512,12 @@ CARDS GRID (Directors & Management)
 
  .section.leadership-wrapper.tabs-container #tab-panel-0-0 .cards-card-image img,
  .section.leadership-wrapper.tabs-container #tab-panel-0-1 .cards-card-image img{
-    width: unset;
-    height: unset;
+    max-width: 290px;
+    /* max-height: 250px; */
+    width: 100%;
+    /* width: auto; */
+    height: auto;
+    object-fit: contain;
 }
 
 /* Subtle variation on hover for organic feel */
@@ -1498,21 +1529,18 @@ CARDS GRID (Directors & Management)
 @media (min-width: 768px) {
   .directors-wrapper .cards-card-image,
   .management-team .cards-card-image {
-    /* width: 170px; */
-    /* height: 170px; */
+    width: 200px;
+    height: 250px;
   }
 }
 
 .directors-wrapper .cards-card-image img,
 .management-team .cards-card-image img {
-  /* width: 100%; */
-  /* height: 100%; */
-  /* object-fit: cover; */
-  /* Slight zoom on the person within the blob */
-  /* transform: scale(1.05);  */
-  /* transform-origin: bottom center; */
-  width: unset;
-  height: unset;
+  max-width: 200px;
+  max-height: 250px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ============================================================================
@@ -1972,6 +2000,7 @@ CARDS GRID (Directors & Management)
 }
 .piramal-foundation .rte-wrapper div div div h2 {
     line-height: 40px;
+    font-family: 'Nunito-Semibold';
     margin-bottom: 30px;
     position: relative;
     color: white;
@@ -2121,13 +2150,46 @@ CARDS GRID (Directors & Management)
 .section.leadership-wrapper .swiper {
   position: relative;
   overflow: hidden;
-    padding: 0 80px 30px 120px; /* leading padding to mimic design spacing */
-    margin-left: 0;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 20px 30px 20px;
+  margin-left: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .section.leadership-wrapper .swiper {
+    padding: 0 40px 30px 40px;
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.section.leadership-wrapper .tabs-wrapper {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.section.leadership-wrapper .tab-content {
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .section.leadership-wrapper .swiper-slide {
   height: auto;
-  display: flex; /* Ensures equal height cards */
+  display: flex;
+  pointer-events: auto;
+}
+}
+
+.section.leadership-wrapper .swiper-wrapper {
+  pointer-events: auto;
 }
 
 /* --- Arrow Styling --- */
@@ -2160,11 +2222,20 @@ CARDS GRID (Directors & Management)
   }
 }
 
-/* On Mobile/Touch devices, you might want arrows always visible or just rely on touch */
+/* On Mobile/Touch devices, hide arrows and pagination */
 @media (hover: none) {
   .section.leadership-wrapper .swiper-button-next,
-  .section.leadership-wrapper .swiper-button-prev {
-    display: none; /* Hide arrows on mobile, rely on swipe */
+  .section.leadership-wrapper .swiper-button-prev,
+  .section.leadership-wrapper .swiper-pagination {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .section.leadership-wrapper .swiper-button-next,
+  .section.leadership-wrapper .swiper-button-prev,
+  .section.leadership-wrapper .swiper-pagination {
+    display: none !important;
   }
 }
 
@@ -2178,15 +2249,18 @@ CARDS GRID (Directors & Management)
 }
 
 .section.leadership-wrapper .cards li {
-  width: auto !important;
   flex: 0 0 auto;
 }
 
 /* Mobile: Full width slides */
 @media (max-width: 767px) {
   .section.leadership-wrapper .swiper-slide {
+    width: 280px !important;
+    flex-shrink: 0;
+  }
+  
+  .section.leadership-wrapper .cards li {
     width: 100% !important;
-    max-width: 343px;
   }
 }
 
@@ -2195,6 +2269,7 @@ CARDS GRID (Directors & Management)
 .bussiness-offerings {
     padding: 100px 112px;
     background-color: rgba(24, 78, 125, 1);
+    padding-inline: calc((100% - 1216px) / 2);
 }
 @media only screen and (max-width: 767px) {
     .bussiness-offerings {
@@ -2206,6 +2281,7 @@ CARDS GRID (Directors & Management)
     text-align: center;
 }
 .bussiness-offerings .default-content-wrapper > h2 {
+    font-family: 'Nunito-Semibold';
     font-size: 40px;
     font-weight: 600;
     line-height: 1;
@@ -2213,6 +2289,7 @@ CARDS GRID (Directors & Management)
     margin-bottom: 24px;
     position: relative;
     height: 60px;
+
 }
 @media only screen and (max-width: 767px) {
     .bussiness-offerings .default-content-wrapper > h2 {

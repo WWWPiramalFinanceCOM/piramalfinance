@@ -529,7 +529,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     display: flex;
 
     color: #032246;
-    font-family: "Montserrat", sans-serif;
+    font-family: Montserrat;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -1555,8 +1555,8 @@ CARDS GRID (Directors & Management)
 @media (min-width: 768px) {
   .directors-wrapper .cards-card-image,
   .management-team .cards-card-image {
-    width: 200px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
   }
 }
 

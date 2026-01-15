@@ -9,7 +9,9 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  
+}
+
+.banners.block .banners-wrapper {
   @media only screen and (max-width: 767px) {
     gap: 15px;
   }
@@ -20,7 +22,9 @@
   min-width: 300px;
   position: relative;
   overflow: hidden;
-  
+}
+
+.banners.block .banners-item {
   @media only screen and (max-width: 767px) {
     min-width: 100%;
   }
@@ -49,7 +53,7 @@
   .banners.block .banners-item .desktop-image {
     display: none;
   }
-  
+
   .banners.block .banners-item .mobile-image {
     display: block;
   }

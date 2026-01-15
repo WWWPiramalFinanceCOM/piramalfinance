@@ -119,6 +119,10 @@
     "components": ["card"]
   },
   {
+    "id": "banners",
+    "components": ["banners-item"]
+  },
+  {
     "id": "boards",
     "components": ["board-item"]
   },

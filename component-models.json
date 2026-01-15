@@ -184,6 +184,43 @@
     ]
   },
   {
+    "id": "banners",
+    "fields": []
+  },
+  {
+    "id": "banners-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "desktop-image",
+        "label": "Desktop Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "desktop-alt",
+        "label": "Desktop Image Alt",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "mobile-image",
+        "label": "Mobile Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "mobile-alt",
+        "label": "Mobile Image Alt",
+        "value": "",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "section",
     "fields": [
       {

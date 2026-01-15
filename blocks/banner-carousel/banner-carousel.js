@@ -1,55 +1,75 @@
 import Swiper from "./swiper-bundle.min.js";
 
-export default function decorate(block) {
-    // debugger;
-    block;
-    console.log(block);
+async function preloadImages(images) {
+  const imageArray = Array.from(images);
 
-  const bannerCarousel = document.querySelector(".banner-carousel.block");
+  const decodeOrLoad = (img) => new Promise((resolve) => {
+    const done = () => resolve();
+
+    if (img.complete && img.naturalWidth) {
+      // decode avoids flash of transparent frame on swap
+      if (img.decode) {
+        img.decode().then(done).catch(done);
+      } else {
+        done();
+      }
+      return;
+    }
+
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', done, { once: true });
+  });
+
+  await Promise.all(imageArray.map(decodeOrLoad));
+}
+
+export default async function decorate(block) {
+  const bannerCarousel = block || document.querySelector('.banner-carousel.block');
 
   if (!bannerCarousel) return;
 
   // Add swiper classes dynamically
-  bannerCarousel.classList.add("swiper", "mySwiper");
+  bannerCarousel.classList.add('swiper', 'mySwiper');
 
   // Get inner wrapper (the <div> that contains image divs)
-  const innerWrapper = bannerCarousel.querySelector(":scope > div");
+  const innerWrapper = bannerCarousel.querySelector(':scope > div');
 
   if (innerWrapper) {
-    innerWrapper.classList.add("swiper-wrapper");
+    innerWrapper.classList.add('swiper-wrapper');
 
     // Each child becomes a swiper-slide
     const slides = innerWrapper.querySelectorAll(":scope > div");
     slides.forEach((slide) => {
       slide.classList.add("swiper-slide");
+
+      // Eager-load slide images so cross-fade never shows a blank frame
+      slide.querySelectorAll('img').forEach((img) => {
+        img.loading = 'eager';
+        img.decoding = 'async';
+        img.setAttribute('fetchpriority', 'high');
+      });
     });
   }
 
-  // Create navigation and pagination elements dynamically
-  const pagination = document.createElement("div");
-  pagination.classList.add("swiper-pagination");
+  // Wait until slide images are decoded to avoid black frames during fade
+  const slideImages = bannerCarousel.querySelectorAll('img');
+  await preloadImages(slideImages);
 
-  // Only append pagination; navigation buttons are not created
-//   bannerCarousel.appendChild(pagination);
-
-  // Hide navigation arrows and pagination via an injected stylesheet
-//   const style = document.createElement('style');
-//   style.type = 'text/css';
-//   style.appendChild(document.createTextNode(
-//     `.banner-carousel.block .swiper-button-next,
-//      .banner-carousel.block .swiper-button-prev,
-//      .banner-carousel.block .swiper-pagination { display: none !important; }`
-//   ));
-//   document.head.appendChild(style);
+  // Use first slide image as background fallback to prevent flashes
+  const firstImg = slideImages[0];
+  if (firstImg?.src) {
+    bannerCarousel.style.backgroundImage = `url(${firstImg.src})`;
+    bannerCarousel.style.backgroundSize = 'cover';
+    bannerCarousel.style.backgroundPosition = 'center';
+  }
 
   // Initialize Swiper
-  const swiper = new Swiper(".mySwiper", {
+  const swiper = new Swiper(bannerCarousel, {
     loop: true,
-    // pagination: {
-    //   el: ".swiper-pagination",
-    //   clickable: true,
-    // },
-    // Removed navigation arrows per request
+    preloadImages: true,
+    lazy: false,
+    observer: true,
+    observeParents: true,
     effect: 'fade',
     fadeEffect: {
       crossFade: true,

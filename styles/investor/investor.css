@@ -999,6 +999,12 @@ vertical-align: middle;
     margin-right: unset;
         border-bottom: unset;
     border: unset;
+
+    @media only screen and (max-width:767px){
+            font-size: 16px;
+    padding: 0 13px;
+    line-height: 46px;
+    }
 }
 
 .section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title{
@@ -1040,7 +1046,7 @@ vertical-align: middle;
     }
 
     .piramal-swiper .swiper-wrapper .cards-card-body h3{
-        margin-top: 159px;
+        /* margin-top: 159px; */
     }
     .piramal-swiper .swiper-wrapper .cards-card-body h3 + p{
         margin-bottom: 30px;

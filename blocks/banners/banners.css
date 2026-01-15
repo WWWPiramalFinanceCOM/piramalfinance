@@ -1,60 +1,39 @@
 .banners.block {
-  /* Banners block container styles */
-}
-
-.banners.block .banners-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
-.banners.block .banners-wrapper {
-  @media only screen and (max-width: 767px) {
-    gap: 15px;
-  }
-}
-
-.banners.block .banners-item {
-  flex: 1;
-  min-width: 300px;
-  position: relative;
-  overflow: hidden;
-}
-
-.banners.block .banners-item {
-  @media only screen and (max-width: 767px) {
-    min-width: 100%;
-  }
-}
-
-.banners.block .banners-item picture {
+.banners.block picture {
   display: block;
   width: 100%;
-  height: auto;
 }
 
-.banners.block .banners-item img {
+.banners.block img {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
 }
 
 /* Hide mobile images on desktop */
-.banners.block .banners-item .mobile-image {
+.banners.block .mobile-image {
+  display: none !important;
+}
+
+.banners.block .desktop-image {
+  display: block !important;
+}
+
+/* Hide text divs */
+.banners.block > div > div > div:not(:has(picture)) {
   display: none;
 }
 
+/* On mobile - show mobile image only */
 @media only screen and (max-width: 767px) {
-  /* Show mobile images on mobile devices */
-  .banners.block .banners-item .desktop-image {
-    display: none;
+  .banners.block .desktop-image {
+    display: none !important;
   }
 
-  .banners.block .banners-item .mobile-image {
-    display: block;
+  .banners.block .mobile-image {
+    display: block !important;
   }
 }

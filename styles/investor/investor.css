@@ -516,6 +516,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 
     @media only screen and (max-width:767px){
         gap: unset;
+        flex-direction: row;
     }
 
 }

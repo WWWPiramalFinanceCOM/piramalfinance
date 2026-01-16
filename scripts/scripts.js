@@ -2,6 +2,7 @@
 // import { statemasterGetStatesApi } from '../blocks/applyloanform/statemasterapi.js';
 // import { validationJSFunc } from '../blocks/applyloanform/validation.js';
 import { ctaClick } from '../dl.js';
+import initGsapAnimations from './gsap-animations.js';
 import {
   sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks, loadCSS, fetchPlaceholders,
   getMetadata,
@@ -29,6 +30,9 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
  */
 /**
  * create an element.
+// Initialize GSAP-based scroll animations
+initGsapAnimations();
+
  * @param {string} tagName the tag for the element
  * @param {string|Array<string>} classes classes to apply
  * @param {object} props properties to apply
@@ -1209,3 +1213,4 @@ const handleModalPopup = (anchor, body) => {
     body.style.overflow = 'hidden';
   });
 };
+

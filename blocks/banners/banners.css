@@ -1,0 +1,39 @@
+.banners.block {
+  width: 100%;
+}
+
+.banners.block picture {
+  display: block;
+  width: 100%;
+}
+
+.banners.block img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hide mobile images on desktop */
+.banners.block .mobile-image {
+  display: none !important;
+}
+
+.banners.block .desktop-image {
+  display: block !important;
+}
+
+/* Hide text divs */
+.banners.block > div > div > div:not(:has(picture)) {
+  display: none;
+}
+
+/* On mobile - show mobile image only */
+@media only screen and (max-width: 767px) {
+  .banners.block .desktop-image {
+    display: none !important;
+  }
+
+  .banners.block .mobile-image {
+    display: block !important;
+  }
+}

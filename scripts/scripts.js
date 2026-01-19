@@ -381,8 +381,9 @@ async function initSwiperForCards(block) {
 
     // Mobile configuration
     if (isMobile) {
-      swiperConfig.slidesPerView = 1;
-      swiperConfig.spaceBetween = 16;
+      swiperConfig.slidesPerView = 1.2;
+      swiperConfig.slidesPerGroup = 1;
+      swiperConfig.spaceBetween = 20;
       swiperConfig.centeredSlides = true;
       swiperConfig.loop = false;
       swiperConfig.allowTouchMove = true;
@@ -390,12 +391,12 @@ async function initSwiperForCards(block) {
       swiperConfig.touchRatio = 1;
       swiperConfig.touchAngle = 45;
       swiperConfig.grabCursor = true;
-      swiperConfig.centerInsufficientSlides = true;
+      swiperConfig.speed = 300;
     } else {
       // Desktop configuration
       swiperConfig.slidesPerView = 3;
       swiperConfig.spaceBetween = 30;
-      swiperConfig.slidesPerGroup = 3;
+      swiperConfig.slidesPerGroup = 1;
       swiperConfig.allowTouchMove = true;
       swiperConfig.simulateTouch = true;
       swiperConfig.touchRatio = 1;
@@ -448,34 +449,31 @@ async function initPiramalCards() {
   }
 }
 
-// async function initLeadershipCards() {
-//   // Select the main wrapper
-//   const leadershipWrapper = document.querySelector('.section.leadership-wrapper');
+async function initLeadershipCards() {
+  const leadershipWrapper = document.querySelector('.section.leadership-wrapper');
 
-//   if (!leadershipWrapper) return;
+  if (!leadershipWrapper) return;
 
-//   // Find card blocks in Directors tab (tab-panel-0-0)
-//   const directorsCards = leadershipWrapper.querySelectorAll('#tab-panel-0-0 .cards.block');
-//   if (directorsCards.length > 0) {
-//     for (const cardBlock of directorsCards) {
-//       // Avoid double initialization
-//       if (!cardBlock.classList.contains('swiper')) {
-//         await initSwiperForCards(cardBlock);
-//       }
-//     }
-//   }
+  // Directors tab (tab-panel-0-0)
+  const directorsCards = leadershipWrapper.querySelectorAll('#tab-panel-0-0 .cards.block');
+  if (directorsCards.length > 0) {
+    for (const cardBlock of directorsCards) {
+      if (!cardBlock.classList.contains('swiper')) {
+        await initSwiperForCards(cardBlock);
+      }
+    }
+  }
 
-//   // Find card blocks in Management Team tab (tab-panel-0-1)
-//   const managementCards = leadershipWrapper.querySelectorAll('#tab-panel-0-1 .cards.block');
-//   if (managementCards.length > 0) {
-//     for (const cardBlock of managementCards) {
-//       // Avoid double initialization
-//       if (!cardBlock.classList.contains('swiper')) {
-//         await initSwiperForCards(cardBlock);
-//       }
-//     }
-//   }
-// }
+  // Management Team tab (tab-panel-0-1)
+  const managementCards = leadershipWrapper.querySelectorAll('#tab-panel-0-1 .cards.block');
+  if (managementCards.length > 0) {
+    for (const cardBlock of managementCards) {
+      if (!cardBlock.classList.contains('swiper')) {
+        await initSwiperForCards(cardBlock);
+      }
+    }
+  }
+}
 
 function moveDirectorsToTabPanel() {
   try {
@@ -751,7 +749,7 @@ async function loadLazy(doc) {
   moveCardsToTabPanels();
   initPiramalCards();
   moveDirectorsToTabPanel();
-  // initLeadershipCards();
+  initLeadershipCards();
    initConnectUsSection();
 
   const { hash } = window.location;

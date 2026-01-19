@@ -56,6 +56,7 @@
 
 /* Heading (H2) Styling */
 .section.commitment-wrap h2 {
+font-family: "Nunito-Semibold";
   font-weight: 600;
   font-size: 40px;
   line-height: 40px;
@@ -73,11 +74,12 @@
   left: 50%;
   transform: translateX(-50%); /* Better centering method */
   bottom: -16px;
-  width: 7%;
-  height: 8px;
   border-radius: 37px;
   background-color: #F58220;
   transition: all ease 0.3s;
+      background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 
 /* Left Column: Numbered/Bulleted List Styling */
@@ -90,11 +92,13 @@
   color: #184E7D;
   box-shadow: 0px 0px 16px 6px #11182721;
   border-radius: 24px;
-  padding: 44px;
+  /* padding: 44px; */
+  padding: 33px;
 }
 
 .section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul > li:nth-child(2) {
   margin-top: 24px;
+  padding: 49px;
 }
 
 /* Nested Text inside List Items */
@@ -116,6 +120,7 @@
       display: grid;
     grid-template-columns: 1fr 1fr;
     /* grid-template-rows: 220px 80px 220px; */
+    grid-gap: 21px;
 }
 
 /* Common Card Styles */
@@ -124,6 +129,8 @@
   border-radius: 15px;
   overflow: hidden;
   width: 100%;
+    background-color: #D3E2F4;
+    padding: 20px;
 }
 
 /* Text Overlay on Cards */
@@ -132,16 +139,25 @@
   bottom: 20px;
   left: 20px;
   z-index: 10;
-  color: white;
   font-family: 'Nunito', sans-serif;
   line-height: 1.3;
   pointer-events: none;
+  padding: unset;
+
+     
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-body h4{
+         font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #164E7D;
+    font-family: 'Nunito', sans-serif;
 }
 
 /* Image Handling */
 .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture img {
-  width: 100%;
-  height: 100%;
+    height: 100px;
+    width: auto;
   object-fit: cover;
   border-radius: 15px;
   display: block; /* Removes bottom spacing whitespace */
@@ -153,14 +169,72 @@
 .section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(1) {
   grid-column: 1;
     grid-row: 1 / 3;
-}
+        padding: 20px;
+    /* max-width: 292px;
+    max-height: 279px; */
+        display: flex;
+    justify-content: center;
+          width: 292px;
+    height: 272px;
 
+    @media only screen and (max-width:767px){
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        height: unset;
+    }
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(1) .cards-card-body p{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+
+    @media only screen and (max-width:767px){
+            display: flex;
+    justify-content: flex-start;
+    }
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(2) .cards-card-body p{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+
+      @media only screen and (max-width:767px){
+            display: flex;
+    justify-content: flex-start;
+    }
+
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(3) .cards-card-body p{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+}
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(4) .cards-card-body p{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+}
 /* Card 2: Short (Right Top) */
 .section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(2) {
-  /* grid-area: box-2; */
-  /* height: 198px; */
       grid-column: 2;
     grid-row: 1 / 2;
+        display: flex;
+    justify-content: flex-end;
+        width: 292px;
+    height: 175px;
+
+    @media only screen and (max-width:767px){
+        width: 100%;
+    }
 }
 
 /* Card 3: Short (Left Bottom) */
@@ -170,12 +244,27 @@
 
       grid-column: 1;
     grid-row: 3 / 4;
+    width: 292px;
+    height: 175px;
+    display: flex;
+    justify-content: flex-end;
+
+    @media only screen and (max-width:767px){
+        width: 100%;
+    }
+
 }
 
 /* Card 4: Tall (Right Bottom) */
 .section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(4) {
       grid-column: 2;
     grid-row: 2 / 4;
+    display: flex;
+    justify-content: center;
+
+    @media only screen and (max-width:767px){
+        justify-content: flex-end;
+    }
 }
 
 /* =========================================
@@ -249,8 +338,10 @@
   .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image,
   .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture,
   .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture img {
-    width: 100%;
-    max-height: 200px;;
+    /* width: 100%;
+    max-height: 200px;; */
+            height: 100px;
+        width: auto;
   }
 }
 
@@ -288,6 +379,7 @@ max-width: 1216px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        flex-direction: column;
     }
 }
 
@@ -296,7 +388,7 @@ max-width: 1216px;
    margin: unset !important;
 
    @media only screen and (max-width:767px){
-    padding: 5px;
+    padding: unset;
    }
 }
 
@@ -310,15 +402,18 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     flex-direction: column; 
     
     @media only screen and (max-width:767px){
-        padding: unset;
+        padding: 20px;
+                display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
 }
 
 .section.performance-snapshot #performance-snapshot{
     margin-bottom: 44px;
-    /* font-family: Nunito; */
-    font-weight: 600;
-    font-style: SemiBold;
+    font-family: "Nunito-Semibold";
+    /* font-weight: 600; */
+    /* font-style: SemiBold; */
     font-size: 40px;
     /* leading-trim: NONE; */
     line-height: 40px;
@@ -329,9 +424,9 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     position: relative;
 
     @media only screen and (max-width:767px){
-    font-family: Nunito;
-    font-weight: 600;
-    font-style: SemiBold;
+    /* font-family: Nunito; */
+    /* font-weight: 600; */
+    /* font-style: SemiBold; */
     font-size: 26px;
     line-height: 40px;
     letter-spacing: 0px;
@@ -345,11 +440,12 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     position: absolute;
     left: 47%;
     bottom: -16px;
-    width: calc(7% + 0px);
-    height: 8px;
     border-radius: 37px;
     background-color: var(--orange);
     transition: all ease 0.3s;
+    background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 
 .section.performance-snapshot #performance-snapshot + p{
@@ -420,6 +516,7 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
 
     @media only screen and (max-width:767px){
         gap: unset;
+        flex-direction: row;
     }
 
 }
@@ -436,14 +533,21 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     color: #3B6D94;
     display: flex;
 
+    color: #032246;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+
 }
 
 .section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li{
     border-radius: 12px;
 
     @media only screen and (max-width:767px){
-        width: 169px;
-        max-height: 118px;
+        width: unset;
+        /* max-height: 118px; */
     }
 }
 
@@ -485,6 +589,15 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     letter-spacing: 20%;
     text-transform: uppercase;
     color: #134F7F;
+
+        font-family: "Nunito", sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 4.8px;
+    text-transform: uppercase;
+    display: inline-block;
+
 
     @media only screen and (max-width:767px){
         text-align: center;
@@ -580,6 +693,21 @@ div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul 
     vertical-align: middle;
     color: #184E7D;
     margin-bottom: 44px;
+    position: relative;
+}
+
+.section.esg-commit.rte-container h3::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -16px;
+    border-radius: 37px;
+    background-color: #F58220;
+    transition: all ease 0.3s;
+    background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 .section.esg-commit.rte-container #our-esg-commitment + p{
        /* font-family: Montserrat; */
@@ -694,14 +822,18 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     color: white;
 } 
 
-.section.stay-informed.tabs-container #stay-informed{
-    padding-top: 100px;
+.section.stay-informed.tabs-container > .default-content-wrapper > h3{
+    padding-top: 70px;
     padding-bottom: 12px;
      margin-bottom: 44px;
     position: relative;
+
+    /* @media only screen and (max-width:767px){
+
+    } */
 }
 
-.section.stay-informed.tabs-container #stay-informed::after{
+.section.stay-informed.tabs-container .default-content-wrapper > h3::after{
     content: "";
     position: absolute;
     left: 47%;
@@ -711,6 +843,9 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     border-radius: 37px;
     background-color: var(--orange);
     transition: all ease 0.3s;
+        background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 
 .section.stay-informed.tabs-container .tabs.block{
@@ -742,8 +877,18 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     /* padding-bottom: 100px; */
 }
 
-.section.stay-informed.tabs-container #stay-informed + p{
+.section.stay-informed.tabs-container .default-content-wrapper h3 + p{
     margin-bottom: 60px;
+    font-family: Montserrat;
+font-weight: 400;
+font-style: Regular;
+font-size: 16px;
+/* leading-trim: NONE; */
+line-height: 30px;
+letter-spacing: 0px;
+text-align: center;
+vertical-align: middle;
+
 }
 
 .section.stay-informed.tabs-container > .tabs-wrapper{
@@ -857,13 +1002,14 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
 .section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-body > p,
 .section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-body > p{
     padding: 18px 0px;
+    text-align: left;
 }
 
 .section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title[aria-selected=true] {
-    /* font-family: Montserrat; */
+    font-family: Montserrat;
     font-weight: 400;
     font-style: Regular;
-    /* font-size: 20px; */
+    font-size: 20px;
     line-height: 30px;
     letter-spacing: 0px;
     vertical-align: middle;
@@ -874,6 +1020,12 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     margin-right: unset;
         border-bottom: unset;
     border: unset;
+
+    @media only screen and (max-width:767px){
+            font-size: 16px;
+    padding: 0 13px;
+    line-height: 46px;
+    }
 }
 
 .section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title{
@@ -910,12 +1062,13 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     .piramal-swiper .cards-card-image {
         display: block !important;
         width: 100%;
-        height: 200px; /* Set a consistent height */
+        /* height: 200px; / */
+        /* * Set a consistent height */ 
         /* overflow: hidden; */
     }
 
     .piramal-swiper .swiper-wrapper .cards-card-body h3{
-        margin-top: 159px;
+        /* margin-top: 159px; */
     }
     .piramal-swiper .swiper-wrapper .cards-card-body h3 + p{
         margin-bottom: 30px;
@@ -1071,8 +1224,12 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
 /* Main Container Spacing */
 .section.leadership-wrapper.tabs-container {
   width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   background-color: #ffffff;
   padding-top: 200px;
+  position: relative;
 
   @media only screen and (max-width:767px){
     padding-top: 60px;
@@ -1121,6 +1278,7 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     @media only screen and (max-width:767px){
         display: flex;
         flex-wrap: wrap;
+        margin-top: unset;
     }
 }
 /* Heading with Orange Underline */
@@ -1141,9 +1299,10 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
   background-color: #ff6b35; /* Vibrant Orange */
+     background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
   border-radius: 2px;
 }
 
@@ -1182,6 +1341,10 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
   justify-content: center;
   align-items: center;
   margin-bottom: 3rem;
+
+  @media only screen and (max-width:767px){
+    flex-direction: unset;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1244,6 +1407,10 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     letter-spacing: 0px;
     vertical-align: middle;
     padding: 20px 30px;
+
+        font-size: 16px;
+    padding: 0 13px;
+    line-height: 46px;
     }
 }
 .section.tabs-container.leadership-wrapper .tabs-wrapper .tab-list button.tab-title {
@@ -1265,26 +1432,33 @@ section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
     border: unset;
     margin: unset;
 }
+.section.tabs-container.leadership-wrapper .tabs-wrapper .tab-list button.tab-title#tab-0-0{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    padding: 20px 30px;
+    font-size: 16px;
+    padding: 0 13px;
+    line-height: 46px;
+}
+
 
 
 /* ============================================================================
 CARDS GRID (Directors & Management)
 ============================================================================ */
 
+/* Leadership tab panel ul - Let Swiper handle layout */
 .section.leadership-wrapper #tab-panel-0-0 ul,
 .section.leadership-wrapper #tab-panel-0-1 ul
 {
-    /* padding-left: 300px; */
-    /* display: flex; */
-    gap: 88px;
-    overflow: hidden;
-    display: flex;
-    justify-content: flex-end;
-
-    @media only screen and (max-width:767px){
-        display: flex;
-        flex-direction: column;
-    }
+    /* Swiper wrapper will handle display and layout */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: unset;
 }
 /* Animation for switching tabs */
 .section.leadership-wrapper .tabs-wrapper .tabpanel {
@@ -1312,6 +1486,19 @@ CARDS GRID (Directors & Management)
   gap: 3rem;
 }
 
+/* Swiper wrapper override for leadership cards */
+.section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-wrapper {
+  display: flex !important;
+  align-items: center;
+}
+
+.section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 @media (min-width: 768px) {
   .directors-wrapper .cards ul,
   .management-team .cards ul {
@@ -1328,6 +1515,36 @@ CARDS GRID (Directors & Management)
   align-items: center;
   text-align: center;
   border: unset;
+    position: relative;
+    transition: transform 0.25s ease;
+}
+
+.directors-wrapper .cards ul li:hover,
+.management-team .cards ul li:hover {
+    transform: scale(1.1);
+}
+
+.directors-wrapper .cards ul li::after,
+.management-team .cards ul li::after {
+    content: none; /* only create on hover */
+    position: absolute;
+    bottom: -10px;
+    right: 40px;
+    opacity: 0;
+    transition: all 0.25s ease;
+    color: #365069;
+    pointer-events: none;
+}
+
+.directors-wrapper .cards ul li:hover::after,
+.management-team .cards ul li:hover::after {
+    content: '→';
+    font-weight: 900;
+    font-size: 30px;
+    color: #365069;
+    opacity: 1;
+    transform: translateX(6px);
+    transform: translateY(-105px);
 }
 
 /* ============================================================================
@@ -1345,8 +1562,12 @@ CARDS GRID (Directors & Management)
 
  .section.leadership-wrapper.tabs-container #tab-panel-0-0 .cards-card-image img,
  .section.leadership-wrapper.tabs-container #tab-panel-0-1 .cards-card-image img{
-    width: unset;
-    height: unset;
+    max-width: 290px;
+    /* max-height: 250px; */
+    width: 100%;
+    /* width: auto; */
+    height: auto;
+    object-fit: contain;
 }
 
 /* Subtle variation on hover for organic feel */
@@ -1358,21 +1579,18 @@ CARDS GRID (Directors & Management)
 @media (min-width: 768px) {
   .directors-wrapper .cards-card-image,
   .management-team .cards-card-image {
-    /* width: 170px; */
-    /* height: 170px; */
+    width: 300px;
+    height: 300px;
   }
 }
 
 .directors-wrapper .cards-card-image img,
 .management-team .cards-card-image img {
-  /* width: 100%; */
-  /* height: 100%; */
-  /* object-fit: cover; */
-  /* Slight zoom on the person within the blob */
-  /* transform: scale(1.05);  */
-  /* transform-origin: bottom center; */
-  width: unset;
-  height: unset;
+  max-width: 200px;
+  max-height: 250px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ============================================================================
@@ -1832,6 +2050,7 @@ CARDS GRID (Directors & Management)
 }
 .piramal-foundation .rte-wrapper div div div h2 {
     line-height: 40px;
+    font-family: 'Nunito-Semibold';
     margin-bottom: 30px;
     position: relative;
     color: white;
@@ -1846,13 +2065,14 @@ CARDS GRID (Directors & Management)
 .piramal-foundation .rte-wrapper div div div h2::before {
     content: "";
     position: absolute;
-    height: 8px;
-    width: 86px;
     border-radius: 37px;
     background: rgba(242, 110, 36, 1);
     bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
+        background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 .piramal-foundation .rte-wrapper div div div p:nth-of-type(2) {
     font-size: 16px;
@@ -1980,12 +2200,46 @@ CARDS GRID (Directors & Management)
 .section.leadership-wrapper .swiper {
   position: relative;
   overflow: hidden;
-  margin-left: 200px;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 20px 30px 20px;
+  margin-left: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .section.leadership-wrapper .swiper {
+    padding: 0 40px 30px 40px;
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.section.leadership-wrapper .tabs-wrapper {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.section.leadership-wrapper .tab-content {
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .section.leadership-wrapper .swiper-slide {
   height: auto;
-  display: flex; /* Ensures equal height cards */
+  display: flex;
+  pointer-events: auto;
+}
+}
+
+.section.leadership-wrapper .swiper-wrapper {
+  pointer-events: auto;
 }
 
 /* --- Arrow Styling --- */
@@ -2018,11 +2272,20 @@ CARDS GRID (Directors & Management)
   }
 }
 
-/* On Mobile/Touch devices, you might want arrows always visible or just rely on touch */
+/* On Mobile/Touch devices, hide arrows and pagination */
 @media (hover: none) {
   .section.leadership-wrapper .swiper-button-next,
-  .section.leadership-wrapper .swiper-button-prev {
-    display: none; /* Hide arrows on mobile, rely on swipe */
+  .section.leadership-wrapper .swiper-button-prev,
+  .section.leadership-wrapper .swiper-pagination {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .section.leadership-wrapper .swiper-button-next,
+  .section.leadership-wrapper .swiper-button-prev,
+  .section.leadership-wrapper .swiper-pagination {
+    display: none !important;
   }
 }
 
@@ -2036,15 +2299,19 @@ CARDS GRID (Directors & Management)
 }
 
 .section.leadership-wrapper .cards li {
-  width: auto !important;
   flex: 0 0 auto;
+  width: 364px !important; 
 }
 
 /* Mobile: Full width slides */
 @media (max-width: 767px) {
   .section.leadership-wrapper .swiper-slide {
+    width: 280px !important;
+    flex-shrink: 0;
+  }
+  
+  .section.leadership-wrapper .cards li {
     width: 100% !important;
-    max-width: 343px;
   }
 }
 
@@ -2053,6 +2320,7 @@ CARDS GRID (Directors & Management)
 .bussiness-offerings {
     padding: 100px 112px;
     background-color: rgba(24, 78, 125, 1);
+    padding-inline: calc((100% - 1216px) / 2);
 }
 @media only screen and (max-width: 767px) {
     .bussiness-offerings {
@@ -2064,6 +2332,7 @@ CARDS GRID (Directors & Management)
     text-align: center;
 }
 .bussiness-offerings .default-content-wrapper > h2 {
+    font-family: 'Nunito-Semibold';
     font-size: 40px;
     font-weight: 600;
     line-height: 1;
@@ -2071,6 +2340,7 @@ CARDS GRID (Directors & Management)
     margin-bottom: 24px;
     position: relative;
     height: 60px;
+
 }
 @media only screen and (max-width: 767px) {
     .bussiness-offerings .default-content-wrapper > h2 {
@@ -2080,14 +2350,15 @@ CARDS GRID (Directors & Management)
 .bussiness-offerings .default-content-wrapper > h2::before {
     content: "";
     position: absolute;
-    width: 86px;
-    height: 8px;
     border-radius: 37px;
     background-color: rgba(242, 110, 36, 1);
     display: block;
     left: 50%;
     transform: translateX(-50%);
     bottom: 0;
+    background: linear-gradient(90deg, #134F7F 0%, #F26E24 100%);
+    width: 80px;
+    height: 4px;
 }
 .bussiness-offerings .default-content-wrapper p {
     font-size: 16px;

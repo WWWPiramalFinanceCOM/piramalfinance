@@ -74,6 +74,7 @@
       "accordion-group",
       "teaserv2",
       "code",
+      "banners",
       "contentfragment",
       "experiencefragment",
       "wrappercreation",
@@ -117,6 +118,10 @@
   {
     "id": "cards",
     "components": ["card"]
+  },
+  {
+    "id": "banners",
+    "components": ["banners-item"]
   },
   {
     "id": "boards",

@@ -2232,6 +2232,455 @@
     "fields": []
   },
   {
+    "id": "generic-calculator",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Calculator Title",
+        "description": "Main title displayed at the top of the calculator"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subheading",
+        "value": "",
+        "label": "Sub Heading",
+        "description": "Secondary text below the main title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "maindivbackground",
+        "value": "calculator",
+        "label": "Background Style Class",
+        "description": "CSS class for background styling (e.g., 'calculator', 'emi')"
+      },
+      {
+        "component": "select",
+        "name": "salariedEnabled",
+        "value": "true",
+        "label": "Show Salaried Employment Option",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Yes",
+            "value": "true"
+          },
+          {
+            "name": "No",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "salariedLabel",
+        "value": "I'm Salaried",
+        "label": "Salaried Employment Label",
+        "description": "Text for salaried employment option"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "salariedIcon",
+        "value": "",
+        "label": "Salaried Employment Icon",
+        "description": "Icon/image for salaried option"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "salariedIconAlt",
+        "value": "salaried",
+        "label": "Salaried Icon Alt Text",
+        "description": "Accessibility alt text for icon"
+      },
+      {
+        "component": "select",
+        "name": "businessEnabled",
+        "value": "true",
+        "label": "Show Business Employment Option",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Yes",
+            "value": "true"
+          },
+          {
+            "name": "No",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "businessLabel",
+        "value": "I'm doing Business",
+        "label": "Business Employment Label",
+        "description": "Text for business employment option"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "businessIcon",
+        "value": "",
+        "label": "Business Employment Icon",
+        "description": "Icon/image for business option"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "businessIconAlt",
+        "value": "business",
+        "label": "Business Icon Alt Text",
+        "description": "Accessibility alt text for icon"
+      },
+      {
+        "component": "select",
+        "name": "emiEnabled",
+        "value": "true",
+        "label": "Enable EMI Calculator Tab",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Yes",
+            "value": "true"
+          },
+          {
+            "name": "No",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiLabel",
+        "value": "EMI Calculator",
+        "label": "EMI Tab Label",
+        "description": "Text displayed on the EMI calculator tab"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiLoanMin",
+        "value": "500000",
+        "label": "EMI: Loan Amount Min (Rs)",
+        "description": "Minimum loan amount for slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiLoanMax",
+        "value": "50000000",
+        "label": "EMI: Loan Amount Max (Rs)",
+        "description": "Maximum loan amount for slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiLoanStep",
+        "value": "10000",
+        "label": "EMI: Loan Amount Step (Rs)",
+        "description": "Step increment for loan amount slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiLoanDefault",
+        "value": "2500000",
+        "label": "EMI: Loan Amount Default (Rs)",
+        "description": "Default value for loan amount slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiTenureMin",
+        "value": "5",
+        "label": "EMI: Tenure Min (Years)",
+        "description": "Minimum loan tenure in years"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiTenureMax",
+        "value": "30",
+        "label": "EMI: Tenure Max (Years)",
+        "description": "Maximum loan tenure in years"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiTenureStep",
+        "value": "1",
+        "label": "EMI: Tenure Step (Years)",
+        "description": "Step increment for tenure slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiTenureDefault",
+        "value": "10",
+        "label": "EMI: Tenure Default (Years)",
+        "description": "Default value for tenure slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiRateMin",
+        "value": "10.50",
+        "label": "EMI: Interest Rate Min (%)",
+        "description": "Minimum interest rate percentage"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiRateMax",
+        "value": "20",
+        "label": "EMI: Interest Rate Max (%)",
+        "description": "Maximum interest rate percentage"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiRateStep",
+        "value": "0.1",
+        "label": "EMI: Interest Rate Step (%)",
+        "description": "Step increment for interest rate slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "emiRateDefault",
+        "value": "11",
+        "label": "EMI: Interest Rate Default (%)",
+        "description": "Default value for interest rate slider"
+      },
+      {
+        "component": "select",
+        "name": "eligibilityEnabled",
+        "value": "true",
+        "label": "Enable Eligibility Calculator Tab",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Yes",
+            "value": "true"
+          },
+          {
+            "name": "No",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligibilityLabel",
+        "value": "Eligibility Calculator",
+        "label": "Eligibility Tab Label",
+        "description": "Text displayed on the eligibility calculator tab"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligIncomeMin",
+        "value": "20000",
+        "label": "Eligibility: Income Min (Rs)",
+        "description": "Minimum monthly income"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligIncomeMax",
+        "value": "1000000",
+        "label": "Eligibility: Income Max (Rs)",
+        "description": "Maximum monthly income"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligIncomeStep",
+        "value": "10000",
+        "label": "Eligibility: Income Step (Rs)",
+        "description": "Step increment for income slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligIncomeDefault",
+        "value": "100000",
+        "label": "Eligibility: Income Default (Rs)",
+        "description": "Default value for income slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligOtherEMIMin",
+        "value": "0",
+        "label": "Eligibility: Other EMI Min (Rs)",
+        "description": "Minimum other loan EMI"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligOtherEMIMax",
+        "value": "500000",
+        "label": "Eligibility: Other EMI Max (Rs)",
+        "description": "Maximum other loan EMI"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligOtherEMIStep",
+        "value": "5000",
+        "label": "Eligibility: Other EMI Step (Rs)",
+        "description": "Step increment for other EMI slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligOtherEMIDefault",
+        "value": "0",
+        "label": "Eligibility: Other EMI Default (Rs)",
+        "description": "Default value for other EMI slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligRateMin",
+        "value": "10.5",
+        "label": "Eligibility: Interest Rate Min (%)",
+        "description": "Minimum interest rate for eligibility"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligRateMax",
+        "value": "20",
+        "label": "Eligibility: Interest Rate Max (%)",
+        "description": "Maximum interest rate for eligibility"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligRateStep",
+        "value": "0.1",
+        "label": "Eligibility: Interest Rate Step (%)",
+        "description": "Step increment for interest rate slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligRateDefault",
+        "value": "10.5",
+        "label": "Eligibility: Interest Rate Default (%)",
+        "description": "Default value for interest rate slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligTenureMin",
+        "value": "5",
+        "label": "Eligibility: Tenure Min (Years)",
+        "description": "Minimum loan tenure for eligibility"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligTenureMax",
+        "value": "30",
+        "label": "Eligibility: Tenure Max (Years)",
+        "description": "Maximum loan tenure for eligibility"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligTenureStep",
+        "value": "1",
+        "label": "Eligibility: Tenure Step (Years)",
+        "description": "Step increment for tenure slider"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eligTenureDefault",
+        "value": "10",
+        "label": "Eligibility: Tenure Default (Years)",
+        "description": "Default value for tenure slider"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "emiResultImage",
+        "value": "",
+        "label": "EMI Result Image (Desktop)",
+        "description": "Image shown with EMI results on desktop"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "emiResultImageMobile",
+        "value": "",
+        "label": "EMI Result Image (Mobile)",
+        "description": "Image shown with EMI results on mobile"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "eligResultImage",
+        "value": "",
+        "label": "Eligibility Result Image (Desktop)",
+        "description": "Image shown with eligibility results on desktop"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "eligResultImageMobile",
+        "value": "",
+        "label": "Eligibility Result Image (Mobile)",
+        "description": "Image shown with eligibility results on mobile"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "button1Text",
+        "value": "Talk to loan expert",
+        "label": "Button 1 Text",
+        "description": "Text for the first call-to-action button"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "button1Link",
+        "value": "",
+        "label": "Button 1 Link",
+        "description": "URL for the first button"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "button2Text",
+        "value": "Apply loan now",
+        "label": "Button 2 Text",
+        "description": "Text for the second call-to-action button"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "button2Link",
+        "value": "",
+        "label": "Button 2 Link",
+        "description": "URL for the second button"
+      }
+    ]
+  },
+  {
     "id": "applyloanform",
     "fields": [
       {

@@ -1,5 +1,20 @@
 .banners.block {
   width: 100%;
+  display: grid;
+  position: relative;
+  isolation: isolate;
+}
+
+.banners.block .banner-slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transition: opacity 600ms ease;
+  pointer-events: none;
+}
+
+.banners.block .banner-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .banners.block picture {

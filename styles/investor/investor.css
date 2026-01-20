@@ -990,7 +990,7 @@ vertical-align: middle;
     
     @media only screen and (max-width:767px){
         margin-top: 30px;
-        gap: unset;
+        gap: 50px;
     }
 }
 

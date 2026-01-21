@@ -773,12 +773,12 @@ async function loadBlock(block) {
     const { blockName } = block.dataset;
     try {
       if(!blockName) {throw Error(`Block Name is ${blockName}`)}
-      const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks${template}/${blockName}/${blockName}${getExtension('css')}`);
+      const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}${template}/${blockName}${getExtension('css')}`);
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {
             const mod = await import(
-              `${window.hlx.codeBasePath}/blocks${template}/${blockName}/${blockName}${getExtension('js')}`
+              `${window.hlx.codeBasePath}/blocks/${blockName}${template}/${blockName}${getExtension('js')}`
             );
             if (mod.default) {
               await mod.default(block);

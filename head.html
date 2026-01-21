@@ -18,10 +18,20 @@
       return isMinify ? `.min.${extCss}` : `.${extCss}`;
     }
   }
+  function getTemplate() {
+    const template = getMetadata("template");
+    return template ? ("/" + template) : ""
+  }
 </script>
 <script type="module">
-  import(`/scripts/aem${window.getExtension("js")}`);
-  import(`/scripts/scripts${window.getExtension("js")}`);
+  const temp = window.getTemplate();
+  if (temp) {
+    import(`/scripts/v1/aem${window.getExtension("js")}`);
+    import(`/scripts/v1/scripts${window.getExtension("js")}`);
+  } else {
+    import(`/scripts/aem${window.getExtension("js")}`);
+    import(`/scripts/scripts${window.getExtension("js")}`);
+  }
 </script>
 <link as="font" crossorigin="" href="/fonts/Nunito-Light.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoRegular.woff2" rel="preconnect" type="font/woff2" />
@@ -32,7 +42,12 @@
 <link as="font" crossorigin="" href="/fonts/NunitoExtraLight.woff2" rel="preconnect" type="font/woff2" />
 
 <script>
-  document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
+  const temp1 = window.getTemplate();
+  if (temp1) {
+    document.write(`<link rel="stylesheet" href="/styles/v1/styles${window.getExtension('css')}" />`);
+  } else {
+    document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
+  }
 </script>
 
 <link rel="apple-touch-icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" />

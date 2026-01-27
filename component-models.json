@@ -1891,6 +1891,14 @@
         "description": "Main Anchor Tag"
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "hrefText",
+        "value": "",
+        "label": "Link",
+        "description": "Main Anchor Tag Text"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "fileReference",

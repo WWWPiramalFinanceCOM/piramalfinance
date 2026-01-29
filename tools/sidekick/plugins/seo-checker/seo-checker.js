@@ -14,7 +14,10 @@
 import {quickSEOCheck,downloadSEOReport,performSEOAudit} from './seo-audit.js';
 import {transformSEOResults, showSeoPanel} from './seo-panel.js';
 
+console.log('SEO Checker module loaded');
 export default async function init() {
+console.log('SEO Checker module loaded in');
+
   // Import required functions
   const { loadCSS } = await import(`${window.hlx.codeBasePath}/scripts/aem.js`);
   

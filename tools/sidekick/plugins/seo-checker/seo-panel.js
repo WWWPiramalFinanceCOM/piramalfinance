@@ -70,7 +70,7 @@ export function transformSEOResults(seoResults) {
 
 // Main panel creation function
 export async function showSeoPanel({ audit, score, scoreInterpretation }) {
-  const { createElement } = await import(`${window.hlx.codeBasePath}/scripts/scripts.js`);
+//   const { createElement } = await import(`${window.hlx.codeBasePath}/scripts/scripts.js`);
   const scorePercentage = typeof score === 'number' ? score : Math.round((score.score / score.maxScore) * 100);
 
   // Remove existing panel if present
@@ -79,6 +79,41 @@ export async function showSeoPanel({ audit, score, scoreInterpretation }) {
     existingPanel.remove();
     document.body.classList.remove('seo-panel-active');
   }
+
+   function createElement(tagName, props, html) {
+  const elem = document.createElement(tagName);
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      const val = props[propName];
+      if (propName === 'class') {
+        const classesArr = (typeof val === 'string') ? val.split(' ') : val;
+        classesArr.forEach(function (cls) {
+          cls && elem.classList.add(cls);
+        })
+      } else {
+        elem.setAttribute(propName, val);
+      }
+    });
+  }
+
+  if (html) {
+    const appendEl = (el) => {
+      if (el instanceof HTMLElement || el instanceof SVGElement) {
+        elem.append(el);
+      } else {
+        elem.insertAdjacentHTML('beforeend', el);
+      }
+    };
+
+    if (Array.isArray(html)) {
+      html.forEach(appendEl);
+    } else {
+      appendEl(html);
+    }
+  }
+
+  return elem;
+}
 
   // Create main panel container
   const panel = createElement('div', {

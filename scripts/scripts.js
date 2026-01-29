@@ -19,6 +19,8 @@ import {
   span,
 } from './dom-helper.js';
 import initSeoChecker from '../tools/sidekick/plugins/seo-checker/seo-checker.js';
+
+initSeoChecker();
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 // console.log('Main Branch 1.3');

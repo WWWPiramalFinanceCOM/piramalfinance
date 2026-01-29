@@ -5,6 +5,12 @@
       "title": "Edit",
       "environments": [ "dev", "preview", "live" ],
       "event": "aemedit"
+    },
+    {
+      "id": "seo-checker",
+      "title": "SEO Checker",
+      "environments": [ "preview", "dev","live" ],
+      "event": "seo-checker"
     }
   ]
 }

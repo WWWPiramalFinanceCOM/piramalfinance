@@ -1,0 +1,517 @@
+/* --- Styles for JSON Report Modal --- */
+.seo-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seo-modal-content {
+  background: #2A2A2A;
+  color: #f1f1f1;
+  border: 1px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+  width: 90%;
+  max-width: 800px;
+  height: 80%;
+  max-height: 700px;
+  padding: 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.seo-modal-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: #fff;
+  border-bottom: 1px solid #444;
+  padding-bottom: 0.75rem;
+}
+
+.seo-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #444;
+  border: none;
+  color: #eee;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.5rem;
+  line-height: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  user-select: none;
+}
+.seo-modal-close:hover {
+  background: #555;
+}
+
+.seo-modal-code {
+  flex-grow: 1;
+  overflow-y: auto;
+  background: #1E1E1E;
+  padding: 1rem;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}
+/* SEO Panel Styles */
+.seo-panel {
+  position: fixed;
+  top: 0;
+  left: -400px;
+  width: 400px;
+  height: 100vh;
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+  background: #1E1E1E;
+  /* backdrop-filter: blur(10px); */
+  /* box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37); */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  /* border-right: 1px solid rgba(255, 255, 255, 0.18); */
+  border-right: 1px solid #333333;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+body.seo-panel-active .seo-panel {
+  left: 0;
+}
+
+body.seo-panel-active {
+  margin-left: 400px;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header & Score Section */
+.seo-header,
+.seo-score-section {
+  /* FIX: Pin these sections to the top so they don't scroll */
+  flex-shrink: 0;
+}
+
+.seo-header {
+  /* background: rgba(255, 255, 255, 0.1); */
+  background: #2A2A2A;
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
+  border-bottom: 1px solid #333333;
+  padding: 20px;
+}
+
+.seo-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.seo-title-section {
+  flex: 1;
+}
+
+.seo-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.seo-icon img {
+  width: 100px;
+}
+
+.seo-title {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #F1F1F1;
+}
+
+.seo-subtitle {
+  margin: 0;
+  font-size: 14px;
+  /* color: rgba(255, 255, 255, 0.8); */
+  color: #9E9E9E;
+  font-weight: 400;
+}
+
+.seo-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.seo-action-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.seo-action-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.seo-score-section {
+  padding: 30px 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.seo-progress-ring {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+}
+
+.seo-progress-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  background: conic-gradient(#4ade80 0deg 0deg, rgba(255, 255, 255, 0.2) 0deg 360deg);
+  transition: all 0.5s ease;
+}
+
+.seo-progress-circle::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+}
+
+.seo-score-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  z-index: 1;
+}
+
+.seo-score-number {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.seo-score-label {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+.seo-score-subtext {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+
+.seo-interpretation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.seo-grade {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.seo-grade-a {
+  background: #10b981;
+  color: white;
+}
+
+.seo-grade-b {
+  background: #3b82f6;
+  color: white;
+}
+
+.seo-grade-c {
+  background: #f59e0b;
+  color: white;
+}
+
+.seo-grade-d {
+  background: #ef4444;
+  color: white;
+}
+
+.seo-grade-f {
+  background: #dc2626;
+  color: white;
+}
+
+.seo-status {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* Content Area */
+.seo-content {
+  /* --- FIX: This is now the single scrolling container --- */
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.seo-tab-buttons {
+  display: flex;
+  /* background: rgba(255, 255, 255, 0.1); */
+  /* background: #514a7e; */
+  background:black;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  /* Makes the tabs stick to the top of the scrolling area */
+  top: 0;
+  z-index: 1;
+}
+
+.seo-tab-btn {
+  flex: 1;
+  padding: 12px 8px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.seo-tab-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.seo-tab-icon {
+  font-size: 16px;
+}
+
+.seo-tab-content {
+  display: none;
+  padding: 20px;
+}
+
+.seo-tab-content.active {
+  display: block;
+}
+
+/* Scrollbar */
+.seo-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.seo-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.seo-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.seo-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* (The rest of the styles for metrics, issues, etc. remain the same) */
+.seo-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.seo-metric-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  border-left: 4px solid;
+}
+
+.seo-metric-card.seo-good {
+  border-left-color: #10b981;
+}
+
+.seo-metric-card.seo-warning {
+  border-left-color: #f59e0b;
+}
+
+.seo-metric-card.seo-error {
+  border-left-color: #ef4444;
+}
+
+.seo-metric-card.seo-info {
+  border-left-color: #3b82f6;
+}
+
+.seo-metric-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.seo-metric-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.seo-issue-section {
+  margin-bottom: 24px;
+}
+
+.seo-issue-title {
+  font-size: 16px;
+  color: white;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.seo-issue-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+  color: white;
+  margin-bottom: 8px;
+  font-size: 14px;
+  word-break:break-all;
+}
+
+.seo-issue-item.critical {
+  background: rgba(239, 68, 68, 0.2);
+  border-left: 3px solid #ef4444;
+}
+
+.seo-issue-item.warning {
+  background: rgba(245, 158, 11, 0.2);
+  border-left: 3px solid #f59e0b;
+}
+
+.seo-no-issues {
+  text-align: center;
+  padding: 40px 20px;
+  color: #10b981;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Technical Content */
+.seo-tech-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.seo-status-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.seo-tech-item.seo-good .seo-status-icon {
+  background: #10b981;
+  color: white;
+}
+
+.seo-tech-item.seo-error .seo-status-icon {
+  background: #ef4444;
+  color: white;
+}
+
+.seo-tech-item.seo-warning .seo-status-icon {
+  background: #f59e0b;
+  color: white;
+}
+
+.seo-tech-label {
+  color: white;
+  font-size: 14px;
+}
+
+/* Content Analysis */
+.seo-content-metric {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.seo-content-metric-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.seo-content-metric-value {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+/* Style for the highlight effect on the main page */
+.seo-highlight {
+  outline: 3px solid #0d6efd !important; /* A bright blue outline */
+  outline-offset: 2px;
+  box-shadow: 0 0 15px rgba(13, 110, 253, 0.7) !important;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  scroll-margin-top: 100px; /* Ensures space from top of screen on scroll */
+}
+
+/* Add a pointer cursor to clickable issue items in the panel */
+.seo-issue-item.clickable {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.seo-issue-item.clickable:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

@@ -1896,7 +1896,7 @@
         "name": "hrefText",
         "value": "",
         "label": "Link",
-        "description": "Main Anchor Tag Text"
+        "description": "Main Anchor Tag Texts"
       },
       {
         "component": "reference",

@@ -63,7 +63,7 @@ export function renderTeaserHTMLFactory(props, block) {
     return element;
   };
 
-  const mainLink = mainHref?.textContent.trim() || '';
+  const mainLink = mainHref.querySelector('a')?.href?.trim() || '';
   const container = document.createElement('a');
   // container.href = mainLink ||  'javascript:void(0)';
   container.setAttribute('aria-label', 'teaser link');

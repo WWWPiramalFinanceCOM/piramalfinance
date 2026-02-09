@@ -1127,6 +1127,37 @@
               }
             }
           }
+        },
+        {
+          "title": "calculator",
+          "id": "calculator",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "calculator",
+                  "model":"calculator",
+                  "filter": "calculator"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "calculator-item",
+          "id": "calculator-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "calculator-item",
+                  "model": "calculator-item"
+                }
+              }
+            }
+          }
         }
       ]
     }

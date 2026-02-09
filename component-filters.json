@@ -111,8 +111,13 @@
       "branchkeyfeatures",
       "branches",
       "banner-carousel",
-      "testimonies"
+      "testimonies",
+      "calculator"
     ]
+  },
+  {
+    "id": "calculator",
+    "components": ["calculator-item"]
   },
   {
     "id": "cards",

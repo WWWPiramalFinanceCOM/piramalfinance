@@ -2892,5 +2892,106 @@
         "valueType": "string"
       }
     ]
+  },
+   {
+    "id": "calculator",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_label",
+        "label": "Tab Label",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "col1_description",
+        "value": "",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "col1_image",
+        "value": "",
+        "label": "Image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_imageLabel",
+        "label": "Image Label",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "col1_resPAmount",
+        "value": "",
+        "label": "Principal Amount Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "col1_resInterestAmount",
+        "value": "",
+        "label": "Interest Amount Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "calculator-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_name",
+        "label": "Name",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_ALabel",
+        "label": "Label",
+        "multi": false
+      },
+       {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_ADefaultValue",
+        "label": "Default Value",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_BMinValue",
+        "label": "Min Value",
+        "multi": false
+      },
+       {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_BMaxValue",
+        "label": "Max Value",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_CMinValue",
+        "label": "Min Value Label",
+        "multi": false
+      },
+       {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_CMaxValue",
+        "label": "Max Value Label",
+        "multi": false
+      }
+    ]
   }
 ]

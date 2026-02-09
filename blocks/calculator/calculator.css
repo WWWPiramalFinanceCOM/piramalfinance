@@ -1,0 +1,322 @@
+/* Calculator Block Styles */
+.calculator-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.calculator-main {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+}
+
+.calculator-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Tabs */
+.calculator-tabs {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0;
+}
+
+.calculator-tab {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  color: #666;
+  padding: 10px 0;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.calculator-tab:hover {
+  color: #e85a2c;
+}
+
+.calculator-tab.active {
+  color: #e85a2c;
+}
+
+.calculator-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #e85a2c;
+  border-radius: 2px 2px 0 0;
+}
+
+/* Tab Content */
+.calculator-tab-content {
+  display: none;
+}
+
+.calculator-tab-content.active {
+  display: block;
+}
+
+/* Content Layout */
+.calculator-content {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+.calculator-left {
+  flex: 1;
+  max-width: 550px;
+}
+
+.calculator-right {
+  flex: 0 0 400px;
+}
+
+/* Slider Groups */
+.slider-group {
+  margin-bottom: 35px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.slider-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.slider-value-display {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.slider-unit {
+  font-size: 16px;
+  color: #666;
+}
+
+.slider-suffix {
+  font-size: 14px;
+  color: #666;
+}
+
+.slider-input {
+  width: 120px;
+  text-align: right;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 5px;
+}
+
+.slider-input:focus {
+  border-bottom: 2px solid #e85a2c;
+}
+
+/* Custom Slider */
+.slider-container {
+  position: relative;
+  height: 8px;
+  margin: 10px 0;
+}
+
+.slider-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.slider-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border: 3px solid #e85a2c;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.slider-range::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.slider-range::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border: 3px solid #e85a2c;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.slider-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.slider-track-fill {
+  height: 100%;
+  background: #e85a2c;
+  border-radius: 4px;
+  transition: width 0.1s ease;
+}
+
+.slider-range-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.slider-min,
+.slider-max {
+  font-size: 13px;
+  color: #888;
+}
+
+/* EMI Result Card */
+.emi-result-card {
+  background: linear-gradient(135deg, #e8f5f0 0%, #f0faf7 100%);
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.emi-icon {
+  margin-bottom: 20px;
+}
+
+.emi-icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.emi-result-label {
+  font-size: 16px;
+  color: #2a7d5f;
+  margin-bottom: 10px;
+}
+
+.emi-result-value {
+  font-size: 42px;
+  font-weight: 700;
+  color: #1a5a42;
+  margin-bottom: 30px;
+}
+
+.emi-breakdown {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid rgba(42, 125, 95, 0.2);
+}
+
+.breakdown-item {
+  text-align: left;
+}
+
+.breakdown-label {
+  display: block;
+  font-size: 14px;
+  color: #2a7d5f;
+  margin-bottom: 5px;
+}
+
+.breakdown-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a5a42;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .calculator-content {
+    flex-direction: column;
+  }
+
+  .calculator-left {
+    max-width: 100%;
+  }
+
+  .calculator-right {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .calculator-main {
+    padding: 20px 15px;
+  }
+
+  .calculator-tabs {
+    gap: 20px;
+  }
+
+  .calculator-tab {
+    font-size: 16px;
+  }
+
+  .slider-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .slider-input {
+    width: 100%;
+    text-align: left;
+  }
+
+  .emi-result-value {
+    font-size: 32px;
+  }
+
+  .emi-breakdown {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

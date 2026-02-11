@@ -10944,7 +10944,7 @@ dialog[open]:has(.modal-content .section.support-contact-us-popup) .close-button
     }
 }
 
-.section.e-nach-reg-modal-wrapper,
+/* .section.e-nach-reg-modal-wrapper,
 .section.e-nach-three-logo,
 .modal dialog[open]:has(.modal-content .section.e-nach-reg-modal-wrapper) .close-button {
     display: block
@@ -11282,7 +11282,7 @@ dialog[open]:has(.modal-content .section.e-nach-reg-modal-wrapper) {
     .modal dialog[open]:has(.modal-content .section.e-nach-reg-modal-wrapper) {
         backdrop-filter: blur(2.1957px)
     }
-}
+} */
 
 dialog[open]:has(.modal-content .section.one-lakh-modal) {
     padding: 56px 0 0;

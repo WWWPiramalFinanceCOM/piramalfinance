@@ -106,13 +106,13 @@ body.modal-open {
 .loan-product-blue .cards-wrapper .cards ul li::after,
 .loan-product-orange .cards-wrapper .cards ul li::after {
   content: "";
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-top: 2px solid #ffffff;
   border-right: 2px solid #ffffff;
   transform: rotateZ(45deg);
   position: absolute;
-  right: 13px;
+  right: 16px;
   top: 44%;
   opacity: 0;
 }

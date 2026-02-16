@@ -2,6 +2,7 @@ import { ctaClickInteraction } from '../../dl.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { decoratePlaceholder } from '../../scripts/scripts.js';
 import { moveInstrumentation } from '../../scripts/common.js';
+import { onCLickApplyFormOpen } from '../applyloanform/applyloanforms.js';
 // import { applyLoanFormClick } from '../applyloanform/applyloanforms.js';
 // import { applyLoanPopper } from '../applyloanform/applyloanpopper.js';
 // import { loanutmForm } from '../applyloanform/loanutm.js';
@@ -30,7 +31,8 @@ export default async function decorate(block) {
         dialog.close();
       }
       e.preventDefault();
-      document.querySelector("div.homeloancalculator > div.calculator-parent > div > div > div.customerbuttons > a:nth-child(2) > button").click();
+      onCLickApplyFormOpen(e);
+      // document.querySelector("div.homeloancalculator > div.calculator-parent > div > div > div.customerbuttons > a:nth-child(2) > button").click();
     });
     ul.append(li);
   });

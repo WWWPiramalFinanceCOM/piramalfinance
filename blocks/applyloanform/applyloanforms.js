@@ -35,7 +35,7 @@ export function handleOpenFormOnClick(el) {
   });
 }
 
-function onCLickApplyFormOpen(e) {
+export function onCLickApplyFormOpen(e) {
   statemasterGetStatesApi();
   validationJSFunc();
   formOpen();

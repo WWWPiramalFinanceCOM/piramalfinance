@@ -1,7 +1,6 @@
 // import { formOpen, overlay } from '../blocks/applyloanform/applyloanforms.js';
 // import { statemasterGetStatesApi } from '../blocks/applyloanform/statemasterapi.js';
 // import { validationJSFunc } from '../blocks/applyloanform/validation.js';
-import { onCLickApplyFormOpen } from '../blocks/applyloanform/applyloanforms.js';
 import { ctaClick } from '../dl.js';
 import {
   sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks, loadCSS, fetchPlaceholders,
@@ -744,6 +743,7 @@ function autoloadForm(doc) {
     if (anchor.href && anchor.href.includes('/leadform/')) {
       anchor.addEventListener('click', async (e) => {
         e.preventDefault();
+        const {onCLickApplyFormOpen} = await import('../blocks/applyloanform/applyloanforms.js');
         onCLickApplyFormOpen(e);
         // document.querySelector('.expert.orangeexpert').click();
       })

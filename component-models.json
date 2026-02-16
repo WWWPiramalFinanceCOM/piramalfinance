@@ -2964,6 +2964,20 @@
         "label": "Default Value",
         "multi": false
       },
+       {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_ADefaultValueIcon",
+        "label": "Default Value Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_stepValue",
+        "label": "Step Value",
+        "multi": false
+      },
       {
         "component": "text",
         "valueType": "string",

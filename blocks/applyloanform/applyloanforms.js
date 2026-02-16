@@ -35,7 +35,7 @@ export let overlay; export let emiOverlay; export let elgOverlay; export let loa
     });
   }
 
-  function onCLickApplyFormOpen(e) {
+  export function onCLickApplyFormOpen(e) {
   statemasterGetStatesApi();
   validationJSFunc();
   formOpen();

@@ -20,15 +20,15 @@ export default async function decorate(block) {
     });
     li.addEventListener('click', function (e) {
       if(!e.target.href.includes('/leadform/'))  return;
-       e.preventDefault();
-          let closeButton = document.querySelector(".close-button");
-          let dialog = document.querySelector("dialog");
-          dialog.close();
-          const dialogDimensions = dialog.getBoundingClientRect();
-          if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
-            || e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom) {
-            dialog.close();
-          }
+      e.preventDefault();
+      let closeButton = document.querySelector(".close-button");
+      let dialog = document.querySelector("dialog");
+      dialog.close();
+      const dialogDimensions = dialog.getBoundingClientRect();
+      if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
+        || e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom) {
+        dialog.close();
+      }
       e.preventDefault();
       document.querySelector("div.homeloancalculator > div.calculator-parent > div > div > div.customerbuttons > a:nth-child(2) > button").click();
     });
@@ -68,30 +68,30 @@ export default async function decorate(block) {
   //     console.warn(error);
   //   }
 
-  function openLeadForm(main) {
-    main.querySelectorAll('a').forEach((anchor) => {
-      if (anchor.closest(".open-form-on-click") && anchor.href.includes('/leadform/')) {
-        anchor.addEventListener('click', async (e) => {
-          e.preventDefault();
-          let closeButton = document.querySelector(".close-button");
-          let dialog = document.querySelector("dialog");
-          dialog.close();
-          const dialogDimensions = dialog.getBoundingClientRect();
-          if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
-            || e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom) {
-            dialog.close();
-          }
-          document.body.classList.remove('modal-open');
-          const formClickSection = e.target.closest('.open-form-on-click');
-          if (e.target.dataset.isFn !== "true") {
-            handleOpenFormOnClick(formClickSection);
-            e.target.dataset.isFn = "true";
-          }
-        })
-      }
+  // function openLeadForm(main) {
+  //   main.querySelectorAll('a').forEach((anchor) => {
+  //     if (anchor.closest(".open-form-on-click") && anchor.href.includes('/leadform/')) {
+  //       anchor.addEventListener('click', async (e) => {
+  //         e.preventDefault();
+  //         let closeButton = document.querySelector(".close-button");
+  //         let dialog = document.querySelector("dialog");
+  //         dialog.close();
+  //         const dialogDimensions = dialog.getBoundingClientRect();
+  //         if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
+  //           || e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom) {
+  //           dialog.close();
+  //         }
+  //         document.body.classList.remove('modal-open');
+  //         const formClickSection = e.target.closest('.open-form-on-click');
+  //         if (e.target.dataset.isFn !== "true") {
+  //           handleOpenFormOnClick(formClickSection);
+  //           e.target.dataset.isFn = "true";
+  //         }
+  //       })
+  //     }
 
-    });
-  }
+  //   });
+  // }
 
   // openLeadForm(block);
 }

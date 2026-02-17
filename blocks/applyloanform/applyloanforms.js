@@ -119,6 +119,9 @@ export function applyLoanFormClick() {
       button.addEventListener('click', (e) => {
         e.preventDefault();
         const anchor = button.closest('a');
+        if (anchor && anchor.href && anchor.href.includes('/modals/')) {
+          return true;
+        }
         if (anchor && anchor.getAttribute('href')) {
           try {
             const emiName = e.target?.closest('.section')?.querySelector('.tab-common.active p')?.textContent.trim();

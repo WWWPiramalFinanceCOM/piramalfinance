@@ -200,6 +200,25 @@
       }
     ]
   },
+   {
+    "id": "investor-section",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "value": "",
+        "label": "section name",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "style",
+        "value": "",
+        "label": "Style",
+        "valueType": "string"
+      }
+    ]
+  },
   {
     "id": "hero",
     "fields": [

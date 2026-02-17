@@ -7,7 +7,8 @@
       "tab-name",
       "tab-container",
       "container",
-      "loader"
+      "loader",
+      "investor-section"
     ]
   },
   {
@@ -115,12 +116,27 @@
     ]
   },
   {
+    "id": "investor-section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "cards",
+      "hero"
+    ]
+  },
+  {
     "id": "cards",
-    "components": ["card"]
+    "components": [
+      "card"
+    ]
   },
   {
     "id": "boards",
-    "components": ["board-item"]
+    "components": [
+      "board-item"
+    ]
   },
   {
     "id": "carousel",
@@ -148,7 +164,9 @@
   },
   {
     "id": "tab-name",
-    "components": ["tab-container"]
+    "components": [
+      "tab-container"
+    ]
   },
   {
     "id": "tab",
@@ -167,24 +185,54 @@
   },
   {
     "id": "tabs",
-    "components": ["tabs", "tab", "container"]
+    "components": [
+      "tabs",
+      "tab",
+      "container"
+    ]
   },
   {
     "id": "accordion",
-    "components": ["accordion"]
+    "components": [
+      "accordion"
+    ]
   },
   {
     "id": "text",
     "rte": {
-      "format": ["bold", "italic", "underline", "strikethrough", "table"],
-      "alignment": ["left", "center", "right"],
-      "indentation": ["indent", "outdent"],
-      "sr_script": ["superscript", "subscript"],
-      "list": ["bullist", "numlist"],
-      "insert": ["link", "image"],
+      "format": [
+        "bold",
+        "italic",
+        "underline",
+        "strikethrough",
+        "table"
+      ],
+      "alignment": [
+        "left",
+        "center",
+        "right"
+      ],
+      "indentation": [
+        "indent",
+        "outdent"
+      ],
+      "sr_script": [
+        "superscript",
+        "subscript"
+      ],
+      "list": [
+        "bullist",
+        "numlist"
+      ],
+      "insert": [
+        "link",
+        "image"
+      ],
       "advanced": [],
       "extensions": [],
-      "editor": ["removeformat"]
+      "editor": [
+        "removeformat"
+      ]
     }
   },
   {

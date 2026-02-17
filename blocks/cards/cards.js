@@ -20,17 +20,18 @@ export default async function decorate(block) {
       else div.className = 'cards-card-body';
     });
     li.addEventListener('click', function (e) {
-      if(!e.target.href.includes('/leadform/'))  return;
+      if (!e.target.href.includes('/leadform/')) return;
       e.preventDefault();
       let closeButton = document.querySelector(".close-button");
-      let dialog = document.querySelector("dialog");
-      dialog.close();
-      const dialogDimensions = dialog.getBoundingClientRect();
-      if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
-        || e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom) {
+      let dialogs = document.querySelectorAll("dialog");
+      dialogs.forEach((dialog)=>{
         dialog.close();
-      }
-      e.preventDefault();
+        const dialogDimensions = dialog.getBoundingClientRect();
+        if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
+          || e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom) {
+          dialog.close();
+        }
+      })
       onCLickApplyFormOpen(e);
       // document.querySelector("div.homeloancalculator > div.calculator-parent > div > div > div.customerbuttons > a:nth-child(2) > button").click();
     });

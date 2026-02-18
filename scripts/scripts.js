@@ -241,6 +241,7 @@ function buildAutoBlocks() {
  * @param {Element} main The main element
  */
 function combineCalculatorSections(main) {
+  if(window.location.href.includes("author")) return true;
   const calcSections = [...main.querySelectorAll(':scope > .section.calculator-container')];
 
   calcSections.forEach((section) => {

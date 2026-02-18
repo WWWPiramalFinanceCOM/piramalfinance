@@ -70,7 +70,7 @@ font-family: "Nunito-Semibold";
 /* Orange Underline for H2 */
 .section.commitment-wrap h2:after {
   content: "";
-  position: absolute;
+  /* position: absolute; */
   left: 50%;
   transform: translateX(-50%); /* Better centering method */
   bottom: -16px;
@@ -98,7 +98,8 @@ font-family: "Nunito-Semibold";
 
 .section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul > li:nth-child(2) {
   margin-top: 24px;
-  padding: 49px;
+  /* padding: 49px; */
+  padding: 32px;
 }
 
 /* Nested Text inside List Items */
@@ -116,155 +117,100 @@ font-family: "Nunito-Semibold";
 /* =========================================
    4. CARD GRID (The Mosaic)
    ========================================= */
-.section.commitment-wrap .cards-wrapper .cards.block ul {
-      display: grid;
+.section.commitment-wrap .cards-wrapper .cards.block > ul {
+          display: grid;
     grid-template-columns: 1fr 1fr;
     /* grid-template-rows: 220px 80px 220px; */
     grid-gap: 21px;
 }
-
-/* Common Card Styles */
-.section.commitment-wrap .cards-wrapper .cards.block ul li {
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  width: 100%;
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li{
+        border-radius: 15px;
     background-color: #D3E2F4;
     padding: 20px;
 }
 
-/* Text Overlay on Cards */
-.section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-body {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  z-index: 10;
-  font-family: 'Nunito', sans-serif;
-  line-height: 1.3;
-  pointer-events: none;
-  padding: unset;
-
-     
-}
-.section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-body h4{
-         font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #164E7D;
-    font-family: 'Nunito', sans-serif;
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li > .cards-card-body{
+    margin-top: 20px  !important;
+    padding: unset;
+        margin-top: 35px !important;
 }
 
-/* Image Handling */
-.section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture img {
-    height: 100px;
-    width: auto;
-  object-fit: cover;
-  border-radius: 15px;
-  display: block; /* Removes bottom spacing whitespace */
-}
-
-/* --- Specific Card Sizing & Placement --- */
-
-/* Card 1: Tall (Left Top) */
-.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(1) {
-  grid-column: 1;
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(1){
+        grid-column: 1;
     grid-row: 1 / 3;
-        padding: 20px;
-    /* max-width: 292px;
-    max-height: 279px; */
-        display: flex;
-    justify-content: center;
-          width: 292px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 292px;
     height: 272px;
+}
 
-    @media only screen and (max-width:767px){
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-        height: unset;
-    }
-}
-.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(1) .cards-card-body p{
-        font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-    list-style: square;
-    color: #414042;
-
-    @media only screen and (max-width:767px){
-            display: flex;
-    justify-content: flex-start;
-    }
-}
-.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(2) .cards-card-body p{
-        font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-    list-style: square;
-    color: #414042;
-
-      @media only screen and (max-width:767px){
-            display: flex;
-    justify-content: flex-start;
-    }
-
-}
-.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(3) .cards-card-body p{
-        font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-    list-style: square;
-    color: #414042;
-}
-.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(4) .cards-card-body p{
-        font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-    list-style: square;
-    color: #414042;
-}
-/* Card 2: Short (Right Top) */
-.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(2) {
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(2){
       grid-column: 2;
     grid-row: 1 / 2;
-        display: flex;
-    justify-content: flex-end;
-        width: 292px;
+    display: flex;
+  justify-content: space-between;
+    width: 292px;
     height: 175px;
-
-    @media only screen and (max-width:767px){
-        width: 100%;
-    }
+        flex-direction: row-reverse;
 }
-
-/* Card 3: Short (Left Bottom) */
-.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(3) {
-  /* grid-area: box-3; */
-  /* height: 198px; */
-
-      grid-column: 1;
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(3){
+    
+        grid-column: 1;
     grid-row: 3 / 4;
     width: 292px;
     height: 175px;
     display: flex;
-    justify-content: flex-end;
-
-    @media only screen and (max-width:767px){
-        width: 100%;
-    }
-
+    justify-content: space-between;
+        flex-direction: row-reverse;
 }
 
-/* Card 4: Tall (Right Bottom) */
-.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(4) {
-      grid-column: 2;
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(3) .cards-card-image img{
+    width: 117px;
+}
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(4) .cards-card-image img{
+    width: 100px;
+    height: 100px;
+}
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(4){
+        grid-column: 2;
     grid-row: 2 / 4;
     display: flex;
     justify-content: center;
+}
 
-    @media only screen and (max-width:767px){
-        justify-content: flex-end;
-    }
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li .cards-card-image{
+        display: flex;
+    justify-content: center;
+}
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li .cards-card-body h4{
+            font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #164E7D;
+}
+
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li .cards-card-body h4 + ul{
+    margin-left: 20px;
+    list-style: disc;
+}
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li .cards-card-body h4 + ul > li{
+        font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    list-style: square;
+    color: #414042;
+    margin-bottom: 3px;
+}
+
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li  .cards-card-image img{
+    height: unset;
 }
 
 /* =========================================
@@ -324,14 +270,7 @@ font-family: "Nunito-Semibold";
     align-items: center;
     width: 100%;
     padding: 0 16px;
-    row-gap: 16px;
-  }
-
-  /* Ensure cards have natural height or specific fixed height on mobile if needed */
-  .section.commitment-wrap .cards-wrapper .cards.block ul li {
-    /* max-width: 343px; */
-    width: 100%;
-    min-height: 200px;
+    /* row-gap: 16px; */
   }
 
   /* Ensure card images fill the card width */
@@ -343,7 +282,40 @@ font-family: "Nunito-Semibold";
             height: 100px;
         width: auto;
   }
+  .section.commitment-wrap .cards-wrapper .cards.block > ul > li .cards-card-body h4 + ul{
+          padding: unset;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 15px;
 }
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(1){
+      width: 100%;
+  flex-direction: row-reverse;
+  height: unset;
+}
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(2){
+      width: 100%;
+  flex-direction: row-reverse;
+  height: unset;
+}
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(3){
+      width: 100%;
+  flex-direction: row-reverse;
+  height: unset;
+}
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(4){
+      width: 100%;
+  flex-direction: row-reverse;
+  height: unset;
+}
+
+.section.commitment-wrap .cards-wrapper .cards.block > ul > li:nth-child(4){
+    justify-content: space-between;
+}
+
+  }
+
 
 
 /* BUSSINESS OFFERINGS */
@@ -2521,6 +2493,10 @@ CARDS GRID (Directors & Management)
     display: flex;
     gap: 10px;
     align-items: center;
+}
+
+.bussiness-offerings .cards-wrapper .cards-card-body{
+    padding: unset;
 }
 
 .d-none{

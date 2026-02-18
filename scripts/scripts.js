@@ -234,6 +234,86 @@ function buildAutoBlocks() {
 }
 
 /**
+ * Combines multiple calculator blocks within the same section into
+ * a single calculator-parent wrapper with tabs, heading, and CTA buttons.
+ * @param {Element} main The main element
+ */
+function combineCalculatorSections(main) {
+  const calcSections = [...main.querySelectorAll(':scope > .section.calculator-container')];
+
+  calcSections.forEach((section) => {
+    const calcWrappers = section.querySelectorAll('.calculator-wrapper');
+    if (calcWrappers.length < 2) return;
+
+    const firstBlock = calcWrappers[0].querySelector('.calculator.block');
+    const secondBlock = calcWrappers[1].querySelector('.calculator.block');
+    if (!firstBlock || !secondBlock) return;
+
+    // Read metadata from first row of each block
+    const firstMeta = firstBlock.children[0]?.children[0]?.children;
+    const secondMeta = secondBlock.children[0]?.children[0]?.children;
+    const heading = firstMeta?.[1]?.textContent?.trim() || 'Calculate EMI & Check eligibility';
+    const firstTabName = firstMeta?.[0]?.textContent?.trim() || 'EMI Calculator';
+    const secondTabName = secondMeta?.[0]?.textContent?.trim() || 'Eligibility Calculator';
+
+    // Add identifying classes to blocks
+    firstBlock.classList.add('emicalculator', 'commoncalculator');
+    firstBlock.dataset.resetId = 'calid-0';
+    secondBlock.classList.add('eligibilitycalculator', 'commoncalculator');
+    secondBlock.dataset.resetId = 'calid-1';
+
+    // Add homeloancalculator class to section for CSS matching
+    section.classList.add('homeloancalculator');
+
+    // Create the calculator-parent wrapper structure
+    const calcParent = document.createElement('div');
+    calcParent.className = 'calculator-parent';
+    calcParent.innerHTML = `
+      <div class="calculator-parent-child">
+        <div class="cp-child">
+          <div class="mainheading ">
+            <p class="first-head">${heading}</p>
+            <p class="second-head"></p>
+          </div>
+          <div class="headingtabs ">
+            <ul class="headul">
+              <li class="tab-emi-calc tab-common active">
+                <p>${firstTabName}</p>
+              </li>
+              <li class="tab-eligibility-calc tab-common">
+                <p>${secondTabName}</p>
+              </li>
+              <li class="tab-eligibility-calc tab-common gst-third-tab">
+                <p></p>
+              </li>
+            </ul>
+          </div>
+          <div class="calctabs"></div>
+          <div class="customerbuttons ">
+            <a href="/modals/loan-products-modal" target="_self">
+              <button class="expert">Talk to loan expert</button>
+            </a>
+            <a href="/modals/loan-products-modal" target="_self">
+              <button class="expert orangeexpert">Apply loan now</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="discalimer-details dp-none"></div>
+    `;
+
+    // Move calculator blocks into calctabs
+    const calctabs = calcParent.querySelector('.calctabs');
+    calctabs.appendChild(firstBlock);
+    calctabs.appendChild(secondBlock);
+
+    // Clear section and add new structure
+    section.textContent = '';
+    section.appendChild(calcParent);
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -246,6 +326,7 @@ export async function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  combineCalculatorSections(main);
   decorateImageIcons(main);
   // handleOpenFormOnClick(main);
   handleReadAll(main);
@@ -741,11 +822,46 @@ function handleFormSubmit(buttonElement) {
 
 
 
+/**
+ * Initializes tab switching logic for the combined calculator section.
+ */
+function initCalculatorTabs() {
+  const calcParent = document.querySelector('.calculator-parent');
+  if (!calcParent) return;
+
+  const tabs = calcParent.querySelectorAll('.headingtabs .tab-common:not(.gst-third-tab)');
+  const emiCalc = calcParent.querySelector('.calctabs .emicalculator');
+  const elgCalc = calcParent.querySelector('.calctabs .eligibilitycalculator');
+
+  if (!emiCalc || !elgCalc || !tabs.length) return;
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+      // Update active tab
+      tabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      if (index === 0) {
+        // EMI tab
+        emiCalc.style.display = '';
+        elgCalc.classList.remove('elgblock');
+      } else if (index === 1) {
+        // Eligibility tab
+        emiCalc.style.display = 'none';
+        elgCalc.classList.add('elgblock');
+      }
+    });
+  });
+}
+
 async function loadLazy(doc) {
   autolinkModals(doc);
 
   const main = doc.querySelector('main');
   await loadBlocks(main);
+
+  // Initialize calculator tabs after blocks are loaded
+  initCalculatorTabs();
 
    // Move cards to tab panels
   moveCardsToTabPanels();

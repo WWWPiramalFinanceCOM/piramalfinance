@@ -1,322 +1,1441 @@
-/* Calculator Block Styles */
-.calculator-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
+ .homeloancalculator .calculator-parent {
+   background: var(--seashell);
+ }
 
-.calculator-main {
-  background: #fff;
-  border-radius: 12px;
-  padding: 30px;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child {
+   padding: 40px 0px 32px;
+ }
 
-.calculator-subtitle {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child {
+     padding: 20px 16px 24px;
+   }
+ }
 
-/* Tabs */
-.calculator-tabs {
-  display: flex;
-  gap: 40px;
-  margin-bottom: 40px;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 0;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child {
+   background: var(--white);
+   max-width: 1240px;
+   width: 100%;
+   margin: 0 auto;
+   padding: 32px;
+   -webkit-box-shadow: 0px 4px 12px rgba(51, 51, 51, 0.08);
+   box-shadow: 0px 4px 12px rgba(51, 51, 51, 0.08);
+   border-radius: 24px;
+ }
 
-.calculator-tab {
-  background: none;
-  border: none;
-  font-size: 18px;
-  font-weight: 600;
-  color: #666;
-  padding: 10px 0;
-  cursor: pointer;
-  position: relative;
-  transition: color 0.3s ease;
-}
+ @media screen and (max-width: 1400px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child {
+     max-width: 76.1%;
+   }
+ }
 
-.calculator-tab:hover {
-  color: #e85a2c;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child {
+     max-width: 100%;
+     padding: 0 16px;
+   }
+ }
 
-.calculator-tab.active {
-  color: #e85a2c;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child {
+     padding: 16px;
+     max-width: 100%;
+     border-radius: 12px;
+   }
+ }
 
-.calculator-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: #e85a2c;
-  border-radius: 2px 2px 0 0;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .mainheading p {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1rem;
+   line-height: 28px;
+   color: var(--darkgrey);
+ }
 
-/* Tab Content */
-.calculator-tab-content {
-  display: none;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .mainheading p {
+     font-size: 0.875rem;
+     line-height: 20px;
+   }
+ }
 
-.calculator-tab-content.active {
-  display: block;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .mainheading .second-head {
+   display: none;
+ }
 
-/* Content Layout */
-.calculator-content {
-  display: flex;
-  gap: 60px;
-  align-items: flex-start;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul {
+   -webkit-box-shadow: rgb(235, 238, 240) 0px -2px 0px inset;
+   box-shadow: rgb(235, 238, 240) 0px -2px 0px inset;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   line-height: 32px;
+ }
 
-.calculator-left {
-  flex: 1;
-  max-width: 550px;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common {
+   padding: 16px 24px 8px;
+   cursor: pointer;
+ }
 
-.calculator-right {
-  flex: 0 0 400px;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common {
+     padding: 12px 0px 6px;
+     -webkit-box-flex: 1;
+     -ms-flex: 1 1 auto;
+     flex: 1 1 auto;
+     text-align: center;
+   }
+ }
 
-/* Slider Groups */
-.slider-group {
-  margin-bottom: 35px;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common p {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1.5rem;
+   line-height: 32px;
+   color: var(--darkcharcoal);
+ }
 
-.slider-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common p {
+     font-size: 1rem;
+     line-height: 24px;
+   }
+ }
 
-.slider-label {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .active {
+   border-bottom: 2px solid var(--orange);
+ }
 
-.slider-value-display {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .active p {
+   font-family: "Nunito-Extrabold", sans-serif;
+   font-weight: 800;
+   font-size: 1.5rem;
+   line-height: 32px;
+   color: var(--orange);
+ }
 
-.slider-unit {
-  font-size: 16px;
-  color: #666;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .active p {
+     font-size: 1rem;
+     line-height: 24px;
+   }
+ }
 
-.slider-suffix {
-  font-size: 14px;
-  color: #666;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   margin-bottom: 32px;
+   margin-top: 46px;
+   gap: 80px;
+ }
 
-.slider-input {
-  width: 120px;
-  text-align: right;
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  border: none;
-  background: transparent;
-  outline: none;
-  padding: 5px;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi {
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     gap: 0px;
+     margin-top: 24px;
+     margin-bottom: 12px;
+   }
+ }
 
-.slider-input:focus {
-  border-bottom: 2px solid #e85a2c;
-}
+ @media screen and (min-width: 768px) and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi {
+     margin-bottom: 32px;
+   }
+ }
 
-/* Custom Slider */
-.slider-container {
-  position: relative;
-  height: 8px;
-  margin: 10px 0;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: vertical;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: column;
+   flex-direction: column;
+   width: 50%;
+   gap: 32px;
+ }
 
-.slider-range {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 8px;
-  background: transparent;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  cursor: pointer;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv {
+     gap: 24px;
+     width: 100%;
+     margin-bottom: 16px;
+   }
+ }
 
-.slider-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 24px;
-  height: 24px;
-  background: #fff;
-  border: 3px solid #e85a2c;
-  border-radius: 50%;
-  cursor: pointer;
-  margin-top: -8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
-}
+ @media screen and (min-width: 768px) and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv {
+     width: 50%;
+   }
+ }
 
-.slider-range::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: vertical;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: column;
+   flex-direction: column;
+ }
 
-.slider-range::-moz-range-thumb {
-  width: 24px;
-  height: 24px;
-  background: #fff;
-  border: 3px solid #e85a2c;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: justify;
+   -ms-flex-pack: justify;
+   justify-content: space-between;
+   margin-bottom: 16px;
+ }
 
-.slider-track {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  background: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data {
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     -webkit-box-pack: unset;
+     -ms-flex-pack: unset;
+     justify-content: unset;
+     margin-bottom: 4px;
+   }
+ }
 
-.slider-track-fill {
-  height: 100%;
-  background: #e85a2c;
-  border-radius: 4px;
-  transition: width 0.1s ease;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .description {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 1rem;
+   line-height: 24px;
+   color: var(--darkgrey);
+ }
 
-.slider-range-labels {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .description {
+     font-size: 0.875rem;
+     line-height: 20px;
+   }
+ }
 
-.slider-min,
-.slider-max {
-  font-size: 13px;
-  color: #888;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs {
+   width: 125px;
+   padding-bottom: 8px;
+   border-bottom: 1px solid var(--zinc);
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   position: relative;
+ }
 
-/* EMI Result Card */
-.emi-result-card {
-  background: linear-gradient(135deg, #e8f5f0 0%, #f0faf7 100%);
-  border-radius: 16px;
-  padding: 40px 30px;
-  text-align: center;
-}
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs {
+     width: 100%;
+     padding-bottom: 4px;
+   }
+ }
 
-.emi-icon {
-  margin-bottom: 20px;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs .rupee {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1rem;
+   line-height: 24px;
+   color: var(--black);
+   margin-right: 12px;
+ }
 
-.emi-icon img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs .textvalue {
+   display: none;
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 0.875rem;
+   line-height: 24px;
+   color: var(--zinc);
+ }
 
-.emi-result-label {
-  font-size: 16px;
-  color: #2a7d5f;
-  margin-bottom: 10px;
-}
+ /* .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs label {
+    display: none;
+  } */
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs label.sr-only,
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .rangediv label.sr-only {
+   width: 1px;
+   height: 1px;
+   position: absolute;
+   padding: 0;
+   overflow: hidden;
+   border: 0;
+   white-space: nowrap;
+ }
 
-.emi-result-value {
-  font-size: 42px;
-  font-weight: 700;
-  color: #1a5a42;
-  margin-bottom: 30px;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 1rem;
+   line-height: 24px;
+   color: var(--darkcharcoal);
+   outline: none;
+   width: 98px;
+   border: none;
+   cursor: pointer;
+ }
 
-.emi-breakdown {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 20px;
-  border-top: 1px solid rgba(42, 125, 95, 0.2);
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input::-webkit-input-placeholder {
+   font-size: 0.75rem;
+   opacity: 0.6;
+ }
 
-.breakdown-item {
-  text-align: left;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input::-moz-placeholder {
+   font-size: 0.75rem;
+   opacity: 0.6;
+ }
 
-.breakdown-label {
-  display: block;
-  font-size: 14px;
-  color: #2a7d5f;
-  margin-bottom: 5px;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input:-ms-input-placeholder {
+   font-size: 0.75rem;
+   opacity: 0.6;
+ }
 
-.breakdown-value {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a5a42;
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input::-ms-input-placeholder {
+   font-size: 0.75rem;
+   opacity: 0.6;
+ }
 
-/* Responsive Design */
-@media (max-width: 992px) {
-  .calculator-content {
-    flex-direction: column;
-  }
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input::placeholder {
+   font-size: 0.75rem;
+   opacity: 0.6;
+ }
 
-  .calculator-left {
-    max-width: 100%;
-  }
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input:disabled {
+   cursor: not-allowed;
+ }
 
-  .calculator-right {
-    flex: none;
-    width: 100%;
-  }
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input:disabled::-webkit-input-placeholder {
+   opacity: 0.3;
+ }
 
-@media (max-width: 768px) {
-  .calculator-main {
-    padding: 20px 15px;
-  }
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input:disabled::-moz-placeholder {
+   opacity: 0.3;
+ }
 
-  .calculator-tabs {
-    gap: 20px;
-  }
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input:disabled:-ms-input-placeholder {
+   opacity: 0.3;
+ }
 
-  .calculator-tab {
-    font-size: 16px;
-  }
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input:disabled::-ms-input-placeholder {
+   opacity: 0.3;
+ }
 
-  .slider-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input:disabled::placeholder {
+   opacity: 0.3;
+ }
 
-  .slider-input {
-    width: 100%;
-    text-align: left;
-  }
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs input {
+     width: 100%;
+   }
+ }
 
-  .emi-result-value {
-    font-size: 32px;
-  }
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .yearstext {
+   -webkit-box-pack: justify;
+   -ms-flex-pack: justify;
+   justify-content: space-between;
+ }
 
-  .emi-breakdown {
-    flex-direction: column;
-    gap: 15px;
-  }
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .yearstext .rupee {
+   display: none;
+ }
 
-  .breakdown-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .yearstext input {
+   width: 60px;
+   text-align: center;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .yearstext input {
+     width: 100%;
+     text-align: start;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .yearstext .textvalue {
+   display: block;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .rangediv {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: vertical;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: column;
+   flex-direction: column;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .rangediv .range-slider__range {
+   margin: 12px 0px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .rangediv .range-slider__range {
+     display: none;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .rangediv .values {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: justify;
+   -ms-flex-pack: justify;
+   justify-content: space-between;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .rangediv .values .text {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1rem;
+   line-height: 24px;
+   color: #808080;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .rangediv .values .text {
+     font-size: 0.875rem;
+     line-height: 20px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs {
+   padding: 4px 0px 5px;
+   position: relative;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs::before {
+   border-bottom: 1px solid rgba(0, 0, 0, 0.4196078431);
+   left: 0px;
+   bottom: 0px;
+   content: " ";
+   position: absolute;
+   right: 0px;
+   -webkit-transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+   transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+   pointer-events: none;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs:hover::before {
+   border-bottom: 2px solid rgba(0, 0, 0, 0.8705882353);
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs::after {
+   border-bottom: 2px solid var(--midnight);
+   left: 0px;
+   bottom: 0px;
+   content: "";
+   position: absolute;
+   right: 0px;
+   -webkit-transform: scaleX(0);
+   transform: scaleX(0);
+   -webkit-transition: -webkit-transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+   transition: -webkit-transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+   transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+   transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms, -webkit-transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+   pointer-events: none;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs:focus-within::before {
+   border-bottom-color: var(--midnight);
+   /* Change to desired color */
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs:focus-within::after {
+   -webkit-transform: scaleX(1);
+   transform: scaleX(1);
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs input {
+   font-family: "Nunito-Regular", sans-serif;
+   line-height: 20px;
+   width: 100%;
+   background: transparent;
+   z-index: 1;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs input:disabled {
+   cursor: not-allowed;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment .inputdivs img {
+   width: 20px;
+   height: 20px;
+   cursor: pointer;
+   position: absolute;
+   right: 0;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.clearAll .data {
+     -webkit-box-orient: horizontal;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: row;
+     flex-direction: row;
+     -webkit-box-pack: justify;
+     -ms-flex-pack: justify;
+     justify-content: space-between;
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     align-items: center;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.clearAll .data .description {
+   font-size: 1.25rem;
+   color: var(--black);
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.clearAll .data .description {
+     font-size: 1rem;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.clearAll .data .clearAllText {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1rem;
+   line-height: 24px;
+   color: var(--orange);
+   text-decoration: underline;
+   cursor: pointer;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.clearAll .data .clearAllText {
+     font-size: 0.875rem;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .boxCont.scrolladd {
+   max-height: 417px;
+   height: 100%;
+   overflow-y: auto;
+   padding-right: 12px;
+   padding-top: 6px;
+   -webkit-box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+   box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .boxCont.scrolladd {
+     max-height: unset;
+     overflow-y: unset;
+     padding-right: 0px;
+     padding-top: 0px;
+     -webkit-box-shadow: unset;
+     box-shadow: unset;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .boxCont.scrolladd::-webkit-scrollbar {
+   width: 4px;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .boxCont.scrolladd::-webkit-scrollbar-thumb {
+   border-radius: 10px;
+   background: var(--cloud);
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .boxCont.scrolladd::-webkit-scrollbar-track {
+   background: var(--silver);
+   border-radius: 10px;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment.partpaymentCardContainer {
+   padding: 24px 24px 16px;
+   border-radius: 16px;
+   border: 1px solid rgb(254, 240, 236);
+   margin-bottom: 16px;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment.partpaymentCardContainer {
+     row-gap: 20px;
+     padding: 24px 24px 12px;
+   }
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment.partpaymentCardContainer .description {
+     font-size: 1rem;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment.partpaymentCardContainer .inputdivs {
+   padding: 4px 0px 5px;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount.partPayment.partpaymentCardContainer .data {
+   margin-bottom: 24px;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .add-more-part-payment-btn {
+   text-align: center;
+   cursor: pointer;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .add-more-part-payment-btn .addMorePartPayment {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 0.875rem;
+   line-height: 20px;
+   color: var(--orange);
+   vertical-align: baseline;
+   cursor: pointer;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .add-more-part-payment-btn.disabled {
+   opacity: 0.5;
+   pointer-events: none;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .partpaymentSection {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: vertical;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: column;
+   flex-direction: column;
+   gap: 24px;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .partpaymentSection {
+     gap: unset;
+   }
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .partpaymentSection .paymentInputContainer {
+     margin: 24px 0px 16px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .partpaymentSection .paymentInputContainer .loanamount .data {
+   margin-bottom: 16px;
+ }
+
+ @media screen and (min-width: 768px) and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .partpaymentSection .paymentInputContainer .loanamount .data {
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-pack: justify;
+     -ms-flex-pack: justify;
+     justify-content: space-between;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv {
+   width: 50%;
+   /* margin-top: 14px; */
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv {
+     width: 100%;
+   }
+ }
+
+ @media screen and (min-width: 768px) and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv {
+     width: 50%;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent {
+   height: 100%;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: vertical;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: column;
+   flex-direction: column;
+   -webkit-box-pack: justify;
+   -ms-flex-pack: justify;
+   justify-content: space-between;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput {
+   margin-bottom: 36px;
+   background: rgba(227, 246, 233, 0.5019607843);
+   border-radius: 12px;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: vertical;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: column;
+   flex-direction: column;
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+   justify-content: center;
+   -webkit-box-align: center;
+   -ms-flex-align: center;
+   align-items: center;
+   height: 100%;
+   padding: 20px;
+   text-align: center;
+   min-height: 257px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput {
+     padding: 10px;
+     position: relative;
+     min-height: 132.8px;
+     margin-bottom: 32px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .outputimg {
+   width: 128px;
+   height: 100px;
+   margin-bottom: 16px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .outputimg {
+     display: none;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .outputimg2 {
+   display: none;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .outputimg2 {
+     display: block;
+     width: 94px;
+     height: 53px;
+     position: absolute;
+     top: -24px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .outputdes {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1rem;
+   line-height: 24px;
+   color: var(--darkcharcoal);
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .outputans,
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput span {
+   font-family: "Nunito-Extrabold", sans-serif;
+   font-weight: 800;
+   font-size: 2.5rem;
+   line-height: 48px;
+   color: var(--greyishblue);
+ }
+
+ @media screen and (max-width: 1024px) {
+
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .outputans,
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput span {
+     font-size: 2rem;
+     line-height: 48px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut {
+   background-color: rgb(227, 246, 233);
+   min-height: unset;
+   height: unset;
+   border-radius: 24px;
+   padding: 0px 44px;
+   margin-bottom: 48px;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut {
+     padding: 0px 8px;
+     margin-bottom: 16px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-align: center;
+   -ms-flex-align: center;
+   align-items: center;
+   -webkit-column-gap: 32px;
+   -moz-column-gap: 32px;
+   column-gap: 32px;
+   border-bottom: 1px solid rgb(215, 220, 225);
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+   justify-content: center;
+   width: 100%;
+   min-height: 204px;
+   height: 100%;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer {
+     min-height: 224px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer:nth-child(1) .text-and-img {
+   padding-right: 40px;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer:nth-child(1) .text-and-img {
+     padding-right: unset;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer .text-and-img {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-align: center;
+   -ms-flex-align: center;
+   align-items: center;
+   gap: 32px;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer .text-and-img {
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     gap: 20px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer .text-and-img .amountContainer {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: vertical;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: column;
+   flex-direction: column;
+   -webkit-box-align: start;
+   -ms-flex-align: start;
+   align-items: flex-start;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer .text-and-img .amountContainer {
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     align-items: center;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer .text-and-img .amountContainer .outputans .amount-1 {
+   font-family: "Nunito-Extrabold", sans-serif;
+   font-weight: 800;
+   font-size: 2rem;
+   line-height: 48px;
+   color: var(--greyishblue);
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer .text-and-img .amountContainer .outputans .amount-2,
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer .text-and-img .amountContainer .outputans .amount-3 {
+   font-family: "Nunito-Extrabold", sans-serif;
+   font-weight: 800;
+   font-size: 2rem;
+   line-height: 48px;
+   color: var(--greyishblue);
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer:last-child {
+   border-bottom: unset;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer:last-child .text-and-img img {
+   width: 48px;
+   height: 44px;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer img {
+   width: 56px;
+   height: 56px;
+   margin-bottom: 0px;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer .outputans {
+   font-size: 2rem;
+ }
+
+ @media screen and (max-width: 767px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer {
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     max-width: 473px;
+     min-width: -webkit-fit-content;
+     min-width: -moz-fit-content;
+     min-width: fit-content;
+   }
+
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput.partPaymentMainOutPut .parpaymentmainoutputcontainer img {
+     display: block;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: justify;
+   -ms-flex-pack: justify;
+   justify-content: space-between;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout p {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1rem;
+   line-height: 24px;
+   color: var(--darkcharcoal);
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout p {
+     font-size: 0.875rem;
+     line-height: 20px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout .amount {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1.25rem;
+   line-height: 28px;
+   color: var(--black);
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout .amount {
+     font-size: 1rem;
+     line-height: 24px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout .amount span {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 1.25rem;
+   line-height: 28px;
+   color: var(--black);
+   padding-right: 4px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout .amount span {
+     font-size: 1rem;
+     line-height: 24px;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .eligibilitycalculator {
+   display: none;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .eligibilitycalculator .parent-emi .outputdiv .output-parent .mainoutput .outputimg {
+   margin-bottom: 100px;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .eligibilitycalculator .parent-emi .outputdiv .output-parent .amountdiv {
+   display: none;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .calctabs .elgblock {
+   display: block;
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .customerbuttons {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-align: stretch;
+   -ms-flex-align: stretch;
+   align-items: stretch;
+   -webkit-box-pack: center;
+   -ms-flex-pack: center;
+   justify-content: center;
+   padding-top: 12px;
+   gap: 16px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .customerbuttons {
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     padding-top: 8px;
+   }
+ }
+
+ @media screen and (min-width: 768px) and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .customerbuttons {
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     align-items: center;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .customerbuttons .expert {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 1rem;
+   line-height: 24px;
+   color: var(--greyishblue);
+   padding: 12px 32px;
+   border: 1px solid var(--greyishblue);
+   cursor: pointer;
+   text-align: center;
+   border-radius: 8px;
+   background: transparent;
+   width: 366px;
+   margin: unset;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .customerbuttons .expert {
+     width: 100%;
+     font-size: 0.875rem;
+     line-height: 20px;
+     padding: 9.5px 32px;
+   }
+ }
+
+ @media screen and (min-width: 768px) and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .customerbuttons .expert {
+     width: 366px;
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     align-items: center;
+   }
+ }
+
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .customerbuttons .orangeexpert {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 1rem;
+   line-height: 24px;
+   color: var(--white);
+   background-color: var(--orange);
+   border: unset;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .customerbuttons .orangeexpert {
+     font-size: 0.875rem;
+     line-height: 20px;
+   }
+ }
+
+ .homepagemobiledesign {
+   display: none;
+ }
+
+ .homeloancalculator .light-red-tab {
+   background: -webkit-linear-gradient(right, #ffffff 50%, #fff7f4 50%);
+   pointer-events: none;
+ }
+
+ .homeloancalculator .light-red-tab .hlc-subparent .radiotab .firsttab {
+   background: var(--seashell);
+ }
+
+ .homeloancalculator .light-red-tab .hlc-subparent .radiotab .secondtab {
+   background: var(--white);
+ }
+
+ .homeloancalculator .light-red-tab~.calculator-parent {
+   background: var(--seashell);
+ }
+
+ .homeloancalculator .blue-tab {
+   background: -webkit-linear-gradient(right, #ffffff 50%, #EEF3FF 50%);
+   pointer-events: none;
+ }
+
+ .homeloancalculator .blue-tab .hlc-subparent .radiotab .firsttab {
+   background: var(--pale);
+ }
+
+ .homeloancalculator .blue-tab .hlc-subparent .radiotab .secondtab {
+   background: var(--white);
+ }
+
+ .homeloancalculator .blue-tab~.calculator-parent {
+   background: var(--pale);
+ }
+
+ .homeloancalculator .white-tab {
+   background: var(--white);
+   pointer-events: none;
+ }
+
+ .homeloancalculator .white-tab .hlc-subparent .radiotab .firsttab {
+   background: var(--white);
+ }
+
+ .homeloancalculator .white-tab .hlc-subparent .radiotab .secondtab {
+   background: var(--white);
+ }
+
+ .homeloancalculator .white-tab~.calculator-parent {
+   background: var(--white);
+ }
+
+ .section.calc-bg-pink .homeloancalculator .white-tab~.calculator-parent {
+   background-color: #fffcfb;
+ }
+
+ .tab-center--calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-emi-calc {
+   width: 50%;
+   text-align: center;
+ }
+
+ @media screen and (max-width: 767px) {
+   .tab-center--calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-emi-calc {
+     width: unset;
+   }
+ }
+
+ .tab-center--calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-eligibility-calc {
+   width: 50%;
+   text-align: center;
+ }
+
+ @media screen and (max-width: 767px) {
+   .tab-center--calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-eligibility-calc {
+     width: unset;
+   }
+ }
+
+ .range-slider__range {
+   position: relative;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   display: block;
+   width: 100%;
+   height: 4px;
+   background-color: rgb(219, 215, 216);
+   border-radius: 8px;
+   /* outline: none; */
+ }
+
+ .range-slider__range::-webkit-slider-runnable-track {
+   -webkit-appearance: none;
+   height: 8px;
+ }
+
+ .range-slider__range::-moz-track {
+   -moz-appearance: none;
+   height: 8px;
+ }
+
+ .range-slider__range::-ms-track {
+   appearance: none;
+   height: 8px;
+ }
+
+ .range-slider__range::-webkit-slider-thumb {
+   -webkit-appearance: none;
+   height: 25px;
+   width: 25px;
+   background-color: var(--white);
+   border: 2px solid #da4e34;
+   border-radius: 50%;
+   cursor: pointer;
+   margin-top: -7px;
+ }
+
+ .range-slider__range::-moz-range-thumb {
+   -webkit-appearance: none;
+   height: 25px;
+   width: 25px;
+   background-color: var(--white);
+   border: 2px solid #da4e34;
+   border-radius: 50%;
+   cursor: pointer;
+   margin-top: -7px;
+ }
+
+ .range-slider__range::-ms-thumb {
+   -webkit-appearance: none;
+   height: 25px;
+   width: 25px;
+   background-color: var(--white);
+   border: 2px solid #da4e34;
+   border-radius: 50%;
+   cursor: pointer;
+   margin-top: -7px;
+ }
+
+ .gst-third-tab {
+   display: none;
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul {
+   -webkit-box-shadow: unset;
+   box-shadow: unset;
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common {
+   padding: 10px 14px;
+   margin: 0 8px;
+   border: 1px solid var(--darkcharcoal);
+   border-radius: 62.5px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common {
+     padding: 8px 12px;
+     -webkit-box-flex: 0;
+     -ms-flex: none;
+     flex: none;
+   }
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common p {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 0.875rem;
+   line-height: 20px;
+   color: var(--black);
+ }
+
+ @media screen and (max-width: 1024px) {
+   .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common p {
+     font-size: 0.75rem;
+     line-height: 16px;
+   }
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .gst-third-tab {
+   display: block;
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .active {
+   background-color: var(--greyishblue);
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .active p {
+   color: var(--white);
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount:nth-child(1) {
+   padding-top: 16px;
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput {
+   margin-bottom: 2px;
+ }
+
+ @media screen and (max-width: 767px) {
+   .part-payment~.calculator-parent .calculator-parent-child {
+     padding: 20px 16px 24px;
+   }
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi {
+   margin-top: 0;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv {
+   margin-top: 62px;
+ }
+
+ @media screen and (max-width: 767px) {
+   .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv {
+     margin-top: 40px;
+   }
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs img {
+   width: 24px;
+   height: 24px;
+ }
+
+ @media screen and (max-width: 767px) {
+   .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount .data .inputdivs img {
+     right: -5px;
+   }
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .partpaymentSection .loanamount .data .inputdivs {
+   border-bottom: unset;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .partpaymentSection .loanamount .data .inputdivs .datepickerInit {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 0.875rem;
+   line-height: 20px;
+   color: rgba(0, 0, 0, 0.8705882353);
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .partpaymentSection .loanamount .data .inputdivs .slider-value {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 1rem;
+   line-height: 24px;
+   color: rgba(0, 0, 0, 0.8705882353);
+ }
+
+ @media screen and (max-width: 767px) {
+   .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .paymentInputContainer .boxCont .partpaymentCardContainer .data {
+     margin-bottom: 4px !important;
+   }
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .paymentInputContainer .boxCont .partpaymentCardContainer .data .inputdivs.disabled-parent img {
+   opacity: 0.5;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .paymentInputContainer .boxCont .partpaymentCardContainer .data .inputdivs.disabled-parent::before {
+   border-bottom: 1px dotted var(--zinc);
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .paymentInputContainer .boxCont .partpaymentCardContainer .data .inputdivs.disabled-parent::after {
+   display: none;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .paymentInputContainer .boxCont .partpaymentCardContainer .loanamount .data .inputdivs {
+   border-bottom: 1px solid var(--zinc);
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .paymentInputContainer .boxCont .partpaymentCardContainer .loanamount .data .inputdivs::before {
+   display: none;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .paymentInputContainer .boxCont .partpaymentCardContainer .loanamount .data .inputdivs::after {
+   display: none;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .paymentInputContainer .clearAll .data {
+   -webkit-box-orient: horizontal;
+   -webkit-box-direction: normal;
+   -ms-flex-direction: row;
+   flex-direction: row;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv {
+   margin-top: 0px;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent {
+   -webkit-box-pack: unset;
+   -ms-flex-pack: unset;
+   justify-content: unset;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout p {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1.125rem;
+   line-height: 28px;
+   color: var(--black);
+ }
+
+ @media screen and (max-width: 767px) {
+   .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout p {
+     font-size: 0.875rem;
+     line-height: 20px;
+   }
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout .amount span {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 1.5rem;
+   line-height: 32px;
+   color: var(--black);
+ }
+
+ @media screen and (max-width: 767px) {
+   .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .firstamout .amount span {
+     font-size: 1rem;
+     line-height: 24px;
+   }
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .secondamount p {
+   text-align: right;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .amountdiv .secondamount .amount span:nth-child(2) {
+   padding-right: 0px;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .text-and-img img {
+   display: block;
+ }
+
+ .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .text-and-img .amountContainer .outputdes {
+   text-align: start;
+ }
+
+ @media screen and (max-width: 767px) {
+   .part-payment~.calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .outputdiv .output-parent .mainoutput .text-and-img .amountContainer .outputdes {
+     font-size: 0.875rem;
+     line-height: 20px;
+   }
+ }
+
+ @media screen and (min-width:1025px) and (max-width: 1300px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent {
+     max-width: 81.25%;
+   }
+
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child {
+     max-width: 81.25%;
+   }
+
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab {
+     padding: 12px 16px 0 0;
+   }
+
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .secondtab .customecheck {
+     margin-left: 78px;
+   }
+
+   /* .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .active p{
+      font-size: 22px;
+    } */
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .secondtab .customecheck {
+     margin-left: 40px;
+   }
+
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent {
+     width: 65%;
+   }
+
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck {
+     margin-right: 30px;
+   }
+ }

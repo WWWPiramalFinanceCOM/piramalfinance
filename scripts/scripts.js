@@ -276,10 +276,12 @@ function combineCalculatorSections(main) {
 
     section.classList.add('homeloancalculator');
 
-    // --- Extract radio & CTA items from default-content-wrapper divs ---
+    // --- Identify radio & CTA default-content-wrappers from raw server DOM ---
     const defaultContentWrappers = [...section.querySelectorAll('.default-content-wrapper')];
-    const radioItems = [];
-    const ctaItems = [];
+    let radioDcw = null;
+    let radioUl = null;
+    let ctaDcw = null;
+    const ctaAnchors = [];
     const dcwToRemove = [];
 
     defaultContentWrappers.forEach((dcw) => {
@@ -289,28 +291,21 @@ function combineCalculatorSections(main) {
       const hasIcons = lis.some((li) => li.querySelector('.icon'));
       const hasLinks = lis.some((li) => li.querySelector('a'));
 
-      if (hasIcons && !radioItems.length) {
-        lis.forEach((li) => {
-          const icon = li.querySelector('.icon img');
-          const iconSrc = icon?.getAttribute('src') || '';
-          // Get text without icon span
-          const clone = li.cloneNode(true);
-          const iconSpan = clone.querySelector('.icon');
-          if (iconSpan) iconSpan.remove();
-          const text = clone.textContent.trim();
-          radioItems.push({ text, iconSrc });
-        });
+      if (hasIcons && !radioDcw) {
+        radioDcw = dcw;
+        radioUl = ul;
         dcwToRemove.push(dcw);
-      } else if (hasLinks && !ctaItems.length) {
+      } else if (hasLinks && !ctaDcw) {
+        ctaDcw = dcw;
         lis.forEach((li) => {
           const a = li.querySelector('a');
-          if (a) ctaItems.push(a); // Store actual server DOM <a> node
+          if (a) ctaAnchors.push(a);
         });
         dcwToRemove.push(dcw);
       }
     });
 
-    // --- Build radio tab HTML (dynamic from authored content) ---
+    // --- Transform raw radio <ul>/<li> DOM into radio tab structure (no innerHTML) ---
     const tabNumNames = ['one', 'two', 'three', 'four', 'five'];
     const foirDefaults = {
       salaried: { foir: 'salaried', value: '65' },
@@ -318,83 +313,153 @@ function combineCalculatorSections(main) {
     };
 
     let radioParent = null;
-    if (radioItems.length > 0) {
-      radioParent = document.createElement('div');
-      radioParent.className = 'home-loan-calculator-parent combined-emi-eligibility';
-      let radioLiHTML = '';
-      radioItems.forEach((item, idx) => {
-        // Derive key from text: "I'm Salaried" → "salaried", "I'm doing Business" → "business"
-        const key = item.text.replace(/^I'm\s*(doing\s*)?/i, '').trim().toLowerCase();
-        const foirData = foirDefaults[key] || { foir: key, value: '65' };
-        const liId = `${key}Tab`;
-        const inputId = `${key}RadioInput`;
-        const isChecked = idx === 0 ? ' checked' : '';
-        const activeClass = idx === 0 ? ' active' : '';
-        const numClass = tabNumNames[idx] ? `${tabNumNames[idx]}tab` : '';
-        const posClasses = idx === 0 ? 'firsttab' : 'firsttab secondtab';
-        const parentExtra = idx > 0 ? ' business-parent' : '';
-        const inputClass = idx === 0 ? 'input_salary_checkbox' : 'input_business_checkbox';
+    if (radioUl) {
+      const radioLis = [...radioUl.querySelectorAll(':scope > li')];
 
-        radioLiHTML += `
-          <li id="${liId}" class="${posClasses} ${numClass}${activeClass}" data-radio-index="${idx}">
-            <div class="customecheck">
-              <div class="salary-parent${parentExtra}">
-                <input type="radio" id="${inputId}" name="employementStatus"
-                  class="${inputClass}" data-cal-foir="${foirData.foir}" value="${foirData.value}"${isChecked}>
-                <label for="${inputId}">${item.text}</label>
-                <div class="blackborder"><div class="black"></div></div>
-              </div>
-              <div class="customimage">
-                <img data-src="${item.iconSrc}" class="customer lozad" alt="${key}"
-                  src="${item.iconSrc}" data-loaded="true">
-              </div>
-            </div>
-          </li>`;
+      radioLis.forEach((li, idx) => {
+        // Extract text and icon from existing raw <li>
+        const iconSpan = li.querySelector('.icon');
+        const iconImg = iconSpan ? iconSpan.querySelector('img') : null;
+        const iconSrc = iconImg ? iconImg.getAttribute('src') || '' : '';
+
+        // Get plain text (excluding the icon span)
+        const textContent = [...li.childNodes]
+          .filter((n) => n.nodeType === Node.TEXT_NODE)
+          .map((n) => n.textContent)
+          .join('')
+          .trim();
+
+        const key = textContent.replace(/^I'm\s*(doing\s*)?/i, '').trim().toLowerCase();
+        const foirData = foirDefaults[key] || { foir: key, value: '65' };
+
+        // Clear existing li content
+        while (li.firstChild) li.removeChild(li.firstChild);
+
+        // Set li attributes
+        li.id = `${key}Tab`;
+        li.className = idx === 0 ? 'firsttab' : 'firsttab secondtab';
+        if (tabNumNames[idx]) li.classList.add(`${tabNumNames[idx]}tab`);
+        if (idx === 0) li.classList.add('active');
+        li.dataset.radioIndex = String(idx);
+
+        // Build customecheck wrapper
+        const customecheck = document.createElement('div');
+        customecheck.className = 'customecheck';
+
+        // Build salary-parent with radio input, label, blackborder
+        const salaryParent = document.createElement('div');
+        salaryParent.className = idx > 0 ? 'salary-parent business-parent' : 'salary-parent';
+
+        const radioInput = document.createElement('input');
+        radioInput.type = 'radio';
+        radioInput.id = `${key}RadioInput`;
+        radioInput.name = 'employementStatus';
+        radioInput.className = idx === 0 ? 'input_salary_checkbox' : 'input_business_checkbox';
+        radioInput.dataset.calFoir = foirData.foir;
+        radioInput.value = foirData.value;
+        if (idx === 0) radioInput.checked = true;
+
+        const label = document.createElement('label');
+        label.htmlFor = `${key}RadioInput`;
+        label.textContent = textContent;
+
+        const blackborder = document.createElement('div');
+        blackborder.className = 'blackborder';
+        const black = document.createElement('div');
+        black.className = 'black';
+        blackborder.appendChild(black);
+
+        salaryParent.appendChild(radioInput);
+        salaryParent.appendChild(label);
+        salaryParent.appendChild(blackborder);
+
+        // Build customimage — reuse the actual server <img> node
+        const customimage = document.createElement('div');
+        customimage.className = 'customimage';
+        if (iconImg) {
+          iconImg.className = 'customer lozad';
+          iconImg.alt = key;
+          iconImg.dataset.src = iconSrc;
+          iconImg.dataset.loaded = 'true';
+          customimage.appendChild(iconImg); // moves the existing server img
+        }
+
+        customecheck.appendChild(salaryParent);
+        customecheck.appendChild(customimage);
+        li.appendChild(customecheck);
       });
 
-      radioParent.innerHTML = `
-        <div class="hlc-subparent">
-          <ul class="radiotab">
-            ${radioLiHTML}
-          </ul>
-        </div>`;
+      // Add radiotab class to existing server <ul>
+      radioUl.className = 'radiotab';
+
+      // Wrap in hlc-subparent and home-loan-calculator-parent
+      const hlcSubparent = document.createElement('div');
+      hlcSubparent.className = 'hlc-subparent';
+      hlcSubparent.appendChild(radioUl); // moves raw UL out of its dcw
+
+      radioParent = document.createElement('div');
+      radioParent.className = 'home-loan-calculator-parent combined-emi-eligibility';
+      radioParent.appendChild(hlcSubparent);
     }
 
-    // --- Build calculator tab <li> elements ---
-    let tabsLiHTML = '';
-    tabNames.forEach((name, idx) => {
-      const activeClass = idx === 0 ? ' active' : '';
-      const tabClass = idx === 0 ? 'tab-emi-calc' : 'tab-eligibility-calc';
-      tabsLiHTML += `<li class="${tabClass} tab-common${activeClass}" data-tab-index="${idx}"><p>${name}</p></li>\n`;
-    });
-    tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
-
-    // --- Create the calculator-parent wrapper ---
+    // --- Build calculator-parent with createElement (no innerHTML) ---
     const calcParent = document.createElement('div');
     calcParent.className = 'calculator-parent';
-    calcParent.innerHTML = `
-      <div class="calculator-parent-child">
-        <div class="cp-child">
-          <div class="mainheading ">
-            <p class="first-head">${heading}</p>
-            <p class="second-head"></p>
-          </div>
-          <div class="headingtabs ">
-            <ul class="headul">
-              ${tabsLiHTML}
-            </ul>
-          </div>
-          <div class="calctabs"></div>
-        </div>
-      </div>
-      <div class="discalimer-details dp-none"></div>
-    `;
+
+    const calcParentChild = document.createElement('div');
+    calcParentChild.className = 'calculator-parent-child';
+
+    const cpChild = document.createElement('div');
+    cpChild.className = 'cp-child';
+
+    // mainheading
+    const mainheading = document.createElement('div');
+    mainheading.className = 'mainheading';
+    const firstHead = document.createElement('p');
+    firstHead.className = 'first-head';
+    firstHead.textContent = heading;
+    const secondHead = document.createElement('p');
+    secondHead.className = 'second-head';
+    mainheading.appendChild(firstHead);
+    mainheading.appendChild(secondHead);
+
+    // headingtabs
+    const headingtabs = document.createElement('div');
+    headingtabs.className = 'headingtabs';
+    const headul = document.createElement('ul');
+    headul.className = 'headul';
+
+    tabNames.forEach((name, idx) => {
+      const tabLi = document.createElement('li');
+      tabLi.className = idx === 0 ? 'tab-emi-calc tab-common active' : 'tab-eligibility-calc tab-common';
+      tabLi.dataset.tabIndex = String(idx);
+      const tabP = document.createElement('p');
+      tabP.textContent = name;
+      tabLi.appendChild(tabP);
+      headul.appendChild(tabLi);
+    });
+
+    // GST third tab placeholder
+    const gstLi = document.createElement('li');
+    gstLi.className = 'tab-eligibility-calc tab-common gst-third-tab';
+    gstLi.appendChild(document.createElement('p'));
+    headul.appendChild(gstLi);
+
+    headingtabs.appendChild(headul);
+
+    // calctabs container
+    const calctabs = document.createElement('div');
+    calctabs.className = 'calctabs';
+
+    cpChild.appendChild(mainheading);
+    cpChild.appendChild(headingtabs);
+    cpChild.appendChild(calctabs);
 
     // --- Move CTA buttons from server DOM (only if second default-content-wrapper has links) ---
-    if (ctaItems.length > 0) {
+    if (ctaAnchors.length > 0) {
       const custButtons = document.createElement('div');
       custButtons.className = 'customerbuttons';
-      ctaItems.forEach((serverAnchor, idx) => {
+      ctaAnchors.forEach((serverAnchor, idx) => {
         const btnText = serverAnchor.textContent.trim();
         serverAnchor.textContent = '';
         const btn = document.createElement('button');
@@ -403,12 +468,18 @@ function combineCalculatorSections(main) {
         serverAnchor.appendChild(btn);
         custButtons.appendChild(serverAnchor);
       });
-      const cpChild = calcParent.querySelector('.cp-child');
       cpChild.appendChild(custButtons);
     }
 
+    calcParentChild.appendChild(cpChild);
+
+    const disclaimer = document.createElement('div');
+    disclaimer.className = 'discalimer-details dp-none';
+
+    calcParent.appendChild(calcParentChild);
+    calcParent.appendChild(disclaimer);
+
     // Move all calculator blocks into calctabs
-    const calctabs = calcParent.querySelector('.calctabs');
     blocks.forEach((blk) => calctabs.appendChild(blk));
 
     // Remove calculator-wrapper divs and processed default-content-wrapper divs

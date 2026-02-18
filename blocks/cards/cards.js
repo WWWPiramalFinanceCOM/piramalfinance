@@ -2,6 +2,7 @@ import { ctaClickInteraction } from '../../dl.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { decoratePlaceholder } from '../../scripts/scripts.js';
 import { moveInstrumentation } from '../../scripts/common.js';
+import {onCLickApplyFormOpen} from '../applyloanform/applyloanforms.js'
 // import { applyLoanFormClick } from '../applyloanform/applyloanforms.js';
 // import { applyLoanPopper } from '../applyloanform/applyloanpopper.js';
 // import { loanutmForm } from '../applyloanform/loanutm.js';
@@ -22,15 +23,18 @@ export default async function decorate(block) {
       if (!e.target.href.includes('/leadform/')) return;
       e.preventDefault();
       let closeButton = document.querySelector(".close-button");
-      let dialog = document.querySelector("dialog");
-      dialog.close();
-      const dialogDimensions = dialog.getBoundingClientRect();
-      if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
-        || e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom) {
+      let dialogs = document.querySelectorAll("dialog");
+      dialogs.forEach((dialog) => {
         dialog.close();
-      }
+        const dialogDimensions = dialog.getBoundingClientRect();
+        if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
+          || e.clientY < dialogDimensions.top || e.clientY > dialogDimensions.bottom) {
+          dialog.close();
+        }
+      })
       e.preventDefault();
-      document.querySelector('.expert.orangeexpert').click();
+      onCLickApplyFormOpen(e);
+      // document.querySelector('.expert.orangeexpert').click();
     });
     ul.append(li);
   });

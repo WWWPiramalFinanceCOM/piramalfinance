@@ -199,7 +199,7 @@
       },
       {
         "component": "text",
-        "name": "desktop-alt",
+        "name": "desktop-imageAlt",
         "label": "Desktop Image Alt",
         "value": "",
         "valueType": "string"
@@ -213,7 +213,7 @@
       },
       {
         "component": "text",
-        "name": "mobile-alt",
+        "name": "mobile-imageAlt",
         "label": "Mobile Image Alt",
         "value": "",
         "valueType": "string"

@@ -234,38 +234,141 @@ function buildAutoBlocks() {
 }
 
 /**
- * Combines multiple calculator blocks within the same section into
+ * Combines calculator blocks within the same section into
  * a single calculator-parent wrapper with tabs, heading, and CTA buttons.
+ * Dynamically builds radio tabs (Salaried/Business) from authored content
+ * and CTA buttons from authored links.
  * @param {Element} main The main element
  */
 function combineCalculatorSections(main) {
   const calcSections = [...main.querySelectorAll(':scope > .section.calculator-container')];
 
   calcSections.forEach((section) => {
-    const calcWrappers = section.querySelectorAll('.calculator-wrapper');
-    if (calcWrappers.length < 2) return;
+    const calcWrappers = [...section.querySelectorAll('.calculator-wrapper')];
+    if (calcWrappers.length < 1) return;
 
-    const firstBlock = calcWrappers[0].querySelector('.calculator.block');
-    const secondBlock = calcWrappers[1].querySelector('.calculator.block');
-    if (!firstBlock || !secondBlock) return;
+    // Collect all calculator blocks from wrappers
+    const blocks = calcWrappers
+      .map((w) => w.querySelector('.calculator.block'))
+      .filter(Boolean);
+    if (blocks.length < 1) return;
 
-    // Read metadata from first row of each block
-    const firstMeta = firstBlock.children[0]?.children[0]?.children;
-    const secondMeta = secondBlock.children[0]?.children[0]?.children;
+    // Read heading from first block metadata
+    const firstMeta = blocks[0].children[0]?.children[0]?.children;
     const heading = firstMeta?.[1]?.textContent?.trim() || 'Calculate EMI & Check eligibility';
-    const firstTabName = firstMeta?.[0]?.textContent?.trim() || 'EMI Calculator';
-    const secondTabName = secondMeta?.[0]?.textContent?.trim() || 'Eligibility Calculator';
 
-    // Add identifying classes to blocks
-    firstBlock.classList.add('emicalculator', 'commoncalculator');
-    firstBlock.dataset.resetId = 'calid-0';
-    secondBlock.classList.add('eligibilitycalculator', 'commoncalculator');
-    secondBlock.dataset.resetId = 'calid-1';
+    // Add classes, data attributes & read tab names from each block
+    const tabNames = [];
+    blocks.forEach((blk, idx) => {
+      const meta = blk.children[0]?.children[0]?.children;
+      const tabName = meta?.[0]?.textContent?.trim() || `Calculator ${idx + 1}`;
+      tabNames.push(tabName);
+      blk.classList.add('commoncalculator');
+      blk.dataset.resetId = `calid-${idx}`;
+      const tabNameLower = tabName.toLowerCase();
+      if (tabNameLower.includes('eligibility')) {
+        blk.classList.add('eligibilitycalculator');
+      } else {
+        blk.classList.add('emicalculator');
+      }
+    });
 
-    // Add homeloancalculator class to section for CSS matching
     section.classList.add('homeloancalculator');
 
-    // Create the calculator-parent wrapper structure
+    // --- Extract radio & CTA items from default-content-wrapper divs ---
+    const defaultContentWrappers = [...section.querySelectorAll('.default-content-wrapper')];
+    const radioItems = [];
+    const ctaItems = [];
+    const dcwToRemove = [];
+
+    defaultContentWrappers.forEach((dcw) => {
+      const ul = dcw.querySelector('ul');
+      if (!ul) return;
+      const lis = [...ul.querySelectorAll(':scope > li')];
+      const hasIcons = lis.some((li) => li.querySelector('.icon'));
+      const hasLinks = lis.some((li) => li.querySelector('a'));
+
+      if (hasIcons && !radioItems.length) {
+        lis.forEach((li) => {
+          const icon = li.querySelector('.icon img');
+          const iconSrc = icon?.getAttribute('src') || '';
+          // Get text without icon span
+          const clone = li.cloneNode(true);
+          const iconSpan = clone.querySelector('.icon');
+          if (iconSpan) iconSpan.remove();
+          const text = clone.textContent.trim();
+          radioItems.push({ text, iconSrc });
+        });
+        dcwToRemove.push(dcw);
+      } else if (hasLinks && !ctaItems.length) {
+        lis.forEach((li) => {
+          const a = li.querySelector('a');
+          if (a) ctaItems.push(a); // Store actual server DOM <a> node
+        });
+        dcwToRemove.push(dcw);
+      }
+    });
+
+    // --- Build radio tab HTML (dynamic from authored content) ---
+    const tabNumNames = ['one', 'two', 'three', 'four', 'five'];
+    const foirDefaults = {
+      salaried: { foir: 'salaried', value: '65' },
+      business: { foir: 'biz', value: '80' },
+    };
+
+    let radioParent = null;
+    if (radioItems.length > 0) {
+      radioParent = document.createElement('div');
+      radioParent.className = 'home-loan-calculator-parent combined-emi-eligibility';
+      let radioLiHTML = '';
+      radioItems.forEach((item, idx) => {
+        // Derive key from text: "I'm Salaried" → "salaried", "I'm doing Business" → "business"
+        const key = item.text.replace(/^I'm\s*(doing\s*)?/i, '').trim().toLowerCase();
+        const foirData = foirDefaults[key] || { foir: key, value: '65' };
+        const liId = `${key}Tab`;
+        const inputId = `${key}RadioInput`;
+        const isChecked = idx === 0 ? ' checked' : '';
+        const activeClass = idx === 0 ? ' active' : '';
+        const numClass = tabNumNames[idx] ? `${tabNumNames[idx]}tab` : '';
+        const posClasses = idx === 0 ? 'firsttab' : 'firsttab secondtab';
+        const parentExtra = idx > 0 ? ' business-parent' : '';
+        const inputClass = idx === 0 ? 'input_salary_checkbox' : 'input_business_checkbox';
+
+        radioLiHTML += `
+          <li id="${liId}" class="${posClasses} ${numClass}${activeClass}" data-radio-index="${idx}">
+            <div class="customecheck">
+              <div class="salary-parent${parentExtra}">
+                <input type="radio" id="${inputId}" name="employementStatus"
+                  class="${inputClass}" data-cal-foir="${foirData.foir}" value="${foirData.value}"${isChecked}>
+                <label for="${inputId}">${item.text}</label>
+                <div class="blackborder"><div class="black"></div></div>
+              </div>
+              <div class="customimage">
+                <img data-src="${item.iconSrc}" class="customer lozad" alt="${key}"
+                  src="${item.iconSrc}" data-loaded="true">
+              </div>
+            </div>
+          </li>`;
+      });
+
+      radioParent.innerHTML = `
+        <div class="hlc-subparent">
+          <ul class="radiotab">
+            ${radioLiHTML}
+          </ul>
+        </div>`;
+    }
+
+    // --- Build calculator tab <li> elements ---
+    let tabsLiHTML = '';
+    tabNames.forEach((name, idx) => {
+      const activeClass = idx === 0 ? ' active' : '';
+      const tabClass = idx === 0 ? 'tab-emi-calc' : 'tab-eligibility-calc';
+      tabsLiHTML += `<li class="${tabClass} tab-common${activeClass}" data-tab-index="${idx}"><p>${name}</p></li>\n`;
+    });
+    tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
+
+    // --- Create the calculator-parent wrapper ---
     const calcParent = document.createElement('div');
     calcParent.className = 'calculator-parent';
     calcParent.innerHTML = `
@@ -277,39 +380,59 @@ function combineCalculatorSections(main) {
           </div>
           <div class="headingtabs ">
             <ul class="headul">
-              <li class="tab-emi-calc tab-common active">
-                <p>${firstTabName}</p>
-              </li>
-              <li class="tab-eligibility-calc tab-common">
-                <p>${secondTabName}</p>
-              </li>
-              <li class="tab-eligibility-calc tab-common gst-third-tab">
-                <p></p>
-              </li>
+              ${tabsLiHTML}
             </ul>
           </div>
           <div class="calctabs"></div>
-          <div class="customerbuttons ">
-            <a href="/modals/loan-products-modal" target="_self">
-              <button class="expert">Talk to loan expert</button>
-            </a>
-            <a href="/modals/loan-products-modal" target="_self">
-              <button class="expert orangeexpert">Apply loan now</button>
-            </a>
-          </div>
         </div>
       </div>
       <div class="discalimer-details dp-none"></div>
     `;
 
-    // Move calculator blocks into calctabs
-    const calctabs = calcParent.querySelector('.calctabs');
-    calctabs.appendChild(firstBlock);
-    calctabs.appendChild(secondBlock);
+    // --- Move CTA buttons from server DOM (only if second default-content-wrapper has links) ---
+    if (ctaItems.length > 0) {
+      const custButtons = document.createElement('div');
+      custButtons.className = 'customerbuttons';
+      ctaItems.forEach((serverAnchor, idx) => {
+        const btnText = serverAnchor.textContent.trim();
+        serverAnchor.textContent = '';
+        const btn = document.createElement('button');
+        btn.className = idx > 0 ? 'expert orangeexpert' : 'expert';
+        btn.textContent = btnText;
+        serverAnchor.appendChild(btn);
+        custButtons.appendChild(serverAnchor);
+      });
+      const cpChild = calcParent.querySelector('.cp-child');
+      cpChild.appendChild(custButtons);
+    }
 
-    // Clear section and add new structure
-    section.textContent = '';
+    // Move all calculator blocks into calctabs
+    const calctabs = calcParent.querySelector('.calctabs');
+    blocks.forEach((blk) => calctabs.appendChild(blk));
+
+    // Remove calculator-wrapper divs and processed default-content-wrapper divs
+    calcWrappers.forEach((w) => w.remove());
+    dcwToRemove.forEach((dcw) => dcw.remove());
+
+    // Insert radio parent at the beginning of section (if present)
+    if (radioParent) {
+      section.insertBefore(radioParent, section.firstChild);
+    }
+
+    // Append calculator-parent
     section.appendChild(calcParent);
+
+    // Append mobile design div and hidden product type input
+    const mobileDiv = document.createElement('div');
+    mobileDiv.className = 'homepagemobiledesign';
+    section.appendChild(mobileDiv);
+
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'product type';
+    hiddenInput.id = 'calculator-product-type';
+    hiddenInput.value = 'hl';
+    section.appendChild(hiddenInput);
   });
 }
 
@@ -326,7 +449,9 @@ export async function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
-  combineCalculatorSections(main);
+  if (main.querySelector(':scope > .section.calculator-container')) {
+    combineCalculatorSections(main);
+  }
   decorateImageIcons(main);
   // handleOpenFormOnClick(main);
   handleReadAll(main);
@@ -823,33 +948,87 @@ function handleFormSubmit(buttonElement) {
 
 
 /**
+ * Initializes radio tab (Salaried/Business) click handling for calculator sections.
+ * Dynamically supports any number of radio tabs from authored content.
+ */
+function initRadioTabs() {
+  const calcSections = document.querySelectorAll('.homeloancalculator');
+  calcSections.forEach((section) => {
+    const radioParent = section.querySelector('.home-loan-calculator-parent');
+    if (!radioParent) return;
+
+    const radioTabs = [...radioParent.querySelectorAll('.radiotab > li')];
+    if (radioTabs.length < 2) return;
+
+    const calculatorParent = section.querySelector('.calculator-parent');
+
+    radioTabs.forEach((tab, idx) => {
+      tab.addEventListener('click', () => {
+        const isSalaried = idx === 0;
+        const radioInput = tab.querySelector('input[type="radio"]');
+        if (radioInput) radioInput.checked = true;
+
+        // Update active class on radio tabs for tracking selected state
+        radioTabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // Update tab backgrounds
+        tab.style.background = isSalaried ? '#fff7f4' : '#eef3ff';
+        radioTabs.forEach((otherTab, otherIdx) => {
+          if (otherIdx !== idx) {
+            otherTab.style.background = '#ffffff';
+          }
+        });
+
+        // Update calculator-parent background
+        if (calculatorParent) {
+          calculatorParent.style.background = isSalaried ? '#fff7f4' : '#eef3ff';
+        }
+
+        // Update gradient background on radio parent
+        radioParent.style.background = isSalaried
+          ? '-webkit-linear-gradient(right, #fff 50%, #fff7f4 50%)'
+          : '-webkit-linear-gradient(right, #eef3ff 50%, #fff 50%)';
+      });
+    });
+  });
+}
+
+/**
  * Initializes tab switching logic for the combined calculator section.
+ * Dynamically supports any number of calculator tabs/blocks.
  */
 function initCalculatorTabs() {
   const calcParent = document.querySelector('.calculator-parent');
   if (!calcParent) return;
 
-  const tabs = calcParent.querySelectorAll('.headingtabs .tab-common:not(.gst-third-tab)');
-  const emiCalc = calcParent.querySelector('.calctabs .emicalculator');
-  const elgCalc = calcParent.querySelector('.calctabs .eligibilitycalculator');
+  const tabs = [...calcParent.querySelectorAll('.headingtabs .tab-common:not(.gst-third-tab)')];
+  const calcBlocks = [...calcParent.querySelectorAll('.calctabs .commoncalculator')];
 
-  if (!emiCalc || !elgCalc || !tabs.length) return;
+  if (calcBlocks.length <= 1 || !tabs.length) return;
 
-  tabs.forEach((tab, index) => {
+  tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
+      const tabIndex = parseInt(tab.dataset.tabIndex || '0', 10);
+
       // Update active tab
       tabs.forEach((t) => t.classList.remove('active'));
       tab.classList.add('active');
 
-      if (index === 0) {
-        // EMI tab
-        emiCalc.style.display = '';
-        elgCalc.classList.remove('elgblock');
-      } else if (index === 1) {
-        // Eligibility tab
-        emiCalc.style.display = 'none';
-        elgCalc.classList.add('elgblock');
-      }
+      // Show/hide blocks
+      calcBlocks.forEach((blk, idx) => {
+        if (idx === 0) {
+          // First block (emicalculator): toggle via display
+          blk.style.display = tabIndex === 0 ? '' : 'none';
+        } else {
+          // Other blocks (eligibilitycalculator): toggle via elgblock class
+          if (idx === tabIndex) {
+            blk.classList.add('elgblock');
+          } else {
+            blk.classList.remove('elgblock');
+          }
+        }
+      });
     });
   });
 }
@@ -860,8 +1039,9 @@ async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadBlocks(main);
 
-  // Initialize calculator tabs after blocks are loaded
+  // Initialize calculator tabs and radio tabs after blocks are loaded
   initCalculatorTabs();
+  initRadioTabs();
 
    // Move cards to tab panels
   moveCardsToTabPanels();

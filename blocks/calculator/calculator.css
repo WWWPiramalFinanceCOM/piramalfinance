@@ -1,3 +1,266 @@
+ /* ========== Radio Tab Base Styles ========== */
+ .homeloancalculator .home-loan-calculator-parent {
+   background: -webkit-linear-gradient(right, #ffffff 50%, #fff7f4 50%);
+   background: linear-gradient(to left, #ffffff 50%, #fff7f4 50%);
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent {
+   background-color: var(--white);
+   max-width: 1240px;
+   margin: 0 auto;
+ }
+
+ @media screen and (max-width: 1400px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent {
+     max-width: 76.1%;
+   }
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent {
+     max-width: 100%;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   list-style: none;
+   padding: 0;
+   margin: 0;
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab {
+   background: var(--seashell);
+   padding: 12px 24px 0 0;
+   width: 50%;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: end;
+       -ms-flex-pack: end;
+           justify-content: flex-end;
+   border-radius: 0 12px 0 0;
+   padding-left: 20px;
+   cursor: pointer;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab {
+     padding-left: unset;
+     padding: 16px 16px 0 16px;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   max-width: 540px;
+   width: 100%;
+   -webkit-box-align: center;
+       -ms-flex-align: center;
+           align-items: center;
+   margin-right: 60px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck {
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+         -ms-flex-direction: column;
+             flex-direction: column;
+     -webkit-box-align: start;
+         -ms-flex-align: start;
+             align-items: start;
+     margin-right: unset;
+     -webkit-box-pack: justify;
+         -ms-flex-pack: justify;
+             justify-content: space-between;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-orient: horizontal;
+   -webkit-box-direction: reverse;
+       -ms-flex-direction: row-reverse;
+           flex-direction: row-reverse;
+   -webkit-box-pack: start;
+       -ms-flex-pack: start;
+           justify-content: start;
+   gap: 12px;
+   width: 50%;
+   -webkit-box-align: center;
+       -ms-flex-align: center;
+           align-items: center;
+   margin-bottom: 8px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent {
+     width: 100%;
+     gap: 19px;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent input {
+   display: none;
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent input:checked ~ .blackborder .black {
+   background: var(--darkcharcoal);
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent input:checked ~ label {
+   font-family: "Nunito-Bold", sans-serif;
+   font-weight: 700;
+   font-size: 1.25rem;
+   line-height: 1.75rem;
+   color: var(--darkcharcoal);
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent input:checked ~ label {
+     font-size: 0.75rem;
+     line-height: 1.5rem;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent label {
+   font-family: "Nunito-Regular", sans-serif;
+   font-weight: 400;
+   font-size: 1.25rem;
+   line-height: 1.75rem;
+   color: var(--darkcharcoal);
+   -ms-flex-item-align: self-end;
+       align-self: self-end;
+   width: 86%;
+   cursor: pointer;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent label {
+     width: 75%;
+     font-size: 0.75rem;
+     line-height: 1.5rem;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent .blackborder {
+   border: 2px solid var(--darkcharcoal);
+   height: 22px;
+   width: 22px;
+   border-radius: 100%;
+   position: relative;
+   -webkit-transition: border 0.25s linear;
+   transition: border 0.25s linear;
+   cursor: pointer;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent .blackborder {
+     height: 16px;
+     width: 16px;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent .blackborder .black {
+   content: "";
+   display: block;
+   height: 12px;
+   width: 12px;
+   border-radius: 100%;
+   background: transparent;
+   position: absolute;
+   -webkit-transition: background 0.25s linear;
+   transition: background 0.25s linear;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .salary-parent .blackborder .black {
+     height: 8px;
+     width: 8px;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .customimage {
+   width: 50%;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: center;
+       -ms-flex-pack: center;
+           justify-content: center;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .customimage {
+     -ms-flex-item-align: center;
+         align-self: center;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .customimage .customer {
+   width: 177px;
+   height: 119px;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .firsttab .customecheck .customimage .customer {
+     width: 94px;
+     height: 64px;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .secondtab {
+   width: 50%;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: start;
+       -ms-flex-pack: start;
+           justify-content: flex-start;
+   border-radius: 12px 0 0 0;
+   background: var(--white);
+   padding-right: 20px;
+   padding-left: unset;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .secondtab {
+     padding: 16px 16px 0 16px;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .secondtab .customecheck {
+   max-width: 600px;
+   width: 100%;
+   margin-left: 84px;
+   margin-right: unset;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .secondtab .customecheck {
+     margin-left: unset;
+   }
+ }
+
+ .homeloancalculator .home-loan-calculator-parent .hlc-subparent .radiotab .secondtab .customecheck .customimage {
+   -webkit-box-pack: center;
+       -ms-flex-pack: center;
+           justify-content: center;
+ }
+ /* ========== End Radio Tab Base Styles ========== */
+
  .homeloancalculator .calculator-parent {
    background: var(--seashell);
  }

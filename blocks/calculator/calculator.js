@@ -1,11 +1,17 @@
+
 export default async function decorate(block) {
-  const isEligibility = block.classList.contains('eligibilitycalculator');
-  const sliderPrefix = isEligibility ? 'el' : 'em';
+    if(window.location.href.includes('author')) return true;
+  // Use block index from data-reset-id for unique IDs across N calculators
+  const blockIndex = block.dataset.resetId?.replace('calid-', '') || '0';
+  // Determine calculator type from authored content — firstRow[0] (e.g. "EMI Calculator", "Eligibility Calculator")
+  const tabName = block.children[0]?.children[0]?.children[0]?.textContent?.trim()?.toLowerCase() || '';
+  const isEligibility = tabName.includes('eligibility');
+  const sliderPrefix = `c${blockIndex}s`;
 
   const parentEmi = document.createElement('div');
   parentEmi.classList.add('parent-emi');
   if (isEligibility) parentEmi.classList.add('parent-eligibility');
-  parentEmi.id = 'emic';
+  parentEmi.id = `emic-${blockIndex}`;
 
   const inputDiv = document.createElement('div');
   inputDiv.classList.add('inputDiv');
@@ -22,6 +28,7 @@ export default async function decorate(block) {
   Array.from(block.children).slice(1).forEach((r, ind) => {
     const columns = r.children[0].children;
     const sliderId = `${sliderPrefix}${ind + 1}`;
+    const inputId = `calcemi-${blockIndex}-${ind}`;
     const rupeeText = columns[3]?.textContent.trim() || '';
     const calInput = columns[0]?.textContent.trim() || '';
     const isYearsText = !rupeeText;
@@ -38,8 +45,8 @@ export default async function decorate(block) {
           <!-- add class yearstext for displaying textvalue -->
           <div class="inputdivs ${isYearsText ? 'yearstext' : ''} ">
             <span class="rupee">${rupeeText}</span>
-            <label for="calcemi-${ind}" aria-label="calculateemi" class="sr-only"></label>
-            <input type="text" class="inputvalue slider-value" value="" id="calcemi-${ind}" data-slider="${sliderId}" data-cal-input="${calInput}">
+            <label for="${inputId}" aria-label="calculateemi" class="sr-only"></label>
+            <input type="text" class="inputvalue slider-value" value="" id="${inputId}" data-slider="${sliderId}" data-cal-input="${calInput}">
             <span class="textvalue">${textValue}</span>
           </div>
         </div>

@@ -1,6 +1,59 @@
+import { prepareBlocks, extractContent } from './extract-content.js';
+import { buildRadioParent, initRadioTabs } from './build-radio.js';
+import { buildCalculatorParent, initCalculatorTabs } from './build-tabs.js';
+
+/** Track sections already combined so it runs only once per section */
+const combinedSections = new WeakSet();
+
+/**
+ * Combines all calculator blocks in a section into a single
+ * calculator-parent wrapper with radio tabs, heading and CTA buttons.
+ * Called by the first calculator block that gets decorated.
+ */
+function combineSection(section) {
+  if (combinedSections.has(section)) return;
+  combinedSections.add(section);
+
+  const calcWrappers = [...section.querySelectorAll('.calculator-wrapper')];
+  if (calcWrappers.length < 1) return;
+
+  const blocks = calcWrappers.map((w) => w.querySelector('.calculator.block')).filter(Boolean);
+  if (blocks.length < 1) return;
+
+  const { heading, tabNames } = prepareBlocks(blocks);
+  section.classList.add('homeloancalculator');
+  const { radioItems, ctaItems, dcwToRemove } = extractContent(section);
+
+  const radioParent = buildRadioParent(radioItems);
+  const calcParent = buildCalculatorParent(heading, tabNames, ctaItems, blocks);
+
+  calcWrappers.forEach((w) => w.remove());
+  dcwToRemove.forEach((dcw) => dcw.remove());
+
+  if (radioParent) section.insertBefore(radioParent, section.firstChild);
+  section.appendChild(calcParent);
+
+  const mobileDiv = document.createElement('div');
+  mobileDiv.className = 'homepagemobiledesign';
+  section.appendChild(mobileDiv);
+
+  const hiddenInput = document.createElement('input');
+  hiddenInput.type = 'hidden';
+  hiddenInput.name = 'product type';
+  hiddenInput.id = 'calculator-product-type';
+  hiddenInput.value = 'hl';
+  section.appendChild(hiddenInput);
+
+  // Init tab & radio click handlers (elements already exist after assembly)
+  initCalculatorTabs();
+  initRadioTabs();
+}
 
 export default async function decorate(block) {
-  // if(window.location.href.includes('author')) return true;
+  // Combine section on first calculator block decoration
+  const section = block.closest('.section.calculator-container');
+  if (section) combineSection(section);
+
   const blockIndex = block.dataset.resetId?.replace('calid-', '') || '0';
   const tabName = block.children[0]?.children[0]?.children[0]?.textContent?.trim()?.toLowerCase() || '';
   const isEligibility = tabName.includes('eligibility');
@@ -66,16 +119,16 @@ export default async function decorate(block) {
         <p class="outputdes">
           ${firstRow[3]?.textContent.trim() || ''}
         </p>
-        <div class="outputans" data-cal-result="resultAmt">₹34,438/-</div>
+        <div class="outputans" data-cal-result="resultAmt">â‚¹34,438/-</div>
       </div>
       <div class="amountdiv">
         <div class="firstamout">
           <p>${firstRow[4]?.textContent.trim() || ''}</p>
-          <p class="amount"><span>₹</span><span data-cal-result="principalAmt">25,00,000</span></p>
+          <p class="amount"><span>â‚¹</span><span data-cal-result="principalAmt">25,00,000</span></p>
         </div>
         <div class="secondamount firstamout">
           <p>${firstRow[5]?.textContent.trim() || ''}</p>
-          <p class="amount"><span>₹</span><span data-cal-result="interestAmt">16,32,560</span></p>
+          <p class="amount"><span>â‚¹</span><span data-cal-result="interestAmt">16,32,560</span></p>
         </div>
       </div>
     </div>

@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+main{
+    overflow-x: hidden;
+}
+
 /* =========================================
    2. MAIN CONTAINER LAYOUT
    ========================================= */

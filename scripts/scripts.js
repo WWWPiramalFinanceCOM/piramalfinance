@@ -241,7 +241,7 @@ function buildAutoBlocks() {
  * @param {Element} main The main element
  */
 function combineCalculatorSections(main) {
-  if(window.location.href.includes("author")) return true;
+  // if(window.location.href.includes("author")) return true;
   const calcSections = [...main.querySelectorAll(':scope > .section.calculator-container')];
 
   calcSections.forEach((section) => {
@@ -276,12 +276,10 @@ function combineCalculatorSections(main) {
 
     section.classList.add('homeloancalculator');
 
-    // --- Identify radio & CTA default-content-wrappers from raw server DOM ---
+    // --- Extract radio & CTA items from default-content-wrapper divs ---
     const defaultContentWrappers = [...section.querySelectorAll('.default-content-wrapper')];
-    let radioDcw = null;
-    let radioUl = null;
-    let ctaDcw = null;
-    const ctaAnchors = [];
+    const radioItems = [];
+    const ctaItems = [];
     const dcwToRemove = [];
 
     defaultContentWrappers.forEach((dcw) => {
@@ -291,21 +289,28 @@ function combineCalculatorSections(main) {
       const hasIcons = lis.some((li) => li.querySelector('.icon'));
       const hasLinks = lis.some((li) => li.querySelector('a'));
 
-      if (hasIcons && !radioDcw) {
-        radioDcw = dcw;
-        radioUl = ul;
+      if (hasIcons && !radioItems.length) {
+        lis.forEach((li) => {
+          const icon = li.querySelector('.icon img');
+          const iconSrc = icon?.getAttribute('src') || '';
+          // Get text without icon span
+          const clone = li.cloneNode(true);
+          const iconSpan = clone.querySelector('.icon');
+          if (iconSpan) iconSpan.remove();
+          const text = clone.textContent.trim();
+          radioItems.push({ text, iconSrc });
+        });
         dcwToRemove.push(dcw);
-      } else if (hasLinks && !ctaDcw) {
-        ctaDcw = dcw;
+      } else if (hasLinks && !ctaItems.length) {
         lis.forEach((li) => {
           const a = li.querySelector('a');
-          if (a) ctaAnchors.push(a);
+          if (a) ctaItems.push(a); // Store actual server DOM <a> node
         });
         dcwToRemove.push(dcw);
       }
     });
 
-    // --- Transform raw radio <ul>/<li> DOM into radio tab structure (no innerHTML) ---
+    // --- Build radio tab HTML (dynamic from authored content) ---
     const tabNumNames = ['one', 'two', 'three', 'four', 'five'];
     const foirDefaults = {
       salaried: { foir: 'salaried', value: '65' },
@@ -313,153 +318,83 @@ function combineCalculatorSections(main) {
     };
 
     let radioParent = null;
-    if (radioUl) {
-      const radioLis = [...radioUl.querySelectorAll(':scope > li')];
-
-      radioLis.forEach((li, idx) => {
-        // Extract text and icon from existing raw <li>
-        const iconSpan = li.querySelector('.icon');
-        const iconImg = iconSpan ? iconSpan.querySelector('img') : null;
-        const iconSrc = iconImg ? iconImg.getAttribute('src') || '' : '';
-
-        // Get plain text (excluding the icon span)
-        const textContent = [...li.childNodes]
-          .filter((n) => n.nodeType === Node.TEXT_NODE)
-          .map((n) => n.textContent)
-          .join('')
-          .trim();
-
-        const key = textContent.replace(/^I'm\s*(doing\s*)?/i, '').trim().toLowerCase();
-        const foirData = foirDefaults[key] || { foir: key, value: '65' };
-
-        // Clear existing li content
-        while (li.firstChild) li.removeChild(li.firstChild);
-
-        // Set li attributes
-        li.id = `${key}Tab`;
-        li.className = idx === 0 ? 'firsttab' : 'firsttab secondtab';
-        if (tabNumNames[idx]) li.classList.add(`${tabNumNames[idx]}tab`);
-        if (idx === 0) li.classList.add('active');
-        li.dataset.radioIndex = String(idx);
-
-        // Build customecheck wrapper
-        const customecheck = document.createElement('div');
-        customecheck.className = 'customecheck';
-
-        // Build salary-parent with radio input, label, blackborder
-        const salaryParent = document.createElement('div');
-        salaryParent.className = idx > 0 ? 'salary-parent business-parent' : 'salary-parent';
-
-        const radioInput = document.createElement('input');
-        radioInput.type = 'radio';
-        radioInput.id = `${key}RadioInput`;
-        radioInput.name = 'employementStatus';
-        radioInput.className = idx === 0 ? 'input_salary_checkbox' : 'input_business_checkbox';
-        radioInput.dataset.calFoir = foirData.foir;
-        radioInput.value = foirData.value;
-        if (idx === 0) radioInput.checked = true;
-
-        const label = document.createElement('label');
-        label.htmlFor = `${key}RadioInput`;
-        label.textContent = textContent;
-
-        const blackborder = document.createElement('div');
-        blackborder.className = 'blackborder';
-        const black = document.createElement('div');
-        black.className = 'black';
-        blackborder.appendChild(black);
-
-        salaryParent.appendChild(radioInput);
-        salaryParent.appendChild(label);
-        salaryParent.appendChild(blackborder);
-
-        // Build customimage — reuse the actual server <img> node
-        const customimage = document.createElement('div');
-        customimage.className = 'customimage';
-        if (iconImg) {
-          iconImg.className = 'customer lozad';
-          iconImg.alt = key;
-          iconImg.dataset.src = iconSrc;
-          iconImg.dataset.loaded = 'true';
-          customimage.appendChild(iconImg); // moves the existing server img
-        }
-
-        customecheck.appendChild(salaryParent);
-        customecheck.appendChild(customimage);
-        li.appendChild(customecheck);
-      });
-
-      // Add radiotab class to existing server <ul>
-      radioUl.className = 'radiotab';
-
-      // Wrap in hlc-subparent and home-loan-calculator-parent
-      const hlcSubparent = document.createElement('div');
-      hlcSubparent.className = 'hlc-subparent';
-      hlcSubparent.appendChild(radioUl); // moves raw UL out of its dcw
-
+    if (radioItems.length > 0) {
       radioParent = document.createElement('div');
       radioParent.className = 'home-loan-calculator-parent combined-emi-eligibility';
-      radioParent.appendChild(hlcSubparent);
+      let radioLiHTML = '';
+      radioItems.forEach((item, idx) => {
+        // Derive key from text: "I'm Salaried" → "salaried", "I'm doing Business" → "business"
+        const key = item.text.replace(/^I'm\s*(doing\s*)?/i, '').trim().toLowerCase();
+        const foirData = foirDefaults[key] || { foir: key, value: '65' };
+        const liId = `${key}Tab`;
+        const inputId = `${key}RadioInput`;
+        const isChecked = idx === 0 ? ' checked' : '';
+        const activeClass = idx === 0 ? ' active' : '';
+        const numClass = tabNumNames[idx] ? `${tabNumNames[idx]}tab` : '';
+        const posClasses = idx === 0 ? 'firsttab' : 'firsttab secondtab';
+        const parentExtra = idx > 0 ? ' business-parent' : '';
+        const inputClass = idx === 0 ? 'input_salary_checkbox' : 'input_business_checkbox';
+
+        radioLiHTML += `
+          <li id="${liId}" class="${posClasses} ${numClass}${activeClass}" data-radio-index="${idx}">
+            <div class="customecheck">
+              <div class="salary-parent${parentExtra}">
+                <input type="radio" id="${inputId}" name="employementStatus"
+                  class="${inputClass}" data-cal-foir="${foirData.foir}" value="${foirData.value}"${isChecked}>
+                <label for="${inputId}">${item.text}</label>
+                <div class="blackborder"><div class="black"></div></div>
+              </div>
+              <div class="customimage">
+                <img data-src="${item.iconSrc}" class="customer lozad" alt="${key}"
+                  src="${item.iconSrc}" data-loaded="true">
+              </div>
+            </div>
+          </li>`;
+      });
+
+      radioParent.innerHTML = `
+        <div class="hlc-subparent">
+          <ul class="radiotab">
+            ${radioLiHTML}
+          </ul>
+        </div>`;
     }
 
-    // --- Build calculator-parent with createElement (no innerHTML) ---
+    // --- Build calculator tab <li> elements ---
+    let tabsLiHTML = '';
+    tabNames.forEach((name, idx) => {
+      const activeClass = idx === 0 ? ' active' : '';
+      const tabClass = idx === 0 ? 'tab-emi-calc' : 'tab-eligibility-calc';
+      tabsLiHTML += `<li class="${tabClass} tab-common${activeClass}" data-tab-index="${idx}"><p>${name}</p></li>\n`;
+    });
+    tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
+
+    // --- Create the calculator-parent wrapper ---
     const calcParent = document.createElement('div');
     calcParent.className = 'calculator-parent';
-
-    const calcParentChild = document.createElement('div');
-    calcParentChild.className = 'calculator-parent-child';
-
-    const cpChild = document.createElement('div');
-    cpChild.className = 'cp-child';
-
-    // mainheading
-    const mainheading = document.createElement('div');
-    mainheading.className = 'mainheading';
-    const firstHead = document.createElement('p');
-    firstHead.className = 'first-head';
-    firstHead.textContent = heading;
-    const secondHead = document.createElement('p');
-    secondHead.className = 'second-head';
-    mainheading.appendChild(firstHead);
-    mainheading.appendChild(secondHead);
-
-    // headingtabs
-    const headingtabs = document.createElement('div');
-    headingtabs.className = 'headingtabs';
-    const headul = document.createElement('ul');
-    headul.className = 'headul';
-
-    tabNames.forEach((name, idx) => {
-      const tabLi = document.createElement('li');
-      tabLi.className = idx === 0 ? 'tab-emi-calc tab-common active' : 'tab-eligibility-calc tab-common';
-      tabLi.dataset.tabIndex = String(idx);
-      const tabP = document.createElement('p');
-      tabP.textContent = name;
-      tabLi.appendChild(tabP);
-      headul.appendChild(tabLi);
-    });
-
-    // GST third tab placeholder
-    const gstLi = document.createElement('li');
-    gstLi.className = 'tab-eligibility-calc tab-common gst-third-tab';
-    gstLi.appendChild(document.createElement('p'));
-    headul.appendChild(gstLi);
-
-    headingtabs.appendChild(headul);
-
-    // calctabs container
-    const calctabs = document.createElement('div');
-    calctabs.className = 'calctabs';
-
-    cpChild.appendChild(mainheading);
-    cpChild.appendChild(headingtabs);
-    cpChild.appendChild(calctabs);
+    calcParent.innerHTML = `
+      <div class="calculator-parent-child">
+        <div class="cp-child">
+          <div class="mainheading">
+            <p class="first-head">${heading}</p>
+            <p class="second-head"></p>
+          </div>
+          <div class="headingtabs">
+            <ul class="headul">
+              ${tabsLiHTML}
+            </ul>
+          </div>
+          <div class="calctabs"></div>
+        </div>
+      </div>
+      <div class="discalimer-details dp-none"></div>
+    `;
 
     // --- Move CTA buttons from server DOM (only if second default-content-wrapper has links) ---
-    if (ctaAnchors.length > 0) {
+    if (ctaItems.length > 0) {
       const custButtons = document.createElement('div');
       custButtons.className = 'customerbuttons';
-      ctaAnchors.forEach((serverAnchor, idx) => {
+      ctaItems.forEach((serverAnchor, idx) => {
         const btnText = serverAnchor.textContent.trim();
         serverAnchor.textContent = '';
         const btn = document.createElement('button');
@@ -468,18 +403,12 @@ function combineCalculatorSections(main) {
         serverAnchor.appendChild(btn);
         custButtons.appendChild(serverAnchor);
       });
+      const cpChild = calcParent.querySelector('.cp-child');
       cpChild.appendChild(custButtons);
     }
 
-    calcParentChild.appendChild(cpChild);
-
-    const disclaimer = document.createElement('div');
-    disclaimer.className = 'discalimer-details dp-none';
-
-    calcParent.appendChild(calcParentChild);
-    calcParent.appendChild(disclaimer);
-
     // Move all calculator blocks into calctabs
+    const calctabs = calcParent.querySelector('.calctabs');
     blocks.forEach((blk) => calctabs.appendChild(blk));
 
     // Remove calculator-wrapper divs and processed default-content-wrapper divs
@@ -628,7 +557,7 @@ async function initSwiperForCards(block) {
   // Initialize Swiper with responsive configuration
   try {
     const swiperConfig = {
-      observer: true, 
+      observer: true,
       observeParents: true,
       pagination: {
         el: block.querySelector('.swiper-pagination'),
@@ -639,14 +568,14 @@ async function initSwiperForCards(block) {
         prevEl: block.querySelector('.swiper-button-prev'),
       },
       on: {
-        init: function() {
+        init: function () {
           console.log('Swiper initialized successfully for cards');
           // Add class if swiper is disabled
           if (this.params.enabled === false) {
             this.el.classList.add('swiper-disabled');
           }
         },
-        update: function() {
+        update: function () {
           // Update disabled class based on state
           if (this.params.enabled === false || !this.allowSlideNext) {
             this.el.classList.add('swiper-disabled');
@@ -780,183 +709,183 @@ function moveDirectorsToTabPanel() {
  * Main initialization function for the Connect Us section
  */
 function initConnectUsSection() {
-    try {
-        // 1. Render the Form in the Right Column
-        renderContactForm();
+  try {
+    // 1. Render the Form in the Right Column
+    renderContactForm();
 
-        // 2. Format the Contact Info in the Left Column
-        formatContactInfo();
-    } catch (error) {
-        console.error('Error initializing Connect Us section:', error);
-    }
+    // 2. Format the Contact Info in the Left Column
+    formatContactInfo();
+  } catch (error) {
+    console.error('Error initializing Connect Us section:', error);
+  }
 }
 
 /**
  * Renders the HTML form into the second column of the block
  */
 function renderContactForm() {
-    try {
-        // Scope selection to the specific section to avoid conflicts
-        const section = document.querySelector('.section.connect-us');
-        if (!section) return;
+  try {
+    // Scope selection to the specific section to avoid conflicts
+    const section = document.querySelector('.section.connect-us');
+    if (!section) return;
 
-        const columns = section.querySelectorAll('.columns.block > div');
+    const columns = section.querySelectorAll('.columns.block > div');
 
-        // Ensure we have at least 2 columns before trying to access index 1
-        if (!columns || columns.length < 2) {
-            console.warn('Connect Us: Columns structure mismatch. Expected at least 2 columns.');
-            return;
-        }
-
-        const formContainer = columns[1]; // The second column
-
-        // Check if form is already rendered to prevent duplicates if init runs twice
-        if (formContainer.querySelector('.form-card')) return;
-
-        // Create the form card using DOM helpers
-        const formCard = div({ class: 'form-card' },
-            div({ class: 'form-header' },
-                h4('Send Us A Message')
-            ),
-            form({ class: 'custom-form', id: 'contactForm', onsubmit: (e) => { e.preventDefault(); return false; } },
-                // Enquiry Type
-                div({ class: 'form-group' },
-                    select({ class: 'form-control', name: 'enquiryType', required: true },
-                        option({ value: '', disabled: true, selected: true }, 'Select Enquiry Type'),
-                        option({ value: 'investor' }, 'Investor Relations'),
-                        option({ value: 'general' }, 'General Inquiry'),
-                        option({ value: 'media' }, 'Media')
-                    )
-                ),
-                // Country
-                div({ class: 'form-group' },
-                    select({ class: 'form-control', name: 'country' },
-                        option({ value: '', disabled: true, selected: true }, 'Select Country'),
-                        option({ value: 'india' }, 'India'),
-                        option({ value: 'usa' }, 'USA'),
-                        option({ value: 'uk' }, 'UK')
-                    )
-                ),
-                // State
-                div({ class: 'form-group' },
-                    select({ class: 'form-control', name: 'state' },
-                        option({ value: '', disabled: true, selected: true }, 'Select State'),
-                        option({ value: 'maharashtra' }, 'Maharashtra'),
-                        option({ value: 'delhi' }, 'Delhi')
-                    )
-                ),
-                // City
-                div({ class: 'form-group' },
-                    select({ class: 'form-control', name: 'city' },
-                        option({ value: '', disabled: true, selected: true }, 'Select City'),
-                        option({ value: 'mumbai' }, 'Mumbai'),
-                        option({ value: 'pune' }, 'Pune')
-                    )
-                ),
-                // First Name
-                div({ class: 'form-group' },
-                    input({ type: 'text', class: 'form-control', name: 'firstName', placeholder: 'First Name', required: true })
-                ),
-                // Last Name
-                div({ class: 'form-group' },
-                    input({ type: 'text', class: 'form-control', name: 'lastName', placeholder: 'Last Name', required: true })
-                ),
-                // Email
-                div({ class: 'form-group' },
-                    input({ type: 'email', class: 'form-control', name: 'email', placeholder: 'Email ID', required: true })
-                ),
-                // Contact Number
-                div({ class: 'form-group' },
-                    input({ type: 'tel', class: 'form-control', name: 'contactNumber', placeholder: 'Contact Number' })
-                ),
-                // Message
-                div({ class: 'form-group full-width' },
-                    textarea({ class: 'form-control', name: 'message', placeholder: 'Message', rows: '4' })
-                ),
-                // Submit Button
-                div({ class: 'form-group' },
-                    button({ type: 'button', class: 'btn-submit', onclick: function() { handleFormSubmit(this); } },
-                        'Submit ',
-                        span({ class: 'btn-arrow' }, '→')
-                    )
-                )
-            )
-        );
-
-        // Clear and append the form
-        formContainer.innerHTML = '';
-        formContainer.appendChild(formCard);
-
-    } catch (error) {
-        console.error('Error rendering contact form:', error);
+    // Ensure we have at least 2 columns before trying to access index 1
+    if (!columns || columns.length < 2) {
+      console.warn('Connect Us: Columns structure mismatch. Expected at least 2 columns.');
+      return;
     }
+
+    const formContainer = columns[1]; // The second column
+
+    // Check if form is already rendered to prevent duplicates if init runs twice
+    if (formContainer.querySelector('.form-card')) return;
+
+    // Create the form card using DOM helpers
+    const formCard = div({ class: 'form-card' },
+      div({ class: 'form-header' },
+        h4('Send Us A Message')
+      ),
+      form({ class: 'custom-form', id: 'contactForm', onsubmit: (e) => { e.preventDefault(); return false; } },
+        // Enquiry Type
+        div({ class: 'form-group' },
+          select({ class: 'form-control', name: 'enquiryType', required: true },
+            option({ value: '', disabled: true, selected: true }, 'Select Enquiry Type'),
+            option({ value: 'investor' }, 'Investor Relations'),
+            option({ value: 'general' }, 'General Inquiry'),
+            option({ value: 'media' }, 'Media')
+          )
+        ),
+        // Country
+        div({ class: 'form-group' },
+          select({ class: 'form-control', name: 'country' },
+            option({ value: '', disabled: true, selected: true }, 'Select Country'),
+            option({ value: 'india' }, 'India'),
+            option({ value: 'usa' }, 'USA'),
+            option({ value: 'uk' }, 'UK')
+          )
+        ),
+        // State
+        div({ class: 'form-group' },
+          select({ class: 'form-control', name: 'state' },
+            option({ value: '', disabled: true, selected: true }, 'Select State'),
+            option({ value: 'maharashtra' }, 'Maharashtra'),
+            option({ value: 'delhi' }, 'Delhi')
+          )
+        ),
+        // City
+        div({ class: 'form-group' },
+          select({ class: 'form-control', name: 'city' },
+            option({ value: '', disabled: true, selected: true }, 'Select City'),
+            option({ value: 'mumbai' }, 'Mumbai'),
+            option({ value: 'pune' }, 'Pune')
+          )
+        ),
+        // First Name
+        div({ class: 'form-group' },
+          input({ type: 'text', class: 'form-control', name: 'firstName', placeholder: 'First Name', required: true })
+        ),
+        // Last Name
+        div({ class: 'form-group' },
+          input({ type: 'text', class: 'form-control', name: 'lastName', placeholder: 'Last Name', required: true })
+        ),
+        // Email
+        div({ class: 'form-group' },
+          input({ type: 'email', class: 'form-control', name: 'email', placeholder: 'Email ID', required: true })
+        ),
+        // Contact Number
+        div({ class: 'form-group' },
+          input({ type: 'tel', class: 'form-control', name: 'contactNumber', placeholder: 'Contact Number' })
+        ),
+        // Message
+        div({ class: 'form-group full-width' },
+          textarea({ class: 'form-control', name: 'message', placeholder: 'Message', rows: '4' })
+        ),
+        // Submit Button
+        div({ class: 'form-group' },
+          button({ type: 'button', class: 'btn-submit', onclick: function () { handleFormSubmit(this); } },
+            'Submit ',
+            span({ class: 'btn-arrow' }, '→')
+          )
+        )
+      )
+    );
+
+    // Clear and append the form
+    formContainer.innerHTML = '';
+    formContainer.appendChild(formCard);
+
+  } catch (error) {
+    console.error('Error rendering contact form:', error);
+  }
 }
 
 /**
  * Formats the raw text content in the first column into styled icons and text
  */
 function formatContactInfo() {
-    try {
-        const section = document.querySelector('.section.connect-us');
-        if (!section) return;
+  try {
+    const section = document.querySelector('.section.connect-us');
+    if (!section) return;
 
-        const columns = section.querySelectorAll('.columns.block > div');
-        if (!columns || columns.length < 1) return;
+    const columns = section.querySelectorAll('.columns.block > div');
+    if (!columns || columns.length < 1) return;
 
-        const infoContainer = columns[0];
-        const pTag = infoContainer.querySelector('p');
+    const infoContainer = columns[0];
+    const pTag = infoContainer.querySelector('p');
 
-        if (!pTag) return;
+    if (!pTag) return;
 
-        // Get raw html to preserve <br> tags
-        const rawContent = pTag.innerHTML;
+    // Get raw html to preserve <br> tags
+    const rawContent = pTag.innerHTML;
 
-        // Split by double break (<br><br>) which indicates a new section in the AEM authoring
-        const sections = rawContent.split('<br><br>');
+    // Split by double break (<br><br>) which indicates a new section in the AEM authoring
+    const sections = rawContent.split('<br><br>');
 
-        const icons = {
-            phone: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>`,
-            email: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
-            map: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`
-        };
+    const icons = {
+      phone: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>`,
+      email: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+      map: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`
+    };
 
-        let newHTML = '<div class="contact-info-list">';
+    let newHTML = '<div class="contact-info-list">';
 
-        // 1. Phone Section (First block)
-        if (sections[0]) {
-            newHTML += createContactItem(icons.phone, sections[0]);
-        }
-
-        // 2. Email Section (Second block)
-        if (sections[1]) {
-            // Regex to make emails clickable
-            let emailContent = sections[1].replace(
-                /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, 
-                '<a href="mailto:$1">$1</a>'
-            );
-            newHTML += createContactItem(icons.email, emailContent);
-        }
-
-        // 3. Address Section (Third block)
-        if (sections[2]) {
-            newHTML += createContactItem(icons.map, sections[2]);
-        }
-
-        newHTML += '</div>';
-
-        infoContainer.innerHTML = newHTML;
-
-    } catch (error) {
-        console.error('Error formatting contact info:', error);
+    // 1. Phone Section (First block)
+    if (sections[0]) {
+      newHTML += createContactItem(icons.phone, sections[0]);
     }
+
+    // 2. Email Section (Second block)
+    if (sections[1]) {
+      // Regex to make emails clickable
+      let emailContent = sections[1].replace(
+        /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
+        '<a href="mailto:$1">$1</a>'
+      );
+      newHTML += createContactItem(icons.email, emailContent);
+    }
+
+    // 3. Address Section (Third block)
+    if (sections[2]) {
+      newHTML += createContactItem(icons.map, sections[2]);
+    }
+
+    newHTML += '</div>';
+
+    infoContainer.innerHTML = newHTML;
+
+  } catch (error) {
+    console.error('Error formatting contact info:', error);
+  }
 }
 
 /**
  * Helper to create HTML string for a single item
  */
 function createContactItem(iconSvg, content) {
-    try {
-        return `
+  try {
+    return `
             <div class="contact-item">
                 <div class="contact-icon-box">
                     ${iconSvg}
@@ -966,39 +895,39 @@ function createContactItem(iconSvg, content) {
                 </div>
             </div>
         `;
-    } catch (error) {
-        console.error('Error creating contact item:', error);
-        return '';
-    }
+  } catch (error) {
+    console.error('Error creating contact item:', error);
+    return '';
+  }
 }
 
 /**
  * Handles form submission
  */
 function handleFormSubmit(buttonElement) {
-    try {
-        const form = buttonElement.closest('form');
+  try {
+    const form = buttonElement.closest('form');
 
-        // Basic validation check
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        // Gather form data
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-
-        console.log('Form Submitted with data:', data);
-        alert("Form submitted successfully! (Check console for data)");
-
-        // Optional: Reset form
-        form.reset();
-
-    } catch (error) {
-        console.error('Error handling form submission:', error);
-        alert('An error occurred while submitting the form. Please try again.');
+    // Basic validation check
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
     }
+
+    // Gather form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    console.log('Form Submitted with data:', data);
+    alert("Form submitted successfully! (Check console for data)");
+
+    // Optional: Reset form
+    form.reset();
+
+  } catch (error) {
+    console.error('Error handling form submission:', error);
+    alert('An error occurred while submitting the form. Please try again.');
+  }
 }
 
 // Call the function
@@ -1115,12 +1044,12 @@ async function loadLazy(doc) {
   initCalculatorTabs();
   initRadioTabs();
 
-   // Move cards to tab panels
+  // Move cards to tab panels
   moveCardsToTabPanels();
   initPiramalCards();
   moveDirectorsToTabPanel();
   // initLeadershipCards();
-   initConnectUsSection();
+  initConnectUsSection();
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

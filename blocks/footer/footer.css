@@ -18,6 +18,7 @@ footer .footer p {
 footer.footer-wrapper {
   padding: 0px;
   background: var(--greyishblue) !important;
+  position: relative;
 }
 /* Footer Background Color */
 

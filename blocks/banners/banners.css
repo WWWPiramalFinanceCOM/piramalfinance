@@ -57,18 +57,13 @@
   min-height: 100vh;
 }
 .section.banners-container .banners-wrapper{
-  z-index: 1;
+  /* z-index: 1; */
     position: fixed;
 }
 
-.footer-wrapper{
-
-  position: relative;
-}    z-index: 2;
-
 .section.banners-container  .default-content-wrapper {
     z-index: 1;
-    color: white;
+    color: #ffff;
     margin: auto;
     position: absolute;
     top: 36%;

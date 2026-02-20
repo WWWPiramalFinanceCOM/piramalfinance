@@ -88,7 +88,7 @@
     font-weight: 400;
     line-height: normal;
     text-transform: uppercase;
-    font-family: "Nunito", sans-serif;
+    font-family: "Nunito-Regular";
 
     @media only screen and (max-width: 767px) {
         font-weight: 400;

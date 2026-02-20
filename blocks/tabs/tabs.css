@@ -57,7 +57,7 @@
 
   /* tabs inside tabs start */
   .section.tabs-container > .default-content-wrapper h3 {
-    font-family: 'Nunito-Extrabold', sans-serif;
+    font-family: "Nunito-Semibold";
     font-size: 2.5rem;
     line-height: 3pc;
     margin-bottom: 1.4pc;

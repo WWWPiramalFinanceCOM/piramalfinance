@@ -1,0 +1,726 @@
+/**
+ * Scroll Animations CSS
+ * Add class via authoring to enable scroll-triggered animations
+ * Classes: scroll-animation, animate-in, animate-title, animate-content, animate-cards
+ */
+
+/* ==========================================================================
+   Animation Keyframes
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ==========================================================================
+   Banner Section - Animate From Left on Page Load (CSS Animation)
+   Add class: animate-from-left to banners-container section
+   ========================================================================== */
+
+/* Banner section title - animate from left on page load */
+.banners-container.animate-from-left .default-content-wrapper h2,
+.banners-container.animate-from-left .default-content-wrapper h3,
+.banners-container.animate-from-left .default-content-wrapper h4 {
+  animation: slideFromLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+/* Banner section card items - staggered animation from left */
+.banners-container.animate-from-left .cards ul li {
+  animation: slideFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.banners-container.animate-from-left .cards ul li:nth-child(1) {
+  animation-delay: 0.5s;
+}
+
+.banners-container.animate-from-left .cards ul li:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.banners-container.animate-from-left .cards ul li:nth-child(3) {
+  animation-delay: 0.7s;
+}
+
+.banners-container.animate-from-left .cards ul li:nth-child(4) {
+  animation-delay: 0.8s;
+}
+
+.banners-container.animate-from-left .cards ul li:nth-child(5) {
+  animation-delay: 0.9s;
+}
+
+.banners-container.animate-from-left .cards ul li:nth-child(6) {
+  animation-delay: 1s;
+}
+
+/* ==========================================================================
+   Commitment Section - Vision/Mission from Left, Cards from Right
+   Add class: scroll-animation to commitment-wrap section
+   ========================================================================== */
+
+/* Our Vision / Our Mission - animate from LEFT */
+.commitment-wrap.scroll-animation .default-content-wrapper > ul {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.commitment-wrap.scroll-animation.animate-in .default-content-wrapper > ul {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Nested list items (Our Vision, Our Mission boxes) - staggered from left */
+.commitment-wrap.scroll-animation .default-content-wrapper > ul > li > ul > li {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.commitment-wrap.scroll-animation.animate-in .default-content-wrapper > ul > li > ul > li:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.2s;
+}
+
+.commitment-wrap.scroll-animation.animate-in .default-content-wrapper > ul > li > ul > li:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.4s;
+}
+
+/* Knowledge, Action, Care, Impact cards - animate from RIGHT */
+.commitment-wrap.scroll-animation .cards-wrapper {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.commitment-wrap.scroll-animation.animate-in .cards-wrapper {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.commitment-wrap.scroll-animation .cards ul li {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.commitment-wrap.scroll-animation.animate-in .cards ul li:nth-child(1) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.3s;
+}
+
+.commitment-wrap.scroll-animation.animate-in .cards ul li:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.4s;
+}
+
+.commitment-wrap.scroll-animation.animate-in .cards ul li:nth-child(3) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.5s;
+}
+
+.commitment-wrap.scroll-animation.animate-in .cards ul li:nth-child(4) {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0.6s;
+}
+
+/* ==========================================================================
+   Base Scroll Animation Setup - Initial Hidden State
+   ========================================================================== */
+
+/* Section with scroll-animation class - children start hidden */
+.scroll-animation .default-content-wrapper h2,
+.scroll-animation .default-content-wrapper h3,
+.scroll-animation .default-content-wrapper h4 {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-animation .default-content-wrapper p {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s, 
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s;
+}
+
+.scroll-animation .default-content-wrapper ul {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s, 
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.scroll-animation .cards-wrapper {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.25s, 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.25s;
+}
+
+.scroll-animation .tabs-wrapper {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s, 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.scroll-animation .rte-wrapper {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+.scroll-animation .columns-wrapper {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s, 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s;
+}
+
+/* ==========================================================================
+   Animated State - When Element is in View
+   ========================================================================== */
+
+.scroll-animation.animate-in .default-content-wrapper h2,
+.scroll-animation.animate-in .default-content-wrapper h3,
+.scroll-animation.animate-in .default-content-wrapper h4 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animation.animate-in .default-content-wrapper p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animation.animate-in .default-content-wrapper ul {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animation.animate-in .cards-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animation.animate-in .tabs-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animation.animate-in .rte-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animation.animate-in .columns-wrapper {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Card Items Staggered Animation
+   ========================================================================== */
+
+.scroll-animation .cards ul li {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-animation.animate-in .cards ul li:nth-child(1) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+.scroll-animation.animate-in .cards ul li:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+.scroll-animation.animate-in .cards ul li:nth-child(3) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.scroll-animation.animate-in .cards ul li:nth-child(4) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+
+.scroll-animation.animate-in .cards ul li:nth-child(5) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+.scroll-animation.animate-in .cards ul li:nth-child(6) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.8s;
+}
+
+.scroll-animation.animate-in .cards ul li:nth-child(7) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}
+
+.scroll-animation.animate-in .cards ul li:nth-child(8) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1s;
+}
+
+/* Allow hover scale effects on leadership/directors cards after animation completes */
+.leadership-wrapper.scroll-animation.animate-in .cards ul li,
+.leadership-wrapper .directors-wrapper .cards ul li,
+.leadership-wrapper .management-team .cards ul li {
+  transition: transform 0.15s ease !important;
+}
+
+.leadership-wrapper.scroll-animation.animate-in .cards ul li:hover,
+.leadership-wrapper .directors-wrapper .cards ul li:hover,
+.leadership-wrapper .management-team .cards ul li:hover {
+  transform: scale(1.1) !important;
+}
+
+/* ==========================================================================
+   Animate From Left Variant (add class: animate-from-left)
+   ========================================================================== */
+
+/* Override initial state for titles - animate from left */
+.scroll-animation.animate-from-left .default-content-wrapper h2,
+.scroll-animation.animate-from-left .default-content-wrapper h3,
+.scroll-animation.animate-from-left .default-content-wrapper h4 {
+  transform: translateX(-60px);
+}
+
+.scroll-animation.animate-from-left .default-content-wrapper p {
+  transform: translateX(-50px);
+}
+
+.scroll-animation.animate-from-left .default-content-wrapper ul {
+  transform: translateX(-40px);
+}
+
+.scroll-animation.animate-from-left .cards-wrapper {
+  transform: translateX(-50px);
+}
+
+/* Override initial state for card items - animate from left */
+.scroll-animation.animate-from-left .cards ul li {
+  transform: translateX(-40px);
+}
+
+/* Animated state - slide to original position from left */
+.scroll-animation.animate-from-left.animate-in .default-content-wrapper h2,
+.scroll-animation.animate-from-left.animate-in .default-content-wrapper h3,
+.scroll-animation.animate-from-left.animate-in .default-content-wrapper h4 {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animation.animate-from-left.animate-in .default-content-wrapper p {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animation.animate-from-left.animate-in .default-content-wrapper ul {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animation.animate-from-left.animate-in .cards-wrapper {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animation.animate-from-left.animate-in .cards ul li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   Animate From Right Variant (add class: animate-from-right)
+   ========================================================================== */
+
+/* Override initial state for titles - animate from right */
+.scroll-animation.animate-from-right .default-content-wrapper h2,
+.scroll-animation.animate-from-right .default-content-wrapper h3,
+.scroll-animation.animate-from-right .default-content-wrapper h4 {
+  transform: translateX(60px);
+}
+
+.scroll-animation.animate-from-right .default-content-wrapper p {
+  transform: translateX(50px);
+}
+
+.scroll-animation.animate-from-right .default-content-wrapper ul {
+  transform: translateX(40px);
+}
+
+.scroll-animation.animate-from-right .cards-wrapper {
+  transform: translateX(50px);
+}
+
+/* Override initial state for card items - animate from right */
+.scroll-animation.animate-from-right .cards ul li {
+  transform: translateX(40px);
+}
+
+/* Animated state - slide to original position from right */
+.scroll-animation.animate-from-right.animate-in .default-content-wrapper h2,
+.scroll-animation.animate-from-right.animate-in .default-content-wrapper h3,
+.scroll-animation.animate-from-right.animate-in .default-content-wrapper h4 {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animation.animate-from-right.animate-in .default-content-wrapper p {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animation.animate-from-right.animate-in .default-content-wrapper ul {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animation.animate-from-right.animate-in .cards-wrapper {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animation.animate-from-right.animate-in .cards ul li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   Button Animation
+   ========================================================================== */
+
+.scroll-animation .button-container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s, 
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+}
+
+.scroll-animation.animate-in .button-container {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Utility Animation Classes (Can be added via authoring)
+   ========================================================================== */
+
+/* Fade In Up Animation */
+.animate-fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade-up.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade In Down Animation */
+.animate-fade-down {
+  opacity: 0;
+  transform: translateY(-40px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade-down.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade In Left Animation */
+.animate-fade-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade-left.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Fade In Right Animation */
+.animate-fade-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade-right.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale In Animation */
+.animate-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-scale.animate-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Simple Fade Animation */
+.animate-fade {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade.animate-in {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Animation Delay Utilities (Add as additional class)
+   ========================================================================== */
+
+.delay-100 {
+  transition-delay: 0.1s !important;
+}
+
+.delay-200 {
+  transition-delay: 0.2s !important;
+}
+
+.delay-300 {
+  transition-delay: 0.3s !important;
+}
+
+.delay-400 {
+  transition-delay: 0.4s !important;
+}
+
+.delay-500 {
+  transition-delay: 0.5s !important;
+}
+
+.delay-600 {
+  transition-delay: 0.6s !important;
+}
+
+.delay-700 {
+  transition-delay: 0.7s !important;
+}
+
+.delay-800 {
+  transition-delay: 0.8s !important;
+}
+
+/* ==========================================================================
+   Animation Duration Utilities
+   ========================================================================== */
+
+.duration-300 {
+  transition-duration: 0.3s !important;
+}
+
+.duration-500 {
+  transition-duration: 0.5s !important;
+}
+
+.duration-700 {
+  transition-duration: 0.7s !important;
+}
+
+.duration-1000 {
+  transition-duration: 1s !important;
+}
+
+/* ==========================================================================
+   Reduced Motion - Accessibility
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-animation .default-content-wrapper h2,
+  .scroll-animation .default-content-wrapper h3,
+  .scroll-animation .default-content-wrapper h4,
+  .scroll-animation .default-content-wrapper p,
+  .scroll-animation .default-content-wrapper ul,
+  .scroll-animation .cards-wrapper,
+  .scroll-animation .tabs-wrapper,
+  .scroll-animation .rte-wrapper,
+  .scroll-animation .columns-wrapper,
+  .scroll-animation .cards ul li,
+  .scroll-animation .button-container,
+  .animate-fade-up,
+  .animate-fade-down,
+  .animate-fade-left,
+  .animate-fade-right,
+  .animate-scale,
+  .animate-fade {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Mobile Adjustments
+   ========================================================================== */
+
+@media only screen and (max-width: 767px) {
+  .scroll-animation .default-content-wrapper h2,
+  .scroll-animation .default-content-wrapper h3,
+  .scroll-animation .default-content-wrapper h4 {
+    transform: translateY(30px);
+  }
+
+  .scroll-animation .default-content-wrapper p {
+    transform: translateY(20px);
+  }
+
+  .scroll-animation .cards ul li {
+    transform: translateY(20px);
+  }
+
+  /* Faster animations on mobile */
+  .scroll-animation .default-content-wrapper h2,
+  .scroll-animation .default-content-wrapper h3,
+  .scroll-animation .default-content-wrapper h4,
+  .scroll-animation .default-content-wrapper p,
+  .scroll-animation .default-content-wrapper ul,
+  .scroll-animation .cards-wrapper,
+  .scroll-animation .tabs-wrapper,
+  .scroll-animation .rte-wrapper,
+  .scroll-animation .columns-wrapper {
+    transition-duration: 0.5s;
+  }
+
+  .scroll-animation .cards ul li {
+    transition-duration: 0.4s;
+  }
+}

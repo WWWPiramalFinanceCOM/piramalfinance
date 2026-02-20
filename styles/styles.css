@@ -1,14 +1,17 @@
 @import url(investor/investor.css);
+@import url(scroll-animations.css);
 
 html {
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none
+    user-select: none;
+    overflow-x: hidden;
 }
 
 body {
@@ -131,7 +134,8 @@ textarea:focus {
 :root,
 main {
     width: 100%;
-    height: 100%
+    height: 100%;
+    overflow-x: hidden
 }
 
 @font-face {

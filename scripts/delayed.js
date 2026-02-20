@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-cycle
 import { fetchPlaceholders, getMetadata, sampleRUM } from './aem.js';
 import eventInit from './events.js';
+import './scroll-animations.js';
 
 
 

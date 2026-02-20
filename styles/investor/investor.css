@@ -89,9 +89,9 @@ font-family: "Nunito-Semibold";
 }
 
 /* Orange Underline for H2 */
-.section.commitment-wrap h2:after {
+.section.commitment-wrap h2::after {
   content: "";
-  /* position: absolute; */
+  position: absolute;
   left: 50%;
   transform: translateX(-50%); /* Better centering method */
   bottom: -16px;
@@ -212,9 +212,11 @@ font-family: "Nunito-Semibold";
 }
 .section.commitment-wrap .cards-wrapper .cards.block > ul > li .cards-card-body h4{
             font-size: 24px;
-    font-weight: 700;
+    /* font-weight: 700; */
     margin-bottom: 10px;
     color: #164E7D;
+    font-family: 'Nunito-Bold';
+
 }
 
 .section.commitment-wrap .cards-wrapper .cards.block > ul > li .cards-card-body h4 + ul{
@@ -228,6 +230,7 @@ font-family: "Nunito-Semibold";
     list-style: square;
     color: #414042;
     margin-bottom: 3px;
+    font-family: "Montserrat"
 }
 
 .section.commitment-wrap .cards-wrapper .cards.block > ul > li  .cards-card-image img{
@@ -1264,11 +1267,13 @@ vertical-align: middle;
 
 .section.leadership-wrapper.tabs-container > div.tabs-wrapper{
     margin-bottom: unset;
+    overflow-x: hidden;
 }
 
 .section.leadership-wrapper.tabs-container > div.tabs-wrapper > div > div.tab-content{
         padding: unset;
     box-shadow: unset;
+    overflow-x: hidden;
 }
 
 .section.leadership-wrapper #tab-panel-0-0 > div > div.default-content-wrapper,
@@ -1318,10 +1323,12 @@ vertical-align: middle;
 
 .leadership-wrapper > .default-content-wrapper p {
   font-size: 0.95rem;
-  color: #666666;
+  /* color: #666666; */
   line-height: 1.6;
   margin: 0;
   padding: 0 1rem;
+  font-family: "Nunito-Regular";
+  color: rgb(3, 34, 70);
 }
 
 .section.leadership-wrapper #tab-panel-0-0 > div > div.default-content-wrapper > .button-container{
@@ -1401,6 +1408,7 @@ vertical-align: middle;
     line-height: 30px;
     letter-spacing: 0px;
     border: unset;
+    font-family: "Nunito-Medium";
 
     @media only screen and (max-width:767px){
     font-weight: 400;
@@ -1446,6 +1454,7 @@ vertical-align: middle;
     font-size: 16px;
     padding: 0 13px;
     line-height: 46px;
+    font-family: "Nunito-Medium";
 }
 
 
@@ -1605,20 +1614,22 @@ CARDS GRID (Directors & Management)
 .directors-wrapper .cards-card-body h3,
 .management-team .cards-card-body h3 {
   font-size: 0.95rem;
-  font-weight: 700;
-  color: #1e3a5f;
+  /* font-weight: 700; */
+      color: #134F7F;
   margin: 0 0 0.5rem 0;
   text-transform: uppercase; /* Crucial for design match */
   letter-spacing: 0.5px;
+  font-family: "Nunito-Semibold";
 }
 
 /* TITLE: Blue/Grey */
 .directors-wrapper .cards-card-body p,
 .management-team .cards-card-body p {
   font-size: 0.85rem;
-  color: #5b7da1;
+  color: #134F7F;
   margin-bottom: 12px;
   font-weight: 500;
+  font-family: 'Nunito-Medium';
 }
 
 /* ============================================================================
@@ -1677,13 +1688,14 @@ CARDS GRID (Directors & Management)
 }
 
 /* 1. Outline Button (Meet the Management) */
-.section.leadership-wrapper .button-container a.button[title="Meet the Management"] {
+.section.leadership-wrapper .button-container a.button:first-child {
   background-color: transparent;
   border: 1px solid #ff6b35;
   color: #ff6b35;
+  font-family: "Nunito-Regular";
 }
 
-.section.leadership-wrapper .button-container a.button[title="Meet the Management"]:hover {
+.section.leadership-wrapper .button-container a.button:nth-child(2):hover {
   background-color: #fff5f0;
 }
 
@@ -2217,19 +2229,32 @@ CARDS GRID (Directors & Management)
   position: relative;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
-  padding: 0 20px 30px 20px;
+  padding: 0 16px 30px 16px;
   margin-left: 0;
-  max-width: 100%;
+  max-width: none;
   box-sizing: border-box;
   width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .section.leadership-wrapper .swiper {
-    padding: 0 40px 30px 40px;
+    padding: 0 0 30px 0;
     overflow: hidden;
-    max-width: 100%;
+    max-width: none;
     box-sizing: border-box;
+    margin-left: max(40px, calc((100vw - 1200px) / 2));
+    width: calc(100vw - max(40px, calc((100vw - 1200px) / 2)));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .section.leadership-wrapper .swiper {
+    padding: 0 0 30px 0;
+    overflow: hidden;
+    max-width: none;
+    box-sizing: border-box;
+    margin-left: 40px;
+    width: calc(100vw - 40px);
   }
 }
 

@@ -110,6 +110,11 @@
    Add class: animate-from-left to banners-container section
    ========================================================================== */
 
+/* Prevent horizontal overflow during translateX animations */
+/* .banners-container.animate-from-left {
+  overflow-x: hidden;
+} */
+
 /* Banner section title - animate from left on page load */
 .banners-container.animate-from-left .default-content-wrapper h2,
 .banners-container.animate-from-left .default-content-wrapper h3,
@@ -150,6 +155,11 @@
    Commitment Section - Vision/Mission from Left, Cards from Right
    Add class: scroll-animation to commitment-wrap section
    ========================================================================== */
+
+/* Prevent horizontal overflow during translateX animations */
+.commitment-wrap.scroll-animation {
+  overflow-x: hidden;
+}
 
 /* Our Vision / Our Mission - animate from LEFT */
 .commitment-wrap.scroll-animation .default-content-wrapper > ul {
@@ -400,6 +410,12 @@
 /* ==========================================================================
    Animate From Left Variant (add class: animate-from-left)
    ========================================================================== */
+
+/* Prevent horizontal overflow during translateX animations */
+/* .scroll-animation.animate-from-left,
+.scroll-animation.animate-from-right {
+  overflow-x: hidden;
+} */
 
 /* Override initial state for titles - animate from left */
 .scroll-animation.animate-from-left .default-content-wrapper h2,

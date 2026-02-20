@@ -6,13 +6,17 @@
   box-sizing: border-box;
 }
 
-main{
-    overflow-x: hidden;
+/* Prevent horizontal scrollbar during animations - investor page only */
+html:has(.commitment-wrap),
+body:has(.commitment-wrap) {
+  overflow-x: hidden;
 }
 
 /* =========================================
    2. MAIN CONTAINER LAYOUT
    ========================================= */
+
+/* Full-width white background wrapper for commitment section */
 .section.commitment-wrap.cards-container {
   display: grid;
   max-width: 1216px;
@@ -27,19 +31,9 @@ main{
   background: white;
   padding: 0 20px 60px;
   z-index: 1;
-}
-
-/* Full-width white background extending beyond max-width */
-.section.commitment-wrap.cards-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  height: 100%;
-  background: white;
-  z-index: -1;
+  /* Create full-width background using box-shadow */
+  box-shadow: 0 0 0 100vmax white;
+  clip-path: inset(0 -100vmax);
 }
 
 /* Section Title */
@@ -2577,4 +2571,10 @@ CARDS GRID (Directors & Management)
     @media only screen and (max-width:767px){
         display: none;
     }
+}
+
+/* Prevent horizontal scrollbar during animations - investor page only */
+html:has(.commitment-wrap),
+body:has(.commitment-wrap) {
+  overflow-x: hidden;
 }

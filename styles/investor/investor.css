@@ -1222,6 +1222,20 @@ vertical-align: middle;
    GLOBAL & LAYOUT - AEM EDS Structure
    ============================================================================ */
 
+/* Hide scrollbar before Swiper initializes */
+
+
+/* Also hide scrollbar on the ul wrapper before swiper initializes */
+/* .section.leadership-wrapper .cards.block:not(.swiper-initialized) ul {
+  overflow: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+} */
+
+/* .section.leadership-wrapper .cards.block:not(.swiper-initialized) ul::-webkit-scrollbar {
+  display: none;
+} */
+
 /* Main Container Spacing */
 .section.leadership-wrapper.tabs-container {
   width: 100%;
@@ -2577,4 +2591,20 @@ CARDS GRID (Directors & Management)
 html:has(.commitment-wrap),
 body:has(.commitment-wrap) {
   overflow-x: hidden;
+}
+
+section.leadership-wrapper
+
+.section.directors-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.section.directors-wrapper .cards-wrapper::-webkit-scrollbar {
+    display: none !important;
+}
+.section.directors-wrapper .cards-wrapper .cards::-webkit-scrollbar {
+    display: none !important;
+}
+.section.scroll-animation.directors-wrapper.cards-container.animate-in .tabs-wrapper::-webkit-scrollbar {
+    display: none;
 }

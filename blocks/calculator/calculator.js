@@ -341,7 +341,12 @@ export default async function decorate(block) {
     </div>
   `;
 
-  while (block.firstChild) block.removeChild(block.firstChild);
+  // Hide original authored children instead of removing them
+  // so the Universal Editor can still track and edit them
+  [...block.children].forEach((child) => {
+    child.style.display = 'none';
+    child.classList.add('author-source');
+  });
 
   parentEmi.appendChild(inputDiv);
   parentEmi.appendChild(outputDiv);

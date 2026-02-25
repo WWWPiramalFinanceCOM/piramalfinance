@@ -18,9 +18,9 @@
  * result = E × ((1 − 1/(1+R)^n ) / R)
  */
 function homeLoanEligibility(inputs, R, n) {
-  const income     = Number(inputs.income) || 0;
-  const otherLoan  = Number(inputs.otherLoan) || 0;
-  const foir       = (Number(inputs.foir) || 65) * 0.01;
+  const income = Number(inputs.income) || 0;
+  const otherLoan = Number(inputs.otherLoan) || 0;
+  const foir = (Number(inputs.foir) || 65) * 0.01;
   const productType = inputs.productType || 'hl';
 
   let eligibilityEmi;
@@ -43,7 +43,7 @@ function homeLoanEligibility(inputs, R, n) {
  * eligibleLoanAmount = applicableAmount × ((1 − 1/(1+R)^n) / R)
  */
 function businessLoanEligibility(inputs, R, n) {
-  const income    = Number(inputs.income) || 0;
+  const income = Number(inputs.income) || 0;
   const otherLoan = Number(inputs.otherLoan) || 0;
 
   const applicable = (income - otherLoan) * 0.5;

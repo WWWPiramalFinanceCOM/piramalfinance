@@ -26,8 +26,10 @@ const INPUT_NAME_MAP = {
   roi: 'roi',
   income: 'income',
   monthlyincome: 'income',
+  grossannualincome: 'income',
   otherloan: 'otherloan',
   existingemi: 'otherloan',
+  otherloanemi: 'otherloan',
   netprice: 'netprice',
   productioncost: 'productioncost',
   gstrate: 'gstrate',
@@ -45,15 +47,10 @@ function mapInputName(authoredName) {
 }
 
 /**
- * Determines the suffix text for text-type inputs.
+ * Currency symbols that appear as a prefix before the input value.
+ * Everything else authored in the icon field is treated as a suffix.
  */
-function getTextSuffix(mappedName) {
-  if (mappedName === 'tenure') return 'Years';
-  if (mappedName === 'roi') return '%';
-  if (mappedName === 'gstrate') return '%';
-  if (mappedName === 'profitratio') return '%';
-  return '';
-}
+const CURRENCY_SYMBOLS = ['₹', '$', '€', '£', '¥'];
 
 /**
  * Combines all calculator blocks in a section into a single
@@ -69,7 +66,7 @@ function combineSection(section) {
   const blocks = calcWrappers.map((w) => w.querySelector('.calculator.block')).filter(Boolean);
   if (blocks.length < 1) return;
 
-  const { heading, tabNames } = prepareBlocks(blocks);
+  const { heading, tabNames, productType } = prepareBlocks(blocks);
   section.classList.add('homeloancalculator');
   const { radioItems, ctaItems, dcwToRemove } = extractContent(section);
 
@@ -104,7 +101,7 @@ function combineSection(section) {
   hiddenInput.type = 'hidden';
   hiddenInput.name = 'product type';
   hiddenInput.id = 'calculator-product-type';
-  hiddenInput.value = 'hl';
+  hiddenInput.value = productType;
   section.appendChild(hiddenInput);
 
   initCalculatorTabs();
@@ -214,8 +211,16 @@ function wireExistingCalculationEvents(section) {
   if (section.dataset.calcEventsWired) return;
   section.dataset.calcEventsWired = 'true';
 
+  // Recalculate on change (text inputs + range slider release)
   section.addEventListener('change', ({ target }) => {
     if (target.tagName !== 'INPUT') return;
+    const calcPanel = target.closest('.commoncalculator');
+    if (calcPanel) runSingleCalculation(section, calcPanel);
+  });
+
+  // Recalculate in real-time while dragging range sliders
+  section.addEventListener('input', ({ target }) => {
+    if (target.tagName !== 'INPUT' || target.type !== 'range') return;
     const calcPanel = target.closest('.commoncalculator');
     if (calcPanel) runSingleCalculation(section, calcPanel);
   });
@@ -260,9 +265,9 @@ export default async function decorate(block) {
 
   const blockIndex = block.dataset.resetId?.replace('calid-', '') || '0';
 
-  // Read calculator name from first <p> of first row
+  // Read product type from <p>[0], calculator name from <p>[1] of first row
   const firstRowChildren = block.children[0]?.children[0]?.children;
-  const calcName = (firstRowChildren?.[0]?.textContent?.trim() || '').toLowerCase();
+  const calcName = (firstRowChildren?.[1]?.textContent?.trim() || '').toLowerCase();
   const isEligibility = calcName.includes('eligibility');
   const sliderPrefix = `c${blockIndex}s`;
 
@@ -277,8 +282,8 @@ export default async function decorate(block) {
   outputDiv.classList.add('outputdiv');
 
   const firstRow = firstRowChildren;
-  const imgEl = firstRow[3]?.querySelector('img');
-  const imgSrc = imgEl ? imgEl.src : (firstRow[3]?.textContent.trim() || '');
+  const imgEl = firstRow[4]?.querySelector('img');
+  const imgSrc = imgEl ? imgEl.src : (firstRow[4]?.textContent.trim() || '');
 
   // Build slider rows from remaining children
   Array.from(block.children).slice(1).forEach((r, ind) => {
@@ -290,19 +295,22 @@ export default async function decorate(block) {
     const authoredName = columns[0]?.textContent.trim() || '';
     const calInput = mapInputName(authoredName);
 
-    const rupeeText = columns[3]?.textContent.trim() || '';
-    const isYearsText = !rupeeText;
-    const textValue = isYearsText ? getTextSuffix(calInput) : '';
+    // columns[3] = authored icon (₹, $, %, Years, etc.)
+    const iconText = columns[3]?.textContent.trim() || '';
+    const isPrefix = CURRENCY_SYMBOLS.includes(iconText);
+    const prefixText = isPrefix ? iconText : '';
+    const suffixText = isPrefix ? '' : iconText;
+    const isYearsText = !isPrefix;
 
     const dom = `
       <div class="loanamount">
         <div class="data">
           <label class="description">${columns[1]?.textContent.trim() || ''}</label>
           <div class="inputdivs ${isYearsText ? 'yearstext' : ''}">
-            <span class="rupee">${rupeeText}</span>
+            <span class="rupee">${prefixText}</span>
             <label for="${inputId}" aria-label="calculateemi" class="sr-only"></label>
             <input type="text" class="inputvalue slider-value" value="" id="${inputId}" data-slider="${sliderId}" data-cal-input="${calInput}">
-            <span class="textvalue">${textValue}</span>
+            <span class="textvalue">${suffixText}</span>
           </div>
         </div>
         <div class="rangediv">
@@ -318,26 +326,30 @@ export default async function decorate(block) {
     inputDiv.innerHTML += dom;
   });
 
+  const principalLabel = firstRow[6]?.textContent.trim() || '';
+  const interestLabel = firstRow[7]?.textContent.trim() || '';
+  const hasAmountBreakdown = principalLabel || interestLabel;
+
   outputDiv.innerHTML = `
     <div class="output-parent">
       <div class="mainoutput">
         <img data-src="${imgSrc}" class="outputimg lozad" alt="calendar" src="${imgSrc}" data-loaded="true">
         <img data-src="${imgSrc}" class="outputimg2 lozad" alt="calendar" src="${imgSrc}" data-loaded="true">
         <p class="outputdes">
-          ${firstRow[4]?.textContent.trim() || ''}
+          ${firstRow[5]?.textContent.trim() || ''}
         </p>
         <div class="outputans" data-cal-result="resultAmt">₹0/-</div>
       </div>
-      <div class="amountdiv">
+      ${hasAmountBreakdown ? `<div class="amountdiv">
         <div class="firstamout">
-          <p>${firstRow[5]?.textContent.trim() || ''}</p>
+          <p>${principalLabel}</p>
           <p class="amount"><span>₹</span><span data-cal-result="principalAmt">0</span></p>
         </div>
         <div class="secondamount firstamout">
-          <p>${firstRow[6]?.textContent.trim() || ''}</p>
+          <p>${interestLabel}</p>
           <p class="amount"><span>₹</span><span data-cal-result="interestAmt">0</span></p>
         </div>
-      </div>
+      </div>` : ''}
     </div>
   `;
 

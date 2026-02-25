@@ -3,24 +3,26 @@
  * and reading the calculator name, heading & tab names from block metadata.
  *
  * First row structure:
- *   <p>0 = calculatorName  (e.g. "emicalculator", "gstcalculator", "aprcalculator")
- *   <p>1 = tabName / heading
- *   <p>2 = heading (only read from the first block)
+ *   <p>0 = productType   (e.g. "hl", "pl", "bl")
+ *   <p>1 = calculatorName (e.g. "emicalculator", "gstcalculator", "aprcalculator")
+ *   <p>2 = tabName        (e.g. "EMI Calculator")
+ *   <p>3 = heading        (only read from the first block)
  *   ...
  *
  * @param {Element[]} blocks - Array of calculator block elements
- * @returns {{ heading: string, tabNames: string[], calcNames: string[] }}
+ * @returns {{ heading: string, tabNames: string[], calcNames: string[], productType: string }}
  */
 export function prepareBlocks(blocks) {
   const firstMeta = blocks[0].children[0]?.children[0]?.children;
-  const heading = firstMeta?.[2]?.textContent?.trim() || 'Calculate EMI & Check eligibility';
+  const productType = (firstMeta?.[0]?.textContent?.trim() || 'hl').toLowerCase();
+  const heading = firstMeta?.[3]?.textContent?.trim() || 'Calculate EMI & Check eligibility';
 
   const tabNames = [];
   const calcNames = [];
   blocks.forEach((blk, idx) => {
     const meta = blk.children[0]?.children[0]?.children;
-    const calcName = (meta?.[0]?.textContent?.trim() || '').toLowerCase();
-    const tabName = meta?.[1]?.textContent?.trim() || `Calculator ${idx + 1}`;
+    const calcName = (meta?.[1]?.textContent?.trim() || '').toLowerCase();
+    const tabName = meta?.[2]?.textContent?.trim() || `Calculator ${idx + 1}`;
     tabNames.push(tabName);
     calcNames.push(calcName);
 
@@ -37,7 +39,7 @@ export function prepareBlocks(blocks) {
     }
   });
 
-  return { heading, tabNames, calcNames };
+  return { heading, tabNames, calcNames, productType };
 }
 
 /**

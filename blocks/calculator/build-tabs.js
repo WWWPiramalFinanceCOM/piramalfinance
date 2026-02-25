@@ -61,6 +61,8 @@ export function buildCalculatorParent(heading, tabNames, ctaItems, blocks) {
 
 /**
  * Initializes calculator tab (EMI / Eligibility) switching.
+ * When switching tabs it resets the target calculator to defaults
+ * and triggers a recalculation via the workflow events.
  */
 export function initCalculatorTabs() {
   const calcParent = document.querySelector('.calculator-parent');
@@ -74,6 +76,7 @@ export function initCalculatorTabs() {
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       const tabIndex = parseInt(tab.dataset.tabIndex || '0', 10);
+      const wasActive = tab.classList.contains('active');
 
       tabs.forEach((t) => t.classList.remove('active'));
       tab.classList.add('active');
@@ -83,10 +86,25 @@ export function initCalculatorTabs() {
           blk.style.display = tabIndex === 0 ? '' : 'none';
         } else if (idx === tabIndex) {
           blk.classList.add('elgblock');
+          blk.style.display = '';
         } else {
           blk.classList.remove('elgblock');
+          blk.style.display = 'none';
         }
       });
+
+      // Reset the now-visible block to defaults when switching
+      if (!wasActive) {
+        const targetBlock = calcBlocks[tabIndex] || calcBlocks[0];
+        try {
+          // Lazy‑import resetCalculator from the existing legacy module
+          import('../emiandeligiblitycalc/resetCalculator.js').then(({ resetCalculator }) => {
+            resetCalculator(targetBlock);
+            // Fire a change event so the workflow picks up the reset values
+            targetBlock.dispatchEvent(new Event('change', { bubbles: true }));
+          });
+        } catch (_) { /* noop if module not found */ }
+      }
     });
   });
 }

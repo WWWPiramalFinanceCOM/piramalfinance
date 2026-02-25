@@ -1,28 +1,43 @@
 /**
  * Prepares calculator blocks by adding classes, data attributes,
- * and reading the heading & tab names from block metadata.
+ * and reading the calculator name, heading & tab names from block metadata.
+ *
+ * First row structure:
+ *   <p>0 = calculatorName  (e.g. "emicalculator", "gstcalculator", "aprcalculator")
+ *   <p>1 = tabName / heading
+ *   <p>2 = heading (only read from the first block)
+ *   ...
+ *
  * @param {Element[]} blocks - Array of calculator block elements
- * @returns {{ heading: string, tabNames: string[] }}
+ * @returns {{ heading: string, tabNames: string[], calcNames: string[] }}
  */
 export function prepareBlocks(blocks) {
   const firstMeta = blocks[0].children[0]?.children[0]?.children;
-  const heading = firstMeta?.[1]?.textContent?.trim() || 'Calculate EMI & Check eligibility';
+  const heading = firstMeta?.[2]?.textContent?.trim() || 'Calculate EMI & Check eligibility';
 
   const tabNames = [];
+  const calcNames = [];
   blocks.forEach((blk, idx) => {
     const meta = blk.children[0]?.children[0]?.children;
-    const tabName = meta?.[0]?.textContent?.trim() || `Calculator ${idx + 1}`;
+    const calcName = (meta?.[0]?.textContent?.trim() || '').toLowerCase();
+    const tabName = meta?.[1]?.textContent?.trim() || `Calculator ${idx + 1}`;
     tabNames.push(tabName);
+    calcNames.push(calcName);
+
     blk.classList.add('commoncalculator');
     blk.dataset.resetId = `calid-${idx}`;
-    if (tabName.toLowerCase().includes('eligibility')) {
+    // Add the calculator name as a class (e.g. emicalculator, gstcalculator)
+    if (calcName) blk.classList.add(calcName);
+
+    // Legacy compat: also add the emi/eligibility specific class
+    if (calcName.includes('eligibility')) {
       blk.classList.add('eligibilitycalculator');
-    } else {
+    } else if (calcName.includes('emi') || calcName.includes('homeloan')) {
       blk.classList.add('emicalculator');
     }
   });
 
-  return { heading, tabNames };
+  return { heading, tabNames, calcNames };
 }
 
 /**

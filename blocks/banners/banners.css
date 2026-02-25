@@ -146,10 +146,54 @@
     backdrop-filter: blur(4.800000190734863px);
     width: 192px;
     height: 178px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: unset;
 
     @media only screen and (max-width: 767px) {
         width: 166px;
         height: 123px;
+    }
+}
+
+.section.banners-container.cards-container .cards-wrapper .cards.block li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px -4px rgba(17, 24, 39, 0.2);
+}
+
+/* Make entire card clickable when it contains a link */
+.section.banners-container.cards-container .cards-wrapper .cards.block li:has(a) {
+    cursor: pointer;
+}
+
+.section.banners-container.cards-container .cards-wrapper .cards.block li .cards-card-body p {
+    position: relative;
+    z-index: 0;
+}
+
+/* Reset button styles for card links */
+.section.banners-container.cards-container .cards-wrapper .cards.block li .button-container {
+    margin: 0;
+}
+
+.section.banners-container.cards-container .cards-wrapper .cards.block li a.button {
+    background: unset !important;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #ffffff;
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .section.banners-container.cards-container .cards-wrapper .cards.block li a.button {
+        font-size: 14px;
+        line-height: 100%;
     }
 }
 .section.banners-container.cards-container .cards-wrapper .cards.block ul {

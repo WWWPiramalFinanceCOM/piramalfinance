@@ -71,4 +71,34 @@ export default function decorate(block) {
       startRotation();
     }
   });
+
+  // Make banner cards clickable - find cards in the same section
+  const makeCardsClickable = () => {
+    const bannersSection = block.closest('.section.banners-container');
+    if (bannersSection) {
+      const cardsBlock = bannersSection.querySelector('.cards.block');
+      if (cardsBlock) {
+        cardsBlock.querySelectorAll('li').forEach((card) => {
+          // Skip if already processed
+          if (card.dataset.clickable) return;
+          card.dataset.clickable = 'true';
+          
+          const link = card.querySelector('a');
+          if (link) {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', (e) => {
+              if (!e.target.closest('a')) {
+                window.location.href = link.href;
+              }
+            });
+          }
+        });
+      }
+    }
+  };
+
+  // Try immediately and also after a delay to ensure cards are loaded
+  makeCardsClickable();
+  setTimeout(makeCardsClickable, 500);
+  setTimeout(makeCardsClickable, 1000);
 }

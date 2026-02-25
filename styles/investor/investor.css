@@ -2415,7 +2415,8 @@ CARDS GRID (Directors & Management)
     line-height: 30px;
     display: flex;
     justify-self: center;
-    /* margin-bottom: 60px; */
+
+    margin-bottom: 45px;
 }
 @media only screen and (max-width: 767px) {
     .bussiness-offerings .default-content-wrapper p {
@@ -2438,6 +2439,13 @@ CARDS GRID (Directors & Management)
     margin: unset;
     display: flex;
     align-items: center;
+}
+
+
+.bussiness-offerings .default-content-wrapper .button-container a:hover{
+        border-color: #fff;
+    background: transparent;
+    color: #fff;
 }
 
 .bussiness-offerings .default-content-wrapper .button-container a::after{
@@ -2467,8 +2475,34 @@ CARDS GRID (Directors & Management)
 .bussiness-offerings .cards.block > ul li {
     background-color: white;
     border-radius: 24px;
-    padding: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
 }
+
+.bussiness-offerings .cards.block > ul li > .cards-card-body:last-child {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: unset !important;
+    padding: unset;
+}
+
+.section.bussiness-offerings span.icon{
+        width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(2, 30, 63, 0.08) 100%);
+}
+
+.section.bussiness-offerings span.icon img{
+        width: 24px;
+    height: 24px;
+}
+
 .bussiness-offerings .cards.block > ul li h3 {
     height: 60px;
     display: flex;
@@ -2479,7 +2513,14 @@ CARDS GRID (Directors & Management)
     font-size: 24px;
     letter-spacing: 4.8px;
     margin-bottom: 18px;
+    font-family: "Nunito-Medium";
+    font-weight: 500;
 }
+
+.bussiness-offerings .cards.block > ul li h3:hover{
+        color: #F26E24;
+}
+
 @media only screen and (max-width: 767px) {
     .bussiness-offerings .cards.block > ul li h3 {
         font-size: 18px;
@@ -2487,11 +2528,14 @@ CARDS GRID (Directors & Management)
     }
 }
 .bussiness-offerings .cards.block > ul li h3 .icon {
-    background: linear-gradient(#FFFFFF, #021e3f);
+    /* background: linear-gradient(#FFFFFF, #021e3f); */
     height: 60px;
     width: 60px;
     display: inline-block;
     border-radius: 10px;
+        display: flex;
+    justify-content: center;
+    align-items: center;
 }
 @media only screen and (max-width: 767px) {
     .bussiness-offerings .cards.block > ul li h3 .icon {
@@ -2502,7 +2546,10 @@ CARDS GRID (Directors & Management)
 .bussiness-offerings .cards.block > ul li h3 + p {
     font-size: 16px;
     line-height: 30px;
-    color: #184E7D;
+    color: #032246;
+    font-weight: 400;
+    font-family: "Montserrat" ;
+
 }
 @media only screen and (max-width: 767px) {
     .bussiness-offerings .cards.block > ul li h3 + p {
@@ -2555,6 +2602,7 @@ CARDS GRID (Directors & Management)
     line-height: 30px;
     color: #4F4F4F;
     margin-bottom: 18px;
+    font-family: "Montserrat"
 }
 @media only screen and (max-width: 767px) {
     .bussiness-offerings .cards.block > ul li ul + p {
@@ -2562,6 +2610,24 @@ CARDS GRID (Directors & Management)
         line-height: 26px;
     }
 }
+
+
+.bussiness-offerings .cards.block .cards-card-body p:nth-of-type(3){
+    display: flex;
+    gap: 2px;
+    cursor: pointer;
+}
+
+.bussiness-offerings .cards.block .cards-card-body p:nth-of-type(3):hover{
+    color: #134F7F;
+}
+
+.bussiness-offerings .cards.block .cards-card-body p:nth-of-type(3) span{
+    background: unset;
+    width: unset;
+    height: unset;
+}
+
 .bussiness-offerings .cards.block > ul li ul + p + p {
     /* padding: 15px 22px; */
     font-weight: 500;
@@ -2571,10 +2637,12 @@ CARDS GRID (Directors & Management)
     display: flex;
     gap: 10px;
     align-items: center;
+    margin-top: auto;
 }
 
-.bussiness-offerings .cards-wrapper .cards-card-body{
+.bussiness-offerings .cards-wrapper .cards-card-body:first-child{
     padding: unset;
+    display: none;
 }
 
 .d-none{

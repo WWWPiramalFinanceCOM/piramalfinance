@@ -2896,6 +2896,27 @@
    {
     "id": "calculator",
     "fields": [
+      {
+        "component": "select",
+        "name": "col1_type",
+        "value": "hl",
+        "label": "Calculator Product Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "HL",
+            "value": "hl"
+          },
+          {
+            "name": "PL",
+            "value": "pl"
+          },
+          {
+            "name": "BL",
+            "value": "bl"
+          }
+        ]
+      },
        {
         "component": "text",
         "valueType": "string",

@@ -27,6 +27,7 @@ const INPUT_NAME_MAP = {
   income: 'income',
   monthlyincome: 'income',
   grossannualincome: 'income',
+  grossmonthlyincome: 'income',
   otherloan: 'otherloan',
   existingemi: 'otherloan',
   otherloanemi: 'otherloan',

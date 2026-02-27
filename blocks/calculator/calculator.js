@@ -5,10 +5,6 @@ import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js
 import { workflowHomeLoanCalculation } from '../emiandeligiblitycalc/calhelpers.js';
 import { currenyCommaSeperation } from '../../scripts/common.js';
 import { CheckAprRate } from '../aprcalculator/aprcalculator.js';
-import {
-  ctaClick, applyLoanNow, talkToExpert, formInteraction,
-} from '../../dl.js';
-import { targetObject } from '../../scripts/scripts.js';
 
 /** Track sections already combined so it runs only once per section */
 const combinedSections = new WeakSet();
@@ -147,19 +143,6 @@ function initSection(section) {
   // Wire calculation events using the existing logic
   wireExistingCalculationEvents(section);
 
-  // Wire CTA button analytics + redirect / form-open
-  wireCTAButtons(section);
-
-  // Wire Salaried / Business radio tab analytics
-  wireRadioTabAnalytics(section);
-
-  // Set initial calculatorType on targetObject for form integration
-  try {
-    const activeTab = section.querySelector('.tab-common.active');
-    targetObject.calculatorType = activeTab?.classList.contains('tab-eligibility-calc')
-      ? 'Eligibility Calculator' : 'EMI Calculator';
-  } catch (_) { /* noop */ }
-
   // Run initial calculation for all panels
   runInitialCalculation(section);
 }
@@ -223,129 +206,6 @@ function runAprCalculation(calcPanel) {
   resultElement.textContent = `${aprValue}%`;
 }
 
-/* ── CTA button wiring (analytics + redirect / form open) ── */
-
-function wireCTAButtons(section) {
-  const customerButtons = section.querySelector('.customerbuttons');
-  if (!customerButtons) return;
-
-  const buttons = customerButtons.querySelectorAll('.expert');
-  buttons.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      const anchor = button.closest('a');
-      const btnText = (button.textContent.trim() || '').toLowerCase();
-
-      // Gather analytics params (same selectors as applyloanforms.js)
-      let emiName = '';
-      let ctaPos = '';
-      try {
-        emiName = section.querySelector('.tab-common.active p')?.textContent.trim() || '';
-        ctaPos = section.querySelector('.calculator-parent .first-head')?.textContent.trim() || '';
-      } catch (_) { /* noop */ }
-
-      // Fire analytics events
-      try {
-        if (btnText.includes('talk to') || btnText.includes('expert')) {
-          talkToExpert('calculator', emiName, ctaPos, targetObject.pageName);
-        } else if (btnText.includes('apply')) {
-          applyLoanNow('calculator', emiName, ctaPos, targetObject.pageName);
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-
-      // Redirect when anchor has an href, otherwise open loan form
-      if (anchor && anchor.getAttribute('href')) {
-        let link = anchor.getAttribute('href');
-        // DWEB → MWEB for mobile (matches templatehtmlv2 behaviour)
-        if (window.matchMedia('(max-width: 768px)').matches) {
-          link = link.replace('DWEB', 'MWEB');
-        }
-        const target = anchor.getAttribute('target');
-        if (target === '_blank') {
-          window.open(link, target);
-        } else {
-          window.location.href = link;
-        }
-      } else {
-        // No href — open the loan form overlay
-        openLoanForm(section, emiName, btnText);
-      }
-    });
-  });
-}
-
-/* ── Open the loan form overlay (matches applyloanforms.js flow) ── */
-
-function openLoanForm(section, emiName, btnText) {
-  try {
-    // Try using the real formOpen exported from applyloanform block
-    import('../applyloanform/applyloanforms.js').then(({ formOpen }) => {
-      formOpen();
-    }).catch(() => {
-      // Fallback: open form manually if applyloanform block is not on page
-      const loanForm = document.querySelector('.loan-form-sub-parent');
-      if (!loanForm) return;
-      loanForm.classList.add('loan-form--open');
-      loanForm.style.visibility = 'visible';
-      document.body.style.overflowY = 'hidden';
-      const modalOverlay = document.querySelector('.modal-overlay');
-      if (modalOverlay) {
-        modalOverlay.classList.add('overlay');
-        modalOverlay.classList.remove('dp-none');
-      }
-    });
-
-    // Reset form state classes (same as applyloanforms.js expert button handler)
-    const loanForm = document.querySelector('.loan-form-sub-parent');
-    if (loanForm) {
-      loanForm.classList.remove('loan-form-sub-otp', 'loan-form-success', 'loan-form-request-fail', 'loan-form-something-wrong');
-      const firstFormBtn = loanForm.querySelector('.first-form-button .cmp-container');
-      if (firstFormBtn) firstFormBtn.classList.remove('loader-initialized');
-      // Hide state/branch dropdowns
-      const stateContainer = loanForm.querySelector('#statecontainer');
-      const branchContainer = loanForm.querySelector('#branchcontainer');
-      if (stateContainer) stateContainer.style.visibility = 'hidden';
-      if (branchContainer) branchContainer.style.visibility = 'hidden';
-      // Reset form fields
-      const inputs = loanForm.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"]');
-      inputs.forEach((inp) => { inp.value = ''; });
-    }
-
-    // Form interaction analytics
-    if (btnText.includes('talk to') || btnText.includes('expert')) {
-      formInteraction(emiName, 'Form Open', targetObject.pageName);
-    } else if (btnText.includes('apply')) {
-      formInteraction(targetObject.pageName, 'Form Open', targetObject.pageName);
-    }
-  } catch (err) {
-    // silent — form may not be on the page
-  }
-}
-
-/* ── Radio tab (Salaried / Business) analytics ── */
-
-function wireRadioTabAnalytics(section) {
-  const radioTabs = section.querySelectorAll('.radiotab > li');
-  radioTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      try {
-        const clickText = tab.textContent.trim();
-        // Legacy pattern: heading from previous section's DCW, fallback to own heading
-        const ctaCategory = section.previousElementSibling
-          ?.querySelector('.default-content-wrapper')
-          ?.querySelector('h1, h2, h3, h4, h5, h6')?.textContent.trim()
-          || section.querySelector('.calculator-parent .first-head')?.textContent.trim()
-          || '';
-        ctaClick(clickText, ctaCategory, '', targetObject.pageName);
-      } catch (err) {
-        console.warn(err);
-      }
-    });
-  });
-}
-
 /* ── Event wiring ────────────────────────────── */
 
 function wireExistingCalculationEvents(section) {
@@ -377,21 +237,6 @@ function wireExistingCalculationEvents(section) {
   const headTabs = section.querySelectorAll('.headul .tab-common');
   headTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
-      // Update targetObject.calculatorType for form integration
-      try {
-        targetObject.calculatorType = tab.classList.contains('tab-eligibility-calc')
-          ? 'Eligibility Calculator' : 'EMI Calculator';
-      } catch (_) { /* noop */ }
-
-      // Fire cta_click analytics for tab switch
-      try {
-        const clickText = tab.textContent.trim();
-        const ctaCategory = section.querySelector('.calculator-parent .first-head')?.textContent.trim() || '';
-        ctaClick(clickText, ctaCategory, '', targetObject.pageName);
-      } catch (err) {
-        console.warn(err);
-      }
-
       requestAnimationFrame(() => {
         const visible = getVisibleCalculator(section);
         if (visible) runSingleCalculation(section, visible);

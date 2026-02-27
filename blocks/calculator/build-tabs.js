@@ -38,9 +38,15 @@ export function buildCalculatorParent(heading, tabNames, ctaItems, blocks) {
 
   // CTA buttons
   if (ctaItems.length > 0) {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
     const custButtons = document.createElement('div');
     custButtons.className = 'customerbuttons';
     ctaItems.forEach((serverAnchor, idx) => {
+      // DWEB → MWEB URL rewriting for mobile (matches templatehtmlv2 behaviour)
+      if (isMobile) {
+        const href = serverAnchor.getAttribute('href');
+        if (href) serverAnchor.setAttribute('href', href.replace('DWEB', 'MWEB'));
+      }
       const btnText = serverAnchor.textContent.trim();
       serverAnchor.textContent = '';
       const btn = document.createElement('button');

@@ -326,8 +326,8 @@
     .section.shareholding-wrap > .default-content-wrapper,
     .section.shareholding-wrap .tabs-wrapper {
       padding: 24px 20px;
-      border-radius: 16px;
-      margin-bottom: 24px;
+      /* border-radius: 16px; */
+      /* margin-bottom: 24px; */
     }
 
     .section.shareholding-wrap > .default-content-wrapper h2 {
@@ -368,7 +368,7 @@
     .section.shareholding-wrap > .default-content-wrapper,
     .section.shareholding-wrap .tabs-wrapper {
       padding: 20px 15px;
-      border-radius: 12px;
+      /* border-radius: 12px; */
     }
 
     .section.shareholding-wrap > .default-content-wrapper h2 {

@@ -109,7 +109,8 @@
       "formformatpdf",
       "branchcarousel",
       "branchkeyfeatures",
-      "branches"
+      "branches",
+      "searchunclaimeddividend"
     ]
   },
   {
@@ -165,7 +166,7 @@
   },
   {
     "id": "tabs",
-    "components": ["tabs", "tab", "container"]
+    "components": ["tabs", "tab", "container", "searchunclaimeddividend"]
   },
   {
     "id": "accordion",

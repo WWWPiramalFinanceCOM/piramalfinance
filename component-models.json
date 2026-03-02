@@ -2831,7 +2831,7 @@
         "component": "text",
         "valueType": "string",
         "name": "sectionLabel",
-        "value": "Refine Your Search",
+        "value": "",
         "label": "Section Label",
         "description": "Label for the search section"
       },

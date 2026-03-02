@@ -3,38 +3,13 @@
  * Displays a search form and results table for unclaimed dividends
  */
 
-// Mock data for development (to be replaced with API data)
-const MOCK_YEARS = ['2024', '2023', '2022', '2021', '2020', '2019'];
-
-const MOCK_DATA = [
-  {
-    srNo: 1,
-    folioNo: 'ABC123456',
-    warrantNo: 'W001234',
-    nameAddress: 'John Doe, 123 Main Street, Mumbai 400001',
-    noOfShares: 100,
-    amount: 5000.00,
-    micrNo: 'MICR001'
-  },
-  {
-    srNo: 2,
-    folioNo: 'DEF789012',
-    warrantNo: 'W005678',
-    nameAddress: 'Jane Smith, 456 Park Avenue, Delhi 110001',
-    noOfShares: 250,
-    amount: 12500.00,
-    micrNo: 'MICR002'
-  },
-  {
-    srNo: 3,
-    folioNo: 'GHI345678',
-    warrantNo: 'W009012',
-    nameAddress: 'Rahul Kumar, 789 Lake View, Bangalore 560001',
-    noOfShares: 75,
-    amount: 3750.00,
-    micrNo: 'MICR003'
-  }
-];
+// API Configuration
+const API_CONFIG = {
+  baseUrl: 'https://www.piramalenterprises.com',
+  searchEndpoint: '/search-unclaimed-dividend',
+  yearsEndpoint: '/GetReportFinancialYear',
+  yearsId: 7
+};
 
 /**
  * Helper function to create DOM elements
@@ -66,7 +41,7 @@ function createTag(tag, attributes, html) {
 function parseAuthorableContent(block) {
   const defaults = {
     pageTitle: 'Search Unclaimed Dividends',
-    sectionLabel: 'Refine Your Search',
+    sectionLabel: '',
     yearLabel: 'Select Year',
     folioLabel: 'Folio No./DP Id Client Id.',
     searchButtonText: 'Search',
@@ -168,11 +143,7 @@ function createSearchForm(content) {
   const defaultOption = createTag('option', { value: '', disabled: '', selected: '' }, content.yearLabel);
   yearSelect.appendChild(defaultOption);
   
-  // Add year options (mock data - to be replaced with API)
-  MOCK_YEARS.forEach(year => {
-    const option = createTag('option', { value: year }, year);
-    yearSelect.appendChild(option);
-  });
+  // Year options will be populated from API in decorate function
   
   yearSelectWrapper.appendChild(yearSelect);
   yearField.appendChild(yearLabel);
@@ -195,7 +166,8 @@ function createSearchForm(content) {
   const buttonField = createTag('div', { class: 'form-field button-field' });
   const searchButton = createTag('button', { 
     type: 'button', 
-    class: 'search-dividend-btn' 
+    class: 'search-dividend-btn',
+    'data-original-text': content.searchButtonText
   });
   searchButton.innerHTML = `${content.searchButtonText} <span class="btn-arrow">&#8599;</span>`;
   buttonField.appendChild(searchButton);
@@ -262,10 +234,10 @@ function createResultsTable(content, data = []) {
 
 /**
  * Update table with search results
- * @param {array} data search results
+ * @param {object} result API response with {success, message, data}
  * @param {object} content authorable content for column order
  */
-function updateTable(data, content) {
+function updateTable(result, content) {
   const tbody = document.getElementById('dividend-table-body');
   const messageContainer = document.getElementById('dividend-message');
   
@@ -276,12 +248,22 @@ function updateTable(data, content) {
   messageContainer.innerHTML = '';
   messageContainer.className = 'search-dividend-message';
   
-  if (data === null) {
+  if (result === null) {
     // API error
     messageContainer.classList.add('error');
     messageContainer.textContent = 'An error occurred while fetching data. Please try again later.';
     return;
   }
+  
+  // Handle API response format
+  if (!result.success) {
+    // No results or error from API
+    messageContainer.classList.add('no-results');
+    messageContainer.textContent = result.message || 'No records found for the given search criteria.';
+    return;
+  }
+  
+  const data = result.data || [];
   
   if (data.length === 0) {
     // No results
@@ -291,15 +273,17 @@ function updateTable(data, content) {
   }
   
   // Populate table with data
-  data.forEach(row => {
+  // Map API field names to table columns based on actual API response:
+  // { srNo, folioNo, warrantNo, name, shares, amount, micrNo }
+  data.forEach((row) => {
     const tr = createTag('tr');
-    tr.appendChild(createTag('td', {}, row.srNo.toString()));
-    tr.appendChild(createTag('td', {}, row.folioNo));
-    tr.appendChild(createTag('td', {}, row.warrantNo));
-    tr.appendChild(createTag('td', {}, row.nameAddress));
-    tr.appendChild(createTag('td', {}, row.noOfShares.toString()));
-    tr.appendChild(createTag('td', {}, row.amount.toFixed(2)));
-    tr.appendChild(createTag('td', {}, row.micrNo));
+    tr.appendChild(createTag('td', {}, row.srNo || '-'));
+    tr.appendChild(createTag('td', {}, row.folioNo || '-'));
+    tr.appendChild(createTag('td', {}, row.warrantNo || '-'));
+    tr.appendChild(createTag('td', {}, row.name || '-'));
+    tr.appendChild(createTag('td', {}, row.shares || '0'));
+    tr.appendChild(createTag('td', {}, row.amount || '0.00'));
+    tr.appendChild(createTag('td', {}, row.micrNo || '-'));
     tbody.appendChild(tr);
   });
 }
@@ -309,39 +293,86 @@ function updateTable(data, content) {
  * @returns {Promise<array>} array of year options
  */
 async function fetchYearOptions() {
-  // TODO: Replace with actual API call when available
-  // const response = await fetch('/api/unclaimed-dividend/years');
-  // return response.json();
-  
-  // Return mock data for now
-  return Promise.resolve(MOCK_YEARS);
+  try {
+    const url = `${API_CONFIG.baseUrl}${API_CONFIG.yearsEndpoint}?id=${API_CONFIG.yearsId}`;
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    // Handle API response - extract year values
+    if (Array.isArray(data)) {
+      return data.map(item => item.year || item.Year || item.financialYear || item);
+    }
+    
+    if (data.data && Array.isArray(data.data)) {
+      return data.data.map(item => item.year || item.Year || item.financialYear || item);
+    }
+    
+    return [];
+  } catch (error) {
+    console.error('Error fetching year options:', error);
+    // Fallback years if API fails
+    return ['2024-2025', '2023-2024', '2022-2023', '2021-2022', '2020-2021', '2019-2020'];
+  }
 }
 
 /**
  * Search for unclaimed dividends
  * @param {string} year selected year
- * @param {string} folioId folio number or DP ID
- * @returns {Promise<array>} search results
+ * @param {string} folioNo folio number or DP ID
+ * @returns {Promise<object>} search results
  */
-async function searchUnclaimedDividend(year, folioId) {
-  // TODO: Replace with actual API call when available
-  // const response = await fetch(`/api/unclaimed-dividend/search?year=${year}&folioId=${folioId}`);
-  // if (!response.ok) throw new Error('API request failed');
-  // return response.json();
-  
-  // Mock search - filter by folioId if provided
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (folioId) {
-        const filtered = MOCK_DATA.filter(item => 
-          item.folioNo.toLowerCase().includes(folioId.toLowerCase())
-        );
-        resolve(filtered);
-      } else {
-        resolve(MOCK_DATA);
-      }
-    }, 500); // Simulate API delay
-  });
+async function searchUnclaimedDividend(year, folioNo) {
+  try {
+    // Construct API URL with query parameters
+    // Example: https://www.piramalenterprises.com/search-unclaimed-dividend?year=2017-2018&folioNo=1301760000239657
+    const url = new URL(`${API_CONFIG.baseUrl}${API_CONFIG.searchEndpoint}`);
+    url.searchParams.append('year', year);
+    url.searchParams.append('folioNo', folioNo);
+    
+    const response = await fetch(url.toString());
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    
+    // Handle different API response formats:
+    // 1. { status: false, message: "Data Not found" } - no data
+    // 2. { status: true, data: [...] } - success with data wrapper
+    // 3. [...] - direct array response
+    
+    // Check for error/no data response
+    if (result.status === false || result.status === 'false') {
+      return { success: false, message: result.message || 'Data Not Found', data: [] };
+    }
+    
+    // Handle direct array response
+    if (Array.isArray(result)) {
+      return { 
+        success: result.length > 0, 
+        message: result.length === 0 ? 'No records found for the given search criteria.' : '', 
+        data: result 
+      };
+    }
+    
+    // Handle wrapped data response
+    const data = result.data || result.Data || [];
+    return { 
+      success: Array.isArray(data) && data.length > 0, 
+      message: '', 
+      data: Array.isArray(data) ? data : [] 
+    };
+    
+  } catch (error) {
+    console.error('Search API error:', error);
+    return { success: false, message: 'An error occurred while fetching data. Please try again later.', data: [] };
+  }
 }
 
 /**
@@ -377,13 +408,14 @@ function showLoading(isLoading) {
   const messageContainer = document.getElementById('dividend-message');
   
   if (button) {
+    const originalText = button.dataset.originalText || 'Search';
     button.disabled = isLoading;
     if (isLoading) {
       button.classList.add('loading');
       button.innerHTML = 'Searching... <span class="btn-spinner"></span>';
     } else {
       button.classList.remove('loading');
-      button.innerHTML = 'Search <span class="btn-arrow">&#8599;</span>';
+      button.innerHTML = `${originalText} <span class="btn-arrow">&#8599;</span>`;
     }
   }
   
@@ -453,6 +485,31 @@ function initializeSearch(content) {
 }
 
 /**
+ * Populate year dropdown with options from API
+ * @param {array} years year options
+ */
+function populateYearDropdown(years) {
+  const yearSelect = document.getElementById('year-select');
+  if (!yearSelect || !years || years.length === 0) return;
+  
+  // Clear existing options except the first placeholder
+  const placeholder = yearSelect.querySelector('option[value=""]');
+  yearSelect.innerHTML = '';
+  if (placeholder) {
+    yearSelect.appendChild(placeholder);
+  } else {
+    const defaultOption = createTag('option', { value: '' }, 'Select Year');
+    yearSelect.appendChild(defaultOption);
+  }
+  
+  // Add year options
+  years.forEach(year => {
+    const option = createTag('option', { value: year }, year);
+    yearSelect.appendChild(option);
+  });
+}
+
+/**
  * Main decorate function for the block
  * @param {HTMLElement} block 
  */
@@ -474,11 +531,11 @@ export default async function decorate(block) {
   // Initialize search functionality
   initializeSearch(content);
   
-  // Future: Fetch year options from API
-  // try {
-  //   const years = await fetchYearOptions();
-  //   populateYearDropdown(years);
-  // } catch (error) {
-  //   console.error('Error fetching year options:', error);
-  // }
+  // Fetch year options from API and populate dropdown
+  try {
+    const years = await fetchYearOptions();
+    populateYearDropdown(years);
+  } catch (error) {
+    console.error('Error fetching year options:', error);
+  }
 }

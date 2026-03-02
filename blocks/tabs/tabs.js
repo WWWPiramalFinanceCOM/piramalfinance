@@ -113,4 +113,57 @@ export default function decorate(block) {
 
   initTabs(block);
   initCount += 1;
+
+  // Add navigation arrows for shareholding-wrap section
+  const section = block.closest('.section.shareholding-wrap');
+  if (section) {
+    addTabNavArrows(block);
+  }
+}
+
+function addTabNavArrows(block) {
+  const tabList = block.querySelector('.tab-list');
+  if (!tabList) return;
+
+  const wrapper = block.closest('.tabs-wrapper');
+  if (!wrapper) return;
+
+  // Create left arrow
+  const prevArrow = createTag('button', {
+    class: 'tab-nav-arrow prev',
+    'aria-label': 'Previous tabs'
+  });
+  prevArrow.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>`;
+
+  // Create right arrow
+  const nextArrow = createTag('button', {
+    class: 'tab-nav-arrow next next-highlight',
+    'aria-label': 'Next tabs'
+  });
+  nextArrow.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>`;
+
+  // Insert arrows into wrapper
+  wrapper.insertBefore(prevArrow, wrapper.firstChild);
+  wrapper.appendChild(nextArrow);
+
+  // Scroll functionality
+  const scrollAmount = 200;
+
+  prevArrow.addEventListener('click', () => {
+    tabList.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+
+  nextArrow.addEventListener('click', () => {
+    tabList.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+
+  // Update arrow visibility based on scroll position
+  function updateArrowVisibility() {
+    const { scrollLeft, scrollWidth, clientWidth } = tabList;
+    prevArrow.style.opacity = scrollLeft > 0 ? '1' : '0.5';
+    nextArrow.classList.toggle('next-highlight', scrollLeft < scrollWidth - clientWidth - 10);
+  }
+
+  tabList.addEventListener('scroll', updateArrowVisibility);
+  updateArrowVisibility();
 }

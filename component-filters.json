@@ -166,7 +166,7 @@
   },
   {
     "id": "tabs",
-    "components": ["tabs", "tab", "container", "searchunclaimeddividend"]
+    "components": ["tabs", "tab", "container"]
   },
   {
     "id": "accordion",

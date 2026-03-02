@@ -6,9 +6,7 @@
 // API Configuration
 const API_CONFIG = {
   baseUrl: 'https://www.piramalenterprises.com',
-  searchEndpoint: '/search-unclaimed-dividend',
-  yearsEndpoint: '/GetReportFinancialYear',
-  yearsId: 7
+  searchEndpoint: '/search-unclaimed-dividend'
 };
 
 /**
@@ -41,7 +39,7 @@ function createTag(tag, attributes, html) {
 function parseAuthorableContent(block) {
   const defaults = {
     pageTitle: 'Search Unclaimed Dividends',
-    sectionLabel: '',
+    sectionLabel: 'Refine Your Searcsh',
     yearLabel: 'Select Year',
     folioLabel: 'Folio No./DP Id Client Id.',
     searchButtonText: 'Search',
@@ -56,61 +54,45 @@ function parseAuthorableContent(block) {
     }
   };
 
-  // Field mapping for model attributes
-  const fieldMap = {
-    'pagetitle': 'pageTitle',
-    'page title': 'pageTitle',
-    'sectionlabel': 'sectionLabel',
-    'section label': 'sectionLabel',
-    'yearlabel': 'yearLabel',
-    'year label': 'yearLabel',
-    'foliolabel': 'folioLabel',
-    'folio label': 'folioLabel',
-    'searchbuttontext': 'searchButtonText',
-    'search button text': 'searchButtonText',
-    'colsrno': 'columns.srNo',
-    'col sr no': 'columns.srNo',
-    'colfoliono': 'columns.folioNo',
-    'col folio no': 'columns.folioNo',
-    'colwarrantno': 'columns.warrantNo',
-    'col warrant no': 'columns.warrantNo',
-    'colnameaddress': 'columns.nameAddress',
-    'col name address': 'columns.nameAddress',
-    'colnoofshares': 'columns.noOfShares',
-    'col no of shares': 'columns.noOfShares',
-    'colamount': 'columns.amount',
-    'col amount': 'columns.amount',
-    'colmicrno': 'columns.micrNo',
-    'col micr no': 'columns.micrNo'
-  };
-
-  // Helper to set nested property
-  const setNestedValue = (obj, path, value) => {
-    const keys = path.split('.');
-    let current = obj;
-    for (let i = 0; i < keys.length - 1; i++) {
-      current = current[keys[i]];
-    }
-    current[keys[keys.length - 1]] = value;
-  };
-
-  // Parse content from block if available
+  // Get all rows from block - each row contains a field value in order matching model
+  // Order: pageTitle, sectionLabel, yearLabel, folioLabel, searchButtonText, 
+  //        colSrNo, colFolioNo, colWarrantNo, colNameAddress, colNoOfShares, colAmount, colMicrNo
   const rows = [...block.querySelectorAll(':scope > div')];
   
-  if (rows.length > 0) {
-    rows.forEach((row) => {
-      const cells = [...row.querySelectorAll(':scope > div')];
-      if (cells.length >= 2) {
-        const key = cells[0].textContent.trim().toLowerCase();
-        const value = cells[1].textContent.trim();
-        
-        const mappedField = fieldMap[key];
-        if (mappedField) {
-          setNestedValue(defaults, mappedField, value);
+  // Map row index to field
+  const fieldOrder = [
+    'pageTitle',
+    'sectionLabel', 
+    'yearLabel',
+    'folioLabel',
+    'searchButtonText',
+    'colSrNo',
+    'colFolioNo',
+    'colWarrantNo',
+    'colNameAddress',
+    'colNoOfShares',
+    'colAmount',
+    'colMicrNo'
+  ];
+
+  rows.forEach((row, index) => {
+    if (index < fieldOrder.length) {
+      // Get the value from the row (may be in nested div or direct text)
+      const cell = row.querySelector(':scope > div') || row;
+      const value = cell.textContent?.trim();
+      
+      if (value) {
+        const fieldName = fieldOrder[index];
+        // Handle column fields
+        if (fieldName.startsWith('col')) {
+          const colKey = fieldName.replace('col', '').charAt(0).toLowerCase() + fieldName.replace('col', '').slice(1);
+          defaults.columns[colKey] = value;
+        } else {
+          defaults[fieldName] = value;
         }
       }
-    });
-  }
+    }
+  });
 
   return defaults;
 }
@@ -129,9 +111,9 @@ function createSearchForm(content) {
   // Form wrapper
   const formWrapper = createTag('div', { class: 'search-dividend-form-wrapper' });
   
-  // Year dropdown field
+  // Year dropdown field with section label as its label
   const yearField = createTag('div', { class: 'form-field year-field' });
-  const yearLabel = createTag('label', { for: 'year-select' }, content.sectionLabel);
+  const yearFieldLabel = createTag('label', { for: 'year-select' }, content.sectionLabel);
   const yearSelectWrapper = createTag('div', { class: 'select-wrapper' });
   const yearSelect = createTag('select', { 
     id: 'year-select', 
@@ -139,14 +121,14 @@ function createSearchForm(content) {
     class: 'year-select'
   });
   
-  // Add default option
+  // Add default option with year label as placeholder
   const defaultOption = createTag('option', { value: '', disabled: '', selected: '' }, content.yearLabel);
   yearSelect.appendChild(defaultOption);
   
   // Year options will be populated from API in decorate function
   
   yearSelectWrapper.appendChild(yearSelect);
-  yearField.appendChild(yearLabel);
+  yearField.appendChild(yearFieldLabel);
   yearField.appendChild(yearSelectWrapper);
   
   // Folio input field
@@ -289,35 +271,20 @@ function updateTable(result, content) {
 }
 
 /**
- * Fetch year options from API
- * @returns {Promise<array>} array of year options
+ * Get year options for dropdown (hardcoded to match production)
+ * @returns {array} array of year options
  */
-async function fetchYearOptions() {
-  try {
-    const url = `${API_CONFIG.baseUrl}${API_CONFIG.yearsEndpoint}?id=${API_CONFIG.yearsId}`;
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    
-    // Handle API response - extract year values
-    if (Array.isArray(data)) {
-      return data.map(item => item.year || item.Year || item.financialYear || item);
-    }
-    
-    if (data.data && Array.isArray(data.data)) {
-      return data.data.map(item => item.year || item.Year || item.financialYear || item);
-    }
-    
-    return [];
-  } catch (error) {
-    console.error('Error fetching year options:', error);
-    // Fallback years if API fails
-    return ['2024-2025', '2023-2024', '2022-2023', '2021-2022', '2020-2021', '2019-2020'];
-  }
+function getYearOptions() {
+  // Hardcoded years matching production dropdown
+  return [
+    '2023-2024',
+    '2022-2023',
+    '2021-2022',
+    '2020-2021',
+    '2019-2020',
+    '2018-2019',
+    '2017-2018'
+  ];
 }
 
 /**
@@ -513,7 +480,7 @@ function populateYearDropdown(years) {
  * Main decorate function for the block
  * @param {HTMLElement} block 
  */
-export default async function decorate(block) {
+export default function decorate(block) {
   // Parse authorable content from block
   const content = parseAuthorableContent(block);
   
@@ -531,11 +498,7 @@ export default async function decorate(block) {
   // Initialize search functionality
   initializeSearch(content);
   
-  // Fetch year options from API and populate dropdown
-  try {
-    const years = await fetchYearOptions();
-    populateYearDropdown(years);
-  } catch (error) {
-    console.error('Error fetching year options:', error);
-  }
+  // Populate year dropdown with hardcoded years (matching production)
+  const years = getYearOptions();
+  populateYearDropdown(years);
 }

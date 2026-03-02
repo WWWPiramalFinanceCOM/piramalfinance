@@ -24,7 +24,7 @@
   align-items: flex-end;
   display: flex;
   flex-wrap: wrap;
-  gap: 64px;
+  gap: 24px;
   margin-bottom: 32px;
 }
 
@@ -119,6 +119,7 @@
 /* Search Button */
 .searchunclaimeddividend .button-field {
   flex: 0 0 auto;
+  margin-left: 30px;
 }
 
 .searchunclaimeddividend .search-dividend-btn {

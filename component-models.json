@@ -2823,7 +2823,6 @@
         "component": "text",
         "valueType": "string",
         "name": "pageTitle",
-        "value": "Search Unclaimed Dividends",
         "label": "Page Title",
         "description": "Title displayed above the search form"
       },
@@ -2831,7 +2830,6 @@
         "component": "text",
         "valueType": "string",
         "name": "sectionLabel",
-        "value": "",
         "label": "Section Label",
         "description": "Label for the search section"
       },
@@ -2839,7 +2837,6 @@
         "component": "text",
         "valueType": "string",
         "name": "yearLabel",
-        "value": "Select Year",
         "label": "Year Dropdown Label",
         "description": "Placeholder text for year dropdown"
       },
@@ -2847,7 +2844,6 @@
         "component": "text",
         "valueType": "string",
         "name": "folioLabel",
-        "value": "Folio No./DP Id Client Id.",
         "label": "Folio Field Label",
         "description": "Label for the folio input field"
       },
@@ -2855,7 +2851,6 @@
         "component": "text",
         "valueType": "string",
         "name": "searchButtonText",
-        "value": "Search",
         "label": "Search Button Text",
         "description": "Text for the search button"
       },
@@ -2863,7 +2858,6 @@
         "component": "text",
         "valueType": "string",
         "name": "colSrNo",
-        "value": "SR. NO.",
         "label": "Column: SR. NO.",
         "description": "Table column heading for serial number"
       },
@@ -2871,7 +2865,6 @@
         "component": "text",
         "valueType": "string",
         "name": "colFolioNo",
-        "value": "FOLIO NO./DP ID CLIENT ID.",
         "label": "Column: Folio No.",
         "description": "Table column heading for folio number"
       },
@@ -2879,7 +2872,6 @@
         "component": "text",
         "valueType": "string",
         "name": "colWarrantNo",
-        "value": "WARRANT NO.",
         "label": "Column: Warrant No.",
         "description": "Table column heading for warrant number"
       },
@@ -2887,7 +2879,6 @@
         "component": "text",
         "valueType": "string",
         "name": "colNameAddress",
-        "value": "NAMES & ADDRESS OF THE SHAREHOLDER",
         "label": "Column: Name & Address",
         "description": "Table column heading for shareholder details"
       },
@@ -2895,7 +2886,6 @@
         "component": "text",
         "valueType": "string",
         "name": "colNoOfShares",
-        "value": "NO. OF SHARES",
         "label": "Column: No. of Shares",
         "description": "Table column heading for number of shares"
       },
@@ -2903,7 +2893,6 @@
         "component": "text",
         "valueType": "string",
         "name": "colAmount",
-        "value": "AMOUNT (RS.)",
         "label": "Column: Amount",
         "description": "Table column heading for amount"
       },
@@ -2911,7 +2900,6 @@
         "component": "text",
         "valueType": "string",
         "name": "colMicrNo",
-        "value": "MICR NO.",
         "label": "Column: MICR No.",
         "description": "Table column heading for MICR number"
       }

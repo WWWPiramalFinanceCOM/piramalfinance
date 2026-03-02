@@ -337,6 +337,7 @@
   .searchunclaimeddividend .year-select,
   .searchunclaimeddividend .folio-input {
     height: 44px;
+    padding: unset;
   }
 
   .searchunclaimeddividend .search-dividend-table th,

@@ -38,19 +38,19 @@ function createTag(tag, attributes, html) {
  */
 function parseAuthorableContent(block) {
   const defaults = {
-    pageTitle: 'Search Unclaimed Dividends',
-    sectionLabel: 'Refine Your Search',
-    yearLabel: 'Select Year',
-    folioLabel: 'Folio No./DP Id Client Id.',
-    searchButtonText: 'Search',
+    pageTitle: '',
+    sectionLabel: '',
+    yearLabel: '',
+    folioLabel: '',
+    searchButtonText: '',
     columns: {
-      srNo: 'SR. NO.',
-      folioNo: 'FOLIO NO./DP ID CLIENT ID.',
-      warrantNo: 'WARRANT NO.',
-      nameAddress: 'NAMES & ADDRESS OF THE SHAREHOLDER',
-      noOfShares: 'NO. OF SHARES',
-      amount: 'AMOUNT (RS.)',
-      micrNo: 'MICR NO.'
+      srNo: '',
+      folioNo: '',
+      warrantNo: '',
+      nameAddress: '',
+      noOfShares: '',
+      amount: '',
+      micrNo: ''
     }
   };
 

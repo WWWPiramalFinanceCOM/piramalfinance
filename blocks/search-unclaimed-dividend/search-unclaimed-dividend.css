@@ -146,10 +146,45 @@
   color: var(--grey, #666666);
 }
 
+/* Year Select Field (Native Select) */
+.search-unclaimed-dividend .select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-unclaimed-dividend .year-select {
+  appearance: none;
+  background-color: var(--white, #ffffff);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23333333' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+  background-size: 12px 8px;
+  border: 1px solid var(--pattensblue, #d1d1d1);
+  border-radius: 8px;
+  color: var(--black, #333333);
+  cursor: pointer;
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 1rem;
+  height: 48px;
+  line-height: 1.4;
+  padding: 0 40px 0 16px;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.search-unclaimed-dividend .year-select:focus {
+  border-color: var(--orange, #F26841);
+  outline: none;
+}
+
+.search-unclaimed-dividend .year-select:hover {
+  border-color: var(--orange, #F26841);
+}
+
 /* Folio Input Field */
 .search-unclaimed-dividend .folio-field {
   /* flex: 1; */
-  /* min-width: 200px; */
+  min-width: 200px;
 }
 
 .search-unclaimed-dividend .folio-input {
@@ -397,7 +432,8 @@
   }
 
   .search-unclaimed-dividend .dropdown-trigger,
-  .search-unclaimed-dividend .folio-input {
+  .search-unclaimed-dividend .folio-input,
+  .search-unclaimed-dividend .year-select {
     height: 44px;
   }
 

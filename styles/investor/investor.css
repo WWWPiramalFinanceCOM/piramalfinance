@@ -1,0 +1,2263 @@
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   2. MAIN CONTAINER LAYOUT
+   ========================================= */
+.section.commitment-wrap.cards-container {
+  display: grid;
+  max-width: 1216px;
+  margin: 0 auto;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 32px;
+  align-items: flex-start;
+  grid-template-areas:
+    "text text"
+    "left right";
+}
+
+/* Section Title */
+.section.commitment-wrap .default-content-wrapper:nth-child(1) {
+  grid-area: text;
+  width: 100%;
+}
+
+/* Left Content (Bullet Points) */
+.section.commitment-wrap .default-content-wrapper:nth-child(2) {
+  grid-area: left;
+}
+
+/* Right Content (Image Cards) */
+.section.commitment-wrap .cards-wrapper {
+  grid-area: right;
+}
+
+/* =========================================
+   3. TYPOGRAPHY & DECORATION
+   ========================================= */
+
+/* Main Paragraph Styling */
+.section.commitment-wrap .default-content-wrapper p {
+  padding: 100px 0 60px;
+  max-width: 1216px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 40px;
+  color: #184E7D;
+}
+
+/* Heading (H2) Styling */
+.section.commitment-wrap h2 {
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding-top: 100px;
+  margin-bottom: 60px;
+  color: #184E7D;
+  position: relative;
+}
+
+/* Orange Underline for H2 */
+.section.commitment-wrap h2:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Better centering method */
+  bottom: -16px;
+  width: 7%;
+  height: 8px;
+  border-radius: 37px;
+  background-color: #F58220;
+  transition: all ease 0.3s;
+}
+
+/* Left Column: Numbered/Bulleted List Styling */
+.section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul > li {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 49px;
+  letter-spacing: 0.2em; /* Converted 20% to em */
+  text-transform: uppercase;
+  color: #184E7D;
+  box-shadow: 0px 0px 16px 6px #11182721;
+  border-radius: 24px;
+  padding: 44px;
+}
+
+.section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul > li:nth-child(2) {
+  margin-top: 24px;
+}
+
+/* Nested Text inside List Items */
+.section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul > li > ul > li {
+    font-family: Montserrat;
+    font-weight: 400;
+    font-style: regular;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: 0;
+    vertical-align: middle;
+  text-transform: none;
+}
+
+/* =========================================
+   4. CARD GRID (The Mosaic)
+   ========================================= */
+.section.commitment-wrap .cards-wrapper .cards.block ul {
+      display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-template-rows: 220px 80px 220px; */
+}
+
+/* Common Card Styles */
+.section.commitment-wrap .cards-wrapper .cards.block ul li {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Text Overlay on Cards */
+.section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-body {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+/* Image Handling */
+.section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  display: block; /* Removes bottom spacing whitespace */
+}
+
+/* --- Specific Card Sizing & Placement --- */
+
+/* Card 1: Tall (Left Top) */
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(1) {
+  grid-column: 1;
+    grid-row: 1 / 3;
+}
+
+/* Card 2: Short (Right Top) */
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(2) {
+  /* grid-area: box-2; */
+  /* height: 198px; */
+      grid-column: 2;
+    grid-row: 1 / 2;
+}
+
+/* Card 3: Short (Left Bottom) */
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(3) {
+  /* grid-area: box-3; */
+  /* height: 198px; */
+
+      grid-column: 1;
+    grid-row: 3 / 4;
+}
+
+/* Card 4: Tall (Right Bottom) */
+.section.commitment-wrap .cards-wrapper .cards.block ul li:nth-child(4) {
+      grid-column: 2;
+    grid-row: 2 / 4;
+}
+
+/* =========================================
+   5. MEDIA QUERIES (Max-width: 767px)
+   ========================================= */
+@media only screen and (max-width: 767px) {
+  
+  /* Reset Main Container to Column */
+  .section.commitment-wrap.cards-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 22px;
+    text-align: center;
+  }
+
+  /* Reorder Items: Text -> List -> Cards */
+  .section.commitment-wrap .default-content-wrapper:nth-child(1) {
+    order: 1;
+    text-align: center;
+  }
+  
+  /* The Content List */
+  .section.commitment-wrap.cards-container .default-content-wrapper:nth-of-type(3), /* Kept distinct selector from original */
+  .section.commitment-wrap .default-content-wrapper:nth-child(2) {
+    order: 2;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  /* The Cards */
+  .section.commitment-wrap .cards-wrapper {
+    order: 3;
+    width: 100%;
+  }
+
+  /* Heading Adjustments */
+  .section.commitment-wrap h2 {
+    padding-top: 30px;
+  }
+
+  /* List Styling Adjustments */
+  .section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section.commitment-wrap.cards-container .default-content-wrapper > ul > li > ul > li {
+    width: 100%;
+    /* max-width: 343px; */
+  }
+
+  /* Collapse Card Grid to Single Column */
+  .section.commitment-wrap .cards-wrapper .cards.block ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 16px;
+    row-gap: 16px;
+  }
+
+  /* Ensure cards have natural height or specific fixed height on mobile if needed */
+  .section.commitment-wrap .cards-wrapper .cards.block ul li {
+    /* max-width: 343px; */
+    width: 100%;
+    min-height: 200px;
+  }
+
+  /* Ensure card images fill the card width */
+  .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image,
+  .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture,
+  .section.commitment-wrap .cards-wrapper .cards.block ul li .cards-card-image picture img {
+    width: 100%;
+    max-height: 200px;;
+  }
+}
+
+
+/* BUSSINESS OFFERINGS */
+
+
+
+/* performance snapshot */
+
+.section.performance-snapshot{
+    padding-top: 100px;
+    
+    /* margin-bottom: 44px; */
+    background: #FDECDF;
+
+    @media only screen and (max-width:767px){
+        /* padding-top: 30px; */
+        padding: 30px 12px;
+    }
+
+}
+.section.performance-snapshot .default-content-wrapper{
+   
+max-width: 1216px;
+    margin: auto;
+}
+.section.performance-snapshot .cards-wrapper{
+max-width: 1216px;
+    margin: auto;
+}
+
+.section.performance-snapshot .cards-wrapper ul{
+      @media only screen and (max-width:767px){
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.section.performance-snapshot .cards-wrapper .cards-card-body{
+   padding: unset;
+   margin: unset !important;
+
+   @media only screen and (max-width:767px){
+    padding: 5px;
+   }
+}
+
+div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul{
+    display: flex;
+}
+
+div.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul{
+    padding: 20px;
+    display: flex;
+    flex-direction: column; 
+    
+    @media only screen and (max-width:767px){
+        padding: unset;
+    }
+}
+
+.section.performance-snapshot #performance-snapshot{
+    margin-bottom: 44px;
+    /* font-family: Nunito; */
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 40px;
+    /* leading-trim: NONE; */
+    line-height: 40px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    color: #184E7D;
+    position: relative;
+
+    @media only screen and (max-width:767px){
+    font-family: Nunito;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 26px;
+    line-height: 40px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    }
+}
+
+.section.performance-snapshot #performance-snapshot::after{
+    content: "";
+    position: absolute;
+    left: 47%;
+    bottom: -16px;
+    width: calc(7% + 0px);
+    height: 8px;
+    border-radius: 37px;
+    background-color: var(--orange);
+    transition: all ease 0.3s;
+}
+
+.section.performance-snapshot #performance-snapshot + p{
+    margin-bottom: 60px;
+    /* font-family: Montserrat; */
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    color: #4F4F4F;
+}
+
+.section.performance-snapshot #years-of-parentage{
+    margin-bottom: 24px;
+    margin-bottom: 24px;
+    /* font-family: Nunito; */
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    /* leading-trim: NONE; */
+    line-height: 49px;
+    letter-spacing: 20%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #134F7F;
+    /* padding: 20px; */
+}
+
+.section.performance-snapshot .default-content-wrapper .button-container a{
+    /* font-family: Nunito; */
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 27.2px;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+
+}
+
+.section.performance-snapshot .default-content-wrapper .button-container{
+    font-family: Nunito;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 27.2px;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+    padding-top: 60px;
+    padding-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media only screen and (max-width:767px){
+        padding-top: 30px;
+        padding-bottom: unset;
+    }
+}
+.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul > li > ul {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    @media only screen and (max-width:767px){
+        gap: unset;
+    }
+
+}
+.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul > li > ul > li {
+  padding-bottom: 18px;
+      /* font-family: Montserrat; */
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #3B6D94;
+    display: flex;
+
+}
+
+.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li{
+    border-radius: 12px;
+
+    @media only screen and (max-width:767px){
+        width: 169px;
+        max-height: 118px;
+    }
+}
+
+.section.performance-snapshot .default-content-wrapper .button-container a{
+        color: #FFFFFF;
+    padding: 15px;
+    border-radius: 8px;
+    /* font-family: Nunito; */
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 27.2px;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+        background: #F26E24;
+        display: flex;
+        max-width: 177px;
+}
+
+.section.performance-snapshot .default-content-wrapper .button-container a::after{
+    content: "";
+    background-image: url("../../icons/lucide_arrow-up.svg");
+     width: 24px;
+    height: 24px;
+    display: inline-block;
+     background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px; 
+}
+
+.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul > li > p{
+    font-family: Nunito;
+    font-weight: 800;
+    font-style: ExtraBold;
+    font-size: 24px;
+    /* leading-trim: NONE; */
+    line-height: 49px;
+    letter-spacing: 20%;
+    text-transform: uppercase;
+    color: #134F7F;
+
+    @media only screen and (max-width:767px){
+        text-align: center;
+
+    }
+}
+
+.section.performance-snapshot.cards-container > div.cards-wrapper > div > ul > li > div > ul > li > p sub{
+    /* font-family: Montserrat; */
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* ESG COMMIT */
+
+.section.esg-commit.rte-container{
+        background: #FDECDF;
+       padding: 100px  0px;
+
+       @media only screen and (max-width:767px){
+        padding-top: 50px;
+        padding-bottom: 50px;
+       }
+}
+.section.esg-commit.rte-container .default-content-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    @media only screen and (max-width:767px){
+        flex-wrap: wrap;
+    }
+}
+
+
+
+.section.esg-commit.rte-container .default-content-wrapper .button-container a.button[title="ESG Report 2024"]{
+        padding: 15px;
+    border-radius: 8px;
+    /* font-family: Nunito; */
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 27.2px;
+    letter-spacing: 0.2px;
+    display: flex;
+    background: white;
+    color: #F26E24;
+    justify-content: center;
+    border: 1px solid #F26E24
+}
+.section.esg-commit.rte-container .default-content-wrapper .button-container a.button[title="View Sustainability Initiatives"]{
+       color: #FFFFFF;
+    padding: 15px;
+    border-radius: 8px;
+    /* font-family: Nunito; */
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 27.2px;
+    letter-spacing: 0.2px;
+    vertical-align: middle;
+    background: #F26E24;
+    display: flex;
+}
+.section.esg-commit.rte-container .default-content-wrapper .button-container a.button[title="View Sustainability Initiatives"]::after{
+        content: "";
+    background-image: url(../../icons/lucide_arrow-up.svg);
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
+}
+
+.section.esg-commit.rte-container h3{
+    /* font-family: Nunito; */
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 40px;
+    leading-trim: NONE;
+    line-height: 40px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    color: #184E7D;
+    margin-bottom: 44px;
+}
+.section.esg-commit.rte-container #our-esg-commitment + p{
+       /* font-family: Montserrat; */
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 18px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+    color: #4F4F4F;
+    margin-bottom: 60px;
+}
+
+.section.esg-commit.rte-container .rte-wrapper{
+        max-width: 1216px;
+    margin: auto;
+
+    @media only screen and (max-width:767px){
+        padding: 0px 20px;
+    }
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul{
+        display: flex;
+    gap: 50px;
+
+    @media only screen and (max-width:767px){
+        flex-wrap: wrap;
+    }
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li{
+    padding: 20px;
+}
+
+/* .section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > p{
+        padding-bottom: 18px;
+} */
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > p{
+    /* font-family: Nunito; */
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    /* leading-trim: NONE; */
+    line-height: 49px;
+    letter-spacing: 20%;
+    text-transform: uppercase;
+    color: #184E7D;
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > ul > li > p{
+    /* font-family: Montserrat; */
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 18px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #184E7D;
+}
+
+.section.esg-commit.rte-container > div > div > div > div > ul > li > ul > li > ul > li > ul > li > ul{
+    /* font-family: Montserrat; */
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    color: #184E7D;
+}
+
+section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(1){
+
+    @media only screen and (max-width:767px){
+
+        max-width: 297px;
+        width: 100%;
+    }
+}
+section.esg-commit.rte-container > div.default-content-wrapper > p:nth-child(2){
+
+    @media only screen and (max-width:767px){
+
+        max-width: 297px;
+        width: 100%;
+    }
+}
+
+
+.section.esg-commit.rte-container > div.rte-wrapper ul > li > ul > li > ul > li > p > span.icon{
+    /* border: 1px solid red; */
+    width: 60px;
+    height: 60px;
+}
+
+/* .section.esg-commit.rte-container > div.rte-wrapper > div > div > div > ul > li:nth-child(1) > ul > li > ul > li:nth-child(1) > p > .icon.icon-environmental-icon{
+        width: 40px;
+    height: 40px;
+} */
+
+
+/* TABS END */
+
+.section.stay-informed{
+    background: #184E7D;
+    color: white;
+} 
+
+.section.stay-informed.tabs-container #stay-informed{
+    padding-top: 100px;
+    padding-bottom: 12px;
+     margin-bottom: 44px;
+    position: relative;
+}
+
+.section.stay-informed.tabs-container #stay-informed::after{
+    content: "";
+    position: absolute;
+    left: 47%;
+    bottom: -10px;
+    width: calc(7% + 0px);
+    height: 8px;
+    border-radius: 37px;
+    background-color: var(--orange);
+    transition: all ease 0.3s;
+}
+
+.section.stay-informed.tabs-container .tabs.block{
+    margin: unset;
+    padding-bottom: 100px;
+}
+
+.section.stay-informed.tabs-container{
+    background: #184E7D;
+}
+
+.section.stay-informed.tabs-container > div.tabs-wrapper > div > div.tab-content{
+    margin: unset !important;
+    padding: unset;
+}
+.section.stay-informed.tabs-container#tab-1-0{
+    margin-right: unset;
+}
+
+.section.cards-container.press-release-cards{
+    background: #184E7D;
+
+}
+
+.section.stay-informed.tabs-container .default-content-wrapper{
+    max-width: 1216px;
+    margin: auto;
+    text-align: center;
+    /* padding-bottom: 100px; */
+}
+
+.section.stay-informed.tabs-container #stay-informed + p{
+    margin-bottom: 60px;
+}
+
+.section.stay-informed.tabs-container > .tabs-wrapper{
+    max-width: 1216px;
+    margin: auto;
+    /* display: flex;
+    justify-content: center; */
+}
+
+.section.stay-informed.tabs-container > div.tabs-wrapper > div > div.tab-list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    /* padding-bottom: 60px; */
+
+    @media only screen and (max-width:767px){
+        padding: 0px 15px;
+    }
+}
+
+
+.section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-image > picture > img,
+.section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-image > picture > img{
+    height: 337px;
+    width: 100%;
+    border-radius: 16px;
+}
+
+.section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-image,
+.section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-image{
+    border-radius: 16px;
+    width: 100%;
+}
+
+.section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li,
+.section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li{
+    border-radius: 31px;
+    /* border-left-radius: 95px; */
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li,
+.section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li{
+    background-color: unset;
+    border: unset;
+    margin-right: unset !important;
+    /* max-width: 379px; */
+    align-items: center;
+
+    /* @media only screen and (max-width:767px){
+        padding: 0px 15px;
+    } */
+}
+
+.section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > p > a,
+ .section.stay-informed #tab-panel-1-1 > div > div.default-content-wrapper > p > a{
+    border-radius: 8px;
+    background: #F26E24;
+    padding: 15px 22px;
+    margin: 60px 0px;
+        padding: 15px 22px;
+    border-radius: 8px;
+    background-color: #F26E24;
+    color: white;
+    letter-spacing: 0.2px;
+    line-height: 27.2px;
+    text-decoration: none;
+    max-width: 177px;
+    margin: unset;
+    display: flex;
+    align-items: center;
+}
+
+.section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > p > a::after,
+ .section.stay-informed #tab-panel-1-1 > div > div.default-content-wrapper > p > a ::after{
+          content: "";
+    background-image: url(../../icons/lucide_arrow-up.svg);
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
+ }
+
+ .section.stay-informed #tab-panel-1-0 > div > div.default-content-wrapper > .button-container,
+ .section.stay-informed #tab-panel-1-1 > div > div.default-content-wrapper > .button-container{
+    display: flex;
+    justify-content: center;
+}
+
+.section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul,
+.section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul{
+    display: flex;
+    gap: 39px;
+    margin-top: 60px;
+    
+    @media only screen and (max-width:767px){
+        margin-top: 30px;
+        gap: unset;
+    }
+}
+
+.section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-body,
+.section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-body{
+    padding: unset;
+}
+
+.section.stay-informed #tab-panel-1-0 > div > div.cards-wrapper > div > ul > li > div.cards-card-body > p,
+.section.stay-informed #tab-panel-1-1 > div > div.cards-wrapper > div > ul > li > div.cards-card-body > p{
+    padding: 18px 0px;
+}
+
+.section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title[aria-selected=true] {
+    /* font-family: Montserrat; */
+    font-weight: 400;
+    font-style: Regular;
+    /* font-size: 20px; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    background: #FFFFFF;
+    padding: 16px 28px;
+    border-radius: 150px;
+    color: #184E7D;
+    margin-right: unset;
+        border-bottom: unset;
+    border: unset;
+}
+
+.section.stay-informed.tabs-container .tabs-wrapper .tab-list button.tab-title{
+    /* font-family: Montserrat; */
+    font-weight: 400;
+    font-style: Regular;
+    /* font-size: 20px; */
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    background: #3B6D94;
+    padding: 16px 28px;
+    border-radius: 150px;
+    margin-right: unset;
+    
+}
+
+
+/* **** */
+
+
+/* --- Mobile View (Swiper) --- */
+@media (max-width: 767px) {
+    /* Container setup */
+    .piramal-swiper {
+        position: relative;
+        padding-bottom: 70px; /* Space for the buttons */
+        overflow: hidden;
+    }
+
+    /* 1. FORCE IMAGE VISIBILITY */
+    /* This fixes the issue where images were hidden on mobile */
+    .piramal-swiper .cards-card-image {
+        display: block !important;
+        width: 100%;
+        height: 200px; /* Set a consistent height */
+        /* overflow: hidden; */
+    }
+
+    .piramal-swiper .swiper-wrapper .cards-card-body h3{
+        margin-top: 159px;
+    }
+    .piramal-swiper .swiper-wrapper .cards-card-body h3 + p{
+        margin-bottom: 30px;
+    }
+
+    .piramal-swiper .cards-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Swiper Wrapper adjustments */
+    .piramal-swiper ul.swiper-wrapper {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .piramal-swiper li.swiper-slide {
+        display: block;
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    /* 2. CUSTOM BUTTONS (Orange) */
+    .piramal-swiper .swiper-button-next,
+    .piramal-swiper .swiper-button-prev {
+        background-color: #f37021; /* Piramal Orange */
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        top: auto;
+        bottom: 10px; /* Position at the bottom */
+    }
+
+    /* Arrow icon size */
+    .piramal-swiper .swiper-button-next::after,
+    .piramal-swiper .swiper-button-prev::after {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    /* Centering the buttons */
+    .piramal-swiper .swiper-button-prev {
+        left: 35%; /* Adjust to center based on your design */
+    }
+    
+    .piramal-swiper .swiper-button-next {
+        right: 35%; /* Adjust to center based on your design */
+    }
+}
+
+/* --- Desktop View (Grid) --- */
+@media (min-width: 768px) {
+    .piramal-swiper ul {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        list-style: none;
+        padding: 0;
+    }
+
+    /* Hide Swiper controls on Desktop */
+    .piramal-swiper .swiper-pagination,
+    .piramal-swiper .swiper-button-prev,
+    .piramal-swiper .swiper-button-next {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Add padding to container for button space */
+    .section.stay-informed .cards.block {
+        position: relative;
+        padding-bottom: 70px;
+        overflow: hidden;
+        width: 100%;
+        /* padding-left: 16px; */
+        /* padding-right: 16px; */
+    }
+    
+    /* Center the swiper wrapper */
+    .section.stay-informed .cards.block .swiper-wrapper {
+        display: flex;
+        align-items: center;
+        transition-timing-function: ease-out;
+    }
+    
+    /* Make each slide centered and full width */
+    .section.stay-informed .cards.block .swiper-slide {
+        width: 343px !important;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+    }
+    
+    /* Ensure cards take proper width */
+    .section.stay-informed .cards.block .swiper-slide > * {
+        width: 100%;
+    }
+    
+    /* Ensure proper card sizing */
+    .section.stay-informed .cards.block .swiper-slide li,
+    .section.stay-informed .cards.block .swiper-slide > div {
+        max-width: 343px;
+        width: 100%;
+    }
+    
+    .section.stay-informed .cards.block .swiper-button-next,
+    .section.stay-informed .cards.block .swiper-button-prev {
+        background-color: #f37021; /* Piramal Orange */
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        z-index: 100;
+        cursor: pointer;
+        top: auto;
+        bottom: 10px;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    /* Arrow icon styling */
+    .section.stay-informed .cards.block .swiper-button-next::after,
+    .section.stay-informed .cards.block .swiper-button-prev::after {
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+    }
+    
+    /* Position buttons centered at bottom */
+    .section.stay-informed .cards.block .swiper-button-prev {
+        left: 35%;
+        transform: translateX(-50%);
+    }
+    
+    .section.stay-informed .cards.block .swiper-button-next {
+        right: 35%;
+        transform: translateX(50%);
+    }
+}
+
+
+
+/* ============================================================================
+   GLOBAL & LAYOUT - AEM EDS Structure
+   ============================================================================ */
+
+/* Main Container Spacing */
+.section.leadership-wrapper.tabs-container {
+  width: 100%;
+  background-color: #ffffff;
+  padding-top: 200px;
+
+  @media only screen and (max-width:767px){
+    padding-top: 60px;
+  }
+  /* padding: 3rem 1.5rem; */
+  /* box-sizing: border-box; */
+}
+
+@media (min-width: 1024px) {
+  .section.leadership-wrapper.tabs-container {
+    padding: 5rem 2rem;
+    /* max-width: 1200px; */
+    /* margin: 0 auto; */
+  }
+}
+
+/* ============================================================================
+   HEADER SECTION
+   ============================================================================ */
+
+.leadership-wrapper > .default-content-wrapper {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section.leadership-wrapper.tabs-container > div.tabs-wrapper{
+    margin-bottom: unset;
+}
+
+.section.leadership-wrapper.tabs-container > div.tabs-wrapper > div > div.tab-content{
+        padding: unset;
+    box-shadow: unset;
+}
+
+.section.leadership-wrapper #tab-panel-0-0 > div > div.default-content-wrapper,
+ .section.leadership-wrapper #tab-panel-0-1 > div > div.default-content-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    gap: 7px;
+
+    @media only screen and (max-width:767px){
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+/* Heading with Orange Underline */
+.leadership-wrapper > .default-content-wrapper h3 {
+  font-family: 'Inter', sans-serif; /* Assuming Inter/Roboto based on image */
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 1rem;
+}
+
+.leadership-wrapper > .default-content-wrapper h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: #ff6b35; /* Vibrant Orange */
+  border-radius: 2px;
+}
+
+@media (min-width: 768px) {
+  .leadership-wrapper > .default-content-wrapper h3 {
+    font-size: 2.5rem;
+  }
+}
+
+.leadership-wrapper > .default-content-wrapper p {
+  font-size: 0.95rem;
+  color: #666666;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.section.leadership-wrapper #tab-panel-0-0 > div > div.default-content-wrapper > .button-container{
+    max-width: 202px;
+}
+/* ============================================================================
+   TABS NAVIGATION
+   ============================================================================ */
+
+/* No dashed border in the final design images, removing it for pixel perfection */
+.section.leadership-wrapper .tabs-wrapper {
+  margin-bottom: 3rem;
+  padding: 0;
+  border: none; 
+}
+
+ .section.leadership-wrapper .tabs-wrapper .tab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section.leadership-wrapper .tabs-wrapper .tab-list {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+/* Tab Buttons (Pills) */
+.section.leadership-wrapper .tabs-wrapper .tab-title {
+  padding: 0.75rem 2.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-family: inherit;
+}
+
+/* ACTIVE STATE - Dark Navy */
+.section.leadership-wrapper .tabs-wrapper .tab-title[aria-selected="true"] {
+  background-color: #1a3b5d;
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* INACTIVE STATE - Light Blue/Grey */
+.section.leadership-wrapper .tabs-wrapper .tab-title[aria-selected="false"] {
+  background-color: #dcebf7; /* Light Blue from image */
+  color: #5b7da1;
+}
+
+.section.leadership-wrapper .tabs-wrapper .tab-title[aria-selected="false"]:hover {
+  background-color: #cfe2f0;
+}
+
+.section.tabs-container.leadership-wrapper  .tabs-wrapper .tab-list button.tab-title[aria-selected=true]{
+    padding: 16px 28px;
+    border-radius: 150px;
+    color: #184E7D;
+    margin-right: unset;
+    background: #184E7D;
+    color: white;
+    /* font-family: "Montserrat"; */
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0px;
+    border: unset;
+
+    @media only screen and (max-width:767px){
+    font-weight: 400;
+    /* font-style: Regular; */
+    font-size: 16px;
+    /* leading-trim: NONE; */
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    padding: 20px 30px;
+    }
+}
+.section.tabs-container.leadership-wrapper .tabs-wrapper .tab-list button.tab-title {
+    /* font-family: "Montserrat"; */
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    background: #D2E3F4;
+    border-radius: 150px;
+    padding: 26ppx;
+    padding: 26px 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #184E7D;
+    border: unset;
+    margin: unset;
+}
+
+
+/* ============================================================================
+CARDS GRID (Directors & Management)
+============================================================================ */
+
+.section.leadership-wrapper #tab-panel-0-0 ul,
+.section.leadership-wrapper #tab-panel-0-1 ul
+{
+    /* padding-left: 300px; */
+    /* display: flex; */
+    gap: 88px;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+
+    @media only screen and (max-width:767px){
+        display: flex;
+        flex-direction: column;
+    }
+}
+/* Animation for switching tabs */
+.section.leadership-wrapper .tabs-wrapper .tabpanel {
+  display: none;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.section.leadership-wrapper .tabs-wrapper .tabpanel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.directors-wrapper .cards ul,
+.management-team .cards ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  /* MOBILE: 1 Column (Pixel match to mobile screenshot) */
+  grid-template-columns: 1fr; 
+  gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  .directors-wrapper .cards ul,
+  .management-team .cards ul {
+    /* TABLET/DESKTOP: 4 Columns */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+.directors-wrapper .cards ul li,
+.management-team .cards ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: unset;
+}
+
+/* ============================================================================
+   IMAGE "BLOB" STYLING
+   ============================================================================ */
+
+.directors-wrapper .cards-card-image,
+.management-team .cards-card-image {
+  display: flex;
+  align-items: flex-end; /* Align image to bottom */
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: border-radius 0.3s ease;
+}
+
+ .section.leadership-wrapper.tabs-container #tab-panel-0-0 .cards-card-image img,
+ .section.leadership-wrapper.tabs-container #tab-panel-0-1 .cards-card-image img{
+    width: unset;
+    height: unset;
+}
+
+/* Subtle variation on hover for organic feel */
+.directors-wrapper .cards-card-image:hover,
+.management-team .cards-card-image:hover {
+   /* border-radius: 48% 52% 50% 50% / 55% 42% 58% 45%; */
+}
+
+@media (min-width: 768px) {
+  .directors-wrapper .cards-card-image,
+  .management-team .cards-card-image {
+    /* width: 170px; */
+    /* height: 170px; */
+  }
+}
+
+.directors-wrapper .cards-card-image img,
+.management-team .cards-card-image img {
+  /* width: 100%; */
+  /* height: 100%; */
+  /* object-fit: cover; */
+  /* Slight zoom on the person within the blob */
+  /* transform: scale(1.05);  */
+  /* transform-origin: bottom center; */
+  width: unset;
+  height: unset;
+}
+
+/* ============================================================================
+   CARD TYPOGRAPHY
+   ============================================================================ */
+
+/* NAME: Uppercase & Bold */
+.directors-wrapper .cards-card-body h3,
+.management-team .cards-card-body h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase; /* Crucial for design match */
+  letter-spacing: 0.5px;
+}
+
+/* TITLE: Blue/Grey */
+.directors-wrapper .cards-card-body p,
+.management-team .cards-card-body p {
+  font-size: 0.85rem;
+  color: #5b7da1;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* ============================================================================
+   ACTION BUTTONS (Bottom)
+   ============================================================================ */
+
+/* Select the specific default-content-wrapper inside the tab panel */
+.section.leadership-wrapper .tabs-wrapper .tabpanel > .default-content-wrapper {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .section.leadership-wrapper .tabs-wrapper .tabpanel > .default-content-wrapper {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+.section.leadership-wrapper .button-container {
+  margin: 0;
+  width: 100%; /* Full width on mobile */
+
+
+}
+
+@media (min-width: 768px) {
+  .section.leadership-wrapper .button-container {
+    width: auto;
+  }
+}
+
+/* Base Button Style */
+.section.leadership-wrapper .button-container a.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .section.leadership-wrapper .button-container a.button {
+    width: auto;
+  }
+}
+
+/* 1. Outline Button (Meet the Management) */
+.section.leadership-wrapper .button-container a.button[title="Meet the Management"] {
+  background-color: transparent;
+  border: 1px solid #ff6b35;
+  color: #ff6b35;
+}
+
+.section.leadership-wrapper .button-container a.button[title="Meet the Management"]:hover {
+  background-color: #fff5f0;
+}
+
+/* 2. Filled Button (Meet the Directors) */
+.section.leadership-wrapper .button-container a.button[title="Meet the Directors"] {
+  background-color: #ff6b35;
+  border: 1px solid #ff6b35;
+  color: #ffffff;
+}
+
+.section.leadership-wrapper .button-container a.button[title="Meet the Directors"]:hover {
+  background-color: #e55a2b;
+}
+
+/* Arrow for the Filled Button */
+.section.leadership-wrapper .button-container a.button[title="Meet the Directors"]::after {
+  content: '→';
+  margin-left: 8px;
+  font-size: 1.1em;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.section.leadership-wrapper .button-container a.button[title="Meet the Directors"]:hover::after {
+  transform: translateX(4px);
+}
+
+
+/* Main Container */
+.section.connect-us {
+    padding: 3rem 1rem;
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+    /* Ensure fonts inherit or set locally if needed */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #1e3a5f;
+}
+
+@media (min-width: 1024px) {
+    .section.connect-us {
+        padding: 5rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+/* ============================================================================
+   HEADER SECTION
+   ============================================================================ */
+
+.section.connect-us .default-content-wrapper {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section.connect-us .default-content-wrapper h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 1rem;
+}
+
+.section.connect-us .default-content-wrapper h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 4px;
+    background-color: #f37021; /* Brand Orange */
+    border-radius: 2px;
+}
+
+@media (min-width: 768px) {
+    .section.connect-us .default-content-wrapper h3 {
+        font-size: 2.5rem;
+    }
+}
+
+.section.connect-us .default-content-wrapper p {
+    font-size: 0.95rem;
+    color: #666666;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ============================================================================
+   COLUMNS LAYOUT
+   ============================================================================ */
+
+.section.connect-us .columns-wrapper {
+    width: 100%;
+}
+
+.section.connect-us .columns.block {
+    display: flex;
+    /* MOBILE: Reverse column to put Form (2nd child) on TOP */
+    flex-direction: column-reverse; 
+    gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+    .section.connect-us .columns.block {
+        /* DESKTOP: Row layout to put Info (1st child) on LEFT */
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+}
+
+.section.connect-us .columns.block > div {
+    flex: 1;
+    width: 100%;
+}
+
+.section.connect-us .columns.block > div:nth-child(2){
+    box-shadow: 0px 0px 16px 6px #11182721;
+    border-radius: 24px;
+}
+
+/* ============================================================================
+   LEFT COLUMN: CONTACT INFO
+   ============================================================================ */
+
+.section.connect-us .contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1rem;
+    position: relative;
+}
+
+/* The vertical grey line on the left */
+.section.connect-us .contact-info-list::before {
+    content: '';
+    position: absolute;
+    left: 24px; /* Align with center of icon box */
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: #e0e0e0;
+    z-index: 0;
+}
+
+@media (min-width: 1024px) {
+    .section.connect-us .contact-info-list {
+        margin-top: 3rem;
+    }
+}
+
+.section.connect-us .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+    background-color: #ffffff;
+}
+
+.section.connect-us .contact-icon-box {
+    width: 48px;
+    height: 48px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #f37021;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.section.connect-us .contact-icon-box svg {
+    width: 24px;
+    height: 24px;
+}
+
+.section.connect-us .contact-text {
+    font-size: 0.95rem;
+    color: #334e6f;
+    line-height: 1.6;
+    padding-top: 2px;
+}
+
+.section.connect-us .contact-text a {
+    color: #334e6f;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.section.connect-us .contact-text a:hover {
+    color: #f37021;
+}
+
+/* ============================================================================
+   RIGHT COLUMN: FORM CARD
+   ============================================================================ */
+
+.section.connect-us .form-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 2rem;
+    border: 1px solid #e8edf2;
+}
+
+@media (min-width: 768px) {
+    .section.connect-us .form-card {
+        padding: 2.5rem 2rem;
+    }
+}
+
+.section.connect-us .form-header {
+    margin-bottom: 1.75rem;
+}
+
+.section.connect-us .form-header h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Grid Layout for Form Fields */
+.section.connect-us .custom-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .section.connect-us .custom-form {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        column-gap: 1rem;
+    }
+}
+
+/* Full Width classes for certain fields */
+.section.connect-us .form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.section.connect-us .form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d9e1e8;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    color: #333;
+    font-family: inherit;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    outline: none;
+    appearance: none;
+}
+
+.section.connect-us .form-control::placeholder {
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+.section.connect-us .form-control:focus {
+    border-color: #f37021;
+}
+
+/* Select styling */
+.section.connect-us select.form-control {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2 4L6 8L10 4' stroke='%23999999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.section.connect-us textarea.form-control {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* Submit Button */
+.section.connect-us .btn-submit {
+    background-color: #f37021;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: auto;
+    min-width: 140px;
+}
+
+.section.connect-us .btn-submit:hover {
+    background-color: #d95d13;
+}
+
+@media (max-width: 767px) {
+    .section.connect-us .btn-submit {
+        width: 100%;
+    }
+}
+
+.section.connect-us .btn-arrow {
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform 0.2s;
+}
+
+.section.connect-us .btn-submit:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.piramal-foundation::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(24, 78, 125, 80%);
+    z-index: -1;
+}
+.piramal-foundation {
+    padding: 100px 112px;
+    position: relative;
+}
+@media (max-width: 767px) {
+    .piramal-foundation {
+        padding: 30px;
+    }
+}
+.piramal-foundation .rte-wrapper div div div p,
+.piramal-foundation .rte-wrapper div div div h2 {
+    text-align: center;
+}
+.piramal-foundation .rte-wrapper div div div p:nth-child(1) {
+    line-height: 69.87px;
+    margin-bottom: 12px;
+    letter-spacing: 4px;
+    color: rgba(249, 182, 130, 1);
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 500;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div p:nth-child(1) {
+        line-height: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 0 10px;
+        letter-spacing: 2.4px;
+    }
+}
+.piramal-foundation .rte-wrapper div div div h2 {
+    line-height: 40px;
+    margin-bottom: 30px;
+    position: relative;
+    color: white;
+    font-size: 40px;
+    font-weight: 600;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div h2 {
+        font-size: 26px;
+    }
+}
+.piramal-foundation .rte-wrapper div div div h2::before {
+    content: "";
+    position: absolute;
+    height: 8px;
+    width: 86px;
+    border-radius: 37px;
+    background: rgba(242, 110, 36, 1);
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.piramal-foundation .rte-wrapper div div div p:nth-of-type(2) {
+    font-size: 16px;
+    margin-bottom: 60px;
+    color: white;
+    padding: 0 30px;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div p:nth-of-type(2) {
+        font-size: 14px;
+        line-height: 2;
+        padding: 0;
+    }
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(1) {
+    list-style: none;
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(1) li {
+    text-align: center;
+    font-size: 16px;
+    line-height: 65px;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) {
+    list-style: none;
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul {
+    list-style: none;
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 70px;
+    margin-bottom: 60px;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul ul {
+        padding: 0;
+        margin-bottom: 50px;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul ul li {
+    line-height: 30px;
+    border: 1px solid white;
+    padding: 8px 18px;
+    border-radius: 150px;
+    font-size: 16px;
+    color: white;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .rte-wrapper div div div > ul:nth-of-type(2) ul ul li {
+        width: max-content;
+    }
+}
+.piramal-foundation .default-content-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+    .piramal-foundation .default-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.piramal-foundation .default-content-wrapper img {
+    position: absolute;
+    z-index: -2;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+}
+.piramal-foundation .default-content-wrapper .button-container {
+    display: contents;
+}
+.piramal-foundation .default-content-wrapper .button-container a {
+    font-size: 16px;
+    line-height: 27.2px;
+    color: rgba(24, 78, 125, 1);
+    padding: 15px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    font-weight: 500;
+    background-color: white;
+    color: rgba(24, 78, 125, 1);
+    text-align: center;
+}
+.piramal-foundation .default-content-wrapper .button-container a::after{
+          content: "";
+    background-image: url(../../icons/lucide_arrow-up.svg);
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
+}
+
+
+@media (max-width: 767px) {
+    .piramal-foundation .default-content-wrapper .button-container a {
+        width: 231px;
+    }
+}
+.piramal-foundation .default-content-wrapper .button-container + .button-container a {
+    background-color: rgba(242, 110, 36, 1);
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+/* Scoped to leadership wrapper to avoid breaking other sliders */
+.section.leadership-wrapper .swiper {
+  position: relative;
+  overflow: hidden;
+  margin-left: 200px;
+}
+
+.section.leadership-wrapper .swiper-slide {
+  height: auto;
+  display: flex; /* Ensures equal height cards */
+}
+
+/* --- Arrow Styling --- */
+.section.leadership-wrapper .swiper-button-next,
+.section.leadership-wrapper .swiper-button-prev {
+  color: #f7941d; /* Piramal Orange based on your image */
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  opacity: 0; /* Hidden by default */
+  visibility: hidden;
+}
+
+.section.leadership-wrapper .swiper-button-next:after,
+.section.leadership-wrapper .swiper-button-prev:after {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* --- Hover Logic --- */
+/* Only apply hover effect on devices that support hover (Desktop) */
+@media (hover: hover) {
+  .section.leadership-wrapper .swiper:hover .swiper-button-next,
+  .section.leadership-wrapper .swiper:hover .swiper-button-prev {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* On Mobile/Touch devices, you might want arrows always visible or just rely on touch */
+@media (hover: none) {
+  .section.leadership-wrapper .swiper-button-next,
+  .section.leadership-wrapper .swiper-button-prev {
+    display: none; /* Hide arrows on mobile, rely on swipe */
+  }
+}
+
+/* --- Card Styling Fixes for Swiper --- */
+.section.leadership-wrapper .cards ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.section.leadership-wrapper .cards li {
+  width: auto !important;
+  flex: 0 0 auto;
+}
+
+/* Mobile: Full width slides */
+@media (max-width: 767px) {
+  .section.leadership-wrapper .swiper-slide {
+    width: 100% !important;
+    max-width: 343px;
+  }
+}
+
+/* #tab-panel-0-0 */
+
+.bussiness-offerings {
+    padding: 100px 112px;
+    background-color: rgba(24, 78, 125, 1);
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings {
+        padding: 30px 16px;
+    }
+}
+.bussiness-offerings .default-content-wrapper {
+    color: white;
+    text-align: center;
+}
+.bussiness-offerings .default-content-wrapper > h2 {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 24px;
+    position: relative;
+    height: 60px;
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .default-content-wrapper > h2 {
+        font-size: 26px;
+    }
+}
+.bussiness-offerings .default-content-wrapper > h2::before {
+    content: "";
+    position: absolute;
+    width: 86px;
+    height: 8px;
+    border-radius: 37px;
+    background-color: rgba(242, 110, 36, 1);
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+}
+.bussiness-offerings .default-content-wrapper p {
+    font-size: 16px;
+    line-height: 30px;
+    display: flex;
+    justify-self: center;
+    /* margin-bottom: 60px; */
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .default-content-wrapper p {
+        font-size: 14px;
+        line-height: 28px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+    }
+}
+.bussiness-offerings .default-content-wrapper .button-container a {
+    padding: 15px 22px;
+    border-radius: 8px;
+    background-color: #F26E24;
+    color: white;
+    letter-spacing: 0.2px;
+    line-height: 27.2px;
+    text-decoration: none;
+    max-width: 177px;
+    margin: unset;
+    display: flex;
+    align-items: center;
+}
+
+.bussiness-offerings .default-content-wrapper .button-container a::after{
+          content: "";
+    background-image: url(../../icons/lucide_arrow-up.svg);
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 8px;
+}
+
+
+.bussiness-offerings .cards.block > ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 24px;
+    margin-bottom: 60px;
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .cards.block > ul {
+        grid-template-columns: 1fr;
+        margin-bottom: 50px;
+    }
+}
+.bussiness-offerings .cards.block > ul li {
+    background-color: white;
+    border-radius: 24px;
+    padding: 20px;
+}
+.bussiness-offerings .cards.block > ul li h3 {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #184E7D;
+    text-transform: uppercase;
+    font-size: 24px;
+    letter-spacing: 4.8px;
+    margin-bottom: 18px;
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .cards.block > ul li h3 {
+        font-size: 18px;
+        letter-spacing: 3.6px;
+    }
+}
+.bussiness-offerings .cards.block > ul li h3 .icon {
+    background: linear-gradient(#FFFFFF, #021e3f);
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    border-radius: 10px;
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .cards.block > ul li h3 .icon {
+        height: 40px;
+        width: 40px;
+    }
+}
+.bussiness-offerings .cards.block > ul li h3 + p {
+    font-size: 16px;
+    line-height: 30px;
+    color: #184E7D;
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .cards.block > ul li h3 + p {
+        font-size: 14px;
+        line-height: 26px;
+    }
+}
+.bussiness-offerings .cards.block > ul li h3 + p + h2 {
+    margin: 25px 0;
+    font-size: 16px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #184E7D;
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .cards.block > ul li h3 + p + h2 {
+        margin: 20px 0;
+        font-size: 14px;
+        font-weight: 1.4px;
+    }
+}
+.bussiness-offerings .cards.block > ul li ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+.bussiness-offerings .cards.block > ul li ul li {
+    background-color: #D2E3F4;
+    border-radius: 150px;
+    padding: 4px 16px;
+    color: #184E7D;
+    font-size: 16px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .cards.block > ul li ul li {
+        font-size: 12px;
+    }
+}
+.bussiness-offerings .cards.block > ul li ul + p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 30px;
+    color: #4F4F4F;
+    margin-bottom: 18px;
+}
+@media only screen and (max-width: 767px) {
+    .bussiness-offerings .cards.block > ul li ul + p {
+        font-size: 14px;
+        line-height: 26px;
+    }
+}
+.bussiness-offerings .cards.block > ul li ul + p + p {
+    /* padding: 15px 22px; */
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    color: #F26E24;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.d-none{
+    display: none;
+}
+
+.mobile-d-none{
+    @media only screen and (max-width:767px){
+        display: none;
+    }
+}

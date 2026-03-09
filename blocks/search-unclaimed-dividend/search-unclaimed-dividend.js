@@ -308,8 +308,8 @@ async function searchUnclaimedDividend(year, folioNo) {
     // const response = await fetch(url.toString());
 
     const formdata = new FormData();
-    formdata.append("year", "2017-2018");
-    formdata.append("folioNo", "00023325");
+    formdata.append("year", year);
+    formdata.append("folioNo", folioNo);
 
     const requestOptions = {
       method: "POST",

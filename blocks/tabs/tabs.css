@@ -138,3 +138,260 @@
   }
   }
   /* tabs inside tabs end */
+
+  /* Shareholding wrap styles - Start */
+  .section.shareholding-wrap {
+    padding: 0;
+    margin: 0;
+  }
+
+   .section.shareholding-wrap h1{          
+        font-size: 38px;
+    color: #fff;
+    text-align: center;
+    font-weight: 800;
+    font-family: 'Nunito-Extrabold';
+    /* background: transparent linear-gradient(103deg, #365069 0%, #22394E 100%) 0% 0% no-repeat padding-box; */
+   }
+
+  .section.shareholding-wrap > .default-content-wrapper {
+    background: linear-gradient(135deg, #1e2e58 0%, #2a3f6e 50%, #1e2e58 100%);
+    border-radius: 24px 24px 0 0;
+    padding: 40px 50px 20px;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .section.shareholding-wrap > .default-content-wrapper h2 {
+    color: #ffffff;
+    font-family: 'Nunito-Bold', sans-serif;
+    font-size: 2.25rem;
+    line-height: 1.3;
+    text-align: center;
+    margin-bottom: 0;
+    font-style: italic;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper {
+    background: linear-gradient(135deg, #1e2e58 0%, #2a3f6e 50%, #1e2e58 100%);
+    border-radius: 0 0 24px 24px;
+    padding: 20px 50px 40px;
+    position: relative;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tabs {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tabs::before {
+    display: none;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 10px 40px;
+    position: relative;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-list button.tab-title {
+    background: transparent;
+    border: 2px solid #ffffff;
+    border-radius: 50px;
+    color: #ffffff;
+    font-family: 'Nunito-SemiBold', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    height: auto;
+    line-height: 1.4;
+    margin: 0;
+    padding: 12px 24px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-list button.tab-title:not(:first-child) {
+    margin-left: 0;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-list button.tab-title:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-list button.tab-title[aria-selected="true"] {
+    background: var(--orange, #F26841);
+    border: 2px solid var(--orange, #F26841);
+    color: #ffffff;
+    font-family: 'Nunito-Bold', sans-serif;
+    font-weight: 700;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tabs > .tab-content {
+    display: block;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tabs > .tab-content .tabpanel {
+    margin: 0;
+  }
+
+  /* Navigation arrows for shareholding tabs */
+  .section.shareholding-wrap .tabs-wrapper {
+    position: relative;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow.prev {
+    left: 10px;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow.next {
+    right: 10px;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow svg {
+    width: 20px;
+    height: 20px;
+    fill: #ffffff;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow.next-highlight {
+    background: #ffffff;
+    border-color: #ffffff;
+  }
+
+  .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow.next-highlight svg {
+    fill: var(--orange, #F26841);
+  }
+
+  /* Responsive styles for shareholding-wrap */
+  @media screen and (max-width: 1024px) {
+    .section.shareholding-wrap > .default-content-wrapper,
+    .section.shareholding-wrap .tabs-wrapper {
+      /* padding: 30px 40px; */
+      /* border-radius: 20px;s */
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-list {
+      padding: 10px 30px;
+      gap: 12px;
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-list button.tab-title {
+      font-size: 0.9rem;
+      padding: 10px 20px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .section.shareholding-wrap > .default-content-wrapper,
+    .section.shareholding-wrap .tabs-wrapper {
+      padding: 24px 20px;
+      /* border-radius: 16px; */
+      /* margin-bottom: 24px; */
+    }
+
+    .section.shareholding-wrap > .default-content-wrapper h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-list {
+      padding: 8px 30px;
+      gap: 8px;
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-list button.tab-title {
+      font-size: 0.85rem;
+      padding: 8px 16px;
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow {
+      width: 28px;
+      height: 28px;
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow.prev {
+      left: 5px;
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-nav-arrow.next {
+      right: 5px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .section.shareholding-wrap > .default-content-wrapper,
+    .section.shareholding-wrap .tabs-wrapper {
+      padding: 20px 15px;
+      /* border-radius: 12px; */
+    }
+
+    .section.shareholding-wrap > .default-content-wrapper h2 {
+      font-size: 1.25rem;
+    }
+
+    .section.shareholding-wrap .tabs-wrapper .tab-list button.tab-title {
+      font-size: 0.75rem;
+      padding: 6px 12px;
+    }
+
+  }
+  /* Shareholding wrap styles - End */
+  .section.shareholding-wrap .tab-nav-arrow.prev{
+    display: none;
+  }
+  .section.shareholding-wrap .tab-nav-arrow.next{
+    display: none;
+  }
+  .section.shareholding-wrap .tabs.block .tab-content #tab-panel-0-0 p{
+    display: none;
+  }
+
+
+
+  

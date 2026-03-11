@@ -142,12 +142,14 @@ footer.footer-wrapper .footer {
   align-items: unset;
   gap: unset;
 }
-.footer-section-second ul > li > p {
+.footer-section-second ul > li > p,
+.footer-section-second ul > li > h2 {
   font-size: 1.125rem;
   color: var(--white);
   padding-bottom: 8px;
   font-family: "Nunito-Extrabold";
   font-weight: 800;
+  margin: 0;
 }
 
 .footer-section-second ul > li > ul > li>a,
@@ -253,12 +255,15 @@ footer.footer-wrapper .footer {
   padding: 50px 0 48px;
 }
 
-.section.footer-follow-us-wrapper .default-content-wrapper p {
+.section.footer-follow-us-wrapper .default-content-wrapper p,
+.section.footer-follow-us-wrapper .default-content-wrapper h2 {
   color: var(--zinc);
   font-family: 'Nunito-Regular',sans-serif;
   font-size: 1rem;
+  font-weight: 400;
   line-height: 1.5rem;
   text-align: center;
+  margin: 0;
 }
 
 .section.footer-follow-us-wrapper .wrappercreation-wrapper .wrapper-creation-container {
@@ -386,11 +391,13 @@ footer.footer-wrapper .footer {
     text-align: left;
     margin: 0;
   }
-  .footer-section-second ul > li > p {
+  .footer-section-second ul > li > p,
+  .footer-section-second ul > li > h2 {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
     color: var(--white);
+    margin: 0;
   }
   .footer-section-second ul > li > ul > li>a,
   .footer-section-second ul > li > ul > li,

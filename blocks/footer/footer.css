@@ -225,7 +225,7 @@ footer.footer-wrapper .footer {
   font-weight: 400;
   line-height: 1.5rem;
   margin-left: 16px;
-  text-decoration: none;
+  text-decoration: underline;
 }
 .footer-section-second{
   display: grid;
@@ -577,6 +577,7 @@ footer.footer-wrapper .footer {
   .section.mobile-left-side-footer .default-content-wrapper p>a {
     display: block;
     color: var(--white);
+    text-decoration: underline;
   }
 
   .section.footer-follow-us-wrapper {
@@ -722,6 +723,7 @@ footer.footer-wrapper .footer {
     display: inline;
     color: var(--white);
     margin-left: 16px;
+    text-decoration: underline;
   }
 
   .section.footer-follow-us-wrapper .wrappercreation-wrapper .wrapper-creation-container .imgwithlink-wrapper .image-href-desktop a>picture img,

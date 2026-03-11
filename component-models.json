@@ -2892,5 +2892,94 @@
         "valueType": "string"
       }
     ]
+  },
+   {
+    "id": "searchunclaimeddividend",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "pageTitle",
+        "label": "Page Title",
+        "description": "Title displayed above the search form"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "sectionLabel",
+        "label": "Section Label",
+        "description": "Label for the search section"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "yearLabel",
+        "label": "Year Dropdown Label",
+        "description": "Placeholder text for year dropdown"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "folioLabel",
+        "label": "Folio Field Label",
+        "description": "Label for the folio input field"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "searchButtonText",
+        "label": "Search Button Text",
+        "description": "Text for the search button"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "colSrNo",
+        "label": "Column: SR. NO.",
+        "description": "Table column heading for serial number"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "colFolioNo",
+        "label": "Column: Folio No.",
+        "description": "Table column heading for folio number"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "colWarrantNo",
+        "label": "Column: Warrant No.",
+        "description": "Table column heading for warrant number"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "colNameAddress",
+        "label": "Column: Name & Address",
+        "description": "Table column heading for shareholder details"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "colNoOfShares",
+        "label": "Column: No. of Shares",
+        "description": "Table column heading for number of shares"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "colAmount",
+        "label": "Column: Amount",
+        "description": "Table column heading for amount"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "colMicrNo",
+        "label": "Column: MICR No.",
+        "description": "Table column heading for MICR number"
+      }
+    ]
   }
 ]

@@ -367,7 +367,7 @@ header nav .nav-sections .nav-drop::after{
   padding: unset;
 }
 .header-wrapper .nav-wrapper nav .nav-sections .default-content-wrapper>ul>li>p>a>sup{
-  background-color: #41c672;
+  background-color: #2E7D32;
   color: #fff;
   font-size: 0.625rem;
   font-family: 'Nunito-Bold';
@@ -871,7 +871,7 @@ header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
     padding: 4px 10px 4px 8px;
     font-size: 0.75rem;
     width: 47px;
-    background-color: #41C672;
+    background-color: #2E7D32;
     color: #fff;
     font-size: 0.75rem;
     font-family: 'Nunito-Bold';

@@ -584,13 +584,27 @@ export function getRelParam(a) {
  * @param {string} [alt] alt text to be added to icon
  */
 function decorateIcon(span, prefix = '', alt = '') {
-    const iconName = Array.from(span.classList)
-        .find((c) => c.startsWith('icon-'))
-        .substring(5);
+    const iconClass = Array.from(span.classList).find((c) => c.startsWith('icon-'));
+    if (!iconClass) return; // Safety check
+    const iconName = iconClass.substring(5);
     const img = document.createElement('img');
     img.dataset.iconName = iconName;
     img.src = `${window.hlx.codeBasePath}${prefix}/icons/${iconName}.svg`;
-    img.alt = alt;
+    // Fix WCAG 1.1.1: Generate alt text for logo icons only, empty for decorative
+    if (alt) {
+        img.alt = alt;
+    } else if (iconName.endsWith('-logo') || iconName.includes('logo-')) {
+        // Only actual logo icons need meaningful alt text (e.g., footer-piramal-finance-logo, piramal-logo-02)
+        const cleanName = iconName
+            .replace(/^(footer|header|nav)-/, '') // Remove positional prefixes
+            .replace(/-\d+$/, '') // Remove version numbers like -02
+            .split('-')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+        img.alt = cleanName;
+    } else {
+        img.alt = '';
+    }
     img.loading = 'lazy';
     span.append(img);
 }

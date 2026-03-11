@@ -19,6 +19,18 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
   block.append(footer);
+  
+  // Fix WCAG 1.3.1: Remove unnecessary list semantics from footer section headings
+  // The outer <ul> in footer-section-second wraps columns, not actual list content
+  block.querySelectorAll('.footer-section-second .columns > div > div > ul').forEach((ul) => {
+    // Add role="presentation" to outer UL (layout container, not semantic list)
+    ul.setAttribute('role', 'presentation');
+    // Direct child LIs are also presentational
+    ul.querySelectorAll(':scope > li').forEach((li) => {
+      li.setAttribute('role', 'presentation');
+    });
+  });
+
   try {
     block.querySelectorAll('li,p').forEach((el) => {
       el.addEventListener('click', (e) => {

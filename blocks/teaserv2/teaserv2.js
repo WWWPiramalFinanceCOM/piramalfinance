@@ -65,8 +65,6 @@ export function renderTeaserHTMLFactory(props, block) {
 
   const mainLink = mainHref?.textContent.trim() || '';
   const container = document.createElement('a');
-  // container.href = mainLink ||  'javascript:void(0)';
-  container.setAttribute('aria-label', 'teaser link');
   container.setAttribute('tabindex', '0');
   mainLink ? container.href = mainLink : container.setAttribute('role', 'button');
 

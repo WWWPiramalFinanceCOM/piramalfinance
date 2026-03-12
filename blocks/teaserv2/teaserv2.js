@@ -65,6 +65,11 @@ export function renderTeaserHTMLFactory(props, block) {
 
   const mainLink = mainHref?.textContent.trim() || '';
   const container = document.createElement('a');
+  // Fix WCAG 2.4.6: Add descriptive aria-label from title instead of generic text
+  const titleText = title?.textContent.trim() || '';
+  if (titleText) {
+    container.setAttribute('aria-label', titleText);
+  }
   container.setAttribute('tabindex', '0');
   mainLink ? container.href = mainLink : container.setAttribute('role', 'button');
 

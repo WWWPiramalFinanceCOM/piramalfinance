@@ -53,6 +53,14 @@ header {
   text-decoration: none;
 }
 
+/* Fix WCAG 2.4.7: Focus Visible - Ensure keyboard focus is visible on header nav items */
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li>p:focus-visible,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li>p>a:focus-visible,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li>a:focus-visible {
+  outline: 2px solid var(--orange, #F26841);
+  outline-offset: 2px;
+}
+
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections >.default-content-wrapper >ul>li>ul>li >a,
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections >.default-content-wrapper >ul>li>ul>li >p{
   font-family: "Nunito-Bold", sans-serif;

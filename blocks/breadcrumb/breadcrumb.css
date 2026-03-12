@@ -57,6 +57,11 @@
     text-decoration: none;
 }
 
+/* Fix WCAG 1.4.3: Contrast - Active breadcrumb link needs 4.5:1 contrast on dark background */
+.section.breadcrumb-handle > .breadcrumb-wrapper > .breadcrumb.white > nav > a:last-child {
+    color: var(--white);
+}
+
 @media screen and (max-width:1024px){
     .section.breadcrumb-handle .breadcrumb-wrapper{
         padding: 0 16px;

@@ -536,9 +536,9 @@ header nav .nav-sections .nav-drop::after{
 .login-button-wrapper .default-content-wrapper .button-container a{
   align-items: center;
   background: var(--rosewhite);
-  border: 1px solid var(--orange);
+  border: 1px solid #C04A1D;
   border-radius: 19px;
-  color: var(--orange);
+  color: #C04A1D;
   display: flex;
   font-family: 'Nunito-Bold', sans-serif;
   font-size: 0.75rem;
@@ -660,7 +660,7 @@ header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
   content: "New";
   position: absolute;
   right: 60px;
-  background-color: #41c66e;
+  background-color: #2E7D32;
   border-radius: 4px;
   color: #fff;
   font-family: 'Nunito-Bold',sans-serif;
@@ -1244,7 +1244,7 @@ header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
   content: 'FREE';
   line-height: 1.5rem;
   align-items: center;
-  background-color: #41c66e;
+  background-color: #2E7D32;
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
@@ -1267,7 +1267,7 @@ header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
 }
 .section.mobile-view-header .code-wrapper .code div > div > ul:nth-child(6) > li:nth-child(1) > ul > li:nth-child(5)::after{
     content: 'New';
-    background-color: #41c66e;
+    background-color: #2E7D32;
     border-radius: 4px;
     color: #fff;
     font-family: 'Nunito-Bold', sans-serif;

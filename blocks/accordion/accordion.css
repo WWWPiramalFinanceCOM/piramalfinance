@@ -15,10 +15,17 @@
     line-height: 21px;
 }
 
+/* Fix WCAG 2.4.7: Focus Visible - Ensure keyboard focus is visible on accordion */
+.accordion details summary:focus-visible {
+    outline: 2px solid var(--orange, #F26841);
+    outline-offset: 2px;
+}
+
 .accordion details summary :where(h2, h3, h4, h5, h6) {
     margin: 0;
     font: inherit;
-    color: inherit;
+    /* Fix WCAG 1.4.3: Contrast - Ensure heading text has sufficient contrast */
+    color: var(--darkcharcoal, #333333);
     display: inline;
 }
 

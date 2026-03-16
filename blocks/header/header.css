@@ -1550,7 +1550,9 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"],
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li>p>a[title="Login"] {
-  color: white;
+  /* color: white;
+   */
+   color: black;
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a,

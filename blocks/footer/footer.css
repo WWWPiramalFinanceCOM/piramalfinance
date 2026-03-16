@@ -75,8 +75,8 @@ footer.footer-wrapper .footer {
   text-decoration: none;
 }
 .footer-section-first .columns-wrapper p sup{
-  background-color: #2E7D32;
-  color: var(--white);
+  /* background-color: #2E7D32; */
+  /* color: var(--white); */
   font-size: 0.75rem;
   font-family: 'Nunito-Bold';
   padding: 6px 10px;
@@ -91,6 +91,8 @@ footer.footer-wrapper .footer {
   right: 22.5%;
   text-align: center;
   justify-content: center;
+      background-color: #1B8040;
+    color: black;
 }
 
 .footer-section-second .columns > div > div > ul {
@@ -490,8 +492,8 @@ footer.footer-wrapper .footer {
     padding: 24px 0;
   }
   .footer-section-first .columns-wrapper p sup{
-    background-color: #2E7D32;
-    color: var(--white);
+    /* background-color: #2E7D32; */
+    /* color: var(--white); */
     font-size: 0.75rem;
     font-family: 'Nunito-Bold';
     padding: 6px 10px;
@@ -507,6 +509,8 @@ footer.footer-wrapper .footer {
     justify-content: center;
     right: 77px;
     left: 0;
+        background-color: #1B8040;
+    color: black;
   }
   header nav .nav-brand img {
     width: 82px;

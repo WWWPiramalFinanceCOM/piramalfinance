@@ -734,9 +734,9 @@ body.modal-open footer {
   bottom: 59px;
   justify-content: center;
   align-items: center;
-  background-color: #2E7D32;
+  /* background-color: #2E7D32;/ */
   border-radius: 4px;
-  color: var(--piramal-white-100);
+  /* color: var(--piramal-white-100); */
   cursor: pointer;
   display: flex;
   font-size: 0.625rem;
@@ -747,6 +747,9 @@ body.modal-open footer {
   padding: 0 4px;
   text-decoration: none;
   width: fit-content;
+
+      background-color: #1B8040;
+    color:  var(--black);
 }
 
 .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p .icon {
@@ -1111,9 +1114,9 @@ body.modal-open footer {
 
   .header .nav-brand .default-content-wrapper>ul>li>ul>li>p>sup {
     align-items: center;
-    background-color: #2E7D32;
+    /* background-color: #2E7D32; */
     border-radius: 4px;
-    color: var(--piramal-white-100);
+    /* color: var(--piramal-white-100); */
     display: flex;
     font-family: "Nunito-Bold", sans-serif;
     font-weight: 700;
@@ -1124,6 +1127,8 @@ body.modal-open footer {
     font-size: 0.75rem;
     line-height: 24px;
     text-transform: uppercase;
+         background-color: #1B8040;
+    color: black;
   }
 
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(3)>ul>li:nth-child(1)>ul>li>a>sup {
@@ -1527,8 +1532,8 @@ body.modal-open footer {
 .header-wrapper.primary .nav-wrapper #nav>.section.nav-sections>.default-content-wrapper>ul>li:last-child p a {
   border-radius: 8px;
   border: 1px solid #C04A1D;
-  background: #C04A1D;
-  color: white;
+  background: #F26E24;
+   color: var(--black);
 }
 
 /* .header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child{

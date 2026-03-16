@@ -736,7 +736,7 @@ body.modal-open footer {
   align-items: center;
   /* background-color: #2E7D32;/ */
   border-radius: 4px;
-  /* color: var(--piramal-white-100); */
+  color: var(--piramal-white-100);
   cursor: pointer;
   display: flex;
   font-size: 0.625rem;
@@ -747,9 +747,8 @@ body.modal-open footer {
   padding: 0 4px;
   text-decoration: none;
   width: fit-content;
-
-      background-color: #1B8040;
-    color:  var(--black);
+  background-color: #1B8040;
+  /* color:  var(--black); */
 }
 
 .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p .icon {
@@ -1116,7 +1115,7 @@ body.modal-open footer {
     align-items: center;
     /* background-color: #2E7D32; */
     border-radius: 4px;
-    /* color: var(--piramal-white-100); */
+    color: var(--piramal-white-100);
     display: flex;
     font-family: "Nunito-Bold", sans-serif;
     font-weight: 700;
@@ -1128,7 +1127,7 @@ body.modal-open footer {
     line-height: 24px;
     text-transform: uppercase;
          background-color: #1B8040;
-    color: black;
+    /* color: black; */
   }
 
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(3)>ul>li:nth-child(1)>ul>li>a>sup {
@@ -1457,7 +1456,9 @@ body.modal-open footer {
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a:hover {
-  color: #C04A1D;
+  /* color: #C04A1D; */
+  color: #134F7F;
+    text-decoration: underline;
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-brand {
@@ -1514,7 +1515,10 @@ body.modal-open footer {
 
 
 }
-
+.header-wrapper.primary nav#nav a:hover{
+  color: #134F7F;
+    text-decoration: underline;
+} 
 /* .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul >li:nth-child(7) >p {
   padding: unset;
   font-size: 16px;

@@ -257,10 +257,11 @@ footer.footer-wrapper .footer {
 
 .section.footer-follow-us-wrapper .default-content-wrapper p,
 .section.footer-follow-us-wrapper .default-content-wrapper h2 {
-  color: var(--white);
-  font-family: 'Nunito-Regular',sans-serif;
+  /* color: var(--white); */
+  color: #EDEDED;
+  font-family: 'Nunito-Medium',sans-serif;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5rem;
   text-align: center;
   margin: 0;
@@ -284,8 +285,9 @@ footer.footer-wrapper .footer {
 }
 
 .section.footer-last-wrapper .default-content-wrapper p>strong {
-  color: var(--white);
-  font-family: 'Nunito-Bold',sans-serif;
+  /* color: var(--white); */
+  color: #EDEDED;
+  font-family: 'Nunito-Medium', sans-serif;
   font-size: 1rem;
   font-weight: 700;
   line-height: 2rem;
@@ -302,8 +304,10 @@ footer.footer-wrapper .footer {
 }
 
 .section.footer-last-wrapper .default-content-wrapper p {
-  color: var(--white);
-  font-family: 'Nunito-Regular',sans-serif;
+  /* color: var(--white); */
+  color: #EDEDED;
+
+  font-family: 'Nunito-Medium',sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.25rem;

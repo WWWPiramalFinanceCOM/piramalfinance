@@ -367,7 +367,8 @@ ol .accordion ul {
 .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block summary.active h3,
 .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block summary.active p,
 .faq-accordion-css-with-orange-heading .accordion-group-wrapper .accordion-group.block.shade-box .accordion.block summary.active {
-    color: var(--orange);
+    /* color: var(--orange); */
+    color: var(--black);
     font-weight: 700;
 }
 

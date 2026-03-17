@@ -209,6 +209,14 @@
   color: var(--grey, #999999);
 }
 
+.search-unclaimed-dividend .folio-error {
+  color: #cc0000;
+  display: block;
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
 /* Search Button */
 .search-unclaimed-dividend .button-field {
   flex: 0 0 auto;

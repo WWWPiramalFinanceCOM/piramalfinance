@@ -12,7 +12,7 @@ npm i
 ```
 
 ## Linting
-
+`
 ```sh
 npm run lint
 ```

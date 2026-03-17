@@ -471,6 +471,12 @@ function initializeSearch(content) {
       // Show loading state
       showLoading(true);
       const results = await searchUnclaimedDividend(year, folioId);
+      
+      // Update table with results
+      updateTable(results, content);
+      
+      // Hide loading state
+      showLoading(false);
     });
   }
 

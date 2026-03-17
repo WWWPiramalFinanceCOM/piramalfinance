@@ -276,6 +276,19 @@ async function loadEager(doc) {
   }
 }
 
+// function autoloadForm(doc) {
+//   doc.querySelectorAll('a').forEach((anchor) => {
+//     if (anchor.href && anchor.href.includes('/leadform/')) {
+//       anchor.addEventListener('click', async (e) => {
+//         e.preventDefault();
+//         const {onCLickApplyFormOpen} = await import('../blocks/applyloanform/applyloanforms.js');
+//         onCLickApplyFormOpen(e);
+//         // document.querySelector('.expert.orangeexpert').click();
+//       })
+//     }
+//   });
+// }
+
 /**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
@@ -754,11 +767,11 @@ function autoloadForm(doc) {
 
 async function loadLazy(doc) {
   autolinkModals(doc);
-  autoloadForm(doc)
+  autoloadForm(doc);
   const main = doc.querySelector('main');
   await loadBlocks(main);
 
-  // Move cards to tab panels
+  // Move cards tozz tab panels
   moveCardsToTabPanels();
   initPiramalCards();
   moveDirectorsToTabPanel();

@@ -57,6 +57,11 @@
     text-decoration: none;
 }
 
+/* Fix WCAG 1.4.3: Contrast - Active breadcrumb link needs 4.5:1 contrast on dark background */
+.section.breadcrumb-handle > .breadcrumb-wrapper > .breadcrumb.white > nav > a:last-child {
+    color: var(--white);
+}
+
 @media screen and (max-width:1024px){
     .section.breadcrumb-handle .breadcrumb-wrapper{
         padding: 0 16px;
@@ -105,3 +110,33 @@
     }
 }
 
+/* Fix WCAG 1.4.3: Breadcrumb colors for dark background pages (add class 'breadcrumb-dark-bg' in authoring) */
+.section.breadcrumb-handle.breadcrumb-dark-bg > .breadcrumb-wrapper > .breadcrumb.block > nav > a {
+    color: #EDEDED !important;
+    font-family: 'Nunito-Regular', sans-serif;
+    font-size: 0.975rem;
+    font-weight: 400;
+    line-height: 20px;
+    text-decoration: none;
+}
+
+.section.breadcrumb-handle.breadcrumb-dark-bg > .breadcrumb-wrapper > .breadcrumb.block > nav > a:last-child {
+    color: #FFFFFF !important;
+    font-family: 'Nunito-Regular', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 20px;
+    text-decoration: none;
+}
+
+.section.breadcrumb-handle.breadcrumb-dark-bg > .breadcrumb-wrapper > .breadcrumb.block > nav > a:hover {
+    color: #FFFFFF;
+}
+
+.section.breadcrumb-handle.breadcrumb-dark-bg .breadcrumb-wrapper > .breadcrumb > nav > span svg {
+    stroke: #EDEDED;
+}
+
+.section.breadcrumb-handle > .breadcrumb-wrapper > .breadcrumb.block > nav > a{
+    color: unset !important;
+}

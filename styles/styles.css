@@ -305,6 +305,14 @@ main img {
     width: 100%
 }
 
+/* Fix WCAG 2.4.7: Focus Visible - Ensure focus indicator is visible */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--orange, #F26841);
+    outline-offset: 2px
+}
+
 .mt-5 {
     margin-top: 5px
 }

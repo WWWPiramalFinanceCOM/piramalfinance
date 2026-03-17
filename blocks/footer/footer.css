@@ -75,7 +75,7 @@ footer.footer-wrapper .footer {
   text-decoration: none;
 }
 .footer-section-first .columns-wrapper p sup{
-  background-color: #41C672;
+  /* background-color: #2E7D32; */
   color: var(--white);
   font-size: 0.75rem;
   font-family: 'Nunito-Bold';
@@ -91,6 +91,8 @@ footer.footer-wrapper .footer {
   right: 22.5%;
   text-align: center;
   justify-content: center;
+      background-color: #1B8040;
+    /* color: black; */
 }
 
 .footer-section-second .columns > div > div > ul {
@@ -142,12 +144,14 @@ footer.footer-wrapper .footer {
   align-items: unset;
   gap: unset;
 }
-.footer-section-second ul > li > p {
+.footer-section-second ul > li > p,
+.footer-section-second ul > li > h2 {
   font-size: 1.125rem;
   color: var(--white);
   padding-bottom: 8px;
   font-family: "Nunito-Extrabold";
   font-weight: 800;
+  margin: 0;
 }
 
 .footer-section-second ul > li > ul > li>a,
@@ -217,13 +221,13 @@ footer.footer-wrapper .footer {
   margin-left: auto;
 }
 .footer-section-third .default-content-wrapper p a{
-  color: var(--salmon);
+  color: var(--white);
   font-family: 'Nunito-Regular', sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
   margin-left: 16px;
-  text-decoration: none;
+  text-decoration: underline;
 }
 .footer-section-second{
   display: grid;
@@ -253,12 +257,16 @@ footer.footer-wrapper .footer {
   padding: 50px 0 48px;
 }
 
-.section.footer-follow-us-wrapper .default-content-wrapper p {
-  color: var(--zinc);
-  font-family: 'Nunito-Regular',sans-serif;
+.section.footer-follow-us-wrapper .default-content-wrapper p,
+.section.footer-follow-us-wrapper .default-content-wrapper h2 {
+  /* color: var(--white); */
+  color: #EDEDED;
+  font-family: 'Nunito-Medium',sans-serif;
   font-size: 1rem;
+  font-weight: 500;
   line-height: 1.5rem;
   text-align: center;
+  margin: 0;
 }
 
 .section.footer-follow-us-wrapper .wrappercreation-wrapper .wrapper-creation-container {
@@ -279,8 +287,9 @@ footer.footer-wrapper .footer {
 }
 
 .section.footer-last-wrapper .default-content-wrapper p>strong {
-  color: var(--zinc);
-  font-family: 'Nunito-Bold',sans-serif;
+  /* color: var(--white); */
+  color: #EDEDED;
+  font-family: 'Nunito-Medium', sans-serif;
   font-size: 1rem;
   font-weight: 700;
   line-height: 2rem;
@@ -297,8 +306,10 @@ footer.footer-wrapper .footer {
 }
 
 .section.footer-last-wrapper .default-content-wrapper p {
-  color: var(--zinc);
-  font-family: 'Nunito-Regular',sans-serif;
+  /* color: var(--white); */
+  color: #EDEDED;
+
+  font-family: 'Nunito-Medium',sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.25rem;
@@ -386,11 +397,13 @@ footer.footer-wrapper .footer {
     text-align: left;
     margin: 0;
   }
-  .footer-section-second ul > li > p {
+  .footer-section-second ul > li > p,
+  .footer-section-second ul > li > h2 {
     font-size: 0.875rem;
     line-height: 1.25rem;
     font-weight: 700;
     color: var(--white);
+    margin: 0;
   }
   .footer-section-second ul > li > ul > li>a,
   .footer-section-second ul > li > ul > li,
@@ -479,8 +492,8 @@ footer.footer-wrapper .footer {
     padding: 24px 0;
   }
   .footer-section-first .columns-wrapper p sup{
-    background-color: #41C672;
-    color: var(--white);
+    /* background-color: #2E7D32; */
+    /* color: var(--white); */
     font-size: 0.75rem;
     font-family: 'Nunito-Bold';
     padding: 6px 10px;
@@ -496,6 +509,8 @@ footer.footer-wrapper .footer {
     justify-content: center;
     right: 77px;
     left: 0;
+    background-color: #1B8040;
+    /* color: black; */
   }
   header nav .nav-brand img {
     width: 82px;
@@ -569,7 +584,8 @@ footer.footer-wrapper .footer {
 
   .section.mobile-left-side-footer .default-content-wrapper p>a {
     display: block;
-    color: var(--salmon);
+    color: var(--white);
+    text-decoration: underline;
   }
 
   .section.footer-follow-us-wrapper {
@@ -713,8 +729,9 @@ footer.footer-wrapper .footer {
 
   .section.mobile-left-side-footer .default-content-wrapper p>a {
     display: inline;
-    color: var(--salmon);
+    color: var(--white);
     margin-left: 16px;
+    text-decoration: underline;
   }
 
   .section.footer-follow-us-wrapper .wrappercreation-wrapper .wrapper-creation-container .imgwithlink-wrapper .image-href-desktop a>picture img,

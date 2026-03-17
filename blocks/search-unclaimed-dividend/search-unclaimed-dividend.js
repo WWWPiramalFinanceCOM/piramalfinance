@@ -132,8 +132,10 @@ function createSearchForm(content) {
   // Year options will be populated from API in decorate function
 
   yearSelectWrapper.appendChild(yearSelect);
+  const yearError = createTag('span', { class: 'year-error', id: 'year-error' });
   yearField.appendChild(yearFieldLabel);
   yearField.appendChild(yearSelectWrapper);
+  yearField.appendChild(yearError);
 
   // Folio input field
   const folioField = createTag('div', { class: 'form-field folio-field' });
@@ -369,7 +371,7 @@ function validateForm(year, folioId) {
   const errors = [];
 
   if (!year) {
-    errors.push('Please select a year');
+    errors.push('Please Select Year');
   }
 
   // Folio number is required for search
@@ -415,8 +417,15 @@ function showLoading(isLoading) {
  */
 function showValidationErrors(errors) {
   const folioError = document.getElementById('folio-error');
+  const yearError = document.getElementById('year-error');
+  
   if (folioError) {
-    folioError.textContent = errors.find(e => e.toLowerCase().includes('folio')) || '';
+    const folioMsg = errors.find(e => e.toLowerCase().includes('folio'));
+    folioError.textContent = folioMsg || '';
+  }
+  if (yearError) {
+    const yearMsg = errors.find(e => e.toLowerCase().includes('year'));
+    yearError.textContent = yearMsg || '';
   }
 }
 
@@ -425,8 +434,13 @@ function showValidationErrors(errors) {
  */
 function clearValidationErrors() {
   const folioError = document.getElementById('folio-error');
+  const yearError = document.getElementById('year-error');
+  
   if (folioError) {
     folioError.textContent = '';
+  }
+  if (yearError) {
+    yearError.textContent = '';
   }
 }
 

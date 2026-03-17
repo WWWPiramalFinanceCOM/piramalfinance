@@ -21,7 +21,7 @@
 
 /* Form Wrapper */
 .search-unclaimed-dividend .search-dividend-form-wrapper {
-  align-items: flex-end;
+  /* align-items: flex-end; */
   display: flex;
   flex-wrap: nowrap;
   gap: 20px;
@@ -46,6 +46,8 @@
 /* Year Dropdown Field */
 .search-unclaimed-dividend .year-field {
   flex: 0 0 220px;
+  position: relative;
+  padding-bottom: 20px;
 }
 
 /* Custom Dropdown Styles */
@@ -185,6 +187,8 @@
 .search-unclaimed-dividend .folio-field {
   /* flex: 1; */
   min-width: 200px;
+  position: relative;
+  padding-bottom: 20px;
 }
 
 .search-unclaimed-dividend .folio-input {
@@ -209,18 +213,22 @@
   color: var(--grey, #999999);
 }
 
-.search-unclaimed-dividend .folio-error {
+.search-unclaimed-dividend .folio-error,
+.search-unclaimed-dividend .year-error {
   color: #cc0000;
   display: block;
   font-family: 'Nunito-Regular', sans-serif;
   font-size: 0.875rem;
-  margin-top: 4px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  min-height: 18px;
 }
 
 /* Search Button */
 .search-unclaimed-dividend .button-field {
-  flex: 0 0 auto;
-  align-self: flex-end;
+  /* flex: 0 0 auto; */
+  /* align-self: flex-end; */
 }
 
 .search-unclaimed-dividend .search-dividend-btn {
@@ -242,6 +250,7 @@
   padding: 0 24px;
   transition: all 0.3s ease;
   margin-bottom: unset;
+  margin-top: 28px;
 }
 
 .search-unclaimed-dividend .search-dividend-btn:hover {

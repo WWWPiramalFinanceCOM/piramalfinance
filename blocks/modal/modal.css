@@ -501,10 +501,10 @@ dialog[open]:has(.modal-content .section.e-nach-reg-modal-wrapper) {
   max-height: 496px;
   border-radius: 12px;
   overflow: auto;
-   position: absolute;
+   /* position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
-  top: 50%;
+  top: 50%; */
 }
 
 .modal-content:has(.section.e-nach-reg-modal-wrapper) {

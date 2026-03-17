@@ -35,7 +35,7 @@ export function handleOpenFormOnClick(el) {
   });
 }
 
-export function onCLickApplyFormOpen(e) {
+  export function onCLickApplyFormOpen(e) {
   statemasterGetStatesApi();
   validationJSFunc();
   formOpen();
@@ -119,7 +119,7 @@ export function applyLoanFormClick() {
       button.addEventListener('click', (e) => {
         e.preventDefault();
         const anchor = button.closest('a');
-        if (anchor && anchor.href && anchor.href.includes('/modals/')) {
+         if (anchor && anchor.href && anchor.href.includes('/modals/')) {
           return true;
         }
         if (anchor && anchor.getAttribute('href')) {

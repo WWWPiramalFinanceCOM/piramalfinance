@@ -41,9 +41,16 @@ function createImageWithLink(block) {
 
   // debugger;
   const createHref = blockDiv.children[textIndex]?.querySelector('a') ? blockDiv.children[textIndex]?.querySelector('a').cloneNode() : document.createElement('a');
-  // console.log(createHref);
-  // createHref.href = hrefElem || 'javascript:void(0)';
-  createHref.setAttribute('aria-label', 'teaser link');
+  // Fix WCAG 2.4.4: Generate meaningful aria-label based on link destination
+  let ariaLabel = click_textel?.innerText?.trim() || 'Link';
+  if (hrefElem) {
+    if (hrefElem.includes('play.google')) {
+      ariaLabel = 'Get it on Google Play';
+    } else if (hrefElem.includes('apple.com') || hrefElem.includes('apps.apple')) {
+      ariaLabel = 'Download on the App Store';
+    }
+  }
+  createHref.setAttribute('aria-label', ariaLabel);
   createHref.setAttribute('tabindex', '0');
   hrefElem ? createHref.href = hrefElem : createHref.setAttribute('role', 'button');
   createHref.target = '_blank';

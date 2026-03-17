@@ -5,12 +5,31 @@ import { fetchAPI } from '../../scripts/common.js';
 export function generateAccordionDOM(block) {
   const details = document.createElement('details');
   const summary = document.createElement('summary');
+  
+  // Fix WCAG 4.1.2: Add aria-expanded for screen readers
+  summary.setAttribute('aria-expanded', 'false');
+  summary.setAttribute('role', 'button');
+  
   details.append(summary);
+  
+  // Fix WCAG 4.1.2: Update aria-expanded when toggle state changes
+  details.addEventListener('toggle', () => {
+    summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+  });
+  
   Array.from(block.children).forEach(async (element, i) => {
     if (i === 0) {
       // const heading = element.querySelector("h2,h3,h4,h5,h6");
-      const heading = element;
-      summary.append(heading || element.textContent.trim());
+      // Fix WCAG 1.3.1: Wrap title in h3 for proper heading structure
+      const headingText = element.textContent?.trim() || element.innerHTML;
+      const existingHeading = element.querySelector('h2,h3,h4,h5,h6');
+      if (existingHeading) {
+        summary.append(existingHeading);
+      } else {
+        const h3 = document.createElement('h3');
+        h3.textContent = headingText;
+        summary.append(h3);
+      }
     } else {
       const url = element.innerText.trim();
       const isurl = url.includes('.json');

@@ -2,7 +2,7 @@ import { ctaClickInteraction } from '../../dl.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { decoratePlaceholder } from '../../scripts/scripts.js';
 import { moveInstrumentation } from '../../scripts/common.js';
-import { onCLickApplyFormOpen } from '../applyloanform/applyloanforms.js';
+import {onCLickApplyFormOpen} from '../applyloanform/applyloanforms.js'
 // import { applyLoanFormClick } from '../applyloanform/applyloanforms.js';
 // import { applyLoanPopper } from '../applyloanform/applyloanpopper.js';
 // import { loanutmForm } from '../applyloanform/loanutm.js';
@@ -24,7 +24,7 @@ export default async function decorate(block) {
       e.preventDefault();
       let closeButton = document.querySelector(".close-button");
       let dialogs = document.querySelectorAll("dialog");
-      dialogs.forEach((dialog)=>{
+      dialogs.forEach((dialog) => {
         dialog.close();
         const dialogDimensions = dialog.getBoundingClientRect();
         if (e.clientX < dialogDimensions.left || e.clientX > dialogDimensions.right
@@ -32,8 +32,9 @@ export default async function decorate(block) {
           dialog.close();
         }
       })
+      e.preventDefault();
       onCLickApplyFormOpen(e);
-      // document.querySelector("div.homeloancalculator > div.calculator-parent > div > div > div.customerbuttons > a:nth-child(2) > button").click();
+      // document.querySelector('.expert.orangeexpert').click();
     });
     ul.append(li);
   });
@@ -60,16 +61,16 @@ export default async function decorate(block) {
     console.warn(error);
   }
 
-  // try {
-  //     applyLoanFormClick();
-  //     applyLoanPopper();
-  //     loanutmForm();
-  //     stateMasterApi();
-  //     validationJSFunc();
-  //     buttonCLick();
-  //   } catch (error) {
-  //     console.warn(error);
-  //   }
+  // // try {
+  // //     applyLoanFormClick();
+  // //     applyLoanPopper();
+  // //     loanutmForm();
+  // //     stateMasterApi();
+  // //     validationJSFunc();
+  // //     buttonCLick();
+  // //   } catch (error) {
+  // //     console.warn(error);
+  // //   }
 
   // function openLeadForm(main) {
   //   main.querySelectorAll('a').forEach((anchor) => {
@@ -96,5 +97,5 @@ export default async function decorate(block) {
   //   });
   // }
 
-  // openLeadForm(block);
+  // // openLeadForm(block);
 }

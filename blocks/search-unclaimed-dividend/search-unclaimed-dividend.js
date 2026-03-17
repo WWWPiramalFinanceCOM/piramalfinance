@@ -145,8 +145,10 @@ function createSearchForm(content) {
     class: 'folio-input',
     placeholder: `Enter ${content.folioLabel}`
   });
+  const folioError = createTag('span', { class: 'folio-error', id: 'folio-error' });
   folioField.appendChild(folioLabel);
   folioField.appendChild(folioInput);
+  folioField.appendChild(folioError);
 
   // Search button
   const buttonField = createTag('div', { class: 'form-field button-field' });
@@ -370,10 +372,10 @@ function validateForm(year, folioId) {
     errors.push('Please select a year');
   }
 
-  // Add additional folio validation if required
-  // if (!folioId || folioId.trim().length < 3) {
-  //   errors.push('Please enter a valid Folio No./DP Id Client Id');
-  // }
+  // Folio number is required for search
+  if (!folioId || folioId.trim().length === 0) {
+    errors.push('Please Enter Folio No.');
+  }
 
   return {
     isValid: errors.length === 0,
@@ -412,10 +414,19 @@ function showLoading(isLoading) {
  * @param {array} errors validation error messages
  */
 function showValidationErrors(errors) {
-  const messageContainer = document.getElementById('dividend-message');
-  if (messageContainer) {
-    messageContainer.className = 'search-dividend-message error';
-    messageContainer.innerHTML = errors.join('<br>');
+  const folioError = document.getElementById('folio-error');
+  if (folioError) {
+    folioError.textContent = errors.find(e => e.toLowerCase().includes('folio')) || '';
+  }
+}
+
+/**
+ * Clear validation errors
+ */
+function clearValidationErrors() {
+  const folioError = document.getElementById('folio-error');
+  if (folioError) {
+    folioError.textContent = '';
   }
 }
 
@@ -433,6 +444,9 @@ function initializeSearch(content) {
       const year = yearSelect?.value || '';
       const folioId = folioInput?.value?.trim() || '';
 
+      // Clear previous errors
+      clearValidationErrors();
+
       // Validate form
       const validation = validateForm(year, folioId);
       if (!validation.isValid) {
@@ -442,17 +456,7 @@ function initializeSearch(content) {
 
       // Show loading state
       showLoading(true);
-
-      try {
-        // Fetch data from API
-        const results = await searchUnclaimedDividend(year, folioId);
-        updateTable(results, content);
-      } catch (error) {
-        console.error('Search error:', error);
-        updateTable(null, content); // Show error message
-      } finally {
-        showLoading(false);
-      }
+      const results = await searchUnclaimedDividend(year, folioId);
     });
   }
 
@@ -462,6 +466,11 @@ function initializeSearch(content) {
       if (e.key === 'Enter') {
         searchButton?.click();
       }
+    });
+
+    // Clear error when user starts typing
+    folioInput.addEventListener('input', () => {
+      clearValidationErrors();
     });
   }
 }

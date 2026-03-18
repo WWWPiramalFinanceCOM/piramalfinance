@@ -4,10 +4,6 @@
  */
 
 // API Configuration
-const API_CONFIG = {
-  baseUrl: 'https://www.piramalenterprises.com',
-  searchEndpoint: '/search-unclaimed-dividend'
-}
 
 import { fetchPlaceholders } from "../../scripts/aem.js";
 
@@ -132,8 +128,10 @@ function createSearchForm(content) {
   // Year options will be populated from API in decorate function
 
   yearSelectWrapper.appendChild(yearSelect);
+  const yearError = createTag('span', { class: 'year-error', id: 'year-error' });
   yearField.appendChild(yearFieldLabel);
   yearField.appendChild(yearSelectWrapper);
+  yearField.appendChild(yearError);
 
   // Folio input field
   const folioField = createTag('div', { class: 'form-field folio-field' });
@@ -145,8 +143,10 @@ function createSearchForm(content) {
     class: 'folio-input',
     placeholder: `Enter ${content.folioLabel}`
   });
+  const folioError = createTag('span', { class: 'folio-error', id: 'folio-error' });
   folioField.appendChild(folioLabel);
   folioField.appendChild(folioInput);
+  folioField.appendChild(folioError);
 
   // Search button
   const buttonField = createTag('div', { class: 'form-field button-field' });
@@ -299,13 +299,7 @@ function getYearOptions() {
  */
 async function searchUnclaimedDividend(year, folioNo) {
   try {
-    // Construct API URL with query parameters
-    // Example: https://www.piramalenterprises.com/search-unclaimed-dividend?year=2017-2018&folioNo=1301760000239657
-    // const url = new URL(`${API_CONFIG.baseUrl}${API_CONFIG.searchEndpoint}`);
-    // url.searchParams.append('year', year);
-    // url.searchParams.append('folioNo', folioNo);
-
-    // const response = await fetch(url.toString());
+ 
 
     const formdata = new FormData();
     formdata.append("year", year);
@@ -367,13 +361,13 @@ function validateForm(year, folioId) {
   const errors = [];
 
   if (!year) {
-    errors.push('Please select a year');
+    errors.push('Please Select Year');
   }
 
-  // Add additional folio validation if required
-  // if (!folioId || folioId.trim().length < 3) {
-  //   errors.push('Please enter a valid Folio No./DP Id Client Id');
-  // }
+  // Folio number is required for search
+  if (!folioId || folioId.trim().length === 0) {
+    errors.push('Please Enter Folio No.');
+  }
 
   return {
     isValid: errors.length === 0,
@@ -412,10 +406,31 @@ function showLoading(isLoading) {
  * @param {array} errors validation error messages
  */
 function showValidationErrors(errors) {
-  const messageContainer = document.getElementById('dividend-message');
-  if (messageContainer) {
-    messageContainer.className = 'search-dividend-message error';
-    messageContainer.innerHTML = errors.join('<br>');
+  const folioError = document.getElementById('folio-error');
+  const yearError = document.getElementById('year-error');
+  
+  if (folioError) {
+    const folioMsg = errors.find(e => e.toLowerCase().includes('folio'));
+    folioError.textContent = folioMsg || '';
+  }
+  if (yearError) {
+    const yearMsg = errors.find(e => e.toLowerCase().includes('year'));
+    yearError.textContent = yearMsg || '';
+  }
+}
+
+/**
+ * Clear validation errors
+ */
+function clearValidationErrors() {
+  const folioError = document.getElementById('folio-error');
+  const yearError = document.getElementById('year-error');
+  
+  if (folioError) {
+    folioError.textContent = '';
+  }
+  if (yearError) {
+    yearError.textContent = '';
   }
 }
 
@@ -433,6 +448,9 @@ function initializeSearch(content) {
       const year = yearSelect?.value || '';
       const folioId = folioInput?.value?.trim() || '';
 
+      // Clear previous errors
+      clearValidationErrors();
+
       // Validate form
       const validation = validateForm(year, folioId);
       if (!validation.isValid) {
@@ -442,17 +460,13 @@ function initializeSearch(content) {
 
       // Show loading state
       showLoading(true);
-
-      try {
-        // Fetch data from API
-        const results = await searchUnclaimedDividend(year, folioId);
-        updateTable(results, content);
-      } catch (error) {
-        console.error('Search error:', error);
-        updateTable(null, content); // Show error message
-      } finally {
-        showLoading(false);
-      }
+      const results = await searchUnclaimedDividend(year, folioId);
+      
+      // Update table with results
+      updateTable(results, content);
+      
+      // Hide loading state
+      showLoading(false);
     });
   }
 
@@ -462,6 +476,11 @@ function initializeSearch(content) {
       if (e.key === 'Enter') {
         searchButton?.click();
       }
+    });
+
+    // Clear error when user starts typing
+    folioInput.addEventListener('input', () => {
+      clearValidationErrors();
     });
   }
 }

@@ -1356,7 +1356,8 @@ body.modal-open footer {
 
   .header .nav-brand .default-content-wrapper>ul>li>ul>li>p.navlist-dropdown {
     border-bottom: unset;
-    color: var(--orange);
+    /* color: var(--orange); */
+     color: #134F7F;
   }
 
   .header .nav-wrapper #nav>div.section.nav-brand>a:nth-child(2) {
@@ -1521,14 +1522,16 @@ body.modal-open footer {
 }
 
 /* Double underline on submenu category headers (Home Loan, Business Loans, etc.) - not main menu items */
-.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>p:hover,
+/* .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>p:hover, */
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>p>a:hover,
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>a:hover {
-  text-decoration: underline;
+  /* text-decoration: underline;
   text-decoration-style: solid;
   text-decoration-color: #333;
   text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+  text-underline-offset: 4px; */
+   color: #134F7F !important;
+  text-decoration: none;
 } 
 /* .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul >li:nth-child(7) >p {
   padding: unset;
@@ -1599,10 +1602,11 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav .nav-sections >.default-content-wrapper >ul >li:last-child span img {
   position: absolute;
-  height: 25px;
+  height: 27px;
   width: 15px;
   top: 35%;
-  left: 59px;
+  left: 62px;
+  padding-left: 1px;
   @media only screen and (max-width: 1200px) {
     left: 30px;
     right: 0px;

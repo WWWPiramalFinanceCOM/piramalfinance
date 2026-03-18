@@ -1520,15 +1520,12 @@ body.modal-open footer {
     text-decoration: none;
 }
 
-/* Double underline on submenu category headers (Home Loan, Business Loans, etc.) - not main menu items */
+/* Color change on submenu category headers (Home Loan, Business Loans, etc.) - not main menu items */
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>p:hover,
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>p>a:hover,
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>a:hover {
-  text-decoration: underline;
-  text-decoration-style: solid;
-  text-decoration-color: #333;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+  color: #134f7f;
+  text-decoration: none;
 } 
 /* .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul >li:nth-child(7) >p {
   padding: unset;

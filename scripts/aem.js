@@ -591,9 +591,7 @@ function decorateIcon(span, prefix = '', alt = '') {
     img.dataset.iconName = iconName;
     img.src = `${window.hlx.codeBasePath}${prefix}/icons/${iconName}.svg`;
     // Fix WCAG 1.1.1: Generate alt text for logo icons only, empty for decorative
-    if (alt) {
-        img.alt = alt;
-    } else if (iconName.endsWith('-logo') || iconName.includes('logo-')) {
+     if (iconName.endsWith('-logo') || iconName.includes('logo-')) {
         // Only actual logo icons need meaningful alt text (e.g., footer-piramal-finance-logo, piramal-logo-02)
         const cleanName = iconName
             .replace(/^(footer|header|nav)-/, '') // Remove positional prefixes
@@ -602,8 +600,6 @@ function decorateIcon(span, prefix = '', alt = '') {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
         img.alt = cleanName;
-    } else {
-        img.alt = '';
     }
     img.loading = 'lazy';
     span.append(img);

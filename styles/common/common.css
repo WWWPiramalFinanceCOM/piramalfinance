@@ -11648,3 +11648,53 @@ dialog[open] .modal-content .section.embed-carousel-youtube-video .embed-wrapper
     display: flex;
     flex-direction: column;
 }
+
+/* ========================================
+   Accessibility Fix: stat-highlight-card
+   Apply this class on section via brush tool
+   - Author main heading as H2 (instead of H4)
+   - Author teaser stat text as P in Long Description (instead of H3 in Heading)
+   ======================================== */
+
+/* Main section heading - H2 styled same as current H4 */
+.section.stat-highlight-card .default-content-wrapper>h2 {
+    color: var(--black);
+    display: block;
+    font-family: Nunito-Extrabold, sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 40px;
+    margin: 0;
+    margin-bottom: 8px
+}
+
+/* Teaser stat card - P in Long Description styled same as current H3 title */
+.section.stat-highlight-card .wrappercreation-wrapper .wrappercreation .wrapper-creation-container .teaser-wrapper .teaser .background .foreground .text .long-description p {
+    color: var(--white);
+    font-family: Nunito-Bold, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 28px;
+    margin: 0
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 767px) {
+    .section.stat-highlight-card .default-content-wrapper>h2 {
+        font-size: 1.25rem;
+        line-height: 28px;
+        padding-bottom: 4px;
+    }
+
+    .section.stat-highlight-card .wrappercreation-wrapper .wrappercreation .wrapper-creation-container .teaser-wrapper .teaser .background .foreground .text .long-description p {
+        font-family: 'Nunito-Extrabold', sans-serif;
+        font-size: 1.25rem;
+        /* font-weight: 800; */
+        line-height: 28px;
+    }
+}
+
+/* Reset min-height for stat-highlight-card text container */
+.section.stat-highlight-card .wrappercreation-wrapper .wrappercreation .wrapper-creation-container .teaser-wrapper .teaser .background .foreground .text .long-description {
+    min-height: unset
+}

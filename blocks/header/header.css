@@ -53,6 +53,14 @@ header {
   text-decoration: none;
 }
 
+/* Fix WCAG 2.4.7: Focus Visible - Ensure keyboard focus is visible on header nav items */
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li>p:focus-visible,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li>p>a:focus-visible,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul>li>a:focus-visible {
+  outline: 2px solid var(--orange, #F26841);
+  outline-offset: 2px;
+}
+
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections >.default-content-wrapper >ul>li>ul>li >a,
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections >.default-content-wrapper >ul>li>ul>li >p{
   font-family: "Nunito-Bold", sans-serif;
@@ -160,8 +168,8 @@ header {
 .header .nav-wrapper #nav .nav-sections .default-content-wrapper >ul >li:last-child p a {
   align-items: center;
   background: var(--rosewhite);
-  border: 1px solid;
-  color: var(--orange);
+  border: 1px solid #C04A1D;
+  color: #C04A1D;
   display: flex;
   font-size: var(--body-font-size-xs);
   line-height: 1rem;
@@ -726,7 +734,7 @@ body.modal-open footer {
   bottom: 59px;
   justify-content: center;
   align-items: center;
-  background-color: var(--green);
+  /* background-color: #2E7D32;/ */
   border-radius: 4px;
   color: var(--piramal-white-100);
   cursor: pointer;
@@ -739,6 +747,8 @@ body.modal-open footer {
   padding: 0 4px;
   text-decoration: none;
   width: fit-content;
+  background-color: #1B8040;
+  /* color:  var(--black); */
 }
 
 .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p .icon {
@@ -883,7 +893,7 @@ body.modal-open footer {
 .header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(6)>ul>li:nth-child(1)>ul>li>a>sup {
   content: "New";
   position: absolute;
-  background-color: var(--green);
+  background-color: #2E7D32;
   border-radius: 4px;
   color: var(--piramal-white-100);
   font-family: "Nunito-Bold", sans-serif;
@@ -1103,7 +1113,7 @@ body.modal-open footer {
 
   .header .nav-brand .default-content-wrapper>ul>li>ul>li>p>sup {
     align-items: center;
-    background-color: var(--green);
+    /* background-color: #2E7D32; */
     border-radius: 4px;
     color: var(--piramal-white-100);
     display: flex;
@@ -1116,10 +1126,12 @@ body.modal-open footer {
     font-size: 0.75rem;
     line-height: 24px;
     text-transform: uppercase;
+         background-color: #1B8040;
+    /* color: black; */
   }
 
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(3)>ul>li:nth-child(1)>ul>li>a>sup {
-    background-color: var(--green);
+    background-color: #2E7D32;
     border-radius: 4px;
     color: var(--piramal-white-100);
     font-family: "Nunito-Bold", sans-serif;
@@ -1344,7 +1356,8 @@ body.modal-open footer {
 
   .header .nav-brand .default-content-wrapper>ul>li>ul>li>p.navlist-dropdown {
     border-bottom: unset;
-    color: var(--orange);
+    /* color: var(--orange); */
+    color: #134F7F;
   }
 
   .header .nav-wrapper #nav>div.section.nav-brand>a:nth-child(2) {
@@ -1444,7 +1457,9 @@ body.modal-open footer {
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a:hover {
-  color: orange;
+  /* color: #C04A1D; */
+  color: #134F7F;
+    text-decoration: none;
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-brand {
@@ -1501,7 +1516,17 @@ body.modal-open footer {
 
 
 }
+.header-wrapper.primary nav#nav a:hover{
+  color: #134F7F;
+    text-decoration: none;
+}
 
+/* Color change on submenu category headers only when they have links (redirections) */
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>p>a:hover,
+.header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>a:hover {
+  color: #134F7F !important;
+  text-decoration: none;
+} 
 /* .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul >li:nth-child(7) >p {
   padding: unset;
   font-size: 16px;
@@ -1518,9 +1543,9 @@ body.modal-open footer {
 /* .header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p a, */
 .header-wrapper.primary .nav-wrapper #nav>.section.nav-sections>.default-content-wrapper>ul>li:last-child p a {
   border-radius: 8px;
-  border: 1px solid #F26E24;
+  border: 1px solid #C04A1D;
   background: #F26E24;
-  color: white;
+   color: var(--black);
 }
 
 /* .header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child{
@@ -1537,7 +1562,9 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"],
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li>p>a[title="Login"] {
-  color: white;
+  /* color: white;
+   */
+   color: black;
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a,
@@ -1546,6 +1573,7 @@ body.modal-open footer {
       display: flex;
     gap: 12px;
     text-decoration: unset;
+    color: #333333;
 }
 
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper .icon.icon-resources img{
@@ -1568,10 +1596,11 @@ body.modal-open footer {
 
 .header-wrapper.primary .nav-wrapper #nav .nav-sections >.default-content-wrapper >ul >li:last-child span img {
   position: absolute;
-  height: 25px;
-  width: 25px;
+  height: 27px;
+  width: 15px;
   top: 35%;
-  left: 59px;
+  left: 62px;
+  padding-left: 1px;
   @media only screen and (max-width: 1200px) {
     left: 30px;
     right: 0px;

@@ -121,6 +121,8 @@ export default async function decorate(block) {
       // const currentTitle = document.querySelector('title').innerText;
       const currentTitle = getMetadata('page-name');
       currentPath.innerText = currentTitle.replace(' | Pricefx', '');
+      // Fix WCAG 4.1.2: Add aria-current for screen readers to identify active page
+      currentPath.setAttribute('aria-current', 'page');
       breadcrumbLinks.push(currentPath.outerHTML);
     }
     breadcrumb.innerHTML = breadcrumbLinks.join(`<span class="breadcrumb-separator">${RIGHTARROW}</span>`);

@@ -3,7 +3,11 @@
  * Displays a search form and results table for unclaimed dividends
  */
 
-
+// API Configuration
+const API_CONFIG = {
+  baseUrl: 'https://www.piramalenterprises.com',
+  searchEndpoint: '/search-unclaimed-dividend'
+}
 
 import { fetchPlaceholders } from "../../scripts/aem.js";
 
@@ -295,7 +299,13 @@ function getYearOptions() {
  */
 async function searchUnclaimedDividend(year, folioNo) {
   try {
-   
+    // Construct API URL with query parameters
+    // Example: https://www.piramalenterprises.com/search-unclaimed-dividend?year=2017-2018&folioNo=1301760000239657
+    // const url = new URL(`${API_CONFIG.baseUrl}${API_CONFIG.searchEndpoint}`);
+    // url.searchParams.append('year', year);
+    // url.searchParams.append('folioNo', folioNo);
+
+    // const response = await fetch(url.toString());
 
     const formdata = new FormData();
     formdata.append("year", year);

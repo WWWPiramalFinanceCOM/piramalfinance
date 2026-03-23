@@ -115,7 +115,7 @@ export function generateOTPAPI(access_token, mobileno, productName, source) {
     fetchAPI('POST', generateOTPURL, requesObj)
       .then((generateOTPRsp, reject) => {
         const generateOTPRspObj = getJsonObj(generateOTPRsp);
-        const otpAuthId = generateOTPRspObj.responseJson.authUniqueId;
+        const otpAuthId = generateOTPRspObj.responseJson.authUniqueId || generateOTPRspObj.responseJson.AuthUniqueId;
         sessionStorage.setItem('otpAuthId', otpAuthId);
         resolve(generateOTPRspObj.responseJson);
       })
@@ -327,7 +327,8 @@ function verifyOtpBtnClick() {
     if (otpValue) {
       verfyOtpAPI(otpValue)
         .then(({ returnResponse, authUniqueId }) => {
-          const { statusCode } = returnResponse;
+          // const { statusCode } = returnResponse;
+          const  statusCode  = returnResponse.StatusCode;
           verifyOtp(e.target.innerText, targetObject.pageName, '');
           const otpMsgElement = document.querySelector('.wrongotpmessage');
           if (statusCode != 100) {

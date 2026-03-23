@@ -395,7 +395,7 @@ function resendOtpBtnClick() {
     }
     resendOtpAPI('Leadform')
       .then(({ responseJson }) => {
-        const otpAuthId = responseJson.authUniqueId;
+        const otpAuthId = responseJson.authUniqueId || responseJson.AuthUniqueId;
         sessionStorage.setItem('otpAuthId', otpAuthId);
       })
       .catch((error) => {

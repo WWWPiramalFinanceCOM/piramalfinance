@@ -69,7 +69,7 @@ export function AccessTokenAPI() {
     requestJson: {
       client_id: '270762d6d2544ce695908b3496d25e06',
       client_secret: '5c2e50eedd8f484387ad432be9897ce4',
-      source: 'WebApp',
+      source: 'help.piramalfinance.com',
     },
   };
 
@@ -115,7 +115,7 @@ export function generateOTPAPI(access_token, mobileno, productName, source) {
     fetchAPI('POST', generateOTPURL, requesObj)
       .then((generateOTPRsp, reject) => {
         const generateOTPRspObj = getJsonObj(generateOTPRsp);
-        const otpAuthId = generateOTPRspObj.responseJson.authUniqueId;
+        const otpAuthId = generateOTPRspObj.responseJson.authUniqueId || generateOTPRspObj.responseJson.AuthUniqueId;
         sessionStorage.setItem('otpAuthId', otpAuthId);
         resolve(generateOTPRspObj.responseJson);
       })
@@ -327,7 +327,8 @@ function verifyOtpBtnClick() {
     if (otpValue) {
       verfyOtpAPI(otpValue)
         .then(({ returnResponse, authUniqueId }) => {
-          const { statusCode } = returnResponse;
+          // const { statusCode } = returnResponse;
+          const  statusCode  = returnResponse.StatusCode;
           verifyOtp(e.target.innerText, targetObject.pageName, '');
           const otpMsgElement = document.querySelector('.wrongotpmessage');
           if (statusCode != 100) {
@@ -395,7 +396,7 @@ function resendOtpBtnClick() {
     }
     resendOtpAPI('Leadform')
       .then(({ responseJson }) => {
-        const otpAuthId = responseJson.authUniqueId;
+        const otpAuthId = responseJson.authUniqueId || responseJson.AuthUniqueId;
         sessionStorage.setItem('otpAuthId', otpAuthId);
       })
       .catch((error) => {

@@ -223,7 +223,7 @@ header {
 
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li:hover,
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li a:hover {
-  color: var(--orange);
+  /* color: var(--orange); */
 }
 
 /* .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li:hover {
@@ -914,7 +914,19 @@ body.modal-open footer {
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li:hover,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>a:hover,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>p>a:hover  {
-  color: var(--orange);
+  /* color: var(--orange); */
+}
+
+/* Override orange hover for nested toggle items and their sub-items - use blue instead */
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>a,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>p,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>a:hover,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>p:hover,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li:hover,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li>a:hover,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li:hover>a {
+  color: #134f7f !important;
 }
 
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(5)>ul>li:hover,
@@ -1357,27 +1369,177 @@ body.modal-open footer {
   .header .nav-brand .default-content-wrapper>ul>li>ul>li>p.navlist-dropdown {
     border-bottom: unset;
     /* color: var(--orange); */
-     color: #134F7F;
+    color: #134F7F;
   }
 
   .header .nav-wrapper #nav>div.section.nav-brand>a:nth-child(2) {
     display: none;
   }
 
-  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"]:has(ul) p::after {
+  /* Level 2 chevron - only target direct child p, not nested ones */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"]:has(> ul)>p::after {
     transition: transform 0.6s ease-in-out;
     transform: rotate(225deg);
-    border: solid var(--orange);
+    border: solid #134f7f;
     border-width: 0 2px 2px 0;
   }
 
-  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"] p::after path {
-    stroke: var(--orange);
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"]>p::after path {
+    stroke: #134f7f;
   }
 
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(3)>ul>li[aria-expanded="true"]>ul>li:nth-child(4) {
     position: relative;
   }
+
+  /* ===== Mobile Nested Expandable Items (Level 4+) ===== */
+
+  /* Style for deeply nested items with children */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li:has(> ul) {
+    position: relative;
+  }
+
+  /* Add chevron arrow for nested expandable items in mobile */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li:has(> ul)>a::after,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li:has(> ul)>p::after {
+    content: "";
+    position: absolute;
+    right: 3px;
+    top: 5px;
+    width: 7px;
+    height: 7px;
+    border: solid var(--grey);
+    border-width: 0 2px 2px 0;
+    border-radius: 0 0 2.5px;
+    transform: rotate(45deg);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  /* Rotate chevron when expanded - use blue instead of orange */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li[aria-expanded="true"]:has(> ul)>a::after,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li[aria-expanded="true"]:has(> ul)>p::after {
+    transform: rotate(225deg);
+    border-color: #134f7f;
+  }
+
+  /* Active state text color for nested toggle */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li[aria-expanded="true"]>a.navlist-dropdown,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li[aria-expanded="true"]>p.navlist-dropdown {
+    color: #134f7f;
+  }
+
+  /* Nested ul styling (Level 4) */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul {
+    max-height: 0;
+    overflow: hidden;
+    padding-left: 16px;
+    margin: 0;
+    transition: max-height 0.6s ease;
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul[aria-expanded="true"] {
+    overflow: visible;
+    padding-top: 8px;
+  }
+
+  /* Level 5 items (bullet points) */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 12px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 20px;
+    font-family: Nunito-Regular, sans-serif;
+    list-style: none;
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--darkcharcoal);
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li a {
+    text-decoration: none;
+    color: var(--darkcharcoal);
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li:hover a,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li a:hover {
+    color: #134f7f;
+  }
+
+  /* Level 5 nested items with children (Level 6 support) */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li:has(> ul) {
+    position: relative;
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li:has(> ul)>a::after,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li:has(> ul)>p::after {
+    content: "";
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 6px;
+    height: 6px;
+    border: solid var(--grey);
+    border-width: 0 2px 2px 0;
+    border-radius: 0 0 2px;
+    transform: rotate(45deg);
+    transition: transform 0.6s ease-in-out;
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li[aria-expanded="true"]:has(> ul)>a::after,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li[aria-expanded="true"]:has(> ul)>p::after {
+    transform: rotate(225deg);
+    border-color: #134f7f;
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li>ul {
+    max-height: 0;
+    overflow: hidden;
+    padding-left: 16px;
+    margin: 0;
+    transition: max-height 0.6s ease;
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li>ul[aria-expanded="true"] {
+    overflow: visible;
+    padding-top: 8px;
+  }
+
+  /* Level 6 items */
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li>ul>li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 12px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 20px;
+    font-family: Nunito-Regular, sans-serif;
+    list-style: none;
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li>ul>li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--darkcharcoal);
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li>ul>li a {
+    text-decoration: none;
+    color: var(--darkcharcoal);
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li>ul>li:hover a,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li>ul>li a:hover {
+    color: #134f7f;
+  }
+
+  /* ===== End Mobile Nested Expandable Items ===== */
 
   /* .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(4)>p::after,
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(2)>p::after,
@@ -1512,6 +1674,9 @@ body.modal-open footer {
 
   @media only screen and (max-width: 1200px) {
     color: black;
+    text-align: unset;
+    background-color: unset;
+    padding-left: unset;
   }
 
 
@@ -1521,16 +1686,10 @@ body.modal-open footer {
     text-decoration: none;
 }
 
-/* Double underline on submenu category headers (Home Loan, Business Loans, etc.) - not main menu items */
-/* .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>p:hover, */
+/* Color change on submenu category headers only when they have links (redirections) */
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>p>a:hover,
 .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>ul>li>a:hover {
-  /* text-decoration: underline;
-  text-decoration-style: solid;
-  text-decoration-color: #333;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px; */
-   color: #134F7F !important;
+  color: #134F7F !important;
   text-decoration: none;
 } 
 /* .header-wrapper.primary .nav-wrapper #nav .section.nav-sections .default-content-wrapper >ul >li:nth-child(7) >p {
@@ -1664,5 +1823,110 @@ body.modal-open footer {
       padding-left: unset;
     }
   }
+
+/* ===== Nested Expandable Items in Desktop Dropdown ===== */
+
+/* Style for items that have nested expandable content */
+@media (min-width: 1201px) {
+  /* Third-level items with nested ul - make them expandable */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle {
+    position: relative;
+    cursor: pointer;
+  }
+
+  /* Style the toggle trigger (p or a element) with flex alignment */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>p,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>a {
+    display: flex;
+    align-items: center;
+    color: var(--darkcharcoal) !important;
+  }
+
+  /* Override orange hover for nested toggle items */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle:hover,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>p:hover,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>a:hover {
+    color: #134f7f !important;
+  }
+
+  /* Add chevron arrow for expandable nested items */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>a::after,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>p::after {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border: 2px solid currentcolor;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-left: 8px;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+  }
+
+  /* Rotate chevron when expanded */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle[aria-expanded="true"]>a::after,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle[aria-expanded="true"]>p::after {
+    transform: rotate(-135deg);
+  }
+
+  /* Hide nested ul by default */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul {
+    display: none;
+    margin-top: 8px;
+    padding-left: 16px;
+  }
+
+  /* Show nested ul when expanded */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle[aria-expanded="true"]>ul {
+    display: block;
+  }
+
+  /* Bullet points for nested items - same size as parent items */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 12px;
+    color: var(--darkcharcoal) !important;
+  }
+
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--darkcharcoal);
+  }
+
+  /* Nested items link styling - inherit same font as siblings */
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li a,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li>a {
+    text-decoration: none;
+    color: var(--darkcharcoal) !important;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: normal;
+    font-family: Nunito-Regular, sans-serif;
+  }
+
+  /* Override orange hover for nav-nested-toggle item itself */
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>a,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>p,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>a:hover,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>p:hover {
+    color: #134f7f !important;
+  }
+
+  /* Nested sub-items hover - use blue instead of orange */
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li:hover,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li:hover a,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li>a:hover,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li:hover,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li:hover a,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li>a:hover {
+    color: #134f7f !important;
+  }
+}
 
 

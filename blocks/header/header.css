@@ -1455,7 +1455,7 @@ body.modal-open footer {
   }
 
   .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li>ul>li::before {
-    content: "•";
+    /* content: "•"; */
     position: absolute;
     left: 0;
     color: var(--darkcharcoal);
@@ -1891,7 +1891,7 @@ body.modal-open footer {
   }
 
   .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li::before {
-    content: "•";
+    /* content: "•"; */
     position: absolute;
     left: 0;
     color: var(--darkcharcoal);

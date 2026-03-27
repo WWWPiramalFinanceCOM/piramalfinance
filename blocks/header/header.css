@@ -204,6 +204,17 @@ header {
   font-family: "Nunito-Regular", sans-serif;
 }
 
+/* Consistent font for Investors tab sub-items (7th nav item) - match Customer Support style */
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li:nth-child(7)>ul>li>ul>li>p,
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li:nth-child(7)>ul>li>ul>li>p>a,
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li:nth-child(7)>ul>li>ul>li>a {
+  font-size: var(--body-font-size-xs);
+  color: rgb(51 51 51);
+  font-weight: 400;
+  line-height: normal;
+  font-family: "Nunito-Regular", sans-serif;
+}
+
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul > li > ul > li > ul > li > a > sub{
   margin-bottom: unset;
 }

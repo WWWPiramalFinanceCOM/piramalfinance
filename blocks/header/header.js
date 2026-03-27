@@ -368,13 +368,15 @@ export default async function decorate(block) {
             e.stopPropagation();
 
             const isExpanded = nestedItem.getAttribute('aria-expanded') === 'true';
-            // Collapse all other nested items in the same parent
-            const parentUl = nestedItem.closest('ul');
-            parentUl.querySelectorAll(':scope > li.nav-nested-toggle[aria-expanded="true"]').forEach((item) => {
-              if (item !== nestedItem) {
-                item.setAttribute('aria-expanded', 'false');
-              }
-            });
+            // Collapse ALL other nested items across the entire dropdown (not just same column)
+            const topLevelDropdown = nestedItem.closest('.nav-sections .default-content-wrapper > ul > li[aria-expanded="true"]');
+            if (topLevelDropdown) {
+              topLevelDropdown.querySelectorAll('.nav-nested-toggle[aria-expanded="true"]').forEach((item) => {
+                if (item !== nestedItem) {
+                  item.setAttribute('aria-expanded', 'false');
+                }
+              });
+            }
 
             // Toggle current item
             nestedItem.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');

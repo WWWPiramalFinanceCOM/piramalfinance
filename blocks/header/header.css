@@ -1922,7 +1922,8 @@ body.modal-open footer {
   /* Nested items link styling - inherit same font as siblings */
   .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li,
   .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li a,
-  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li>a {
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li>a,
+    .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li>a > sub {
     text-decoration: none;
     color: var(--darkcharcoal) !important;
     font-size: 0.875rem;

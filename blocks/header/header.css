@@ -304,7 +304,7 @@ header {
 .header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>p,
 .header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>p >a {
   /* color: var(--piramal-neutral-80); */
-  color: var(--white);
+  color: var(--white) !important;
 }
 
 .header .nav-wrapper #nav .section.nav-sections[aria-expanded="true"] .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li>a,

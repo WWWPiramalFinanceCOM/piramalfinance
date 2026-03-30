@@ -83,12 +83,16 @@ export async function innerBranchFunc(branchhList) {
     const eachCity = eachBranch.City;
     const eachLocationCode = eachBranch['Location Code'];
     const eachLocation = eachBranch.Location;
+    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${eachBranch.Latitude},${eachBranch.Longitude}`;
     innerBranch
                 += `<div class='card-box'>
               <h3 class='card-title'> ${eachBranch.Location} </h3>
               <p class='card-address'>${eachBranch.Address}</p>
-              <p class='card-gmail'> <span> <img src='/images/gmail.svg' alt='gmail-icon'/> </span> ${placeholders.branchlocatorgmail} </p> 
-              <a href="${branchURLStr(eachLocation, eachCity, eachState, 'loans', eachLocationCode)}" id='more-details-btn'>${placeholders.moredetailtext}  </a> 
+              <p class='card-gmail'> <span> <img src='/images/gmail.svg' alt='gmail-icon'/> </span> ${placeholders.branchlocatorgmail} </p>
+              <div class='card-actions'>
+                <a href="${branchURLStr(eachLocation, eachCity, eachState, 'loans', eachLocationCode)}" class='more-details-btn'>${placeholders.moredetailtext}</a>
+                <a href="${directionsUrl}" target="_blank" rel="noopener noreferrer" class='directions-btn'><span class='icon icon-directions'></span> ${placeholders.directionstext || 'Directions'}</a>
+              </div>
             </div>`;
     // <a href="/branch-locator/${eachState}/${eachCity}/loans-in-${eachCity}-${eachState}-${eachLocationCode}" id='more-details-btn'> More details </a>
   });

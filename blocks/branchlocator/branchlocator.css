@@ -321,8 +321,14 @@
     margin-right: 8px;
 }
 
-.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box a:last-child {
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions {
+    display: flex;
+    gap: 12px;
     margin-top: 29px;
+    flex-wrap: wrap;
+}
+
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .more-details-btn {
     font-weight: 700;
     padding: 8px 16px;
     line-height: 20px;
@@ -333,10 +339,44 @@
     display: inline-block;
     font-family: "Nunito-Bold";
     background-color: var(--orange);
+    text-decoration: none;
 }
 
-.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box a:last-child:hover {
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .more-details-btn:hover {
     text-decoration: none;
+}
+
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .directions-btn {
+    font-weight: 700;
+    padding: 8px 16px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: var(--orange);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Nunito-Bold";
+    background-color: var(--white);
+    border: 1px solid var(--orange);
+    text-decoration: none;
+}
+
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .directions-btn:hover {
+    background-color: var(--orange);
+    color: var(--white);
+    text-decoration: none;
+}
+
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .directions-btn .icon {
+    width: 16px;
+    height: 16px;
+}
+
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .directions-btn .icon img {
+    width: 16px;
+    height: 16px;
 }
 
 @media screen and (min-width:768px) and (max-width: 1024px) {
@@ -473,6 +513,17 @@
 
     .section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-gmail {
         margin-top: 25px;
+    }
+
+    .section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .more-details-btn,
+    .section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .directions-btn {
+        padding: 8px 12px;
+        font-size: 0.75rem;
     }
 
     .section.branchlocator-dropdown .container .dropdown-wrapper .dropdown .dropdown-option-wrapper .option-wrapper>a>li {

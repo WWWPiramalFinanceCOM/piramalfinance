@@ -1557,7 +1557,8 @@ body.modal-open footer {
   .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li>p,
   .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li>p>a,
   .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li>p a,
-  .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li a {
+  .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li a,
+   .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li a > sub{
     font-family: "Nunito-Regular", sans-serif !important;
     font-weight: 400 !important;
     color: #212529;

@@ -1552,6 +1552,17 @@ body.modal-open footer {
 
   /* ===== End Mobile Nested Expandable Items ===== */
 
+  /* ===== Investors Section - Lighter font for nested items in mobile ===== */
+  /* Target Investors (2nd li) nested items to have regular/light font like About Us */
+  .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li>p,
+  .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li>p>a,
+  .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li>p a,
+  .header .nav-brand .default-content-wrapper>ul>li:nth-child(2)>ul>li>ul>li a {
+    font-family: "Nunito-Regular", sans-serif !important;
+    font-weight: 400 !important;
+    color: #212529;
+  }
+
   /* .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(4)>p::after,
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(2)>p::after,
   .header #nav>div.section.nav-brand>div>ul>li:nth-child(2)>ul>li:nth-child(1)>p::after {

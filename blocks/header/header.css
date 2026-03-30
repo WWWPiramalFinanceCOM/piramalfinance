@@ -1704,7 +1704,7 @@ body.modal-open footer {
 
 }
 .header-wrapper.primary nav#nav a:hover{
-  color: #134F7F !important;
+  color: #134F7F;
     text-decoration: none;
 }
 

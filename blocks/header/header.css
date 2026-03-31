@@ -1388,6 +1388,12 @@ body.modal-open footer {
     color: #134F7F;
   }
 
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"]>p,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"]>p>a,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li[aria-expanded="true"]>a {
+    color: #134f7f !important;
+  }
+
   .header .nav-wrapper #nav>div.section.nav-brand>a:nth-child(2) {
     display: none;
   }
@@ -1442,6 +1448,11 @@ body.modal-open footer {
   .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li[aria-expanded="true"]>a.navlist-dropdown,
   .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li[aria-expanded="true"]>p.navlist-dropdown {
     color: #134f7f;
+  }
+
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li[aria-expanded="true"]>p.navlist-dropdown>a,
+  .header .nav-brand .default-content-wrapper>ul>li>ul>li>ul>li[aria-expanded="true"]>a.navlist-dropdown {
+    color: #134f7f !important;
   }
 
   /* Nested ul styling (Level 4) */

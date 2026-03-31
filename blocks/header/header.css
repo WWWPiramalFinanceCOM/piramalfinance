@@ -233,8 +233,11 @@ header {
 }
 
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li:hover,
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li:hover>a,
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li:hover>p,
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li:hover>p>a,
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li a:hover {
-  /* color: var(--orange); */
+  color: #134f7f !important;
 }
 
 /* .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li>ul>li>ul>li:hover {
@@ -932,8 +935,10 @@ body.modal-open footer {
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>a,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>p,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>p>a,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>a:hover,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>p:hover,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>p>a:hover,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li:hover,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li>a:hover,
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>ul>li:hover>a {
@@ -1867,8 +1872,12 @@ body.modal-open footer {
 
   /* Override orange hover for nested toggle items */
   .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle:hover,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle:hover>p,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle:hover>a,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle:hover>p>a,
   .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>p:hover,
-  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>a:hover {
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>a:hover,
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>p>a:hover {
     color: #134f7f !important;
   }
 
@@ -1937,8 +1946,10 @@ body.modal-open footer {
   .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover,
   .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>a,
   .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>p,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle:hover>p>a,
   .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>a:hover,
-  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>p:hover {
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>p:hover,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul>li>ul>li.nav-nested-toggle>p>a:hover {
     color: #134f7f !important;
   }
 

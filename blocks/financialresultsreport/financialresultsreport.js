@@ -293,6 +293,36 @@ function bindEvents(block, companies, state) {
       d.querySelector('.fr-dropdown-trigger').setAttribute('aria-expanded', 'false');
     });
   });
+
+  // Open PDF links - resolve path for localhost
+  block.querySelectorAll('a[data-pdf-path]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const pdfPath = link.getAttribute('data-pdf-path');
+      const resolvedPath = resolveApiUrl(pdfPath);
+      window.open(resolvedPath, '_blank');
+    });
+  });
+}
+
+const AEM_PUBLISH_DOMAIN = 'https://uatmarketing.piramalfinance.com';
+
+/**
+ * Resolve API URL - on non-publish environments, prepend AEM publish domain for API paths
+ */
+function resolveApiUrl(url) {
+  if (!url) return url;
+  if (url.startsWith('http')) return url;
+  const { hostname } = window.location;
+  const isNonPublish = hostname === 'localhost'
+    || hostname === '127.0.0.1'
+    || hostname.endsWith('.adobeaemcloud.com')
+    || hostname.endsWith('.hlx.page')
+    || hostname.endsWith('.hlx.live');
+  if (isNonPublish && url.startsWith('/content/')) {
+    return `${AEM_PUBLISH_DOMAIN}${url}`;
+  }
+  return url;
 }
 
 export default async function decorate(block) {

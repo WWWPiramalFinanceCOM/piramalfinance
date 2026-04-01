@@ -132,7 +132,7 @@ function buildTable(yearData) {
       if (pdf) {
         const title = pdf['dc:title'] || reportType.name;
         return `<td class="fr-table-cell fr-table-cell--has-pdf">
-          <a href="${pdf.path}" target="_blank" rel="noopener noreferrer" title="${title}" aria-label="Download ${reportType.name} ${q} PDF">
+          <a href="${pdfUrl}" target="_blank" rel="noopener noreferrer" title="${title}" aria-label="Download ${reportType.name} ${q} PDF">
             ${PDF_ICON}
           </a>
         </td>`;

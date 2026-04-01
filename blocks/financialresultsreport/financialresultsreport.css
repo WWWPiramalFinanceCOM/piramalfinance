@@ -1,0 +1,389 @@
+/* ==========================================
+   Financial Results Revamp Block
+   ========================================== */
+
+/* Container */
+.financialresultsreport .fr-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ---- Loader & Error ---- */
+.financialresultsreport .fr-loader,
+.financialresultsreport .fr-error {
+  text-align: center;
+  padding: 40px 16px;
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 1rem;
+  color: var(--darkcharcoal);
+}
+
+.financialresultsreport .fr-no-data {
+  text-align: center;
+  padding: 40px 16px;
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 1rem;
+  color: var(--gradient-gray);
+}
+
+/* ---- Company Tabs ---- */
+.financialresultsreport .fr-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 24px;
+  margin-top: 8px;
+}
+
+.financialresultsreport .fr-tab {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-family: 'Nunito-Bold', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--greyishblue, #365069);
+  position: relative;
+  bottom: -2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.financialresultsreport .fr-tab:hover {
+  color: var(--orange, #F26841);
+}
+
+.financialresultsreport .fr-tab--active {
+  color: var(--orange, #F26841);
+  border-bottom-color: var(--orange, #F26841);
+}
+
+/* ---- Dropdown Controls ---- */
+.financialresultsreport .fr-controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.financialresultsreport .fr-dropdown {
+  position: relative;
+  min-width: 200px;
+}
+
+.financialresultsreport .fr-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--background-color, #fff);
+  border: 1px solid var(--dark-color, #ccc);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--darkcharcoal, #333);
+  transition: border-color 0.2s ease;
+}
+
+.financialresultsreport .fr-dropdown-trigger:hover {
+  border-color: var(--greyishblue, #365069);
+}
+
+.financialresultsreport .fr-dropdown-trigger svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+}
+
+.financialresultsreport .fr-dropdown--open .fr-dropdown-trigger svg {
+  transform: rotate(180deg);
+}
+
+.financialresultsreport .fr-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: var(--background-color, #fff);
+  border: 1px solid var(--dark-color, #ccc);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.financialresultsreport .fr-dropdown--open .fr-dropdown-menu {
+  display: block;
+}
+
+.financialresultsreport .fr-dropdown-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--darkcharcoal, #333);
+  transition: background 0.15s ease;
+}
+
+.financialresultsreport .fr-dropdown-item:hover {
+  background: var(--rosewhite, #FEF0EC);
+}
+
+.financialresultsreport .fr-dropdown-item--active {
+  background: var(--rosewhite, #FEF0EC);
+  color: var(--orange, #F26841);
+  font-family: 'Nunito-Bold', sans-serif;
+  font-weight: 700;
+}
+
+/* ---- FY Heading ---- */
+.financialresultsreport .fr-fy-heading {
+  font-family: 'Nunito-Extrabold', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 36px;
+  color: var(--orange, #F26841);
+  margin: 0 0 16px;
+}
+
+/* ---- Table ---- */
+.financialresultsreport .fr-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 32px;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid #dde2e8;
+}
+
+.financialresultsreport .fr-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Header */
+.financialresultsreport .fr-table-header {
+  background: var(--greyishblue, #365069);
+}
+
+.financialresultsreport .fr-table-th {
+  padding: 14px 16px;
+  font-family: 'Nunito-Bold', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #fff;
+  text-align: center;
+  border: none;
+}
+
+.financialresultsreport .fr-table-th--name {
+  text-align: left;
+  width: 45%;
+  padding-left: 20px;
+}
+
+.financialresultsreport .fr-table-th--quarter {
+  width: 13.75%;
+}
+
+/* Body rows */
+.financialresultsreport .fr-table-row {
+  border-bottom: 1px solid #e8ecf0;
+  transition: background 0.15s ease;
+}
+
+.financialresultsreport .fr-table-row:last-child {
+  border-bottom: none;
+}
+
+.financialresultsreport .fr-table-row:nth-child(even) {
+  background: #fafbfc;
+}
+
+.financialresultsreport .fr-table-row:hover {
+  background: #f5f7f9;
+}
+
+/* Cells */
+.financialresultsreport .fr-table-cell {
+  padding: 14px 16px;
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--darkcharcoal, #333);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.financialresultsreport .fr-table-cell--name {
+  text-align: left;
+  font-family: 'Nunito-SemiBold', 'Nunito-Regular', sans-serif;
+  font-weight: 600;
+  padding-left: 20px;
+  color: var(--darkcharcoal, #333);
+}
+
+/* PDF icon link */
+.financialresultsreport .fr-table-cell--has-pdf a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--greyishblue, #365069);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.financialresultsreport .fr-table-cell--has-pdf a:hover {
+  color: var(--orange, #F26841);
+  transform: scale(1.1);
+}
+
+.financialresultsreport .fr-table-cell--has-pdf svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Dash for empty cells */
+.financialresultsreport .fr-dash {
+  color: var(--dark-color, #ccc);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* ==========================================
+   Responsive - Tablet (≤ 1024px)
+   ========================================== */
+@media screen and (max-width: 1024px) {
+  .financialresultsreport .fr-tabs {
+    margin-bottom: 20px;
+  }
+
+  .financialresultsreport .fr-tab {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .financialresultsreport .fr-dropdown {
+    min-width: 180px;
+  }
+
+  .financialresultsreport .fr-fy-heading {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .financialresultsreport .fr-table-th {
+    font-size: 14px;
+    padding: 12px 10px;
+  }
+
+  .financialresultsreport .fr-table-cell {
+    font-size: 13px;
+    padding: 12px 10px;
+  }
+
+  .financialresultsreport .fr-table-cell--has-pdf svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* ==========================================
+   Responsive - Mobile (≤ 767px)
+   ========================================== */
+@media screen and (max-width: 767px) {
+  .financialresultsreport .fr-container {
+    padding: 0 12px;
+  }
+
+  .financialresultsreport .fr-tabs {
+    gap: 0;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .financialresultsreport .fr-tab {
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .financialresultsreport .fr-controls {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .financialresultsreport .fr-dropdown {
+    min-width: 100%;
+  }
+
+  .financialresultsreport .fr-fy-heading {
+    font-size: 18px;
+    line-height: 27px;
+    margin-bottom: 12px;
+  }
+
+  .financialresultsreport .fr-table-wrapper {
+    border-radius: 6px 6px 0 0;
+  }
+
+  .financialresultsreport .fr-table {
+    table-layout: auto;
+  }
+
+  .financialresultsreport .fr-table-th {
+    font-size: 12px;
+    padding: 10px 6px;
+    line-height: 18px;
+  }
+
+  .financialresultsreport .fr-table-th--name {
+    padding-left: 12px;
+    width: auto;
+    min-width: 120px;
+  }
+
+  .financialresultsreport .fr-table-th--quarter {
+    width: auto;
+    min-width: 36px;
+  }
+
+  .financialresultsreport .fr-table-cell {
+    font-size: 12px;
+    padding: 10px 6px;
+    line-height: 16px;
+  }
+
+  .financialresultsreport .fr-table-cell--name {
+    padding-left: 12px;
+    font-size: 12px;
+    min-width: 120px;
+  }
+
+  .financialresultsreport .fr-table-cell--has-pdf svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .financialresultsreport .fr-dash {
+    font-size: 14px;
+  }
+}

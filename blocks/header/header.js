@@ -347,6 +347,75 @@ export default async function decorate(block) {
     console.log(error);
   }
 
+  // Setup nested expandable items in desktop dropdown
+  function setupNestedToggle(navSections) {
+    if (!isDesktop.matches) return;
+
+    // Find all third-level items that have nested ul (4th level)
+    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li > ul > li > ul > li:has(> ul)').forEach((nestedItem) => {
+      // Add class for stylingse
+      nestedItem.classList.add('nav-nested-toggle');
+      nestedItem.setAttribute('aria-expanded', 'false');
+
+      // Get the clickable element (p or a)
+      const clickableEl = nestedItem.querySelector(':scope > p') || nestedItem.querySelector(':scope > a');
+      if (clickableEl) {
+        clickableEl.style.cursor = 'pointer';
+        clickableEl.addEventListener('click', (e) => {
+          // Prevent navigation if it's the toggle trigger
+          if (nestedItem.querySelector(':scope > ul')) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const isExpanded = nestedItem.getAttribute('aria-expanded') === 'true';
+            // Collapse ALL other nested items across the entire dropdown (not just same column)
+            const topLevelDropdown = nestedItem.closest('.nav-sections .default-content-wrapper > ul > li[aria-expanded="true"]');
+            if (topLevelDropdown) {
+              topLevelDropdown.querySelectorAll('.nav-nested-toggle[aria-expanded="true"]').forEach((item) => {
+                if (item !== nestedItem) {
+                  item.setAttribute('aria-expanded', 'false');
+                }
+              });
+            }
+
+            // Toggle current item
+            nestedItem.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+
+            try {
+              const click_text = clickableEl.textContent.trim();
+              const menu_category = nestedItem.closest('ul').closest('li')?.querySelector('p')?.textContent.trim() || '';
+              targetObject.ctaPosition = 'Top Menu Bar';
+              headerInteraction(click_text, menu_category, targetObject.ctaPosition, targetObject.pageName);
+            } catch (error) {
+              console.warn(error);
+            }
+          }
+        });
+      }
+    });
+  }
+
+  // Initial setup for nested toggle
+  setupNestedToggle(navSections);
+
+  // Re-setup nested toggle when nav section is expanded
+  navSections.querySelectorAll(':scope .default-content-wrapper > ul > li.nav-drop').forEach((navDrop) => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'aria-expanded') {
+          const expanded = navDrop.getAttribute('aria-expanded') === 'true';
+          if (expanded) {
+            // Reset nested toggles when dropdown opens
+            navDrop.querySelectorAll('.nav-nested-toggle').forEach((item) => {
+              item.setAttribute('aria-expanded', 'false');
+            });
+          }
+        }
+      });
+    });
+    observer.observe(navDrop, { attributes: true });
+  });
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
@@ -364,46 +433,81 @@ export default async function decorate(block) {
       mobNav.querySelectorAll(':scope > ul > li').forEach((navSection) => {
         wrapListUE(navSection);
       });
-      mobNav.querySelectorAll('ul ul').forEach((el) => {
-        el.querySelectorAll('ul p').forEach((elem) => {
-          elem.addEventListener('click', (e) => {
-            try {
-              const click_text = e.target.textContent.trim();
-              const menu_category = e.target.closest('li ul').parentNode.querySelector('p').textContent.trim();
-              targetObject.ctaPosition = 'Hamburger';
-              headerInteraction(click_text, menu_category, targetObject.ctaPosition, targetObject.pageName);
-            } catch (error) {
-              console.warn(error);
-            }
-          });
-        });
-        el.querySelectorAll('ul').forEach((ele) => {
-          ele.setAttribute('aria-expanded', 'false');
-          ele.parentElement.querySelector('p').addEventListener('click', (e) => {
-            const expanded = ele.getAttribute('aria-expanded') === 'true';
-            if (!expanded) {
-              ele.style.maxHeight = `${ele.scrollHeight}px`;
-            } else {
-              ele.style.maxHeight = '0px';
-            }
-            ele.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-            ele.parentElement.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-            ele.parentElement.querySelector('p').classList.toggle('navlist-dropdown');
-            ele.querySelectorAll('ul > li > a').forEach((eachHref) => {
-              eachHref.addEventListener('click', (e) => {
-                try {
-                  const click_text = e.target.textContent.trim();
-                  const menu_category = e.target?.closest('ul')?.parentNode?.querySelector('.navlist-dropdown')?.textContent.trim() || '';
-                  targetObject.ctaPosition = 'Hamburger';
-                  headerInteraction(click_text, menu_category, targetObject.ctaPosition, targetObject.pageName);
-                } catch (error) {
-                  console.warn(error);
+
+      // Function to setup nested expandable items recursively
+      function setupMobileNestedToggle(parentEl) {
+        // Find all li elements that have a ul child (at any level)
+        parentEl.querySelectorAll('li:has(> ul)').forEach((liWithUl) => {
+          const nestedUl = liWithUl.querySelector(':scope > ul');
+          if (!nestedUl) return;
+
+          // Mark as expandable
+          nestedUl.setAttribute('aria-expanded', 'false');
+          liWithUl.setAttribute('aria-expanded', 'false');
+
+          // Add class to identify nested toggle items
+          if (liWithUl.closest('ul > li > ul > li > ul')) {
+            liWithUl.classList.add('mob-nested-toggle');
+          }
+
+          // Get the clickable element (p or a or direct text)
+          let clickableEl = liWithUl.querySelector(':scope > p') || liWithUl.querySelector(':scope > a');
+
+          if (clickableEl) {
+            clickableEl.style.cursor = 'pointer';
+
+            // Remove existing listeners to avoid duplicates
+            const newClickableEl = clickableEl.cloneNode(true);
+            clickableEl.parentNode.replaceChild(newClickableEl, clickableEl);
+            clickableEl = newClickableEl;
+
+            clickableEl.addEventListener('click', (evt) => {
+              evt.preventDefault();
+              evt.stopPropagation();
+
+              const expanded = nestedUl.getAttribute('aria-expanded') === 'true';
+
+              // Calculate proper height including nested content
+              if (!expanded) {
+                // First set to auto to get the full height
+                nestedUl.style.maxHeight = 'none';
+                const fullHeight = nestedUl.scrollHeight;
+                nestedUl.style.maxHeight = '0px';
+                // Force reflow
+                nestedUl.offsetHeight; // eslint-disable-line no-unused-expressions
+                nestedUl.style.maxHeight = `${fullHeight}px`;
+              } else {
+                nestedUl.style.maxHeight = '0px';
+              }
+
+              nestedUl.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+              liWithUl.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+              clickableEl.classList.toggle('navlist-dropdown');
+
+              // Update parent ul heights when nested items expand/collapse
+              let parentUl = liWithUl.closest('ul');
+              while (parentUl && parentUl.hasAttribute('aria-expanded')) {
+                if (parentUl.getAttribute('aria-expanded') === 'true') {
+                  parentUl.style.maxHeight = 'none';
                 }
-              });
+                parentUl = parentUl.parentElement?.closest('ul');
+              }
+
+              try {
+                const click_text = clickableEl.textContent.trim();
+                const menu_category = liWithUl.closest('ul')?.closest('li')?.querySelector('p')?.textContent.trim() || '';
+                targetObject.ctaPosition = 'Hamburger';
+                headerInteraction(click_text, menu_category, targetObject.ctaPosition, targetObject.pageName);
+              } catch (error) {
+                console.warn(error);
+              }
             });
-          });
+          }
         });
-      });
+      }
+
+      // Setup nested toggle for all levels in mobile nav
+      setupMobileNestedToggle(mobNav);
     }
     toggleMenu(nav, navSections);
   });

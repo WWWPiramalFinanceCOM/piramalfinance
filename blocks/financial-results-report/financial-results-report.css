@@ -421,6 +421,8 @@
 /* File type colors from Figma */
 .financial-results-report .fr-file--pdf a { color: #d04423; }
 .financial-results-report .fr-file--pdf a:hover { color: #b03a1e; }
+.financial-results-report .fr-file--ppt a { color: #d04423; }
+.financial-results-report .fr-file--ppt a:hover { color: #b03a1e; }
 .financial-results-report .fr-file--excel a { color: #1d6f42; }
 .financial-results-report .fr-file--excel a:hover { color: #175c37; }
 .financial-results-report .fr-file--word a { color: #2b579a; }

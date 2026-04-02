@@ -20,36 +20,31 @@ function resolveUrl(url) {
   return url;
 }
 
-/* ---- File type icons ---- */
-const FILE_ICON_PDF = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="currentColor">
-  <path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
-  <path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-  <path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-  <path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
-</svg>`;
+/* ---- File type icons (minimal document + prominent label) ---- */
+function createFileIcon(label, accentColor) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+    <path d="M8 4a2 2 0 012-2h12l10 10v22a2 2 0 01-2 2H10a2 2 0 01-2-2V4z" fill="#fff" stroke="#B0BEC5" stroke-width="1.2"/>
+    <path d="M22 2v8a2 2 0 002 2h8" fill="#ECEFF1" stroke="#B0BEC5" stroke-width="1.2" stroke-linejoin="round"/>
+    <rect x="12" y="16" width="10" height="1.2" rx=".6" fill="#CFD8DC"/>
+    <rect x="12" y="19.5" width="7" height="1.2" rx=".6" fill="#CFD8DC"/>
+    <rect x="6" y="26" width="20" height="10" rx="2" fill="${accentColor}"/>
+    <text x="16" y="34" text-anchor="middle" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="7.5" font-weight="700" letter-spacing="0.5">${label}</text>
+    <circle cx="30" cy="34" r="5.5" fill="${accentColor}" stroke="#fff" stroke-width="1.5"/>
+    <path d="M30 31.5v3.5M28.2 33.5l1.8 1.8 1.8-1.8" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
 
-const FILE_ICON_EXCEL = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
-  <polyline points="14 2 14 8 20 8" fill="none" stroke="#fff" stroke-width="1"/>
-  <text x="12" y="17" text-anchor="middle" fill="#fff" font-size="7" font-weight="bold">XLS</text>
-</svg>`;
-
-const FILE_ICON_WORD = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
-  <polyline points="14 2 14 8 20 8" fill="none" stroke="#fff" stroke-width="1"/>
-  <text x="12" y="17" text-anchor="middle" fill="#fff" font-size="7" font-weight="bold">DOC</text>
-</svg>`;
-
-const FILE_ICON_MP3 = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-</svg>`;
-
-const FILE_ICON_MP4 = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-</svg>`;
+const FILE_ICON_PDF = createFileIcon('PDF', '#D04423');
+const FILE_ICON_EXCEL = createFileIcon('XLS', '#1D6F42');
+const FILE_ICON_WORD = createFileIcon('DOC', '#2B579A');
+const FILE_ICON_MP3 = createFileIcon('MP3', '#7F4CA8');
+const FILE_ICON_MP4 = createFileIcon('MP4', '#7F4CA8');
+const FILE_ICON_PPT = createFileIcon('PPT', '#D04423');
 
 const FILE_TYPE_MAP = {
   pdf: { icon: FILE_ICON_PDF, label: 'PDF', cssClass: 'fr-file--pdf' },
+  ppt: { icon: FILE_ICON_PPT, label: 'PPT', cssClass: 'fr-file--ppt' },
+  pptx: { icon: FILE_ICON_PPT, label: 'PPT', cssClass: 'fr-file--ppt' },
   xls: { icon: FILE_ICON_EXCEL, label: 'Excel', cssClass: 'fr-file--excel' },
   xlsx: { icon: FILE_ICON_EXCEL, label: 'Excel', cssClass: 'fr-file--excel' },
   csv: { icon: FILE_ICON_EXCEL, label: 'CSV', cssClass: 'fr-file--excel' },
@@ -67,6 +62,7 @@ const DEFAULT_FILE_TYPE = { icon: FILE_ICON_PDF, label: 'File', cssClass: 'fr-fi
 function getFileType(file) {
   const format = (file['dc:format'] || '').toLowerCase();
   if (format.includes('pdf')) return FILE_TYPE_MAP.pdf;
+  if (format.includes('presentation') || format.includes('powerpoint')) return FILE_TYPE_MAP.pptx;
   if (format.includes('excel') || format.includes('spreadsheet')) return FILE_TYPE_MAP.xlsx;
   if (format.includes('word') || format.includes('document')) return FILE_TYPE_MAP.docx;
   if (format.includes('audio') || format.includes('mp3')) return FILE_TYPE_MAP.mp3;
@@ -321,13 +317,14 @@ function renderUI(block, companies, state) {
     )
     .join('');
 
-  // Year dropdown options — "Show all" first, then individual years
-  const yearOptions = [{ value: 'all', label: 'Show all' }];
+  // Year dropdown options — individual years first, "Show all" at bottom
+  const yearOptions = [];
   if (category) {
     category.years.forEach((y) => {
       yearOptions.push({ value: y.year, label: `FY ${y.year}` });
     });
   }
+  yearOptions.push({ value: 'all', label: 'Show all' });
   const selectedYear = isShowAll ? 'all' : (category?.years[state.yearIndex]?.year || '');
 
   // Category dropdown options
@@ -373,7 +370,7 @@ function bindEvents(block, companies, state) {
       const newState = {
         companyIndex: parseInt(tab.dataset.index, 10),
         categoryIndex: 0,
-        yearIndex: 'all',
+        yearIndex: 0,
       };
       renderUI(block, companies, newState);
     });
@@ -422,7 +419,7 @@ function bindEvents(block, companies, state) {
         const newState = {
           ...state,
           categoryIndex: categoryIndex >= 0 ? categoryIndex : 0,
-          yearIndex: 'all',
+          yearIndex: 0,
         };
         renderUI(block, companies, newState);
       }
@@ -462,7 +459,7 @@ export default async function decorate(block) {
     const initialState = {
       companyIndex: 0,
       categoryIndex: 0,
-      yearIndex: 'all',
+      yearIndex: 0,
     };
 
     renderUI(block, companies, initialState);

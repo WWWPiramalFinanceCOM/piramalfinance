@@ -244,6 +244,12 @@ function buildTable(yearData) {
 
   let rows = '';
   yearData.reportTypes.forEach((reportType) => {
+    // Skip rows where no file exists for any quarter
+    const hasAnyFile = QUARTERS.some(
+      (q) => reportType.pdfs.some((p) => p.results && p.results.toUpperCase() === q),
+    );
+    if (!hasAnyFile) return;
+
     const cells = QUARTERS.map((q) => {
       const file = reportType.pdfs.find(
         (p) => p.results && p.results.toUpperCase() === q,
@@ -305,7 +311,8 @@ function createDropdown(options, selectedValue, className, labelPrefix) {
 function renderUI(block, companies, state) {
   const company = companies[state.companyIndex];
   const category = company.categories[state.categoryIndex] || company.categories[0];
-  const yearData = category?.years[state.yearIndex] || category?.years[0];
+
+  const isShowAll = state.yearIndex === 'all';
 
   // Company tabs
   const tabs = companies
@@ -314,11 +321,14 @@ function renderUI(block, companies, state) {
     )
     .join('');
 
-  // Year dropdown options
-  const yearOptions = category
-    ? category.years.map((y) => ({ value: y.year, label: `FY ${y.year}` }))
-    : [];
-  const selectedYear = yearData ? yearData.year : '';
+  // Year dropdown options — "Show all" first, then individual years
+  const yearOptions = [{ value: 'all', label: 'Show all' }];
+  if (category) {
+    category.years.forEach((y) => {
+      yearOptions.push({ value: y.year, label: `FY ${y.year}` });
+    });
+  }
+  const selectedYear = isShowAll ? 'all' : (category?.years[state.yearIndex]?.year || '');
 
   // Category dropdown options
   const categoryOptions = company.categories.map((c) => ({
@@ -327,11 +337,19 @@ function renderUI(block, companies, state) {
   }));
   const selectedCategory = category ? category.slug : '';
 
-  // FY heading
-  const fyHeading = yearData ? `FY ${yearData.year}` : '';
-
-  // Table
-  const table = buildTable(yearData);
+  // Build table content: show all years or single year
+  let tableContent = '';
+  if (isShowAll && category) {
+    category.years.forEach((yearData) => {
+      tableContent += `<h3 class="fr-fy-heading">FY ${yearData.year}</h3>`;
+      tableContent += buildTable(yearData);
+    });
+  } else {
+    const yearData = category?.years[state.yearIndex] || category?.years[0];
+    const fyHeading = yearData ? `FY ${yearData.year}` : '';
+    tableContent = `<h3 class="fr-fy-heading">${fyHeading}</h3>`;
+    tableContent += buildTable(yearData);
+  }
 
   block.innerHTML = `
     <div class="fr-container">
@@ -340,8 +358,7 @@ function renderUI(block, companies, state) {
         ${createDropdown(yearOptions, selectedYear, 'fr-dropdown--year', 'Select Financial Year')}
         ${createDropdown(categoryOptions, selectedCategory, 'fr-dropdown--category', 'Select Report Category')}
       </div>
-      <h3 class="fr-fy-heading">${fyHeading}</h3>
-      ${table}
+      ${tableContent}
     </div>
   `;
 
@@ -356,7 +373,7 @@ function bindEvents(block, companies, state) {
       const newState = {
         companyIndex: parseInt(tab.dataset.index, 10),
         categoryIndex: 0,
-        yearIndex: 0,
+        yearIndex: 'all',
       };
       renderUI(block, companies, newState);
     });
@@ -389,18 +406,23 @@ function bindEvents(block, companies, state) {
       const value = item.dataset.value;
 
       if (dropdown.classList.contains('fr-dropdown--year')) {
-        const company = companies[state.companyIndex];
-        const category = company.categories[state.categoryIndex];
-        const yearIndex = category.years.findIndex((y) => y.year === value);
-        const newState = { ...state, yearIndex: yearIndex >= 0 ? yearIndex : 0 };
-        renderUI(block, companies, newState);
+        if (value === 'all') {
+          const newState = { ...state, yearIndex: 'all' };
+          renderUI(block, companies, newState);
+        } else {
+          const company = companies[state.companyIndex];
+          const category = company.categories[state.categoryIndex];
+          const yearIndex = category.years.findIndex((y) => y.year === value);
+          const newState = { ...state, yearIndex: yearIndex >= 0 ? yearIndex : 0 };
+          renderUI(block, companies, newState);
+        }
       } else if (dropdown.classList.contains('fr-dropdown--category')) {
         const company = companies[state.companyIndex];
         const categoryIndex = company.categories.findIndex((c) => c.slug === value);
         const newState = {
           ...state,
           categoryIndex: categoryIndex >= 0 ? categoryIndex : 0,
-          yearIndex: 0,
+          yearIndex: 'all',
         };
         renderUI(block, companies, newState);
       }
@@ -440,7 +462,7 @@ export default async function decorate(block) {
     const initialState = {
       companyIndex: 0,
       categoryIndex: 0,
-      yearIndex: 0,
+      yearIndex: 'all',
     };
 
     renderUI(block, companies, initialState);

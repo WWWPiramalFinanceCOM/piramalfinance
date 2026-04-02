@@ -534,7 +534,7 @@
     ]
   },
   {
-    "id": "financialresultsreport",
+    "id": "financial-results-report",
     "fields": [
       {
         "component": "text",

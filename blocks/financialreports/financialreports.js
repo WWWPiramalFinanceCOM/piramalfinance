@@ -31,31 +31,40 @@ export default async function decorate(block) {
       'July', 'August', 'September', 'October', 'November', 'December',
     ];
     
-    const quarterOrder = ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'];
+  sortedYears.forEach((year) => {
+    const months = Array.isArray(years[year]) ? years[year][0] : years[year];
     
-    sortedYears.forEach((year) => {
-      const months = Array.isArray(years[year]) ? years[year][0] : years[year];
+    // Sort months/quarters based on sortType
+    const sortedMonths = Object.keys(months).sort((a, b) => {
+      let comparison = 0;
       
-      // Sort months/quarters based on sortType
-      const sortedMonths = Object.keys(months).sort((a, b) => {
-        let comparison = 0;
-        // Check if it's a quarter format - always keep quarters in ascending order
-        if (a.startsWith('Quarter') && b.startsWith('Quarter')) {
-          comparison = quarterOrder.indexOf(a) - quarterOrder.indexOf(b);
-          return comparison; // Always ascending for quarters
+      // Extract quarter numbers dynamically (e.g., "Quarter 1", "Quarter2", "Quarter 10")
+      const quarterRegex = /^Quarter\s*(\d+)/i;
+      const quarterMatchA = a.match(quarterRegex);
+      const quarterMatchB = b.match(quarterRegex);
+
+      if (quarterMatchA && quarterMatchB) {
+        // Both are quarters - compare numerically
+        const quarterNumA = parseInt(quarterMatchA[1]);
+        const quarterNumB = parseInt(quarterMatchB[1]);
+        comparison = quarterNumA - quarterNumB;
+      } else if (quarterMatchA || quarterMatchB) {
+        // One is quarter, one is not - quarters come first
+        comparison = quarterMatchA ? -1 : 1;
+      } else {
+        // Check if it's a month format (case-insensitive)
+        const monthA = monthOrder.findIndex((m) => m.toLowerCase() === a.toLowerCase());
+        const monthB = monthOrder.findIndex((m) => m.toLowerCase() === b.toLowerCase());
+        if (monthA !== -1 && monthB !== -1) {
+          comparison = monthA - monthB;
         } else {
-          // Check if it's a month format (case-insensitive)
-          const monthA = monthOrder.findIndex(m => m.toLowerCase() === a.toLowerCase());
-          const monthB = monthOrder.findIndex(m => m.toLowerCase() === b.toLowerCase());
-          if (monthA !== -1 && monthB !== -1) {
-            comparison = monthA - monthB;
-          } else {
-            // Fallback to string comparison
-            comparison = a.localeCompare(b);
-          }
+          // Fallback to string comparison
+          comparison = a.localeCompare(b);
         }
-        return isAscending ? comparison : -comparison;
-      });
+      }
+
+      return isAscending ? comparison : -comparison;
+    });
       
       let monthsli = '';
       sortedMonths.forEach((month) => {

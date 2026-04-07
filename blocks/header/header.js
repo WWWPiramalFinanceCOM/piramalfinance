@@ -523,6 +523,30 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 
+  // Intercept investor corner nav links to redirect to financial-results with category
+  const financialResultsPath = '/investor-corner/financial-results';
+  const categoryMap = {
+    '/stakeholders/quarterly-results-pfl': 'quarterly-results',
+    '/stakeholders/equity-investor-presentation': 'equity-investor-presentation',
+    '/stakeholders/debt-investors-presentation': 'debt-investor-presentation',
+    '/stakeholders/annual-reports': 'annual-reports',
+  };
+  nav.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href') || '';
+    const matchedCategory = Object.keys(categoryMap).find((path) => href.includes(path));
+    if (matchedCategory) {
+      e.preventDefault();
+      sessionStorage.setItem('fr-selected-category', categoryMap[matchedCategory]);
+      if (window.location.pathname.includes('/financial-results')) {
+        window.location.reload();
+      } else {
+        window.location.href = financialResultsPath;
+      }
+    }
+  });
+
   if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
     navWrapper.append(await buildBreadcrumbs());
   }

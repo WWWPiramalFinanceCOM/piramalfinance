@@ -456,9 +456,27 @@ export default async function decorate(block) {
       return;
     }
 
+    // Check sessionStorage for category passed from header nav
+    let initialCompanyIndex = 0;
+    let initialCategoryIndex = 0;
+    const storedCategory = sessionStorage.getItem('fr-selected-category');
+    if (storedCategory) {
+      sessionStorage.removeItem('fr-selected-category');
+      for (let ci = 0; ci < companies.length; ci += 1) {
+        const catIdx = companies[ci].categories.findIndex(
+          (c) => c.slug === storedCategory,
+        );
+        if (catIdx >= 0) {
+          initialCompanyIndex = ci;
+          initialCategoryIndex = catIdx;
+          break;
+        }
+      }
+    }
+
     const initialState = {
-      companyIndex: 0,
-      categoryIndex: 0,
+      companyIndex: initialCompanyIndex,
+      categoryIndex: initialCategoryIndex,
       yearIndex: 0,
     };
 

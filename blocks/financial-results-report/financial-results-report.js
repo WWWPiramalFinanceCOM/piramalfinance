@@ -10,8 +10,6 @@ function resolveUrl(url) {
   if (url.startsWith('http')) return url;
   const { hostname } = window.location;
   const isNonPublish = hostname === 'localhost'
-    || hostname === '127.0.0.1'
-    || hostname.endsWith('.adobeaemcloud.com')
     || hostname.endsWith('.hlx.page')
     || hostname.endsWith('.hlx.live');
   if (isNonPublish && url.startsWith('/content/')) {
@@ -226,6 +224,7 @@ function buildSimpleTable(yearData) {
   yearData.reportTypes.forEach((reportType) => {
     reportType.pdfs.forEach((file) => {
       const title = file['dc:title'] || reportType.name;
+      console.log('dc:title, title');
       const fileType = getFileType(file);
       const resolvedPath = resolveUrl(file.path);
       rows += `<tr class="fr-table-row">

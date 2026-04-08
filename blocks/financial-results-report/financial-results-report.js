@@ -90,6 +90,27 @@ function formatSlug(slug) {
  * Parse the deeply nested API response into a flat usable structure.
  * Returns: { companies: [ { name, slug, categories: [ { name, slug, years: [ { year, reportTypes: [ { name, slug, pdfs: [...] } ] } ] } ] } ] }
  */
+
+// Fixed display order for Quarterly Results report types.
+// Uses keyword matching so it works regardless of year-specific slug variations.
+// Report types not matching any keyword appear at the end in API order.
+const QUARTERLY_REPORT_ORDER = [
+  'result-presentation',
+  'press-release',
+  'historical-data',
+  'standalone-financial-results',
+  'consolidated-financial-results',
+  'earnings-conference-call-invite',
+  'earnings-conference-call-audio-recording',
+  'earnings-conference-call-transcript',
+  'unaudited-financial-results',
+];
+
+function getQuarterlyOrderIndex(slug) {
+  const idx = QUARTERLY_REPORT_ORDER.findIndex((keyword) => slug.includes(keyword));
+  return idx === -1 ? QUARTERLY_REPORT_ORDER.length : idx;
+}
+
 function parseAPIData(data) {
   const selectorKey = Object.keys(data)[0];
   const companiesRaw = data[selectorKey];
@@ -171,6 +192,14 @@ function parseAPIData(data) {
 
       // Sort years descending
       category.years.sort((a, b) => parseInt(b.year, 10) - parseInt(a.year, 10));
+
+      // Sort report types for quarterly-results category
+      if (category.slug === 'quarterly-results') {
+        category.years.forEach((y) => {
+          y.reportTypes.sort((a, b) => getQuarterlyOrderIndex(a.slug) - getQuarterlyOrderIndex(b.slug));
+        });
+      }
+
       company.categories.push(category);
     });
 

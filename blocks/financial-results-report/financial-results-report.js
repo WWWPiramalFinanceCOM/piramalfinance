@@ -10,8 +10,8 @@ function resolveUrl(url) {
   if (url.startsWith('http')) return url;
   const { hostname } = window.location;
   const isNonPublish = hostname === 'localhost'
-    || hostname.endsWith('.hlx.page')
-    || hostname.endsWith('.hlx.live');
+    || hostname.endsWith('.aem.page')
+    || hostname.endsWith('.aem.live');
   if (isNonPublish && url.startsWith('/content/')) {
     return `${AEM_PUBLISH_DOMAIN}${url}`;
   }

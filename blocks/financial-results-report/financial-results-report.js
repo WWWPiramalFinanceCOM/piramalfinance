@@ -215,7 +215,7 @@ function buildSimpleTable(yearData) {
       <thead>
         <tr class="fr-table-header">
           <th class="fr-table-th fr-table-th--name">Reports</th>
-          <th class="fr-table-th fr-table-th--download">Download</th>
+          <th class="fr-table-th fr-table-th--download"></th>
         </tr>
       </thead>
       <tbody>

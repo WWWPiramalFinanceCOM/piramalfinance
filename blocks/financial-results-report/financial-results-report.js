@@ -81,7 +81,8 @@ function formatSlug(slug) {
   return slug
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(' ')
+    .replace(/\(\w/g, (match) => match.toUpperCase());
 }
 
 /**
@@ -108,12 +109,31 @@ async function fetchSequenceOrder() {
   }
 }
 
+/**
+ * Fetch the category dropdown display order from the sheet.
+ * Falls back to an empty array (original API order) on failure.
+ */
+async function fetchCategorySequenceOrder() {
+  try {
+    const resp = await fetch('/sheet/dropdown-sequence.json');
+    if (!resp.ok) return [];
+    const json = await resp.json();
+    const rows = json?.data || [];
+    return rows
+      .map((r) => (r.sequence || '').trim().toLowerCase().replace(/\s+/g, '-'))
+      .filter(Boolean);
+  } catch (e) {
+    console.warn('Financial Results: could not load category sequence sheet', e);
+    return [];
+  }
+}
+
 function getQuarterlyOrderIndex(slug, sequenceOrder) {
   const idx = sequenceOrder.findIndex((keyword) => slug.includes(keyword));
   return idx === -1 ? sequenceOrder.length : idx;
 }
 
-function parseAPIData(data, sequenceOrder = []) {
+function parseAPIData(data, sequenceOrder = [], categorySequenceOrder = []) {
   const selectorKey = Object.keys(data)[0];
   const companiesRaw = data[selectorKey];
   const companies = [];
@@ -205,6 +225,16 @@ function parseAPIData(data, sequenceOrder = []) {
       company.categories.push(category);
     });
 
+    // Sort categories by sheet-defined dropdown order
+    if (categorySequenceOrder.length > 0) {
+      company.categories.sort((a, b) => {
+        const ai = categorySequenceOrder.findIndex((k) => a.slug.includes(k));
+        const bi = categorySequenceOrder.findIndex((k) => b.slug.includes(k));
+        return (ai === -1 ? categorySequenceOrder.length : ai)
+          - (bi === -1 ? categorySequenceOrder.length : bi);
+      });
+    }
+
     companies.push(company);
   });
 
@@ -295,12 +325,8 @@ function buildTable(yearData, categorySlug) {
       return '<td class="fr-table-cell fr-table-cell--empty"><span class="fr-dash">&ndash;</span></td>';
     }).join('');
 
-    // Use dc:title from the first available PDF as row name, fall back to reportType.name
-    const firstPdf = reportType.pdfs.find((p) => p['dc:title']);
-    const rowName = (firstPdf && firstPdf['dc:title']) || reportType.name;
-
     rows += `<tr class="fr-table-row">
-      <td class="fr-table-cell fr-table-cell--name">${rowName}</td>
+      <td class="fr-table-cell fr-table-cell--name">${reportType.name}</td>
       ${cells}
     </tr>`;
   });
@@ -483,12 +509,13 @@ export default async function decorate(block) {
   }
 
   try {
-    const [resp, sequenceOrder] = await Promise.all([
+    const [resp, sequenceOrder, categorySequenceOrder] = await Promise.all([
       fetchAPI('GET', url),
       fetchSequenceOrder(),
+      fetchCategorySequenceOrder(),
     ]);
     const data = await resp.json();
-    const companies = parseAPIData(data, sequenceOrder);
+    const companies = parseAPIData(data, sequenceOrder, categorySequenceOrder);
 
     if (!companies.length) {
       block.innerHTML = '<div class="fr-error">No financial results data found.</div>';

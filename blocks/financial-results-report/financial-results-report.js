@@ -89,27 +89,31 @@ function formatSlug(slug) {
  * Returns: { companies: [ { name, slug, categories: [ { name, slug, years: [ { year, reportTypes: [ { name, slug, pdfs: [...] } ] } ] } ] } ] }
  */
 
-// Fixed display order for Quarterly Results report types.
-// Uses keyword matching so it works regardless of year-specific slug variations.
-// Report types not matching any keyword appear at the end in API order.
-const QUARTERLY_REPORT_ORDER = [
-  'result-presentation',
-  'press-release',
-  'historical-data',
-  'standalone-financial-results',
-  'consolidated-financial-results',
-  'earnings-conference-call-invite',
-  'earnings-conference-call-audio-recording',
-  'earnings-conference-call-transcript',
-  'unaudited-financial-results',
-];
-
-function getQuarterlyOrderIndex(slug) {
-  const idx = QUARTERLY_REPORT_ORDER.findIndex((keyword) => slug.includes(keyword));
-  return idx === -1 ? QUARTERLY_REPORT_ORDER.length : idx;
+/**
+ * Fetch the report-type display order from the sheet.
+ * Falls back to an empty array (original API order) on failure.
+ */
+async function fetchSequenceOrder() {
+  try {
+    const resp = await fetch('/sheet/financial-result-sequence.json');
+    if (!resp.ok) return [];
+    const json = await resp.json();
+    const rows = json?.data || [];
+    return rows
+      .map((r) => (r.sequence || '').trim().toLowerCase().replace(/\s+/g, '-'))
+      .filter(Boolean);
+  } catch (e) {
+    console.warn('Financial Results: could not load sequence sheet', e);
+    return [];
+  }
 }
 
-function parseAPIData(data) {
+function getQuarterlyOrderIndex(slug, sequenceOrder) {
+  const idx = sequenceOrder.findIndex((keyword) => slug.includes(keyword));
+  return idx === -1 ? sequenceOrder.length : idx;
+}
+
+function parseAPIData(data, sequenceOrder = []) {
   const selectorKey = Object.keys(data)[0];
   const companiesRaw = data[selectorKey];
   const companies = [];
@@ -192,9 +196,9 @@ function parseAPIData(data) {
       category.years.sort((a, b) => parseInt(b.year, 10) - parseInt(a.year, 10));
 
       // Sort report types for quarterly-results category
-      if (category.slug === 'quarterly-results') {
+      if (category.slug === 'quarterly-results' && sequenceOrder.length > 0) {
         category.years.forEach((y) => {
-          y.reportTypes.sort((a, b) => getQuarterlyOrderIndex(a.slug) - getQuarterlyOrderIndex(b.slug));
+          y.reportTypes.sort((a, b) => getQuarterlyOrderIndex(a.slug, sequenceOrder) - getQuarterlyOrderIndex(b.slug, sequenceOrder));
         });
       }
 
@@ -475,9 +479,12 @@ export default async function decorate(block) {
   }
 
   try {
-    const resp = await fetchAPI('GET', url);
+    const [resp, sequenceOrder] = await Promise.all([
+      fetchAPI('GET', url),
+      fetchSequenceOrder(),
+    ]);
     const data = await resp.json();
-    const companies = parseAPIData(data);
+    const companies = parseAPIData(data, sequenceOrder);
 
     if (!companies.length) {
       block.innerHTML = '<div class="fr-error">No financial results data found.</div>';

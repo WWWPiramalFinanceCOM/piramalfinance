@@ -10,10 +10,8 @@ function resolveUrl(url) {
   if (url.startsWith('http')) return url;
   const { hostname } = window.location;
   const isNonPublish = hostname === 'localhost'
-    || hostname === '127.0.0.1'
-    || hostname.endsWith('.adobeaemcloud.com')
-    || hostname.endsWith('.hlx.page')
-    || hostname.endsWith('.hlx.live');
+    || hostname.endsWith('.aem.page')
+    || hostname.endsWith('.aem.live');
   if (isNonPublish && url.startsWith('/content/')) {
     return `${AEM_PUBLISH_DOMAIN}${url}`;
   }
@@ -91,27 +89,31 @@ function formatSlug(slug) {
  * Returns: { companies: [ { name, slug, categories: [ { name, slug, years: [ { year, reportTypes: [ { name, slug, pdfs: [...] } ] } ] } ] } ] }
  */
 
-// Fixed display order for Quarterly Results report types.
-// Uses keyword matching so it works regardless of year-specific slug variations.
-// Report types not matching any keyword appear at the end in API order.
-const QUARTERLY_REPORT_ORDER = [
-  'result-presentation',
-  'press-release',
-  'historical-data',
-  'standalone-financial-results',
-  'consolidated-financial-results',
-  'earnings-conference-call-invite',
-  'earnings-conference-call-audio-recording',
-  'earnings-conference-call-transcript',
-  'unaudited-financial-results',
-];
-
-function getQuarterlyOrderIndex(slug) {
-  const idx = QUARTERLY_REPORT_ORDER.findIndex((keyword) => slug.includes(keyword));
-  return idx === -1 ? QUARTERLY_REPORT_ORDER.length : idx;
+/**
+ * Fetch the report-type display order from the sheet.
+ * Falls back to an empty array (original API order) on failure.
+ */
+async function fetchSequenceOrder() {
+  try {
+    const resp = await fetch('/sheet/financial-result-sequence.json');
+    if (!resp.ok) return [];
+    const json = await resp.json();
+    const rows = json?.data || [];
+    return rows
+      .map((r) => (r.sequence || '').trim().toLowerCase().replace(/\s+/g, '-'))
+      .filter(Boolean);
+  } catch (e) {
+    console.warn('Financial Results: could not load sequence sheet', e);
+    return [];
+  }
 }
 
-function parseAPIData(data) {
+function getQuarterlyOrderIndex(slug, sequenceOrder) {
+  const idx = sequenceOrder.findIndex((keyword) => slug.includes(keyword));
+  return idx === -1 ? sequenceOrder.length : idx;
+}
+
+function parseAPIData(data, sequenceOrder = []) {
   const selectorKey = Object.keys(data)[0];
   const companiesRaw = data[selectorKey];
   const companies = [];
@@ -194,9 +196,9 @@ function parseAPIData(data) {
       category.years.sort((a, b) => parseInt(b.year, 10) - parseInt(a.year, 10));
 
       // Sort report types for quarterly-results category
-      if (category.slug === 'quarterly-results') {
+      if (category.slug === 'quarterly-results' && sequenceOrder.length > 0) {
         category.years.forEach((y) => {
-          y.reportTypes.sort((a, b) => getQuarterlyOrderIndex(a.slug) - getQuarterlyOrderIndex(b.slug));
+          y.reportTypes.sort((a, b) => getQuarterlyOrderIndex(a.slug, sequenceOrder) - getQuarterlyOrderIndex(b.slug, sequenceOrder));
         });
       }
 
@@ -226,6 +228,7 @@ function buildSimpleTable(yearData) {
   yearData.reportTypes.forEach((reportType) => {
     reportType.pdfs.forEach((file) => {
       const title = file['dc:title'] || reportType.name;
+      console.log('dc:title, title');
       const fileType = getFileType(file);
       const resolvedPath = resolveUrl(file.path);
       rows += `<tr class="fr-table-row">
@@ -257,13 +260,13 @@ function buildSimpleTable(yearData) {
 /**
  * Build the table for a specific company + category + year
  */
-function buildTable(yearData) {
+function buildTable(yearData, categorySlug) {
   if (!yearData || !yearData.reportTypes || yearData.reportTypes.length === 0) {
     return '<div class="fr-no-data">No data available for this selection.</div>';
   }
 
-  // Non-quarterly categories: use simple two-column layout
-  if (!isQuarterlyData(yearData)) {
+  // Only quarterly-results category gets Q1/Q2/Q3/Q4 columns
+  if (categorySlug !== 'quarterly-results') {
     return buildSimpleTable(yearData);
   }
 
@@ -292,8 +295,12 @@ function buildTable(yearData) {
       return '<td class="fr-table-cell fr-table-cell--empty"><span class="fr-dash">&ndash;</span></td>';
     }).join('');
 
+    // Use dc:title from the first available PDF as row name, fall back to reportType.name
+    const firstPdf = reportType.pdfs.find((p) => p['dc:title']);
+    const rowName = (firstPdf && firstPdf['dc:title']) || reportType.name;
+
     rows += `<tr class="fr-table-row">
-      <td class="fr-table-cell fr-table-cell--name">${reportType.name}</td>
+      <td class="fr-table-cell fr-table-cell--name">${rowName}</td>
       ${cells}
     </tr>`;
   });
@@ -368,13 +375,13 @@ function renderUI(block, companies, state) {
   if (isShowAll && category) {
     category.years.forEach((yearData) => {
       tableContent += `<h3 class="fr-fy-heading">FY ${yearData.year}</h3>`;
-      tableContent += buildTable(yearData);
+      tableContent += buildTable(yearData, category.slug);
     });
   } else {
     const yearData = category?.years[state.yearIndex] || category?.years[0];
     const fyHeading = yearData ? `FY ${yearData.year}` : '';
     tableContent = `<h3 class="fr-fy-heading">${fyHeading}</h3>`;
-    tableContent += buildTable(yearData);
+    tableContent += buildTable(yearData, category.slug);
   }
 
   block.innerHTML = `
@@ -476,9 +483,12 @@ export default async function decorate(block) {
   }
 
   try {
-    const resp = await fetchAPI('GET', url);
+    const [resp, sequenceOrder] = await Promise.all([
+      fetchAPI('GET', url),
+      fetchSequenceOrder(),
+    ]);
     const data = await resp.json();
-    const companies = parseAPIData(data);
+    const companies = parseAPIData(data, sequenceOrder);
 
     if (!companies.length) {
       block.innerHTML = '<div class="fr-error">No financial results data found.</div>';

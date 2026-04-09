@@ -260,13 +260,13 @@ function buildSimpleTable(yearData) {
 /**
  * Build the table for a specific company + category + year
  */
-function buildTable(yearData) {
+function buildTable(yearData, categorySlug) {
   if (!yearData || !yearData.reportTypes || yearData.reportTypes.length === 0) {
     return '<div class="fr-no-data">No data available for this selection.</div>';
   }
 
-  // Non-quarterly categories: use simple two-column layout
-  if (!isQuarterlyData(yearData)) {
+  // Only quarterly-results category gets Q1/Q2/Q3/Q4 columns
+  if (categorySlug !== 'quarterly-results') {
     return buildSimpleTable(yearData);
   }
 
@@ -295,8 +295,12 @@ function buildTable(yearData) {
       return '<td class="fr-table-cell fr-table-cell--empty"><span class="fr-dash">&ndash;</span></td>';
     }).join('');
 
+    // Use dc:title from the first available PDF as row name, fall back to reportType.name
+    const firstPdf = reportType.pdfs.find((p) => p['dc:title']);
+    const rowName = (firstPdf && firstPdf['dc:title']) || reportType.name;
+
     rows += `<tr class="fr-table-row">
-      <td class="fr-table-cell fr-table-cell--name">${reportType.name}</td>
+      <td class="fr-table-cell fr-table-cell--name">${rowName}</td>
       ${cells}
     </tr>`;
   });
@@ -371,13 +375,13 @@ function renderUI(block, companies, state) {
   if (isShowAll && category) {
     category.years.forEach((yearData) => {
       tableContent += `<h3 class="fr-fy-heading">FY ${yearData.year}</h3>`;
-      tableContent += buildTable(yearData);
+      tableContent += buildTable(yearData, category.slug);
     });
   } else {
     const yearData = category?.years[state.yearIndex] || category?.years[0];
     const fyHeading = yearData ? `FY ${yearData.year}` : '';
     tableContent = `<h3 class="fr-fy-heading">${fyHeading}</h3>`;
-    tableContent += buildTable(yearData);
+    tableContent += buildTable(yearData, category.slug);
   }
 
   block.innerHTML = `

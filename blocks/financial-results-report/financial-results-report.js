@@ -510,6 +510,9 @@ function bindEvents(block, companies, state) {
 }
 
 export default async function decorate(block) {
+  // Register this page's path so the header can redirect here dynamically
+  try { localStorage.setItem('financial-reports-page', window.location.pathname); } catch (e) { /* private browsing */ }
+
   const props = getProps(block);
   const [rawUrl] = props;
   const url = resolveUrl(rawUrl);
@@ -534,16 +537,21 @@ export default async function decorate(block) {
       return;
     }
 
-    // Check sessionStorage for category passed from header nav
+    // Check URL params or sessionStorage for category passed from header nav
     let initialCompanyIndex = 0;
     let initialCategoryIndex = 0;
-    const storedCategory = sessionStorage.getItem('fr-selected-category');
-    if (storedCategory) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category') || sessionStorage.getItem('fr-selected-category');
+    if (categoryParam) {
       sessionStorage.removeItem('fr-selected-category');
+      const normalizedParam = categoryParam.toLowerCase().replace(/\s+/g, '-');
       for (let ci = 0; ci < companies.length; ci += 1) {
-        const catIdx = companies[ci].categories.findIndex(
-          (c) => c.slug === storedCategory,
-        );
+        const catIdx = companies[ci].categories.findIndex((c) => {
+          const normalizedSlug = c.slug.toLowerCase().replace(/\s+/g, '-');
+          return normalizedSlug === normalizedParam
+            || normalizedSlug.includes(normalizedParam)
+            || normalizedParam.includes(normalizedSlug);
+        });
         if (catIdx >= 0) {
           initialCompanyIndex = ci;
           initialCategoryIndex = catIdx;

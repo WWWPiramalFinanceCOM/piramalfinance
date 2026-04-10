@@ -524,7 +524,7 @@ export default async function decorate(block) {
   block.append(navWrapper);
 
   // Intercept investor corner nav links to redirect to financial-reports with category
-  const financialResultsPath = '/investor-corner/financial-reports';
+  // Path is dynamic — stored by the financial-results-report block in localStorage
   const categoryMap = {
     '/stakeholders/quarterly-results-pfl': 'quarterly-results',
     '/stakeholders/equity-investor-presentation': 'equity-investor-presentation',
@@ -535,15 +535,14 @@ export default async function decorate(block) {
     const anchor = e.target.closest('a');
     if (!anchor) return;
     const href = anchor.getAttribute('href') || '';
-    const matchedCategory = Object.keys(categoryMap).find((path) => href.includes(path));
+    const matchedCategory = Object.keys(categoryMap).find((p) => href.includes(p));
     if (matchedCategory) {
+      const financialResultsPath = localStorage.getItem('financial-reports-page');
+      if (!financialResultsPath) return; // block page not yet visited, let default nav work
       e.preventDefault();
-      sessionStorage.setItem('fr-selected-category', categoryMap[matchedCategory]);
-      if (window.location.pathname.includes('/financial-reports')) {
-        window.location.reload();
-      } else {
-        window.location.href = financialResultsPath;
-      }
+      const category = categoryMap[matchedCategory];
+      sessionStorage.setItem('fr-selected-category', category);
+      window.location.href = `${financialResultsPath}?category=${encodeURIComponent(category)}`;
     }
   });
 

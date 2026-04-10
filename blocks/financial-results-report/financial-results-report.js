@@ -238,13 +238,13 @@ function parseAPIData(data, sequenceOrder = [], categorySequenceOrder = []) {
     // Sort categories by sheet-defined dropdown order
     if (categorySequenceOrder.length > 0) {
       company.categories.sort((a, b) => {
-        const ai = categorySequenceOrder.findIndex((k) => a.slug.includes(k));
-        const bi = categorySequenceOrder.findIndex((k) => b.slug.includes(k));
-        console.log(a.slug);
+        const aNorm = a.slug.toLowerCase().replace(/\s+/g, '-');
+        const bNorm = b.slug.toLowerCase().replace(/\s+/g, '-');
+        const ai = categorySequenceOrder.findIndex((k) => aNorm.includes(k) || k.includes(aNorm));
+        const bi = categorySequenceOrder.findIndex((k) => bNorm.includes(k) || k.includes(bNorm));
         return (ai === -1 ? categorySequenceOrder.length : ai)
           - (bi === -1 ? categorySequenceOrder.length : bi);
-        });
-   
+      });
     }
     companies.push(company);
   });

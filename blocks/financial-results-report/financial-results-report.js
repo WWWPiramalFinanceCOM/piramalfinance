@@ -128,8 +128,9 @@ async function fetchCategorySequenceOrder() {
   }
 }
 
-function getQuarterlyOrderIndex(slug, sequenceOrder) {
-  const idx = sequenceOrder.findIndex((keyword) => slug.includes(keyword));
+function getSequenceIndex(text, sequenceOrder) {
+  const normalized = text.toLowerCase().replace(/\s+/g, '-');
+  const idx = sequenceOrder.findIndex((keyword) => normalized.includes(keyword));
   return idx === -1 ? sequenceOrder.length : idx;
 }
 
@@ -215,10 +216,19 @@ function parseAPIData(data, sequenceOrder = [], categorySequenceOrder = []) {
       // Sort years descending
       category.years.sort((a, b) => parseInt(b.year, 10) - parseInt(a.year, 10));
 
-      // Sort report types for quarterly-results category
-      if (category.slug === 'quarterly-results' && sequenceOrder.length > 0) {
+      // Sort report types and PDFs by sequence sheet for all categories
+      if (sequenceOrder.length > 0) {
         category.years.forEach((y) => {
-          y.reportTypes.sort((a, b) => getQuarterlyOrderIndex(a.slug, sequenceOrder) - getQuarterlyOrderIndex(b.slug, sequenceOrder));
+          // Sort report types (rows) by slug
+          y.reportTypes.sort((a, b) => getSequenceIndex(a.slug, sequenceOrder) - getSequenceIndex(b.slug, sequenceOrder));
+          // Sort individual PDFs within each report type by dc:title
+          y.reportTypes.forEach((rt) => {
+            rt.pdfs.sort((a, b) => {
+              const titleA = a['dc:title'] || rt.name;
+              const titleB = b['dc:title'] || rt.name;
+              return getSequenceIndex(titleA, sequenceOrder) - getSequenceIndex(titleB, sequenceOrder);
+            });
+          });
         });
       }
 
@@ -230,11 +240,12 @@ function parseAPIData(data, sequenceOrder = [], categorySequenceOrder = []) {
       company.categories.sort((a, b) => {
         const ai = categorySequenceOrder.findIndex((k) => a.slug.includes(k));
         const bi = categorySequenceOrder.findIndex((k) => b.slug.includes(k));
+        console.log(a.slug);
         return (ai === -1 ? categorySequenceOrder.length : ai)
           - (bi === -1 ? categorySequenceOrder.length : bi);
-      });
+        });
+   
     }
-
     companies.push(company);
   });
 
@@ -296,7 +307,8 @@ function buildTable(yearData, categorySlug) {
   }
 
   // Only quarterly-results category gets Q1/Q2/Q3/Q4 columns
-  if (categorySlug !== 'quarterly-results') {
+  const normalizedSlug = categorySlug.toLowerCase().replace(/\s+/g, '-');
+  if (normalizedSlug !== 'quarterly-results' && !isQuarterlyData(yearData)) {
     return buildSimpleTable(yearData);
   }
 

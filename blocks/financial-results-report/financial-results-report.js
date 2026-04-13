@@ -1,6 +1,6 @@
 import { fetchAPI, getProps } from '../../scripts/common.js';
 
-const AEM_PUBLISH_DOMAIN = 'https://uatmarketing.piramalfinance.com';
+// const AEM_PUBLISH_DOMAIN = 'https://uatmarketing.piramalfinance.com';
 
 /**
  * Resolve API/asset URL - on non-publish environments, prepend AEM publish domain
@@ -75,6 +75,15 @@ const CHEVRON_DOWN = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height=
 const QUARTERS = ['Q1', 'Q2', 'Q3', 'Q4'];
 
 /**
+ * Check if a `results` value is a valid quarter (Q1-Q4).
+ * Returns false for empty, "Select Result", or any non-quarter value.
+ */
+function isValidQuarter(val) {
+  if (!val) return false;
+  return QUARTERS.includes(val.toUpperCase());
+}
+
+/**
  * Formats a slug like "piramal-finance-limited" to "Piramal Finance Limited"
  */
 function formatSlug(slug) {
@@ -128,8 +137,9 @@ async function fetchCategorySequenceOrder() {
   }
 }
 
-function getQuarterlyOrderIndex(slug, sequenceOrder) {
-  const idx = sequenceOrder.findIndex((keyword) => slug.includes(keyword));
+function getSequenceIndex(text, sequenceOrder) {
+  const normalized = text.toLowerCase().replace(/\s+/g, '-');
+  const idx = sequenceOrder.findIndex((keyword) => normalized.includes(keyword));
   return idx === -1 ? sequenceOrder.length : idx;
 }
 
@@ -215,10 +225,19 @@ function parseAPIData(data, sequenceOrder = [], categorySequenceOrder = []) {
       // Sort years descending
       category.years.sort((a, b) => parseInt(b.year, 10) - parseInt(a.year, 10));
 
-      // Sort report types for quarterly-results category
-      if (category.slug === 'quarterly-results' && sequenceOrder.length > 0) {
+      // Sort report types and PDFs by sequence sheet for all categories
+      if (sequenceOrder.length > 0) {
         category.years.forEach((y) => {
-          y.reportTypes.sort((a, b) => getQuarterlyOrderIndex(a.slug, sequenceOrder) - getQuarterlyOrderIndex(b.slug, sequenceOrder));
+          // Sort report types (rows) by slug
+          y.reportTypes.sort((a, b) => getSequenceIndex(a.slug, sequenceOrder) - getSequenceIndex(b.slug, sequenceOrder));
+          // Sort individual PDFs within each report type by dc:title
+          y.reportTypes.forEach((rt) => {
+            rt.pdfs.sort((a, b) => {
+              const titleA = a['dc:title'] || rt.name;
+              const titleB = b['dc:title'] || rt.name;
+              return getSequenceIndex(titleA, sequenceOrder) - getSequenceIndex(titleB, sequenceOrder);
+            });
+          });
         });
       }
 
@@ -228,13 +247,14 @@ function parseAPIData(data, sequenceOrder = [], categorySequenceOrder = []) {
     // Sort categories by sheet-defined dropdown order
     if (categorySequenceOrder.length > 0) {
       company.categories.sort((a, b) => {
-        const ai = categorySequenceOrder.findIndex((k) => a.slug.includes(k));
-        const bi = categorySequenceOrder.findIndex((k) => b.slug.includes(k));
+        const aNorm = a.slug.toLowerCase().replace(/\s+/g, '-');
+        const bNorm = b.slug.toLowerCase().replace(/\s+/g, '-');
+        const ai = categorySequenceOrder.findIndex((k) => aNorm.includes(k) || k.includes(aNorm));
+        const bi = categorySequenceOrder.findIndex((k) => bNorm.includes(k) || k.includes(bNorm));
         return (ai === -1 ? categorySequenceOrder.length : ai)
           - (bi === -1 ? categorySequenceOrder.length : bi);
       });
     }
-
     companies.push(company);
   });
 
@@ -243,10 +263,10 @@ function parseAPIData(data, sequenceOrder = [], categorySequenceOrder = []) {
 
 /**
  * Check whether the year data contains quarterly (Q1-Q4) structure.
- * Returns true if ANY pdf across all report types has a `results` field.
+ * Returns true only if ANY pdf has a valid quarter value (Q1/Q2/Q3/Q4).
  */
 function isQuarterlyData(yearData) {
-  return yearData.reportTypes.some((rt) => rt.pdfs.some((p) => p.results));
+  return yearData.reportTypes.some((rt) => rt.pdfs.some((p) => isValidQuarter(p.results)));
 }
 
 /**
@@ -296,7 +316,8 @@ function buildTable(yearData, categorySlug) {
   }
 
   // Only quarterly-results category gets Q1/Q2/Q3/Q4 columns
-  if (categorySlug !== 'quarterly-results') {
+  const normalizedSlug = categorySlug.toLowerCase().replace(/\s+/g, '-');
+  if (normalizedSlug !== 'quarterly-results' && !isQuarterlyData(yearData)) {
     return buildSimpleTable(yearData);
   }
 
@@ -304,13 +325,13 @@ function buildTable(yearData, categorySlug) {
   yearData.reportTypes.forEach((reportType) => {
     // Skip rows where no file exists for any quarter
     const hasAnyFile = QUARTERS.some(
-      (q) => reportType.pdfs.some((p) => p.results && p.results.toUpperCase() === q),
+      (q) => reportType.pdfs.some((p) => isValidQuarter(p.results) && p.results.toUpperCase() === q),
     );
     if (!hasAnyFile) return;
 
     const cells = QUARTERS.map((q) => {
       const file = reportType.pdfs.find(
-        (p) => p.results && p.results.toUpperCase() === q,
+        (p) => isValidQuarter(p.results) && p.results.toUpperCase() === q,
       );
       if (file) {
         const title = file['dc:title'] || reportType.name;
@@ -498,6 +519,9 @@ function bindEvents(block, companies, state) {
 }
 
 export default async function decorate(block) {
+  // Register this page's path so the header can redirect here dynamically
+  try { localStorage.setItem('financial-reports-page', window.location.pathname); } catch (e) { /* private browsing */ }
+
   const props = getProps(block);
   const [rawUrl] = props;
   const url = resolveUrl(rawUrl);
@@ -522,16 +546,21 @@ export default async function decorate(block) {
       return;
     }
 
-    // Check sessionStorage for category passed from header nav
+    // Check URL params or sessionStorage for category passed from header nav
     let initialCompanyIndex = 0;
     let initialCategoryIndex = 0;
-    const storedCategory = sessionStorage.getItem('fr-selected-category');
-    if (storedCategory) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category') || sessionStorage.getItem('fr-selected-category');
+    if (categoryParam) {
       sessionStorage.removeItem('fr-selected-category');
+      const normalizedParam = categoryParam.toLowerCase().replace(/\s+/g, '-');
       for (let ci = 0; ci < companies.length; ci += 1) {
-        const catIdx = companies[ci].categories.findIndex(
-          (c) => c.slug === storedCategory,
-        );
+        const catIdx = companies[ci].categories.findIndex((c) => {
+          const normalizedSlug = c.slug.toLowerCase().replace(/\s+/g, '-');
+          return normalizedSlug === normalizedParam
+            || normalizedSlug.includes(normalizedParam)
+            || normalizedParam.includes(normalizedSlug);
+        });
         if (catIdx >= 0) {
           initialCompanyIndex = ci;
           initialCategoryIndex = catIdx;

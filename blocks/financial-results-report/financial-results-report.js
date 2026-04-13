@@ -1,6 +1,6 @@
 import { fetchAPI, getProps } from '../../scripts/common.js';
 
-const AEM_PUBLISH_DOMAIN = 'https://uatmarketing.piramalfinance.com';
+// const AEM_PUBLISH_DOMAIN = 'https://uatmarketing.piramalfinance.com';
 
 /**
  * Resolve API/asset URL - on non-publish environments, prepend AEM publish domain
@@ -73,6 +73,15 @@ function getFileType(file) {
 const CHEVRON_DOWN = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
 
 const QUARTERS = ['Q1', 'Q2', 'Q3', 'Q4'];
+
+/**
+ * Check if a `results` value is a valid quarter (Q1-Q4).
+ * Returns false for empty, "Select Result", or any non-quarter value.
+ */
+function isValidQuarter(val) {
+  if (!val) return false;
+  return QUARTERS.includes(val.toUpperCase());
+}
 
 /**
  * Formats a slug like "piramal-finance-limited" to "Piramal Finance Limited"
@@ -254,10 +263,10 @@ function parseAPIData(data, sequenceOrder = [], categorySequenceOrder = []) {
 
 /**
  * Check whether the year data contains quarterly (Q1-Q4) structure.
- * Returns true if ANY pdf across all report types has a `results` field.
+ * Returns true only if ANY pdf has a valid quarter value (Q1/Q2/Q3/Q4).
  */
 function isQuarterlyData(yearData) {
-  return yearData.reportTypes.some((rt) => rt.pdfs.some((p) => p.results));
+  return yearData.reportTypes.some((rt) => rt.pdfs.some((p) => isValidQuarter(p.results)));
 }
 
 /**
@@ -316,13 +325,13 @@ function buildTable(yearData, categorySlug) {
   yearData.reportTypes.forEach((reportType) => {
     // Skip rows where no file exists for any quarter
     const hasAnyFile = QUARTERS.some(
-      (q) => reportType.pdfs.some((p) => p.results && p.results.toUpperCase() === q),
+      (q) => reportType.pdfs.some((p) => isValidQuarter(p.results) && p.results.toUpperCase() === q),
     );
     if (!hasAnyFile) return;
 
     const cells = QUARTERS.map((q) => {
       const file = reportType.pdfs.find(
-        (p) => p.results && p.results.toUpperCase() === q,
+        (p) => isValidQuarter(p.results) && p.results.toUpperCase() === q,
       );
       if (file) {
         const title = file['dc:title'] || reportType.name;

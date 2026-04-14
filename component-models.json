@@ -534,6 +534,19 @@
     ]
   },
   {
+    "id": "financial-results-report",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "apiurl",
+        "value": "",
+        "label": "API URL",
+        "description": "Enter the API endpoint URL for financial results data."
+      }
+    ]
+  },
+  {
     "id": "faq",
     "fields": [
       {
@@ -2816,7 +2829,7 @@
       }
     ]
   },
-    {
+   {
     "id": "searchunclaimeddividend",
     "fields": [
       {

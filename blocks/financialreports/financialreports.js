@@ -167,7 +167,7 @@ export default async function decorate(block) {
     });
 
     // Auto-open first FY accordion if section has 'fy-open-first' class
-    if (block.closest('.section')?.classList.contains('fy-open-first')) {
+    if (block.closest('.section')?.classList.contains('fy-open-only')) {
       const firstTitle = block.querySelector('.subAccordianTitle');
       if (firstTitle) {
         firstTitle.click();

@@ -165,6 +165,14 @@ export default async function decorate(block) {
     innerAccordionTitles.forEach((title) => {
       title.addEventListener('click', handleInnerAccordionClick);
     });
+
+    // Auto-open first FY accordion if section has 'fy-open-first' class
+    if (block.closest('.section')?.classList.contains('fy-open-only')) {
+      const firstTitle = block.querySelector('.subAccordianTitle');
+      if (firstTitle) {
+        firstTitle.click();
+      }
+    }
   } catch (error) {
     console.error(error);
   }

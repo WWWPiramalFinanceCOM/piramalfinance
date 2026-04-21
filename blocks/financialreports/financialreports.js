@@ -166,12 +166,13 @@ export default async function decorate(block) {
       title.addEventListener('click', handleInnerAccordionClick);
     });
 
-    // Auto-open first FY accordion if section has 'fy-open-first' class
+    // Auto-open all FY accordions if section has 'fy-open-only' class
     if (block.closest('.section')?.classList.contains('fy-open-only')) {
-      const firstTitle = block.querySelector('.subAccordianTitle');
-      if (firstTitle) {
-        firstTitle.click();
-      }
+      block.querySelectorAll('.subAccordianBox').forEach((box) => {
+        box.classList.add('active');
+        box.querySelectorAll('.grey-border').forEach((el) => { el.style.display = 'block'; });
+        box.querySelectorAll('.subAccordianContent').forEach((el) => { el.style.display = 'block'; });
+      });
     }
   } catch (error) {
     console.error(error);

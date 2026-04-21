@@ -165,6 +165,15 @@ export default async function decorate(block) {
     innerAccordionTitles.forEach((title) => {
       title.addEventListener('click', handleInnerAccordionClick);
     });
+
+    // Auto-open all FY accordions if section has 'fy-open-only' class
+    if (block.closest('.section')?.classList.contains('fy-open-only')) {
+      block.querySelectorAll('.subAccordianBox').forEach((box) => {
+        box.classList.add('active');
+        box.querySelectorAll('.grey-border').forEach((el) => { el.style.display = 'block'; });
+        box.querySelectorAll('.subAccordianContent').forEach((el) => { el.style.display = 'block'; });
+      });
+    }
   } catch (error) {
     console.error(error);
   }

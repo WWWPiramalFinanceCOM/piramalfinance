@@ -1274,6 +1274,10 @@
                 "name": "personal-loan-branch-carousel",
                 "value": "personal-loan-branch-carousel"
               },
+                 {
+                "name": "gold-loan-branch-carousel",
+                "value": "gold-loan-branch-carousel"
+              },
               {
                 "name": "used-car-loan-branch-carousel",
                 "value": "used-car-loan-branch-carousel"

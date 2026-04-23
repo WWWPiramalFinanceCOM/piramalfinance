@@ -27,16 +27,28 @@ import { validationJSFunc } from './validation.js';
 export let overlay; export let emiOverlay; export let elgOverlay; export let loaninnerform; export let
   bodyElement;
 
-export function handleOpenFormOnClick(el) {
-  const formButtons = el.querySelectorAll('.open-form-on-click .button-container');
-  formButtons.forEach(button => {
-    console.log(button);
-    button.addEventListener('click', onCLickApplyFormOpen);
-  });
-}
+  export function handleOpenFormOnClick(el) {
+    const formButtons = el.querySelectorAll('.open-form-on-click .button-container');
+    formButtons.forEach(button => {
+      console.log(button);
+      button.addEventListener('click', onCLickApplyFormOpen);
+    });
+  }
 
   export function onCLickApplyFormOpen(e) {
-  statemasterGetStatesApi();
+  const loanInput = loanProduct();
+  let currentLoanType = loanInput?.dataset?.loanType;
+  if (!currentLoanType && loanInput?.value) {
+    const allOptions = document.querySelectorAll('.loan-form-drpdown .subpoints[data-loan-type]');
+    allOptions.forEach((opt) => {
+      if (opt.textContent.trim().toLowerCase() === loanInput.value.trim().toLowerCase()) {
+        currentLoanType = opt.dataset.loanType;
+        loanInput.dataset.loanType = opt.dataset.loanType;
+        loanInput.dataset.loanName = opt.dataset.loanName;
+      }
+    });
+  }
+  statemasterGetStatesApi(currentLoanType);
   validationJSFunc();
   formOpen();
   try {
@@ -152,10 +164,10 @@ export function applyLoanFormClick() {
             const ctaPos = e.target?.closest('.section')?.querySelector('.calculator-parent p')?.textContent.trim();
             if (e.target.innerText.trim() === 'Talk to loan expert') {
               talkToExpert('calculator', emiName, ctaPos, targetObject.pageName);
-              formInteraction(emiName, "Form Open", targetObject.pageName)
+              formInteraction(emiName,"Form Open",targetObject.pageName)
             } else if (e.target.innerText.trim() === 'Apply loan now') {
               applyLoanNow('calculator', emiName, ctaPos, targetObject.pageName);
-              formInteraction(targetObject.pageName, "Form Open", targetObject.pageName)
+              formInteraction(targetObject.pageName,"Form Open",targetObject.pageName)
             }
           } catch (error) {
             console.warn(error);
@@ -237,7 +249,7 @@ export function applyLoanFormClick() {
           if (emiOverlay.classList.contains("show") || elgOverlay.classList.contains("show")) { */
         if (checkingFormopen) {
           if (checkingFormopen.querySelector('.homeloancalculator-wrapper .show') || checkingFormopen.querySelector('.eligibilitycalculator-wrapper .show')) {
-
+            
             loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
             loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
 
@@ -513,7 +525,7 @@ export function applyLoanFormClick() {
       event.stopPropagation();
     });
 
-    function multiSelectHandler(event) {
+    multiSelect.addEventListener('click', function (event) {
       branchcontainer.style.visibility = 'hidden';
       branchArrowImg.classList.remove('inverted');
       isBranchContainerVisible = false;
@@ -527,13 +539,7 @@ export function applyLoanFormClick() {
       toggleArrowImage(this.querySelector('.arrowimage'));
       isLoanContainerVisible = !isLoanContainerVisible;
       event.stopPropagation();
-    }
-    // multiSelect.removeEventListener('click', multiSelectHandler);
-    console.log('multiSelectHandler added');
-    // if (!multiSelect.dataset.multiSelect) {
-    //   multiSelect.dataset.multiSelect = "eventAdded";
-    // }
-    multiSelect.addEventListener('click', multiSelectHandler);
+    });
 
     const checkbox = document.getElementById('loanformcheck');
     const circle = document.querySelector('.circle');
@@ -584,7 +590,7 @@ export function applyLoanFormClick() {
     // loanFormOtpBtn().addEventListener('click', () => {
     //   clearInterval(intervalTime);
     // });
-
+    
 
     function startTimer(footer_time_limit, footer_time_out) {
       clearInterval(footer_time_out);
@@ -654,4 +660,4 @@ window.addEventListener('pageshow', (event) => {
 });
 
 
-handleOpenFormOnClick(document);
+  handleOpenFormOnClick(document);

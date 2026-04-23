@@ -115,7 +115,7 @@ export function generateOTPAPI(access_token, mobileno, productName, source) {
     fetchAPI('POST', generateOTPURL, requesObj)
       .then((generateOTPRsp, reject) => {
         const generateOTPRspObj = getJsonObj(generateOTPRsp);
-        const otpAuthId = generateOTPRspObj.responseJson.authUniqueId || generateOTPRspObj.responseJson.AuthUniqueId;
+       const otpAuthId = generateOTPRspObj.responseJson.authUniqueId || generateOTPRspObj.responseJson.AuthUniqueId;
         sessionStorage.setItem('otpAuthId', otpAuthId);
         resolve(generateOTPRspObj.responseJson);
       })
@@ -396,7 +396,7 @@ function resendOtpBtnClick() {
     }
     resendOtpAPI('Leadform')
       .then(({ responseJson }) => {
-        const otpAuthId = responseJson.authUniqueId || responseJson.AuthUniqueId;
+         const otpAuthId = responseJson.authUniqueId || responseJson.AuthUniqueId;
         sessionStorage.setItem('otpAuthId', otpAuthId);
       })
       .catch((error) => {
@@ -427,6 +427,8 @@ function getProductMap(product, occupation) {
   if (product == 'hl' || product == 'msme') return occupation == 'salaried' ? 'otherLoanSAL' : 'otherLoanSE';
 
   if (product == 'ubl') return occupation == 'business' ? 'bussinessLoan' : false;
+
+  if (product == 'gold-loan') return occupation == 'business' ? 'goldLoan' : false;
 
   if (product == 'pl') return occupation == 'salaried' ? 'personalLoan' : false;
   // if (product == 'pl') return occupation == 'salaried' ? 'personalLoan' : true;

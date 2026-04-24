@@ -3889,6 +3889,11 @@
     position: relative
 }
 
+.section.board-of-directors-wrapper .wrappercreation-wrapper .wrappercreation .wrapper-creation-container .teaser-wrapper .teaser.click-able .background,
+.section.board-of-directors-wrapper .tab-container-wrapper .tab-container .panel-container .teaser.click-able .background {
+    cursor: pointer
+}
+
 .section.board-of-directors-wrapper .wrappercreation-wrapper .wrappercreation .wrapper-creation-container .teaser-wrapper .teaser .background .front-picture,
 .section.board-of-directors-wrapper .tab-container-wrapper .tab-container .panel-container .teaser .background .front-picture {
     display: none

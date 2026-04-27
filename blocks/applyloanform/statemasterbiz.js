@@ -8,6 +8,8 @@ import { statemasterGetStatesApi } from './statemasterapi.js';
 let statemasterGlobal = statemasterDataMap.get('statemasterGlobal') || {};
 let productStatemaster = {};
 let productStates = [];
+let allStates = [];
+let goldLoanStatemaster = null;
 let loanProductListenerAttached = false;
 
 let ulFormBranch = document.createElement('li');
@@ -61,15 +63,15 @@ export function stateMasterProcessApiData(rawData) {
 }
 
 function renderStatemaster(statemaster) {
-  const states = Object.keys(statemaster).sort();
+  allStates = Object.keys(statemaster).sort();
 
-  renderDefaultStates(states);
+  renderDefaultStates(allStates);
 
   if (!loanProductListenerAttached) {
     const buttonExpert = document.querySelectorAll('.expert');
     buttonExpert.forEach((btn) => {
       btn.addEventListener('click', () => {
-        renderDefaultStates(states);
+        renderDefaultStates(allStates);
         brachDropDownUl().replaceChildren(defaultCityLi);
         productStatemaster = {};
         productStates = [];
@@ -77,7 +79,7 @@ function renderStatemaster(statemaster) {
     });
 
     stateInput().addEventListener('change', ({ currentTarget }) => {
-      const state = (productStates.length ? productStates : states).filter((state) => state.toLowerCase() === currentTarget.value.toLowerCase())[0];
+      const state = (productStates.length ? productStates : allStates).filter((state) => state.toLowerCase() === currentTarget.value.toLowerCase())[0];
       if (state) {
         renderCities(state);
         currentTarget.classList.add('place-selected');
@@ -90,7 +92,6 @@ function renderStatemaster(statemaster) {
     });
 
     loanProduct().addEventListener('change', ({ currentTarget }) => {
-      stateLoanFilter(currentTarget.dataset.loanType);
       clearPLLoanError();
       validatePLLoan();
       const allowedtype = ['pl', 'las', 'lamf'].includes(currentTarget.dataset.loanType);
@@ -100,32 +101,46 @@ function renderStatemaster(statemaster) {
       const isGoldLoanAllowed = statemasterDataMap.get('goldLoanType');
       const goldCheckedType = typeof isGoldLoanAllowed === 'boolean' ? isGoldLoanAllowed : false;
 
-      if (isGoldLoan && !goldCheckedType) {
-        statemasterGetStatesApi(currentTarget.dataset.loanType).then(() => {
+      if (isGoldLoan) {
+        if (goldLoanStatemaster) {
+          statemasterGlobal = goldLoanStatemaster;
+          statemasterDataMap.set('statemasterGlobal', goldLoanStatemaster);
+          allStates = Object.keys(goldLoanStatemaster).sort();
+          renderDefaultStates(allStates);
           stateLoanFilter(currentTarget.dataset.loanType);
-        });
-        statemasterDataMap.set('goldLoanType', true);
+        } else {
+          statemasterGetStatesApi(currentTarget.dataset.loanType).then((statemaster) => {
+            if (statemaster) {
+              goldLoanStatemaster = statemaster;
+              stateLoanFilter(currentTarget.dataset.loanType);
+            }
+          });
+          statemasterDataMap.set('goldLoanType', true);
+        }
       }
-      else if (allowedtype && !checkedType) {
-        statemasterGetStatesApi(currentTarget.dataset.loanType);
-        statemasterDataMap.set('allowedType', true);
-      }
-      else if (!allowedtype && !isGoldLoan && checkedType) {
-        statemasterGetStatesApi(currentTarget.dataset.loanType);
-        statemasterDataMap.set('allowedType', false);
+      else {
+        stateLoanFilter(currentTarget.dataset.loanType);
+        if (allowedtype && !checkedType) {
+          statemasterGetStatesApi(currentTarget.dataset.loanType);
+          statemasterDataMap.set('allowedType', true);
+        }
+        else if (!allowedtype && !isGoldLoan && checkedType) {
+          statemasterGetStatesApi(currentTarget.dataset.loanType);
+          statemasterDataMap.set('allowedType', false);
+        }
       }
     });
 
     stateInput().addEventListener('keyup', ({ currentTarget }) => {
       const ul = stateDropDownUL();
 
-      const searchStates = (productStates.length ? productStates : states).filter((state) => state.toLocaleLowerCase().includes(currentTarget.value.trim().toLocaleLowerCase()));
+      const searchStates = (productStates.length ? productStates : allStates).filter((state) => state.toLocaleLowerCase().includes(currentTarget.value.trim().toLocaleLowerCase()));
       const serachFragment = searchStates.length > 0 ? renderHelper(searchStates, 'form-state', 'States') : renderHelper(searchStates, 'form-state', 'No options');
       ul.replaceChildren(serachFragment);
     });
 
     stateInput().addEventListener('input', ({ currentTarget }) => {
-      const isState = (productStates.length && loanProduct().value ? productStates : states).map((s) => s.toLocaleLowerCase()).includes(currentTarget.value.trim().toLocaleLowerCase());
+      const isState = (productStates.length && loanProduct().value ? productStates : allStates).map((s) => s.toLocaleLowerCase()).includes(currentTarget.value.trim().toLocaleLowerCase());
       if (isState) {
         currentTarget.classList.add('place-selected');
       } else {

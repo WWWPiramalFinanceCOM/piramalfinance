@@ -48,7 +48,10 @@ export function stateMasterApi() {
   sessionStorage.removeItem('goldLoanType');
 }
 
+let latestRequestId = 0;
+
 export function statemasterGetStatesApi(loanType) {
+  const requestId = ++latestRequestId;
   const allowedtype = ['pl', 'las', 'lamf'].includes(loanType);
   const isGoldLoan = loanType === 'gold-loan';
   const fetchUrl = isGoldLoan
@@ -65,6 +68,10 @@ export function statemasterGetStatesApi(loanType) {
     
     fetchAPI('GET', url)
       .then(async (response) => {
+        if (requestId !== latestRequestId) {
+          resolve(null);
+          return;
+        }
         const responseJson = await response.json();
         const statemaster = (allowedtype || isGoldLoan)
         ? stateMasterProcessApiData(responseJson.data) 

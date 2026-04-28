@@ -2146,6 +2146,19 @@
     width: 50%
 }
 
+/* Uniform equal column widths - author "equal-col-table" class on section (desktop only) */
+@media screen and (min-width: 768px) {
+    .section.fees-charges-wrapper.equal-col-table .code-wrapper .code>div>table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .section.fees-charges-wrapper.equal-col-table .code-wrapper .code>div>table>tbody>tr>th,
+    .section.fees-charges-wrapper.equal-col-table .code-wrapper .code>div>table>tbody>tr>td {
+        width: auto;
+    }
+}
+
 .section.fees-charges-wrapper.three-col-table .code-wrapper .code>div>table>tbody>tr>th,
 .section.fees-charges-wrapper.three-col-table .code-wrapper .code>div>table>tbody>tr>td {
     width: 33.33%;
@@ -8166,6 +8179,11 @@ table {
     margin-right: 20px;
     height: 18px;
     width: 18px
+}
+
+/* Hide empty table rows in accordion tables */
+.section.documents-required-brown .accordion.block>details>div>table>tbody>tr:not(:has(td:not(:empty))) {
+    display: none;
 }
 
 @media screen and (max-width:1024px) {

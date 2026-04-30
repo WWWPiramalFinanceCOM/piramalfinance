@@ -428,7 +428,7 @@ function getProductMap(product, occupation) {
 
   if (product == 'ubl') return occupation == 'business' ? 'bussinessLoan' : false;
 
-  if (product == 'gold-loan') return occupation == 'business' ? 'goldLoan' : false;
+  if (product == 'gold-loan') return 'goldLoan';
 
   if (product == 'pl') return occupation == 'salaried' ? 'personalLoan' : false;
   // if (product == 'pl') return occupation == 'salaried' ? 'personalLoan' : true;

@@ -58,9 +58,10 @@ loanFormContainer().addEventListener('input', ({ target }) => {
     const isPLLoan = loanProduct().dataset.loanType === "pl";
     const isLasLoan = loanProduct().dataset.loanType === "las";
     const isLamfLoan = loanProduct().dataset.loanType === "lamf";
+    const isGoldLoan = loanProduct().dataset.loanType === "gold-loan";
 
-    if(isPLLoan || isLasLoan || isLamfLoan){
-      if (target.id === 'form-income') {
+    if(isPLLoan || isLasLoan || isLamfLoan || isGoldLoan){
+      if (target.id === 'form-income' && !isGoldLoan) {
         isValidIncome(target);
       }
 
@@ -95,6 +96,12 @@ loanFormContainer().addEventListener('input', ({ target }) => {
       validatePLLoan();
     }else if((loanProduct().dataset.loanType === "las") || (loanProduct().dataset.loanType === "lamf")){
       validateLasOrLamfLoan();
+    }else if(loanProduct().dataset.loanType === "gold-loan"){
+      if(isValidLoanAmt(formLoanAmt())){
+        loanFromBtn().classList.add('loan-form-button-active');
+      }else{
+        loanFromBtn().classList.remove('loan-form-button-active');
+      }
     }else{
       loanFromBtn().classList.add('loan-form-button-active');
     }
@@ -154,12 +161,15 @@ export function checkAllFieldValidation() {
   const loanType = document.querySelector('#form-loan-type')?.value;
 
   const loanTypeValue = loanType.trim().toLowerCase();
-  if (!['personal loan', 'loan against security', 'loan against mutual fund'].includes(loanTypeValue)) {
+  if (!['personal loan', 'loan against security', 'loan against mutual fund', 'gold loan'].includes(loanTypeValue)) {
     return;
   }
-  const isLoanValid = ['personal loan', 'loan against security', 'loan against mutual fund'].includes(loanTypeValue)
-  ? isLoanAmtValidation && isIncomeValidations
-  : true;
+  const isGoldLoanType = loanTypeValue === 'gold loan';
+  const isLoanValid = isGoldLoanType
+  ? isLoanAmtValidation
+  : (['personal loan', 'loan against security', 'loan against mutual fund'].includes(loanTypeValue)
+    ? isLoanAmtValidation && isIncomeValidations
+    : true);
 
   // Check if all the validations pass
   if (isEmptyValidations && isNumberValidations && isLoanValid && isPlaceValidations && isDateValidations) {
@@ -215,12 +225,20 @@ function isValidLoanAmt(input, target) {
   if (
     loanType.trim().toLowerCase() !== 'personal loan' &&
     loanType.trim().toLowerCase() !== 'loan against security' &&
-    loanType.trim().toLowerCase() !== 'loan against mutual fund'
+    loanType.trim().toLowerCase() !== 'loan against mutual fund' &&
+    loanType.trim().toLowerCase() !== 'gold loan'
   ) {
     return true;
   }
 
-  if (amount < 100000) {
+  const isGoldLoan = loanType.trim().toLowerCase() === 'gold loan';
+  const minLoanAmt = isGoldLoan ? 25000 : 100000;
+  const maxLoanAmt = isGoldLoan ? 5000000 : Infinity;
+
+  if (amount < minLoanAmt || amount > maxLoanAmt) {
+    loanMsgErrorMsg.textContent = isGoldLoan
+      ? 'Amount should be ₹25,000 - ₹50,00,000.'
+      : 'Minimum amount should be 1 lakh.';
     loanMsgErrorMsg.style.display = 'block';
     return false;
   } else {

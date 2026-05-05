@@ -36,7 +36,19 @@ export let overlay; export let emiOverlay; export let elgOverlay; export let loa
   }
 
   export function onCLickApplyFormOpen(e) {
-  statemasterGetStatesApi();
+  const loanInput = loanProduct();
+  let currentLoanType = loanInput?.dataset?.loanType;
+  if (!currentLoanType && loanInput?.value) {
+    const allOptions = document.querySelectorAll('.loan-form-drpdown .subpoints[data-loan-type]');
+    allOptions.forEach((opt) => {
+      if (opt.textContent.trim().toLowerCase() === loanInput.value.trim().toLowerCase()) {
+        currentLoanType = opt.dataset.loanType;
+        loanInput.dataset.loanType = opt.dataset.loanType;
+        loanInput.dataset.loanName = opt.dataset.loanName;
+      }
+    });
+  }
+  statemasterGetStatesApi(currentLoanType);
   validationJSFunc();
   formOpen();
   try {

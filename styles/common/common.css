@@ -2146,6 +2146,19 @@
     width: 50%
 }
 
+/* Uniform equal column widths - author "equal-col-table" class on section (desktop only) */
+@media screen and (min-width: 768px) {
+    .section.fees-charges-wrapper.equal-col-table .code-wrapper .code>div>table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .section.fees-charges-wrapper.equal-col-table .code-wrapper .code>div>table>tbody>tr>th,
+    .section.fees-charges-wrapper.equal-col-table .code-wrapper .code>div>table>tbody>tr>td {
+        width: auto;
+    }
+}
+
 .section.fees-charges-wrapper.three-col-table .code-wrapper .code>div>table>tbody>tr>th,
 .section.fees-charges-wrapper.three-col-table .code-wrapper .code>div>table>tbody>tr>td {
     width: 33.33%;
@@ -2271,6 +2284,7 @@
         left: -13px
     }
 
+    .section.fees-charges-wrapper.two-col-table.choose-us-css .code-wrapper .code.block>div,
     .section.fees-charges-wrapper.three-col-table .code-wrapper .code.block>div,
     .section.fees-charges-wrapper.four-col-table .code-wrapper .code.block>div,
     .section.fees-charges-wrapper.five-col-table .code-wrapper .code.block>div,
@@ -2279,6 +2293,8 @@
         scrollbar-width: none
     }
 
+    .section.fees-charges-wrapper.two-col-table.choose-us-css .code-wrapper .code.block>div>table>tbody>tr>th,
+    .section.fees-charges-wrapper.two-col-table.choose-us-css .code-wrapper .code.block>div>table>tbody>tr>td,
     .section.fees-charges-wrapper.three-col-table .code-wrapper .code.block>div>table>tbody>tr>th,
     .section.fees-charges-wrapper.three-col-table .code-wrapper .code.block>div>table>tbody>tr>td,
     .section.fees-charges-wrapper.four-col-table .code-wrapper .code.block>div>table>tbody>tr>th,
@@ -3887,6 +3903,11 @@
     background-size: 100%;
     background-position: 100% 100%;
     position: relative
+}
+
+.section.board-of-directors-wrapper .wrappercreation-wrapper .wrappercreation .wrapper-creation-container .teaser-wrapper .teaser.click-able .background,
+.section.board-of-directors-wrapper .tab-container-wrapper .tab-container .panel-container .teaser.click-able .background {
+    cursor: pointer
 }
 
 .section.board-of-directors-wrapper .wrappercreation-wrapper .wrappercreation .wrapper-creation-container .teaser-wrapper .teaser .background .front-picture,
@@ -8163,6 +8184,11 @@ table {
     margin-right: 20px;
     height: 18px;
     width: 18px
+}
+
+/* Hide empty table rows in accordion tables */
+.section.documents-required-brown .accordion.block>details>div>table>tbody>tr:not(:has(td:not(:empty))) {
+    display: none;
 }
 
 @media screen and (max-width:1024px) {

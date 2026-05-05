@@ -1,4 +1,5 @@
 export default function decorate(block) {
+  if(window.location.href.includes('author-p')) return;
   const mainParentContainer = block.parentElement.closest('.section');
   const mainParentContainerChildren = Array.from(mainParentContainer.children);
   let wrapperChecker = false;

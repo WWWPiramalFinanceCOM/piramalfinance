@@ -6,6 +6,9 @@ import {
   sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks, loadCSS, fetchPlaceholders,
   getMetadata,
   getExtension,
+  waitForFirstImage,
+  loadSection,
+  loadSections,
 } from './aem.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -250,11 +253,14 @@ async function loadEager(doc) {
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
-    await waitForLCP(LCP_BLOCKS);
-    await loadHeader(doc.querySelector('header'));
-    document.body.classList.add('appear');
-  }
+    // await waitForLCP(doc.querySelector('.section'));
+    loadCSS(`${window.hlx.codeBasePath}/styles/styles${window.getExtension('css')}`);
+    // document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
 
+    document.body.classList.add('appear');
+    await loadSection(main.querySelector('.section'), waitForFirstImage);
+    await loadHeader(doc.querySelector('header'));
+  }
   try {
     /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
     if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
@@ -270,7 +276,7 @@ function autoloadForm(doc) {
     if (anchor.href && anchor.href.includes('/leadform/')) {
       anchor.addEventListener('click', async (e) => {
         e.preventDefault();
-        const {onCLickApplyFormOpen} = await import('../blocks/applyloanform/applyloanforms.js');
+        const { onCLickApplyFormOpen } = await import('../blocks/applyloanform/applyloanforms.js');
         onCLickApplyFormOpen(e);
         // document.querySelector('.expert.orangeexpert').click();
       })
@@ -286,7 +292,7 @@ async function loadLazy(doc) {
   autolinkModals(doc);
   autoloadForm(doc);
   const main = doc.querySelector('main');
-  await loadBlocks(main);
+  await loadSections(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
@@ -344,14 +350,14 @@ async function loadTemplate(doc, templateName) {
 
 async function loadPage() {
   // loadHeader(document.querySelector('header'));
+  await loadResetCss();
+  await loadEager(document);
   const templateName = getMetadata('template');
   if (templateName) {
     await loadTemplate(document, templateName);
   } else {
     await loadingCustomCss();
   }
-  await loadResetCss();
-  await loadEager(document);
   await loadLazy(document);
   loadDelayed();
 }

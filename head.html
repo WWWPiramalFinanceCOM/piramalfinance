@@ -11,7 +11,7 @@
   }
   function getExtension(type) {
     let isMinify = getMetadata("minify") === "true";
-    isMinify = false;
+    // isMinify = false;
     if (type === "js") {
       return isMinify ? `.min.${extJs}` : `.${extJs}`;
     } else if (type === "css") {

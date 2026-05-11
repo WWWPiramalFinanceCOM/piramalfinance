@@ -343,7 +343,7 @@ function createOptimizedPicture(
     src,
     alt = '',
     eager = false,
-    breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
+    breakpoints = [{ media: '(min-width: 600px)', width: '800' }, { width: '400' }],
 ) {
     const url = new URL(src, window.location.href);
     const picture = document.createElement('picture');
@@ -762,7 +762,7 @@ function buildBlock(blockName, content) {
  */
 export function getExtension(type) {
     let isMinify = getMetadata('minify') === 'true'
-    isMinify = false
+    // isMinify = false
     if (type === 'js') {
         return isMinify ? `.min.${extJs}` : `.${extJs}`;
     } else if (type === 'css') {

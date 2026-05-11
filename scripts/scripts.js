@@ -96,6 +96,19 @@ function decorateImageIcons(element, prefix = '') {
   });
 }
 
+function optimizeImageDimensions(main) {
+  const MAX_WIDTH = 800;
+  main.querySelectorAll('picture img').forEach((img) => {
+    const w = parseInt(img.getAttribute('width'), 10);
+    const h = parseInt(img.getAttribute('height'), 10);
+    if (w && h && w > MAX_WIDTH) {
+      const ratio = MAX_WIDTH / w;
+      img.setAttribute('width', MAX_WIDTH);
+      img.setAttribute('height', Math.round(h * ratio));
+    }
+  });
+}
+
 window.addEventListener('resize', () => {
   targetObject.isTab = window.matchMedia('(max-width: 1024px)').matches;
 });
@@ -239,6 +252,7 @@ export async function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateImageIcons(main);
+  optimizeImageDimensions(main);
   // handleOpenFormOnClick(main);
   handleReadAll(main);
 }

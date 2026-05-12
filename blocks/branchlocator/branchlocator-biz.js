@@ -4,7 +4,7 @@ import { branchURLStr, fetchAPI, selectBranchDetails } from "../../scripts/commo
 import returnLatLan from "./sort.js";
 import { initMap, searchBranchByURL } from "./branchlocator-api.js";
 import { setLocationObj } from "./branchlocator-init.js";
-import { renderCity, renderState } from "./branchlocator-render.js";
+import { renderCity, renderState, renderBusinessType } from "./branchlocator-render.js";
 import { innerBranchFunc } from "./branchlocator.js";
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyDx1HwnCLjSSIm_gADqaYAZhSBh7hgcwTQ";
@@ -29,9 +29,17 @@ export async function onloadBranchLocator(block) {
     }
 
     updateURL();
-    const branchList = getBranchList();
+    let branchList = getBranchList();
+
+    // Restore persisted Branch Type selection
+    const savedType = sessionStorage.getItem('selectedBranchType');
+    if (savedType && savedType !== 'All') {
+      setLocationObj.selectedBusinessType = savedType;
+      branchList = branchList.filter((b) => b['Branch Type'] === savedType);
+    }
+
     await loadGoogleMapsAndRender(branchList);
-    updateUI(block, branchList);
+    updateUI(block, branchList, savedType);
   } catch (error) {
     console.error("Error in onloadBranchLocator:", error);
   }
@@ -96,13 +104,22 @@ async function loadGoogleMapsAndRender(branchList) {
   myMap(setLocationObj.lat, setLocationObj.lng, branchList);
 }
 
-async function updateUI(block, branchList) {
+async function updateUI(block, branchList, savedType) {
   const section = block.closest(".section");
   bizStateDD(setLocationObj.getExcelData, block);
   bizCityDD(setLocationObj.getExcelData, block);
+  bizBusinessTypeDD(setLocationObj.getExcelData);
+
+  // Restore persisted Branch Type selection after bizBusinessTypeDD resets it
+  if (savedType && savedType !== 'All') {
+    setLocationObj.selectedBusinessType = savedType;
+    updateCityDDByType(savedType);
+  }
+
   defaultSelectedCityState(block);
   renderCity(block, setLocationObj);
   renderState(block, setLocationObj);
+  renderBusinessType(block);
 
   const multipleBranch = await innerBranchFunc(branchList);
   section.querySelector(".title-to-show").textContent = `Find all ${setLocationObj.geoInfo.city} Branches here`;
@@ -240,6 +257,17 @@ export function bizStateDD(data) {
     .join("");
 }
 
+export function bizBusinessTypeDD(data) {
+  const branches = data[setLocationObj.geoInfo.state] || [];
+  const cityBranches = setLocationObj.geoInfo.city
+    ? branches.filter((b) => b.City.toLowerCase() === setLocationObj.geoInfo.city.toLowerCase())
+    : branches;
+  const types = [...new Set(cityBranches.map((b) => b['Branch Type']).filter(Boolean))];
+  setLocationObj.businessTypeLi = `<li class="businesstype-option option" data-info="All">All</li>`
+    + types.map((type) => `<li class="businesstype-option option" data-info="${type}">${type}</li>`).join("");
+  setLocationObj.selectedBusinessType = 'Branch Type';
+}
+
 export function bizCityDD(data) {
   setLocationObj.cityhash = {};
   setLocationObj.cityLi = Object.values(data[setLocationObj.geoInfo.state]).reduce((acc, { City }) => {
@@ -251,10 +279,24 @@ export function bizCityDD(data) {
   }, "");
 }
 
+function updateCityDDByType(type) {
+  const branches = setLocationObj.getExcelData[setLocationObj.geoInfo.state] || [];
+  const filtered = type === 'All' ? branches : branches.filter((b) => b['Branch Type'] === type);
+  const cityHash = {};
+  setLocationObj.cityLi = filtered.reduce((acc, { City }) => {
+    if (!cityHash[City]) {
+      cityHash[City] = true;
+      acc += `<a href="${branchURLStr("", City, setLocationObj.geoInfo.state, "shorthand")}"><li class="city-option option" data-info="${City}">${City}</li></a>`;
+    }
+    return acc;
+  }, "");
+}
+
 function defaultSelectedCityState(block) {
   const section = block.closest(".section");
   section.querySelector(".default-state-selected").textContent = setLocationObj.geoInfo.state;
   section.querySelector(".default-city-selected").textContent = setLocationObj.geoInfo.city;
+  section.querySelector(".default-businesstype-selected").textContent = setLocationObj.selectedBusinessType || 'Branch Type';
 }
 
 export function onClickState(block) {
@@ -275,6 +317,44 @@ export function onClickCity(block) {
     });
 }
 
+export function onClickBusinessType(block) {
+  block
+    .closest(".section")
+    .querySelectorAll(".businesstype-option")
+    .forEach((eachType) => {
+      eachType.addEventListener("click", (e) => handleBusinessTypeClick(e, block));
+    });
+}
+
+async function handleBusinessTypeClick(e, block) {
+  try {
+    const type = e.target.dataset.info;
+    setLocationObj.selectedBusinessType = type;
+    sessionStorage.setItem('selectedBranchType', type);
+    block.closest(".section").querySelector(".default-businesstype-selected").textContent = type;
+
+    let branchList = getBranchList();
+
+    if (type !== 'All') {
+      branchList = branchList.filter((b) => b['Branch Type'] === type);
+    }
+
+    // Update city dropdown to show only cities matching the selected Branch Type
+    updateCityDDByType(type);
+    renderCity(block);
+
+    await loadGoogleMapsAndRender(branchList);
+
+    const multipleBranch = await innerBranchFunc(branchList);
+    const section = block.closest(".section");
+    section.querySelector(".branch-list-wrapper").innerHTML = multipleBranch;
+
+    e.target.closest("ul").classList.add("dp-none");
+  } catch (error) {
+    console.error("Error in handleBusinessTypeClick:", error);
+  }
+}
+
 export function locateMeClick(block) {
   const locateMeEvent = block.closest(".section").querySelector(".btn-locate");
   locateMeEvent.addEventListener("click", (e) => handleLocateMeClick(e, block));
@@ -293,6 +373,7 @@ function formatURLString(str) {
 
 async function handleStateClick(e, block) {
   try {
+    sessionStorage.removeItem('selectedBranchType');
     const state = e.target.dataset.info;
     setLocationObj.geoInfo.state = state;
 
@@ -302,8 +383,10 @@ async function handleStateClick(e, block) {
     setLocationObj.lng = excelValueObj.Longitude;
 
     bizCityDD(setLocationObj.getExcelData);
+    bizBusinessTypeDD(setLocationObj.getExcelData);
     defaultSelectedCityState(block);
     renderCity(block);
+    renderBusinessType(block);
 
     // const branchList = sortingNearestBranch(setLocationObj.lat, setLocationObj.lng, setLocationObj.getExcelData);
     const branchList = sortByCityandState(setLocationObj.getExcelData[setLocationObj.geoInfo.state]);
@@ -329,7 +412,9 @@ async function handleCityClick(e, block) {
     setLocationObj.lat = excelValueObj.Latitude;
     setLocationObj.lng = excelValueObj.Longitude;
 
+    bizBusinessTypeDD(setLocationObj.getExcelData);
     defaultSelectedCityState(block);
+    renderBusinessType(block);
 
     // const branchList = sortingNearestBranch(setLocationObj.lat, setLocationObj.lng, setLocationObj.getExcelData);
     const branchList = sortByCityandState(setLocationObj.getExcelData[setLocationObj.geoInfo.state]);
@@ -403,9 +488,11 @@ function updateUIForNoLocation(block, target) {
 async function updateDropdownsAndRender(block) {
   bizStateDD(setLocationObj.getExcelData, block);
   bizCityDD(setLocationObj.getExcelData, block);
+  bizBusinessTypeDD(setLocationObj.getExcelData);
   defaultSelectedCityState(block);
   renderCity(block, setLocationObj);
   renderState(block, setLocationObj);
+  renderBusinessType(block);
 }
 
 async function renderBranchList(block, branchList) {

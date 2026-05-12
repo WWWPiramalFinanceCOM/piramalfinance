@@ -67,6 +67,11 @@
     height: 40px;
 }
 
+.section.branchlocator-dropdown .container .dropdown-wrapper .businesstype-dropdown{
+    width: 220px;
+    height: 40px;
+}
+
 .section.branchlocator-dropdown .container .dropdown-wrapper .dropdown .dropdown-selectvalue{
     width: inherit;
     cursor: pointer;
@@ -151,8 +156,22 @@
     padding: 5px 0;
 }
 
+.section.branchlocator-dropdown .container .dropdown-wrapper .dropdown .dropdown-option-wrapper .option-wrapper>li{
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--darkcharcoal);
+    font-family: "Nunito-Regular";
+    padding: 5px 0;
+    list-style: none;
+}
+
 .section.branchlocator-dropdown .container .dropdown-wrapper .dropdown .dropdown-option-wrapper .option-wrapper .option:not(:nth-child(1)){
     margin-top: 15px;
+}
+
+.section.branchlocator-dropdown .container .dropdown-wrapper .businesstype-dropdown .dropdown-option-wrapper .option-wrapper>.option:not(:nth-child(1)){
+    margin-top: 0;
 }
 
 /* DropDown Scroll Bar*/
@@ -339,6 +358,33 @@
     text-decoration: none;
 }
 
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .more-details-btn:hover {
+    text-decoration: none;
+}
+
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .directions-btn {
+    font-weight: 700;
+    padding: 8px 16px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: var(--orange);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Nunito-Bold";
+    background-color: var(--white);
+    border: 1px solid var(--orange);
+    text-decoration: none;
+}
+
+.section.branchlocator-cards .cards-branches .cards-container .cards-wrapper .card-box .card-actions .directions-btn:hover {
+    background-color: var(--orange);
+    color: var(--white);
+    text-decoration: none;
+}
+
 @media screen and (min-width:768px) and (max-width: 1024px) {
     .section.branchlocator-map .container .map-branchinfo-wrapper {
         gap: 90px;
@@ -408,6 +454,7 @@
     .section.branchlocator-dropdown .container .dropdown-wrapper {
         width: 100%;
         gap: 20px;
+        flex-direction: column;
     }
 
     .section.branchlocator-dropdown .container .dropdown-wrapper .state-dropdown{
@@ -415,6 +462,10 @@
     }
 
     .section.branchlocator-dropdown .container .dropdown-wrapper .city-dropdown{
+        width: inherit;
+    }
+
+    .section.branchlocator-dropdown .container .dropdown-wrapper .businesstype-dropdown{
         width: inherit;
     }
 

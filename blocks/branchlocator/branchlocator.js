@@ -25,6 +25,15 @@ export function branchLocator_dropdown(_block) {
                                         </ul>
                                     </div>
 
+                                    <div class='businesstype-dropdown dropdown dropdown-li-logic'>
+                                        <div class='dropdown-selectvalue default-businesstype-selected'> Branch Type </div>
+                                        <ul class='businesstype-vlaue-option dropdown-option-wrapper businesstype-wrapper dp-none'>
+                                            <input type='text' placeholder='Branch Type' id='search' class="search-input"/>
+                                            <div class='option-wrapper'>
+                                            </div>
+                                        </ul>
+                                    </div>
+
                                 </div>
                           </div>`;
 
@@ -87,8 +96,11 @@ export async function innerBranchFunc(branchhList) {
                 += `<div class='card-box'>
               <h3 class='card-title'> ${eachBranch.Location} </h3>
               <p class='card-address'>${eachBranch.Address}</p>
-              <p class='card-gmail'> <span> <img src='/images/gmail.svg' alt='gmail-icon'/> </span> ${placeholders.branchlocatorgmail} </p> 
-              <a href="${branchURLStr(eachLocation, eachCity, eachState, 'loans', eachLocationCode)}" id='more-details-btn'>${placeholders.moredetailtext}  </a> 
+              <p class='card-gmail'> <span> <img src='/images/gmail.svg' alt='gmail-icon'/> </span> ${placeholders.branchlocatorgmail} </p>
+              <div class='card-actions'>
+                <a href="${branchURLStr(eachLocation, eachCity, eachState, 'loans', eachLocationCode)}" class='more-details-btn'>${placeholders.moredetailtext}</a>
+                <a href="${directionsUrl}" target="_blank" rel="noopener noreferrer" class='directions-btn'>${placeholders.directionstext || 'Directions'}</a>
+              </div>
             </div>`;
     // <a href="/branch-locator/${eachState}/${eachCity}/loans-in-${eachCity}-${eachState}-${eachLocationCode}" id='more-details-btn'> More details </a>
   });

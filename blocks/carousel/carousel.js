@@ -84,7 +84,7 @@ export default function decorate(block) {
   // loop through all children blocks
   [...panels].forEach((panel, i) => {
     // generate the  panel
-    const [imagebg, image, classList, ...rest] = panel.children;
+    const [bannerImagebg, bannerImagebgMob, imagebg, image, classList, ...rest] = panel.children;
     const bgColorCode = rest[rest.length - 2].textContent.trim();
     const bgLinearGradientColor = rest[rest.length - 1].textContent.trim();
     const classesText = classList.textContent.trim();

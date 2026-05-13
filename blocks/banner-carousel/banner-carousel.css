@@ -171,6 +171,381 @@
   display: none;
 }
 
+/*
+ * ============================================================
+ *  CAROUSEL-CONTEXT OVERRIDES
+ *  banner-teaser.css is designed for standalone teasers.
+ *  When the teaser sits INSIDE the carousel the DOM is:
+ *    .banner-teaser.block > .background > .foreground > .text
+ *  whereas standalone teaser.css expects:
+ *    .banner-teaser.block > .foreground > .text
+ *  The rules below override every conflicting banner-teaser.css
+ *  rule so the carousel layout works without a section style.
+ * ============================================================
+ */
+
+/* --- Reset standalone teaser img rule (applies to ALL images) --- */
+.banner-carousel .panel-container .banner-teaser.block > .background img {
+  width: auto;
+  height: auto;
+  max-width: none;
+  object-position: unset;
+  object-fit: unset;
+}
+
+/* --- Reset standalone teaser .background --- */
+.banner-carousel .panel-container .banner-teaser.block > .background {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  max-width: 1240px;
+  margin: 0 auto;
+  position: relative;
+  background-color: unset;
+  /* reset teaser standalone absolute-fill values */
+  top: unset;
+  left: unset;
+  height: 100%;
+  width: 100%;
+}
+
+/* --- Panel & block base --- */
+.banner-carousel .panel-container .banner-teaser {
+  min-height: 529px;
+  width: 100%;
+}
+
+.banner-carousel.block {
+  position: relative;
+}
+
+/* --- Foreground --- */
+.banner-carousel .panel-container .banner-teaser .foreground {
+  width: 62.50%;
+}
+
+.banner-carousel .panel-container .banner-teaser .foreground .long-description {
+  margin-top: 16px;
+}
+
+/* Override standalone teaser foreground background-color + min-height */
+.banner-carousel .panel-container .banner-teaser.block .foreground {
+  background-color: unset;
+  min-height: unset;
+  padding: 0;
+}
+
+/* Show eyebrow, title, long-desc (hidden in standalone mobile teaser.css) */
+.banner-carousel .panel-container .banner-teaser.block .foreground .text .eyebrow {
+  display: block;
+}
+
+.banner-carousel .panel-container .banner-teaser.block .foreground .text .title {
+  display: block;
+}
+
+.banner-carousel .panel-container .banner-teaser.block .foreground .text .long-description {
+  display: block;
+}
+
+/* --- Front-picture (person image) --- */
+.banner-carousel .panel-container .banner-teaser.block > .background .front-picture {
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+}
+
+.banner-carousel .panel-container .banner-teaser.block > .background .front-picture img {
+  height: 334px;
+  width: 394px;
+  display: block;
+  object-fit: contain;
+}
+
+/* --- Typography --- */
+.banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .title > :where(h1, h2, h3, h4, h5, h6),
+.banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .eyebrow {
+  color: var(--black);
+  font-family: "Nunito-Extrabold", sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 60px;
+  margin: unset;
+}
+
+.banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .long-description > p {
+  color: var(--gradient-gray);
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 32px;
+  margin: unset;
+}
+
+.banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .short-description > p {
+  color: var(--black);
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 32px;
+  margin: unset;
+}
+
+/* --- CTA buttons --- */
+.banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .cta {
+  position: unset;
+  margin-top: 2rem;
+}
+
+.banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .cta > a {
+  background: var(--orange);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: 'Nunito-Bold', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 20px;
+  padding: 18px 2.16pc 18px 34.65px;
+  width: fit-content;
+  position: unset;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* --- CTA image icons (generic — works with any teaser variant) --- */
+.banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  column-gap: 40px;
+}
+
+.banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper .img-with-text-wrap {
+  max-width: 100px;
+  width: 100%;
+}
+
+.banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper .img-with-text-wrap .cta-image > a {
+  cursor: auto;
+}
+
+.banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper .img-with-text-wrap .cta-image img {
+  width: 72px;
+  height: 72px;
+  display: block;
+  object-fit: contain;
+}
+
+.banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper .img-with-text-wrap p {
+  color: var(--darkcharcoal);
+  font-family: "Nunito-Regular", sans-serif;
+  font-size: 1.125rem;
+  line-height: 26px;
+  padding-top: 8px;
+}
+
+/* --- Button dots --- */
+.banner-carousel.block .button-container {
+  position: absolute;
+  left: calc((100% - 1240px) / 2);
+  bottom: 40px;
+  gap: 8px;
+}
+
+.banner-carousel.block .button-container > button {
+  height: 8px;
+  width: 8px;
+  border: unset;
+  background-color: #858585;
+  opacity: 0.3;
+}
+
+.banner-carousel.block .button-container > button.selected {
+  width: 24px;
+  background-color: var(--black);
+  opacity: 1;
+}
+
+/* --- Whatsapp-banner variant overrides --- */
+.banner-carousel .panel-container .banner-teaser.block.teaser-whatsapp-banner > .background .front-picture img {
+  width: 517px;
+  height: 432px;
+}
+
+.banner-carousel .panel-container .banner-teaser.block.teaser-whatsapp-banner > .background .foreground .text .eyebrow,
+.banner-carousel .panel-container .banner-teaser.block.teaser-whatsapp-banner .background .foreground .long-description > :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--darkcharcoal);
+}
+
+.banner-carousel .panel-container .banner-teaser.block.teaser-whatsapp-banner .background .foreground .long-description > :where(h1, h2, h3, h4, h5, h6) > strong {
+  color: #349E58;
+}
+
+.banner-carousel .panel-container .banner-teaser.block.teaser-whatsapp-banner .background .foreground .long-description {
+  margin-top: unset;
+}
+
+/* --- Base responsive (no section style required) --- */
+
+/* Reset teaser tablet rules that leak into carousel context */
+@media (min-width: 600px) {
+  /* Stop teaser.css from making .background absolute-fill */
+  .banner-carousel .panel-container .banner-teaser.block > .background {
+    display: flex;
+    position: relative;
+    top: unset;
+    left: unset;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* Stop teaser.css from stretching every img to 100% */
+  .banner-carousel .panel-container .banner-teaser.block > .background img {
+    width: auto;
+    height: auto;
+    max-width: none;
+    object-position: unset;
+  }
+
+  /* front-picture img must still be constrained */
+  .banner-carousel .panel-container .banner-teaser.block > .background .front-picture img {
+    max-width: 100%;
+    object-fit: contain;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .banner-carousel .panel-container .banner-teaser.block > .background {
+    max-width: 100%;
+    padding: 0 16px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser .foreground {
+    width: 100%;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .title > :where(h1, h2, h3, h4, h5, h6),
+  .banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .eyebrow {
+    font-size: 1.5rem;
+    line-height: 32px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .long-description > p {
+    font-size: .875rem;
+    line-height: 20px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser .foreground .long-description {
+    margin-top: 12px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .cta > a {
+    font-size: .875rem;
+    line-height: 17px;
+    padding: 14px 16px;
+    margin: 0;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .foreground .text .cta {
+    margin-top: 24px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .foreground .text {
+    padding-top: 40px;
+  }
+
+  .banner-carousel.block .button-container {
+    left: 16px;
+    gap: 8px;
+  }
+
+  .banner-carousel.block .button-container > button {
+    height: 5px;
+    width: 5px;
+  }
+
+  .banner-carousel.block .button-container > button.selected {
+    width: 13px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .front-picture img {
+    height: 170px;
+    width: 200px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .front-picture {
+    right: 16px;
+  }
+
+  /* CTA icons at mobile */
+  .banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper {
+    margin-top: 12px;
+    column-gap: 10px;
+    align-items: flex-start;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper .img-with-text-wrap {
+    max-width: 80px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper .img-with-text-wrap .cta-image img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block .cta-image-wrapper .img-with-text-wrap p {
+    font-size: 0.875rem;
+    line-height: 20px;
+    padding-top: 4px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block.teaser-whatsapp-banner > .background .front-picture img {
+    width: 240px;
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .banner-carousel .panel-container .banner-teaser {
+    min-height: 440px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser .foreground {
+    width: 100%;
+    min-height: 440px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .front-picture img {
+    height: 170px;
+    width: 200px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block.teaser-whatsapp-banner > .background .front-picture img {
+    width: 240px;
+    height: 200px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1300px) {
+  .banner-carousel .panel-container .banner-teaser.block > .background {
+    max-width: 81.25%;
+  }
+
+  .banner-carousel.block .button-container {
+    left: calc((100% - 1025px) / 2);
+    bottom: 60px;
+  }
+
+  .banner-carousel .panel-container .banner-teaser.block > .background .front-picture img {
+    height: 335px;
+    width: 394px;
+  }
+}
+
+/* ---- End carousel-context overrides ---- */
+
 /* homepage top banner carousel css start */
 .section.banner-carousel-wrapper .banner-carousel-wrapper .banner-carousel .panel-container .banner-teaser,
 .section.banner-carousel-wrapper .banner-carousel .panel-container .banner-teaser {
@@ -580,6 +955,7 @@
     padding: 0 16px;
   }
 
+  .section.banner-carousel-wrapper .banner-carousel-wrapper .banner-carousel .panel-container .banner-teaser .foreground,
   .banner-carousel-wrapper .banner-carousel .panel-container .banner-teaser .foreground,
   .section.banner-carousel-wrapper .banner-carousel .panel-container .banner-teaser.block.teaser-block-five > .background .foreground,
   .banner-carousel-wrapper.personal-loan-sub-page-banner .banner-carousel .panel-container .banner-teaser .foreground {
@@ -809,6 +1185,7 @@
 }
 
 @media screen and (max-width: 767px) {
+  .section.banner-carousel-wrapper .banner-carousel-wrapper .banner-carousel .panel-container .banner-teaser,
   .section.banner-carousel-wrapper .banner-carousel .panel-container .banner-teaser {
     min-height: 440px;
   }

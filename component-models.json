@@ -3026,6 +3026,10 @@
             "value": "income"
           },
           {
+            "name": "Gross Annual Income (₹)",
+            "value": "income"
+          },
+          {
             "name": "Existing EMI / Other Loan EMI (₹)",
             "value": "otherloan"
           },

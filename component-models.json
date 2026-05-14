@@ -2918,11 +2918,36 @@
         ]
       },
        {
-        "component": "text",
+        "component": "select",
         "valueType": "string",
         "name": "col1_name",
         "label": "Calculator Name",
-        "multi": false
+        "options": [
+          {
+            "name": "EMI Calculator",
+            "value": "emicalculator"
+          },
+          {
+            "name": "Eligibility Calculator",
+            "value": "eligibilitycalculator"
+          },
+          {
+            "name": "APR Calculator",
+            "value": "aprcalculator"
+          },
+          {
+            "name": "GST Calculator (Buyer)",
+            "value": "gstcalculatorbuyer"
+          },
+          {
+            "name": "GST Calculator (Seller)",
+            "value": "gstcalculatorseller"
+          },
+          {
+            "name": "Part Payment Calculator",
+            "value": "partpaymentcalculator"
+          }
+        ]
       },
       {
         "component": "text",

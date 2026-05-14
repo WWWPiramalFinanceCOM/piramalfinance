@@ -1158,6 +1158,21 @@
               }
             }
           }
+        },
+        {
+          "title": "calculator-radio-item",
+          "id": "calculator-radio-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "calculator-radio-item",
+                  "model": "calculator-radio-item"
+                }
+              }
+            }
+          }
         }
       ]
     }

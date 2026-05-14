@@ -3035,5 +3035,55 @@
         "multi": false
       }
     ]
+  },
+  {
+    "id": "calculator-radio-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_radioText",
+        "label": "Radio Text",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_radioImage",
+        "label": "Radio Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_radioImageAlt",
+        "label": "Radio Image Alt",
+        "multi": false
+      },
+      {
+        "component": "select",
+        "name": "col1_foirType",
+        "value": "salaried",
+        "label": "FOIR Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Salaried",
+            "value": "salaried"
+          },
+          {
+            "name": "Business",
+            "value": "biz"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_foirValue",
+        "label": "FOIR Value",
+        "multi": false
+      }
+    ]
   }
 ]

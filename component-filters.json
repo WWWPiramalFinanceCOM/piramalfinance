@@ -117,7 +117,7 @@
   },
   {
     "id": "calculator",
-    "components": ["calculator-item"]
+    "components": ["calculator-item", "calculator-radio-item"]
   },
   {
     "id": "cards",

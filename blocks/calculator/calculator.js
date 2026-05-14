@@ -67,9 +67,11 @@ function combineSection(section) {
   const blocks = calcWrappers.map((w) => w.querySelector('.calculator.block')).filter(Boolean);
   if (blocks.length < 1) return;
 
-  const { heading, tabNames, productType } = prepareBlocks(blocks);
+  const {
+    heading, tabNames, productType, authoredRadioItems,
+  } = prepareBlocks(blocks);
   section.classList.add('homeloancalculator');
-  const { radioItems, ctaItems, dcwToRemove } = extractContent(section);
+  const { radioItems, ctaItems, dcwToRemove } = extractContent(section, authoredRadioItems);
 
   const radioParent = buildRadioParent(radioItems);
   const calcParent = buildCalculatorParent(heading, tabNames, ctaItems, blocks);
@@ -286,11 +288,17 @@ export default async function decorate(block) {
   const imgEl = firstRow[4]?.querySelector('img');
   const imgSrc = imgEl ? imgEl.src : (firstRow[4]?.textContent.trim() || '');
 
-  // Build slider rows from remaining children
-  Array.from(block.children).slice(1).forEach((r, ind) => {
-    const columns = r.children[0].children;
-    const sliderId = `${sliderPrefix}${ind + 1}`;
-    const inputId = `calcemi-${blockIndex}-${ind}`;
+  // Build slider rows from remaining children (skip radio item rows)
+  let sliderIndex = 0;
+  Array.from(block.children).slice(1).forEach((r) => {
+    // Skip rows marked as radio items
+    if (r.dataset.radioItem === 'true') return;
+
+    const columns = r.children[0]?.children;
+    if (!columns || columns.length < 3) return; // Skip malformed rows
+
+    const sliderId = `${sliderPrefix}${sliderIndex + 1}`;
+    const inputId = `calcemi-${blockIndex}-${sliderIndex}`;
 
     // columns[0] = authored input name → map to correct data-cal-input
     const authoredName = columns[0]?.textContent.trim() || '';
@@ -325,6 +333,7 @@ export default async function decorate(block) {
       </div>
     `;
     inputDiv.innerHTML += dom;
+    sliderIndex += 1;
   });
 
   const principalLabel = firstRow[6]?.textContent.trim() || '';

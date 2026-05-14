@@ -3,12 +3,13 @@ const TAB_NUM_NAMES = ['one', 'two', 'three', 'four', 'five'];
 const FOIR_DEFAULTS = {
   salaried: { foir: 'salaried', value: '65' },
   business: { foir: 'biz', value: '80' },
+  biz: { foir: 'biz', value: '80' },
 };
 
 /**
  * Builds the radio tab parent element (Salaried / Business)
- * from authored radio items extracted from default-content-wrapper.
- * @param {Array<{text: string, iconSrc: string}>} radioItems
+ * from authored radio items extracted from block or default-content-wrapper.
+ * @param {Array<{text: string, iconSrc: string, iconAlt?: string, foirType?: string, foirValue?: string}>} radioItems
  * @returns {HTMLElement|null}
  */
 export function buildRadioParent(radioItems) {
@@ -19,28 +20,42 @@ export function buildRadioParent(radioItems) {
 
   let radioLiHTML = '';
   radioItems.forEach((item, idx) => {
+    // Use authored foirType/foirValue if available, else derive from text
     const key = item.text.replace(/^I'm\s*(doing\s*)?/i, '').trim().toLowerCase();
-    const foirData = FOIR_DEFAULTS[key] || { foir: key, value: '65' };
-    const liId = `${key}Tab`;
-    const inputId = `${key}RadioInput`;
+    let foirType = item.foirType || '';
+    let foirValue = item.foirValue || '';
+
+    // Fallback to deriving from text if not authored
+    if (!foirType) {
+      const foirData = FOIR_DEFAULTS[key] || { foir: key, value: '65' };
+      foirType = foirData.foir;
+      foirValue = foirData.value;
+    }
+    if (!foirValue) {
+      foirValue = foirType === 'salaried' ? '65' : '80';
+    }
+
+    const liId = `${foirType}Tab`;
+    const inputId = `${foirType}RadioInput`;
     const isChecked = idx === 0 ? ' checked' : '';
     const activeClass = idx === 0 ? ' active' : '';
     const numClass = TAB_NUM_NAMES[idx] ? `${TAB_NUM_NAMES[idx]}tab` : '';
     const posClasses = idx === 0 ? 'firsttab' : 'firsttab secondtab';
-    const parentExtra = idx > 0 ? ' business-parent' : '';
-    const inputClass = idx === 0 ? 'input_salary_checkbox' : 'input_business_checkbox';
+    const parentExtra = foirType === 'biz' || idx > 0 ? ' business-parent' : '';
+    const inputClass = foirType === 'salaried' ? 'input_salary_checkbox' : 'input_business_checkbox';
+    const imgAlt = item.iconAlt || key;
 
     radioLiHTML += `
       <li id="${liId}" class="${posClasses} ${numClass}${activeClass}" data-radio-index="${idx}">
         <div class="customecheck">
           <div class="salary-parent${parentExtra}">
             <input type="radio" id="${inputId}" name="employementStatus"
-              class="${inputClass}" data-cal-foir="${foirData.foir}" value="${foirData.value}"${isChecked}>
+              class="${inputClass}" data-cal-foir="${foirType}" value="${foirValue}"${isChecked}>
             <label for="${inputId}">${item.text}</label>
             <div class="blackborder"><div class="black"></div></div>
           </div>
           <div class="customimage">
-            <img data-src="${item.iconSrc}" class="customer lozad" alt="${key}"
+            <img data-src="${item.iconSrc}" class="customer lozad" alt="${imgAlt}"
               src="${item.iconSrc}" data-loaded="true">
           </div>
         </div>

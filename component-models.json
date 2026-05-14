@@ -2900,20 +2900,25 @@
         "component": "select",
         "name": "col1_type",
         "value": "hl",
-        "label": "Calculator Product Type",
+        "label": "Loan Product Type",
+        "description": "Select the loan product this calculator is for",
         "valueType": "string",
         "options": [
           {
-            "name": "HL",
+            "name": "Home Loan (HL)",
             "value": "hl"
           },
           {
-            "name": "PL",
+            "name": "Personal Loan (PL)",
             "value": "pl"
           },
           {
-            "name": "BL",
+            "name": "Business Loan (BL)",
             "value": "bl"
+          },
+          {
+            "name": "Used Business Loan (UBL)",
+            "value": "ubl"
           }
         ]
       },
@@ -2921,18 +2926,19 @@
         "component": "select",
         "valueType": "string",
         "name": "col1_name",
-        "label": "Calculator Name",
+        "label": "Calculator Type",
+        "description": "Select which type of calculator to show",
         "options": [
           {
-            "name": "EMI Calculator",
+            "name": "EMI Calculator - Calculate monthly EMI",
             "value": "emicalculator"
           },
           {
-            "name": "Eligibility Calculator",
+            "name": "Eligibility Calculator - Check loan eligibility",
             "value": "eligibilitycalculator"
           },
           {
-            "name": "APR Calculator",
+            "name": "APR Calculator - Calculate Annual Percentage Rate",
             "value": "aprcalculator"
           },
           {
@@ -3000,46 +3006,47 @@
         "component": "select",
         "valueType": "string",
         "name": "col1_name",
-        "label": "Name",
+        "label": "Input Type",
+        "description": "Select the type of slider input for this calculator",
         "options": [
           {
-            "name": "Loan Amount",
+            "name": "Loan Amount (₹)",
             "value": "loanamt"
           },
           {
-            "name": "Loan Tenure",
+            "name": "Loan Tenure (Years/Months)",
             "value": "tenure"
           },
           {
-            "name": "Interest Rate (ROI)",
+            "name": "Interest Rate / ROI (%)",
             "value": "roi"
           },
           {
-            "name": "Monthly Income",
+            "name": "Gross Monthly Income (₹)",
             "value": "income"
           },
           {
-            "name": "Other Loan EMI",
+            "name": "Existing EMI / Other Loan EMI (₹)",
             "value": "otherloan"
           },
           {
-            "name": "Net Price (GST)",
+            "name": "Net Price (₹) - For GST Calculator",
             "value": "netprice"
           },
           {
-            "name": "Production Cost (GST)",
+            "name": "Production Cost (₹) - For GST Calculator",
             "value": "productioncost"
           },
           {
-            "name": "GST Rate",
+            "name": "GST Rate (%) - For GST Calculator",
             "value": "gstrate"
           },
           {
-            "name": "Profit Ratio (GST)",
+            "name": "Profit Ratio (%) - For GST Calculator",
             "value": "profitratio"
           },
           {
-            "name": "Origination Charges (APR)",
+            "name": "Loan Origination Charges (₹) - For APR Calculator",
             "value": "origincharges"
           }
         ]
@@ -3049,6 +3056,7 @@
         "valueType": "string",
         "name": "col1_ALabel",
         "label": "Label",
+        "description": "Display label shown above the slider (e.g., 'Loan Amount (Rs.)')",
         "multi": false
       },
        {
@@ -3056,6 +3064,7 @@
         "valueType": "string",
         "name": "col1_ADefaultValue",
         "label": "Default Value",
+        "description": "Initial value when calculator loads (e.g., 800000 for ₹8 Lakhs)",
         "multi": false
       },
        {
@@ -3063,6 +3072,7 @@
         "valueType": "string",
         "name": "col1_ADefaultValueIcon",
         "label": "Default Value Icon",
+        "description": "Symbol shown with value. Use ₹ for currency, % for percentage, Yrs for years",
         "multi": false
       },
       {
@@ -3070,6 +3080,7 @@
         "valueType": "string",
         "name": "col1_stepValue",
         "label": "Step Value",
+        "description": "Increment amount when sliding (e.g., 25000 means slider moves by ₹25,000)",
         "multi": false
       },
       {
@@ -3077,6 +3088,7 @@
         "valueType": "string",
         "name": "col1_BMinValue",
         "label": "Min Value",
+        "description": "Minimum allowed value (e.g., 100000 for ₹1 Lakh minimum)",
         "multi": false
       },
        {
@@ -3084,6 +3096,7 @@
         "valueType": "string",
         "name": "col1_BMaxValue",
         "label": "Max Value",
+        "description": "Maximum allowed value (e.g., 5000000 for ₹50 Lakhs maximum)",
         "multi": false
       },
       {
@@ -3091,6 +3104,7 @@
         "valueType": "string",
         "name": "col1_CMinValue",
         "label": "Min Value Label",
+        "description": "Text shown at left of slider (e.g., '1L' or '5%')",
         "multi": false
       },
        {
@@ -3098,6 +3112,7 @@
         "valueType": "string",
         "name": "col1_CMaxValue",
         "label": "Max Value Label",
+        "description": "Text shown at right of slider (e.g., '50L' or '20%')",
         "multi": false
       }
     ]
@@ -3109,7 +3124,8 @@
         "component": "select",
         "name": "col1_productType",
         "value": "hl",
-        "label": "Product Type",
+        "label": "Loan Product Type",
+        "description": "Select the loan product for hidden tracking (used for analytics)",
         "valueType": "string",
         "options": [
           {
@@ -3139,36 +3155,40 @@
         "component": "text",
         "valueType": "string",
         "name": "col1_radioText",
-        "label": "Radio Text",
+        "label": "Tab Label",
+        "description": "Text shown on the radio tab (e.g., 'Salaried' or 'Self Employed')",
         "multi": false
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "col1_radioImage",
-        "label": "Radio Image",
+        "label": "Tab Icon",
+        "description": "Small icon shown next to the tab label",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_radioImageAlt",
-        "label": "Radio Image Alt",
+        "label": "Tab Icon Alt Text",
+        "description": "Alt text for the icon (for accessibility)",
         "multi": false
       },
       {
         "component": "select",
         "name": "col1_foirType",
         "value": "salaried",
-        "label": "FOIR Type",
+        "label": "Customer Type",
+        "description": "Type of customer - affects eligibility calculation",
         "valueType": "string",
         "options": [
           {
-            "name": "Salaried",
+            "name": "Salaried Employee - Uses 65% FOIR",
             "value": "salaried"
           },
           {
-            "name": "Business",
+            "name": "Self Employed / Business Owner - Uses 50% FOIR",
             "value": "biz"
           }
         ]
@@ -3177,7 +3197,8 @@
         "component": "text",
         "valueType": "string",
         "name": "col1_foirValue",
-        "label": "FOIR Value",
+        "label": "FOIR Percentage",
+        "description": "Fixed Obligation to Income Ratio (e.g., 65 for salaried, 50 for business)",
         "multi": false
       }
     ]

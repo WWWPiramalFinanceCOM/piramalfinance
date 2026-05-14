@@ -2972,11 +2972,52 @@
     "id": "calculator-item",
     "fields": [
       {
-        "component": "text",
+        "component": "select",
         "valueType": "string",
         "name": "col1_name",
         "label": "Name",
-        "multi": false
+        "options": [
+          {
+            "name": "Loan Amount",
+            "value": "loanamt"
+          },
+          {
+            "name": "Loan Tenure",
+            "value": "tenure"
+          },
+          {
+            "name": "Interest Rate (ROI)",
+            "value": "roi"
+          },
+          {
+            "name": "Monthly Income",
+            "value": "income"
+          },
+          {
+            "name": "Other Loan EMI",
+            "value": "otherloan"
+          },
+          {
+            "name": "Net Price (GST)",
+            "value": "netprice"
+          },
+          {
+            "name": "Production Cost (GST)",
+            "value": "productioncost"
+          },
+          {
+            "name": "GST Rate",
+            "value": "gstrate"
+          },
+          {
+            "name": "Profit Ratio (GST)",
+            "value": "profitratio"
+          },
+          {
+            "name": "Origination Charges (APR)",
+            "value": "origincharges"
+          }
+        ]
       },
       {
         "component": "text",

@@ -1,0 +1,227 @@
+/* Calculator Radio Block Styles */
+/* Radio Tab Base Styles - Matches existing calculator styles */
+
+.calculator-radio-wrapper {
+  width: 100%;
+}
+
+.calculator-radio.block {
+  background: -webkit-linear-gradient(right, #ffffff 50%, #fff7f4 50%);
+  background: linear-gradient(to left, #ffffff 50%, #fff7f4 50%);
+}
+
+.calculator-radio .hlc-subparent {
+  background-color: var(--white);
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1400px) {
+  .calculator-radio .hlc-subparent {
+    max-width: 76.1%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .hlc-subparent {
+    max-width: 100%;
+  }
+}
+
+.calculator-radio .radiotab {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.calculator-radio .firsttab {
+  background: var(--seashell);
+  padding: 12px 24px 0 0;
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  border-radius: 0 12px 0 0;
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .firsttab {
+    padding-left: unset;
+    padding: 16px 16px 0 16px;
+  }
+}
+
+.calculator-radio .customecheck {
+  display: flex;
+  max-width: 540px;
+  width: 100%;
+  align-items: center;
+  margin-right: 60px;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .customecheck {
+    flex-direction: column;
+    align-items: start;
+    margin-right: unset;
+    justify-content: space-between;
+  }
+}
+
+.calculator-radio .salary-parent {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  gap: 12px;
+  width: 50%;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .salary-parent {
+    width: 100%;
+    gap: 19px;
+  }
+}
+
+.calculator-radio .salary-parent input {
+  display: none;
+}
+
+.calculator-radio .salary-parent input:checked ~ .blackborder .black {
+  background: var(--darkcharcoal);
+}
+
+.calculator-radio .salary-parent input:checked ~ label {
+  font-family: "Nunito-Bold", sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--darkcharcoal);
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .salary-parent input:checked ~ label {
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+  }
+}
+
+.calculator-radio .salary-parent label {
+  font-family: "Nunito-Regular", sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--darkcharcoal);
+  align-self: self-end;
+  width: 86%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .salary-parent label {
+    width: 75%;
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+  }
+}
+
+.calculator-radio .blackborder {
+  border: 2px solid var(--darkcharcoal);
+  height: 22px;
+  width: 22px;
+  border-radius: 100%;
+  position: relative;
+  transition: border 0.25s linear;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .blackborder {
+    height: 16px;
+    width: 16px;
+  }
+}
+
+.calculator-radio .blackborder .black {
+  content: "";
+  display: block;
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  background: transparent;
+  position: absolute;
+  transition: background 0.25s linear;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .blackborder .black {
+    height: 8px;
+    width: 8px;
+  }
+}
+
+.calculator-radio .customimage {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .customimage {
+    align-self: center;
+  }
+}
+
+.calculator-radio .customimage .customer {
+  width: 177px;
+  height: 119px;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .customimage .customer {
+    width: 94px;
+    height: 64px;
+  }
+}
+
+.calculator-radio .secondtab {
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 12px 0 0 0;
+  background: var(--white);
+  padding-right: 20px;
+  padding-left: unset;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .secondtab {
+    padding: 16px 16px 0 16px;
+  }
+}
+
+.calculator-radio .secondtab .customecheck {
+  max-width: 600px;
+  width: 100%;
+  margin-left: 84px;
+  margin-right: unset;
+}
+
+@media screen and (max-width: 1024px) {
+  .calculator-radio .secondtab .customecheck {
+    margin-left: unset;
+  }
+}
+
+.calculator-radio .secondtab .customimage {
+  justify-content: center;
+}

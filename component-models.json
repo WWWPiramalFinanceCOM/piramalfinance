@@ -3037,6 +3037,36 @@
     ]
   },
   {
+    "id": "calculator-radio",
+    "fields": [
+      {
+        "component": "select",
+        "name": "col1_productType",
+        "value": "hl",
+        "label": "Product Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Home Loan (HL)",
+            "value": "hl"
+          },
+          {
+            "name": "Personal Loan (PL)",
+            "value": "pl"
+          },
+          {
+            "name": "Business Loan (BL)",
+            "value": "bl"
+          },
+          {
+            "name": "Used Business Loan (UBL)",
+            "value": "ubl"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "calculator-radio-item",
     "fields": [
       {

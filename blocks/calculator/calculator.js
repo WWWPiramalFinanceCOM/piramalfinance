@@ -1,5 +1,4 @@
 import { prepareBlocks, extractContent } from './extract-content.js';
-import { buildRadioParent, initRadioTabs } from './build-radio.js';
 import { buildCalculatorParent, initCalculatorTabs } from './build-tabs.js';
 import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js';
 import { workflowHomeLoanCalculation } from '../emiandeligiblitycalc/calhelpers.js';
@@ -55,7 +54,8 @@ const CURRENCY_SYMBOLS = ['₹', '$', '€', '£', '¥'];
 
 /**
  * Combines all calculator blocks in a section into a single
- * calculator-parent wrapper with radio tabs, heading and CTA buttons.
+ * calculator-parent wrapper with heading and CTA buttons.
+ * Radio tabs are handled by the separate calculator-radio block.
  */
 function combineSection(section) {
   if (combinedSections.has(section)) return;
@@ -67,24 +67,20 @@ function combineSection(section) {
   const blocks = calcWrappers.map((w) => w.querySelector('.calculator.block')).filter(Boolean);
   if (blocks.length < 1) return;
 
-  const {
-    heading, tabNames, productType, authoredRadioItems,
-  } = prepareBlocks(blocks);
+  const { heading, tabNames, productType } = prepareBlocks(blocks);
   section.classList.add('homeloancalculator');
-  const { radioItems, ctaItems, dcwToRemove } = extractContent(section, authoredRadioItems);
+  const { ctaItems, dcwToRemove } = extractContent(section);
 
-  const radioParent = buildRadioParent(radioItems);
   const calcParent = buildCalculatorParent(heading, tabNames, ctaItems, blocks);
 
   calcWrappers.forEach((w) => w.remove());
   dcwToRemove.forEach((dcw) => dcw.remove());
 
-  if (radioParent) section.insertBefore(radioParent, section.firstChild);
   section.appendChild(calcParent);
 
-  // If no radio items were authored, add a hidden default salaried radio
-  // so that getCalculatorInput can find [data-cal-foir]:checked
-  if (!radioParent) {
+  // Check if calculator-radio block exists - if not, add a hidden fallback radio
+  const hasRadioBlock = section.querySelector('.calculator-radio');
+  if (!hasRadioBlock) {
     const fallbackRadio = document.createElement('input');
     fallbackRadio.type = 'radio';
     fallbackRadio.name = 'calculator-foir';
@@ -100,15 +96,17 @@ function combineSection(section) {
   mobileDiv.className = 'homepagemobiledesign';
   section.appendChild(mobileDiv);
 
-  const hiddenInput = document.createElement('input');
-  hiddenInput.type = 'hidden';
-  hiddenInput.name = 'product type';
-  hiddenInput.id = 'calculator-product-type';
-  hiddenInput.value = productType;
-  section.appendChild(hiddenInput);
+  // Only add product type if calculator-radio block hasn't already added it
+  if (!section.querySelector('#calculator-product-type')) {
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'product type';
+    hiddenInput.id = 'calculator-product-type';
+    hiddenInput.value = productType;
+    section.appendChild(hiddenInput);
+  }
 
   initCalculatorTabs();
-  initRadioTabs();
 }
 
 /**

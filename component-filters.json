@@ -112,12 +112,17 @@
       "branches",
       "banner-carousel",
       "testimonies",
-      "calculator"
+      "calculator",
+      "calculator-radio"
     ]
   },
   {
     "id": "calculator",
-    "components": ["calculator-item", "calculator-radio-item"]
+    "components": ["calculator-item"]
+  },
+  {
+    "id": "calculator-radio",
+    "components": ["calculator-radio-item"]
   },
   {
     "id": "cards",

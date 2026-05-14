@@ -5,6 +5,22 @@
  */
 
 /**
+ * Checks if we're in AEM Universal Editor (author mode).
+ * In author mode, we need to preserve the original DOM structure
+ * so that child components remain editable.
+ * @returns {boolean}
+ */
+function isEditorMode() {
+  // Check for Universal Editor environment
+  return window.location.href.includes('.adobeaemcloud.com')
+    || window.location.href.includes('aem.page')
+    || window.location.href.includes('aem.live')
+    || document.documentElement.hasAttribute('data-aue-resource')
+    || document.body.classList.contains('adobe-ue-edit')
+    || !!document.querySelector('[data-aue-resource]');
+}
+
+/**
  * Extracts radio items from the block rows.
  * Row structure: Text | Image | ImageAlt | FoirType | FoirValue
  * @param {Element} block - The calculator-radio block
@@ -168,8 +184,35 @@ function initRadioTabs(block) {
 
 export default async function decorate(block) {
   const section = block.closest('.section');
-  const radioItems = extractRadioItems(block);
   const productType = getProductType(block);
+
+  // In editor mode, preserve the original DOM structure for authoring
+  // The Universal Editor needs the original structure to allow adding/editing children
+  if (isEditorMode()) {
+    // Add minimal styling for editor preview
+    block.classList.add('calculator-radio-editor-mode');
+
+    // Add product type hidden input to section if not already present
+    if (section && !section.querySelector('#calculator-product-type')) {
+      const hiddenInput = document.createElement('input');
+      hiddenInput.type = 'hidden';
+      hiddenInput.name = 'product type';
+      hiddenInput.id = 'calculator-product-type';
+      hiddenInput.value = productType;
+      section.appendChild(hiddenInput);
+    }
+
+    // Add homeloancalculator class to section
+    if (section) {
+      section.classList.add('homeloancalculator');
+    }
+
+    // Don't replace innerHTML - let the editor manage the content
+    return;
+  }
+
+  // Preview/Publish mode - transform to final radio tab UI
+  const radioItems = extractRadioItems(block);
 
   // If no radio items authored, create a hidden fallback
   if (radioItems.length === 0) {

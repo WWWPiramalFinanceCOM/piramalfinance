@@ -225,3 +225,50 @@
 .calculator-radio .secondtab .customimage {
   justify-content: center;
 }
+
+/* ===== Editor Mode Styles ===== */
+/* Styles for when the block is in AEM Universal Editor */
+/* Preserves authored content structure while providing visual feedback */
+
+.calculator-radio.calculator-radio-editor-mode {
+  background: #f5f5f5;
+  border: 2px dashed #ccc;
+  padding: 16px;
+  min-height: 80px;
+}
+
+.calculator-radio.calculator-radio-editor-mode::before {
+  content: "Calculator Radio Tabs (Preview in Publish mode)";
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calculator-radio.calculator-radio-editor-mode > div {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.calculator-radio.calculator-radio-editor-mode > div:last-child {
+  margin-bottom: 0;
+}
+
+.calculator-radio.calculator-radio-editor-mode > div > div {
+  padding: 4px 8px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.calculator-radio.calculator-radio-editor-mode img {
+  max-width: 60px;
+  max-height: 60px;
+  object-fit: contain;
+}

@@ -1289,14 +1289,14 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "ctaImageOne",
+        "name": "ctaItem1",
         "label": "CTA Image 1",
         "description": "Select CTA Image 1"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "ctaImageAltOne",
+        "name": "ctaItem1Alt",
         "value": "",
         "label": "CTA Image Alt 1",
         "description": "Enter CTA Alt 1"
@@ -1304,7 +1304,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "ctaImageURLOne",
+        "name": "ctaItem1Url",
         "value": "",
         "label": "CTA Image URL 1",
         "description": "Enter CTA Image URL 1"
@@ -1312,7 +1312,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "imageTextOne",
+        "name": "ctaItem1Text",
         "value": "",
         "label": "Image Text 1",
         "description": "Enter Image Text 1"
@@ -1320,14 +1320,14 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "ctaImageTwo",
+        "name": "ctaItem2",
         "label": "CTA Image 2",
         "description": "Select CTA Image 2"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "ctaImageAltTwo",
+        "name": "ctaItem2Alt",
         "value": "",
         "label": "CTA Image Alt 2",
         "description": "Enter CTA Alt 2"
@@ -1335,7 +1335,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "ctaImageURLTwo",
+        "name": "ctaItem2Url",
         "value": "",
         "label": "CTA Image URL 2",
         "description": "Enter CTA Image URL 2"
@@ -1343,7 +1343,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "imageTextTwo",
+        "name": "ctaItem2Text",
         "value": "",
         "label": "Image Text 2",
         "description": "Enter Image Text 2"
@@ -1351,14 +1351,14 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "ctaImageThree",
+        "name": "ctaItem3",
         "label": "CTA Image 3",
         "description": "Select CTA Image 3"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "ctaImageAltThree",
+        "name": "ctaItem3Alt",
         "value": "",
         "label": "CTA Image Alt 3",
         "description": "Enter CTA Alt 3"
@@ -1366,7 +1366,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "ctaImageURLThree",
+        "name": "ctaItem3Url",
         "value": "",
         "label": "CTA Image URL 3",
         "description": "Enter CTA Image URL 3"
@@ -1374,7 +1374,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "imageTextThree",
+        "name": "ctaItem3Text",
         "value": "",
         "label": "Image Text 3",
         "description": "Enter Image Text 3"

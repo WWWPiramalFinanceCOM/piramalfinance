@@ -52,19 +52,7 @@ export function generateBannerTeaserDOM(props, classes) {
     rawShortDescr,
     rawFirstCta,
     rawSecondCta,
-    rawCtaImage,
-    rawCtaImageAlt,
-    rawCtaImageUrl,
-    rawImageText,
-    rawCtaImage2,
-    rawCtaImageAlt2,
-    rawCtaImageUrl2,
-    rawImageText2,
-    rawCtaImage3,
-    rawCtaImageAlt3,
-    rawCtaImageUrl3,
-    rawImageText3,
-    rawMobileImage,
+    ...ctaAndTrailing
   ] = props || [];
 
   const pictureBgContainer = safe(rawPictureBgContainer);
@@ -75,26 +63,56 @@ export function generateBannerTeaserDOM(props, classes) {
   const shortDescr = safe(rawShortDescr);
   const firstCta = safe(rawFirstCta);
   const secondCta = safe(rawSecondCta);
-  const ctaImage = safe(rawCtaImage);
-  const ctaImageUrl = safe(rawCtaImageUrl);
-  const imageText = safe(rawImageText);
-  const ctaImage2 = safe(rawCtaImage2);
-  const ctaImageUrl2 = safe(rawCtaImageUrl2);
-  const imageText2 = safe(rawImageText2);
-  const ctaImage3 = safe(rawCtaImage3);
-  const ctaImageUrl3 = safe(rawCtaImageUrl3);
-  const imageText3 = safe(rawImageText3);
-  const mobileImage = rawMobileImage; // nullable on purpose
+
+  /** Parse a grouped CTA cell (picture + paragraphs in one div). */
+  function parseCtaGroup(cell) {
+    const el = safe(cell);
+    const pic = el.querySelector('picture');
+    const anchor = el.querySelector('a') || createAnchor(el);
+    if (pic) anchor.innerHTML = pic.outerHTML;
+    const paragraphs = [...el.querySelectorAll(':scope > p')];
+    const textP = paragraphs.find((p) => !p.querySelector('a') && !p.querySelector('picture'));
+    return { anchor, text: textP?.textContent?.trim() || '' };
+  }
+
+  /** Parse old-format separate CTA cells (image, alt, url, text as 4 divs). */
+  function parseOldCta(imgCell, urlCell, textCell) {
+    const img = safe(imgCell);
+    const url = safe(urlCell);
+    const txt = safe(textCell);
+    const anchor = url.querySelector('a') || createAnchor(url);
+    anchor.innerHTML = img.innerHTML;
+    return { anchor, text: txt.innerText || '' };
+  }
+
+  // Old format: 12 separate CTA cells + mobileBgImage + bgcolor + gradient = 15
+  // New format: 3 grouped CTA cells + mobileBgImage + bgcolor + gradient = 6
+  const isOldFormat = ctaAndTrailing.length > 8;
+  let cta1;
+  let cta2;
+  let cta3;
+  let mobileImage;
+  if (isOldFormat) {
+    const [
+      rawCtaImg, , rawCtaUrl, rawImgTxt,
+      rawCtaImg2, , rawCtaUrl2, rawImgTxt2,
+      rawCtaImg3, , rawCtaUrl3, rawImgTxt3,
+      rawMobImg,
+    ] = ctaAndTrailing;
+    cta1 = parseOldCta(rawCtaImg, rawCtaUrl, rawImgTxt);
+    cta2 = parseOldCta(rawCtaImg2, rawCtaUrl2, rawImgTxt2);
+    cta3 = parseOldCta(rawCtaImg3, rawCtaUrl3, rawImgTxt3);
+    mobileImage = rawMobImg;
+  } else {
+    const [rawG1, rawG2, rawG3, rawMobImg] = ctaAndTrailing;
+    cta1 = parseCtaGroup(rawG1);
+    cta2 = parseCtaGroup(rawG2);
+    cta3 = parseCtaGroup(rawG3);
+    mobileImage = rawMobImg;
+  }
 
   const bgPicture = pictureBgContainer.querySelector('picture');
   const picture = pictureContainer.querySelector('picture');
-
-  const ctaImageAnchor = ctaImageUrl.querySelector('a') || createAnchor(ctaImageUrl);
-  const ctaImageAnchor2 = ctaImageUrl2.querySelector('a') || createAnchor(ctaImageUrl2);
-  const ctaImageAnchor3 = ctaImageUrl3.querySelector('a') || createAnchor(ctaImageUrl3);
-  ctaImageAnchor.innerHTML = ctaImage.innerHTML;
-  ctaImageAnchor2.innerHTML = ctaImage2.innerHTML;
-  ctaImageAnchor3.innerHTML = ctaImage3.innerHTML;
 
   let bgPictureStyle = '';
   const bgImgSrc = bgPicture?.querySelector('img')?.src;
@@ -125,16 +143,16 @@ export function generateBannerTeaserDOM(props, classes) {
           <div class='short-description'>${shortDescr.innerHTML}</div>
           <div class='cta-image-wrapper'>
             <div class="img-with-text-wrap">
-              <div class="cta-image">${ctaImageAnchor ? ctaImageAnchor.outerHTML : ''}</div>
-              <p class="cta-text">${imageText.innerText || ''}</p>
+              <div class="cta-image">${cta1.anchor ? cta1.anchor.outerHTML : ''}</div>
+              <p class="cta-text">${cta1.text}</p>
             </div>
             <div class="img-with-text-wrap">
-              <div class="cta-image">${ctaImageAnchor2 ? ctaImageAnchor2.outerHTML : ''}</div>
-              <p class="cta-text">${imageText2.innerText || ''}</p>
+              <div class="cta-image">${cta2.anchor ? cta2.anchor.outerHTML : ''}</div>
+              <p class="cta-text">${cta2.text}</p>
             </div>
             <div class="img-with-text-wrap">
-              <div class="cta-image">${ctaImageAnchor3 ? ctaImageAnchor3.outerHTML : ''}</div>
-              <p class="cta-text">${imageText3.innerText || ''}</p>
+              <div class="cta-image">${cta3.anchor ? cta3.anchor.outerHTML : ''}</div>
+              <p class="cta-text">${cta3.text}</p>
             </div>
           </div>
           <div class='cta'>${decorateButtons(rawFirstCta, rawSecondCta)}</div>

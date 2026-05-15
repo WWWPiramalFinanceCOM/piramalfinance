@@ -7,43 +7,47 @@
  * @param {Element[]} blocks
  * @returns {HTMLElement}
  */
-export function buildCalculatorParent(description, tabNames, ctaItems, blocks) {
-  // Only create switchable tabs if there are multiple calculators
+export function buildCalculatorParent(description, tabNames, ctaItems, blocks, isGstCalculator = false) {
+  // For GST: always show pill-button tabs even with single calculator
+  // For EMI/Eligibility: only show tabs with multiple calculators
   const hasMultipleCalcs = blocks.length > 1;
+  const showPillTabs = isGstCalculator || hasMultipleCalcs;
 
   let tabsLiHTML = '';
-  if (hasMultipleCalcs) {
+  if (showPillTabs) {
     tabNames.forEach((name, idx) => {
       const activeClass = idx === 0 ? ' active' : '';
       const tabClass = idx === 0 ? 'tab-emi-calc' : 'tab-eligibility-calc';
       tabsLiHTML += `<li class="${tabClass} tab-common${activeClass}" data-tab-index="${idx}"><p>${name || ''}</p></li>\n`;
     });
-    tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
+    if (hasMultipleCalcs) {
+      tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
+    }
   }
 
   // Get values (empty string if not authored - HTML structure always present)
   const tabLabel = tabNames[0] || '';
   const descriptionText = description || '';
 
-  // Build heading HTML - always render structure
-  // Description comes FIRST (above), Tab Label comes SECOND (below)
+  // Build heading HTML
+  // Description comes FIRST (above), Tab Label/Tabs come SECOND (below)
   let headingHTML = '';
-  if (!hasMultipleCalcs) {
-    // Single calculator: Description above, Tab Label as styled tab below
+  if (!showPillTabs) {
+    // Single non-GST calculator: Description above, Tab Label as styled heading below
     headingHTML = `<div class="mainheading">
           <p class="first-head">${descriptionText}</p>
           <p class="second-head calc-tab-label">${tabLabel}</p>
         </div>`;
   } else {
-    // Multiple calculators: Description as heading above tabs
+    // GST or multiple calculators: Description as heading above tabs
     headingHTML = `<div class="mainheading">
           <p class="first-head">${descriptionText}</p>
           <p class="second-head"></p>
         </div>`;
   }
 
-  // Switchable tabs section for multiple calculators
-  const tabsHTML = hasMultipleCalcs
+  // Show tabs section for GST (always) or multiple calculators
+  const tabsHTML = showPillTabs
     ? `<div class="headingtabs">
           <ul class="headul">
             ${tabsLiHTML}

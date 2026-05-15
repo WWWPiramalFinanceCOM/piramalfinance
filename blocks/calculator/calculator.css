@@ -1503,6 +1503,12 @@
    margin: 0 8px;
    border: 1px solid var(--darkcharcoal);
    border-radius: 62.5px;
+   background-color: var(--white);
+   cursor: pointer;
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-common:first-child {
+   margin-left: 0;
  }
 
  @media screen and (max-width: 1024px) {
@@ -1535,10 +1541,28 @@
 
  .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .active {
    background-color: var(--greyishblue);
+   background-color: #365069;
+   border-color: var(--greyishblue);
+   border-color: #365069;
  }
 
  .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .active p {
    color: var(--white);
+   color: #ffffff;
+   font-family: "Nunito-Extrabold", sans-serif;
+   font-weight: 800;
+ }
+
+ /* Ensure first tab (tab-emi-calc) gets active styling when it has active class */
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-emi-calc.active {
+   background-color: #365069;
+   border-color: #365069;
+ }
+
+ .gst-calculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul .tab-emi-calc.active p {
+   color: #ffffff;
+   font-family: "Nunito-Extrabold", sans-serif;
+   font-weight: 800;
  }
 
  .gst-calculator .calculator-parent .calculator-parent-child .cp-child .calctabs .commoncalculator .parent-emi .inputDiv .loanamount:nth-child(1) {

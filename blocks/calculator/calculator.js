@@ -66,11 +66,18 @@ function combineSection(section) {
   const blocks = calcWrappers.map((w) => w.querySelector('.calculator.block')).filter(Boolean);
   if (blocks.length < 1) return;
 
-  const { description, tabNames, productType } = prepareBlocks(blocks);
+  const { description, tabNames, calcNames, productType } = prepareBlocks(blocks);
   section.classList.add('homeloancalculator');
+  
+  // Add gst-calculator class if any calculator is GST type (for pill-button tab styles)
+  const hasGstCalc = calcNames.some((name) => name.includes('gst'));
+  if (hasGstCalc) {
+    section.classList.add('gst-calculator');
+  }
+  
   const { ctaItems, dcwToRemove } = extractContent(section);
 
-  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks);
+  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc);
 
   calcWrappers.forEach((w) => w.remove());
   dcwToRemove.forEach((dcw) => dcw.remove());
@@ -107,19 +114,24 @@ function combineSection(section) {
 
   initCalculatorTabs();
 
-  // Set initial calculator-parent background based on checked radio (if exists)
-  // First try :checked, then fallback to first radio with data-cal-foir
-  let checkedRadio = section.querySelector('[data-cal-foir]:checked');
-  if (!checkedRadio) {
-    checkedRadio = section.querySelector('[data-cal-foir]');
-  }
-  if (checkedRadio && calcParent) {
-    const foirType = (checkedRadio.dataset && checkedRadio.dataset.calFoir) || 'salaried';
-    const SALARIED_BG = 'rgb(255, 247, 244)';
-    const BUSINESS_BG = 'rgb(238, 243, 255)';
-    calcParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
-    // eslint-disable-next-line no-console
-    console.log('[calculator] combineSection set background for foirType:', foirType);
+  // Set initial calculator-parent background
+  // GST calculators get white background, EMI/Eligibility use radio-based background
+  if (hasGstCalc && calcParent) {
+    calcParent.style.background = '#fff';
+  } else {
+    // First try :checked, then fallback to first radio with data-cal-foir
+    let checkedRadio = section.querySelector('[data-cal-foir]:checked');
+    if (!checkedRadio) {
+      checkedRadio = section.querySelector('[data-cal-foir]');
+    }
+    if (checkedRadio && calcParent) {
+      const foirType = (checkedRadio.dataset && checkedRadio.dataset.calFoir) || 'salaried';
+      const SALARIED_BG = 'rgb(255, 247, 244)';
+      const BUSINESS_BG = 'rgb(238, 243, 255)';
+      calcParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
+      // eslint-disable-next-line no-console
+      console.log('[calculator] combineSection set background for foirType:', foirType);
+    }
   }
 }
 
@@ -130,6 +142,7 @@ function combineSection(section) {
  */
 function initializeSliders(section) {
   const sliderValues = section.querySelectorAll('.slider-value');
+  const isGstCalculator = section.classList.contains('gst-calculator');
 
   sliderValues.forEach((textInput) => {
     const sliderId = textInput.dataset.slider;
@@ -167,12 +180,31 @@ function initializeSliders(section) {
       }
     }
 
-    // Slider drag event - update text, gradient, and calculate
+    // Trigger GST calculation
+    function triggerGstCalculation() {
+      const calcPanel = rangeSlider.closest('.commoncalculator');
+      if (calcPanel) {
+        runSingleCalculation(section, calcPanel);
+      }
+    }
+
+    // Slider drag event - update text and gradient
+    // For GST: DON'T calculate during drag (keep previous value visible)
+    // For EMI/Eligibility: calculate immediately
     rangeSlider.addEventListener('input', () => {
       textInput.value = formatValue(rangeSlider.value);
       updateGradient();
-      triggerCalculation();
+      if (!isGstCalculator) {
+        triggerCalculation();
+      }
     });
+
+    // Slider release event (change) - calculate for GST
+    if (isGstCalculator) {
+      rangeSlider.addEventListener('change', () => {
+        triggerGstCalculation();
+      });
+    }
 
     // Text input focus out - sync back to slider and calculate
     textInput.addEventListener('focusout', () => {
@@ -187,7 +219,12 @@ function initializeSliders(section) {
       rangeSlider.value = parsed;
       textInput.value = formatValue(parsed);
       updateGradient();
-      triggerCalculation();
+      
+      if (isGstCalculator) {
+        triggerGstCalculation();
+      } else {
+        triggerCalculation();
+      }
     });
 
     // Text input typing - allow only numbers and decimals for ROI
@@ -217,12 +254,19 @@ function initSection(section, retryCount = 0) {
   if (allBlocks.length === 0) return;
   const allReady = allBlocks.every((b) => b.querySelector('.parent-emi'));
 
+  // GST/APR calculators don't need radio inputs - skip that check
+  const isGstOrAprCalc = section.classList.contains('gst-calculator') ||
+    allBlocks.some((b) => b.classList.contains('aprcalculator') || 
+                         b.classList.contains('gstcalculatorbuyer') || 
+                         b.classList.contains('gstcalculatorseller'));
+  
   // Check if calculator-radio has created AND CHECKED a radio input
-  // The :checked state is required for calculations to work
+  // Only required for EMI/Eligibility calculators
   const hasCheckedRadio = section.querySelector('[data-cal-foir]:checked');
 
   // If not ready, retry (up to 30 times = 3 seconds)
-  if (!allReady || !hasCheckedRadio) {
+  // GST/APR calculators skip the radio check
+  if (!allReady || (!isGstOrAprCalc && !hasCheckedRadio)) {
     if (retryCount < 30) {
       setTimeout(() => initSection(section, retryCount + 1), 100);
     }
@@ -242,20 +286,25 @@ function initSection(section, retryCount = 0) {
     eligibilityCalc.style.display = 'block';
   }
 
-  // Set calculator-parent background based on checked radio's foirType
+  // Set calculator-parent background
+  // GST calculators get white background, EMI/Eligibility use radio-based background
   const calculatorParent = section.querySelector('.calculator-parent');
-  // First try :checked, then fallback to first radio with data-cal-foir
-  let checkedRadioForBg = section.querySelector('[data-cal-foir]:checked');
-  if (!checkedRadioForBg) {
-    checkedRadioForBg = section.querySelector('[data-cal-foir]');
-  }
-  if (calculatorParent && checkedRadioForBg) {
-    const foirType = (checkedRadioForBg.dataset && checkedRadioForBg.dataset.calFoir) || 'salaried';
-    const SALARIED_BG = 'rgb(255, 247, 244)';
-    const BUSINESS_BG = 'rgb(238, 243, 255)';
-    calculatorParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
-    // eslint-disable-next-line no-console
-    console.log('[calculator] initSection set background for foirType:', foirType);
+  if (isGstOrAprCalc && calculatorParent) {
+    calculatorParent.style.background = '#fff';
+  } else if (calculatorParent) {
+    // First try :checked, then fallback to first radio with data-cal-foir
+    let checkedRadioForBg = section.querySelector('[data-cal-foir]:checked');
+    if (!checkedRadioForBg) {
+      checkedRadioForBg = section.querySelector('[data-cal-foir]');
+    }
+    if (checkedRadioForBg) {
+      const foirType = (checkedRadioForBg.dataset && checkedRadioForBg.dataset.calFoir) || 'salaried';
+      const SALARIED_BG = 'rgb(255, 247, 244)';
+      const BUSINESS_BG = 'rgb(238, 243, 255)';
+      calculatorParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
+      // eslint-disable-next-line no-console
+      console.log('[calculator] initSection set background for foirType:', foirType);
+    }
   }
 
   // Store default slider values for reset (same as homeloancalculatorv2)
@@ -279,7 +328,11 @@ function initSection(section, retryCount = 0) {
 /* ── Calculator type detection ───────────────── */
 
 function getCalcType(calcPanel) {
-  if (calcPanel.classList.contains('gstcalculator') || calcPanel.classList.contains('gst')) return 'gst';
+  // GST calculator types include: gstcalculator, gstcalculatorbuyer, gstcalculatorseller
+  if (calcPanel.classList.contains('gstcalculator') || 
+      calcPanel.classList.contains('gstcalculatorbuyer') || 
+      calcPanel.classList.contains('gstcalculatorseller') ||
+      calcPanel.classList.contains('gst')) return 'gst';
   if (calcPanel.classList.contains('aprcalculator') || calcPanel.classList.contains('apr')) return 'apr';
   if (calcPanel.classList.contains('eligibilitycalculator')) return 'eligibility';
   return 'emi';
@@ -302,20 +355,25 @@ function runSingleCalculation(section, calcPanel) {
 }
 
 function runGstCalculation(section, calcPanel) {
-  const activeTab = section.querySelector('.headul .tab-common.active');
-  const isBuyer = activeTab?.classList.contains('tab-emi-calc');
   const resultElement = calcPanel.querySelector('[data-cal-result=resultAmt]');
   if (!resultElement) return;
 
+  // Detect Buyer vs Seller from the calculator block's class name (not tab position)
+  // gstcalculatorbuyer uses Net Price formula
+  // gstcalculatorseller uses Production Cost + Profit Ratio formula
+  const isBuyer = calcPanel.classList.contains('gstcalculatorbuyer');
+
   let result = 0;
+  const gstRate = Number(calcPanel.querySelector('[data-cal-input=gstrate]')?.value) || 0;
+
   if (isBuyer) {
+    // Buyer formula: NetPrice * (1 + GSTRate/100)
     const netPrice = Number((calcPanel.querySelector('[data-cal-input=netprice]')?.value || '').replace(/,/g, '')) || 0;
-    const gstRate = Number(calcPanel.querySelector('[data-cal-input=gstrate]')?.value) || 0;
     result = netPrice * (1 + gstRate * 0.01);
   } else {
+    // Seller/Manufacturer formula: ProductionCost * (1 + ProfitRatio/100) * (1 + GSTRate/100)
     const productionCost = Number((calcPanel.querySelector('[data-cal-input=productioncost]')?.value || '').replace(/,/g, '')) || 0;
     const profitRatio = Number(calcPanel.querySelector('[data-cal-input=profitratio]')?.value) || 0;
-    const gstRate = Number(calcPanel.querySelector('[data-cal-input=gstrate]')?.value) || 0;
     result = productionCost * (1 + profitRatio * 0.01) * (1 + gstRate * 0.01);
   }
   result = isNaN(result) ? 0 : Math.round(result);

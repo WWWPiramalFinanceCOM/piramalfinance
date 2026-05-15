@@ -5,13 +5,14 @@
   width: 100%;
 }
 
+/* Initial state: salaried (first tab) active - coral on left, white on right */
 .calculator-radio.block {
-  background: -webkit-linear-gradient(right, #ffffff 50%, #fff7f4 50%);
-  background: linear-gradient(to left, #ffffff 50%, #fff7f4 50%);
+  background: linear-gradient(to right, rgb(255, 247, 244) 50%, rgb(255, 255, 255) 50%);
 }
 
+/* The hlc-subparent contains the tabs */
 .calculator-radio .hlc-subparent {
-  background-color: var(--white);
+  background-color: transparent;
   max-width: 1240px;
   margin: 0 auto;
 }
@@ -91,20 +92,25 @@
   display: none;
 }
 
-.calculator-radio .salary-parent input:checked ~ .blackborder .black {
-  background: var(--darkcharcoal);
+/* Use both :checked pseudo-selector AND explicit class for reliability */
+/* !important needed to override production CSS with longer selectors */
+.calculator-radio .salary-parent input:checked ~ .blackborder .black,
+.calculator-radio .salary-parent.is-checked .blackborder .black {
+  background: var(--darkcharcoal, #333333) !important;
 }
 
-.calculator-radio .salary-parent input:checked ~ label {
-  font-family: "Nunito-Bold", sans-serif;
-  font-weight: 700;
+.calculator-radio .salary-parent input:checked ~ label,
+.calculator-radio .salary-parent.is-checked label {
+  font-family: "Nunito-Bold", sans-serif !important;
+  font-weight: 700 !important;
   font-size: 1.25rem;
   line-height: 1.75rem;
   color: var(--darkcharcoal);
 }
 
 @media screen and (max-width: 1024px) {
-  .calculator-radio .salary-parent input:checked ~ label {
+  .calculator-radio .salary-parent input:checked ~ label,
+  .calculator-radio .salary-parent.is-checked label {
     font-size: 0.75rem;
     line-height: 1.5rem;
   }

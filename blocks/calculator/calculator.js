@@ -1,6 +1,5 @@
 import { prepareBlocks, extractContent } from './extract-content.js';
 import { buildCalculatorParent, initCalculatorTabs } from './build-tabs.js';
-import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js';
 import { workflowHomeLoanCalculation } from '../emiandeligiblitycalc/calhelpers.js';
 import { currenyCommaSeperation } from '../../scripts/common.js';
 import { CheckAprRate } from '../aprcalculator/aprcalculator.js';
@@ -110,11 +109,91 @@ function combineSection(section) {
 }
 
 /**
- * After all blocks in the section are decorated,
- * initialise sliders via the existing homeLoanCalcFunc,
- * store defaults, wire events, and run the first calculation.
+ * Initialize slider event handlers for the calculator.
+ * This is a clean implementation that ONLY handles sliders - 
+ * radio tab handling is done by calculator-radio.js
  */
-function initSection(section) {
+function initializeSliders(section) {
+  const sliderValues = section.querySelectorAll('.slider-value');
+
+  sliderValues.forEach((textInput) => {
+    const sliderId = textInput.dataset.slider;
+    if (!sliderId) return;
+
+    const rangeSlider = section.querySelector(`#${sliderId}`);
+    if (!rangeSlider) return;
+
+    const calInput = rangeSlider.dataset.calInput || '';
+    const isRoi = calInput === 'roi';
+
+    // Format number with Indian comma separation
+    function formatValue(value) {
+      const val = Number(value);
+      if (Number.isNaN(val)) return '0';
+      return isRoi ? String(val) : currenyCommaSeperation(val);
+    }
+
+    // Update slider track gradient
+    function updateGradient() {
+      const min = parseFloat(rangeSlider.min) || 0;
+      const max = parseFloat(rangeSlider.max) || 100;
+      const val = parseFloat(rangeSlider.value) || 0;
+      const percent = ((val - min) / (max - min)) * 100;
+      rangeSlider.style.background = `linear-gradient(90deg, #da4d34 ${percent}%, #dbd7d8 ${percent}%)`;
+    }
+
+    // Trigger calculation for the calculator panel
+    function triggerCalculation() {
+      const calcPanel = rangeSlider.closest('.commoncalculator');
+      if (calcPanel) {
+        const calcType = calcPanel.classList.contains('eligibilitycalculator')
+          ? 'eligibility' : 'emi';
+        workflowHomeLoanCalculation(calcPanel, calcType);
+      }
+    }
+
+    // Slider drag event - update text, gradient, and calculate
+    rangeSlider.addEventListener('input', () => {
+      textInput.value = formatValue(rangeSlider.value);
+      updateGradient();
+      triggerCalculation();
+    });
+
+    // Text input focus out - sync back to slider and calculate
+    textInput.addEventListener('focusout', () => {
+      let parsed = parseFloat(textInput.value.replace(/,/g, '')) || 0;
+      const minVal = parseFloat(rangeSlider.min) || 0;
+      const maxVal = parseFloat(rangeSlider.max) || 100;
+
+      // Clamp to valid range
+      if (parsed < minVal) parsed = minVal;
+      if (parsed > maxVal) parsed = maxVal;
+
+      rangeSlider.value = parsed;
+      textInput.value = formatValue(parsed);
+      updateGradient();
+      triggerCalculation();
+    });
+
+    // Text input typing - allow only numbers and decimals for ROI
+    textInput.addEventListener('input', () => {
+      let cleaned = textInput.value.replace(/[^\d.]/g, '');
+      if (!isRoi) {
+        cleaned = cleaned.replace(/\./g, ''); // No decimals for non-ROI
+      }
+      textInput.value = cleaned;
+    });
+
+    // Initialize gradient on load
+    updateGradient();
+  });
+}
+
+/**
+ * After all blocks in the section are decorated,
+ * initialise sliders, store defaults, wire events, and run the first calculation.
+ */
+function initSection(section, retryCount = 0) {
   if (initialisedSections.has(section)) return;
 
   const calctabs = section.querySelector('.calctabs');
@@ -122,12 +201,23 @@ function initSection(section) {
   const allBlocks = [...calctabs.querySelectorAll('.commoncalculator')];
   if (allBlocks.length === 0) return;
   const allReady = allBlocks.every((b) => b.querySelector('.parent-emi'));
-  if (!allReady) return;
+
+  // Check if calculator-radio has created AND CHECKED a radio input
+  // The :checked state is required for calculations to work
+  const hasCheckedRadio = section.querySelector('[data-cal-foir]:checked');
+
+  // If not ready, retry (up to 30 times = 3 seconds)
+  if (!allReady || !hasCheckedRadio) {
+    if (retryCount < 30) {
+      setTimeout(() => initSection(section, retryCount + 1), 100);
+    }
+    return;
+  }
 
   initialisedSections.add(section);
 
-  // Use the existing homeLoanCalcFunc for slider init + event wiring
-  homeLoanCalcFunc(section);
+  // Initialize sliders with clean event handlers (no conflicts with calculator-radio)
+  initializeSliders(section);
 
   // Store default slider values for reset (same as homeloancalculatorv2)
   const calDefaultValueObj = JSON.parse(sessionStorage.getItem('calDefaultValueObj') || '{}');
@@ -212,28 +302,27 @@ function wireExistingCalculationEvents(section) {
   if (section.dataset.calcEventsWired) return;
   section.dataset.calcEventsWired = 'true';
 
-  // Recalculate on change (text inputs + range slider release)
+  // Recalculate on change (text inputs + radio selection change)
   section.addEventListener('change', ({ target }) => {
     if (target.tagName !== 'INPUT') return;
-    const calcPanel = target.closest('.commoncalculator');
-    if (calcPanel) runSingleCalculation(section, calcPanel);
-  });
 
-  // Recalculate in real-time while dragging range sliders
-  section.addEventListener('input', ({ target }) => {
-    if (target.tagName !== 'INPUT' || target.type !== 'range') return;
-    const calcPanel = target.closest('.commoncalculator');
-    if (calcPanel) runSingleCalculation(section, calcPanel);
-  });
-
-  const radioTabs = section.querySelectorAll('.radiotab > li');
-  radioTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
+    // Check if this is a radio input (FOIR selection change)
+    // calculator-radio.js dispatches change event when radio is clicked
+    if (target.type === 'radio' && target.dataset.calFoir) {
       const visible = getVisibleCalculator(section);
       if (visible) runSingleCalculation(section, visible);
-    });
+      return;
+    }
+
+    // Regular calculator input
+    const calcPanel = target.closest('.commoncalculator');
+    if (calcPanel) runSingleCalculation(section, calcPanel);
   });
 
+  // NOTE: Radio tab click handlers are in calculator-radio.js
+  // DO NOT add duplicate click handlers here
+
+  // EMI/Eligibility tab switching (headTabs)
   const headTabs = section.querySelectorAll('.headul .tab-common');
   headTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
@@ -302,12 +391,24 @@ export default async function decorate(block) {
     const authoredName = columns[0]?.textContent.trim() || '';
     const calInput = mapInputName(authoredName);
 
+    // columns[2] = default value
+    const defaultValue = columns[2]?.textContent.trim() || '0';
+    // Format default value for display (Indian number format for currency)
+    const isRoi = calInput === 'roi';
+    const formattedDefault = isRoi ? defaultValue : currenyCommaSeperation(Number(defaultValue) || 0);
+
     // columns[3] = authored icon (₹, $, %, Years, etc.)
     const iconText = columns[3]?.textContent.trim() || '';
     const isPrefix = CURRENCY_SYMBOLS.includes(iconText);
     const prefixText = isPrefix ? iconText : '';
     const suffixText = isPrefix ? '' : iconText;
     const isYearsText = !isPrefix;
+
+    // Calculate initial slider fill percentage
+    const minVal = Number(columns[5]?.textContent.trim()) || 0;
+    const maxVal = Number(columns[6]?.textContent.trim()) || 100;
+    const defVal = Number(defaultValue) || 0;
+    const fillPercent = ((defVal - minVal) / (maxVal - minVal)) * 100;
 
     const dom = `
       <div class="loanamount">
@@ -316,13 +417,13 @@ export default async function decorate(block) {
           <div class="inputdivs ${isYearsText ? 'yearstext' : ''}">
             <span class="rupee">${prefixText}</span>
             <label for="${inputId}" aria-label="calculateemi" class="sr-only"></label>
-            <input type="text" class="inputvalue slider-value" value="" id="${inputId}" data-slider="${sliderId}" data-cal-input="${calInput}">
+            <input type="text" class="inputvalue slider-value" value="${formattedDefault}" id="${inputId}" data-slider="${sliderId}" data-cal-input="${calInput}">
             <span class="textvalue">${suffixText}</span>
           </div>
         </div>
         <div class="rangediv">
           <label for="${sliderId}" aria-label="calculateemi" class="sr-only"></label>
-          <input type="range" min="${columns[5]?.textContent.trim() || ''}" step="${columns[4]?.textContent.trim() || ''}" max="${columns[6]?.textContent.trim() || ''}" value="${columns[2]?.textContent.trim() || ''}" id="${sliderId}" data-cal-input="${calInput}" class="range-slider__range" style="background: linear-gradient(90deg, rgb(218, 77, 52) 4.0404%, rgb(219, 215, 216) 4.0404%);">
+          <input type="range" min="${columns[5]?.textContent.trim() || ''}" step="${columns[4]?.textContent.trim() || ''}" max="${columns[6]?.textContent.trim() || ''}" value="${defaultValue}" id="${sliderId}" data-cal-input="${calInput}" class="range-slider__range" style="background: linear-gradient(90deg, rgb(218, 77, 52) ${fillPercent}%, rgb(219, 215, 216) ${fillPercent}%);">
           <div class="values">
             <span class="text">${columns[7]?.textContent.trim() || ''}</span>
             <span class="text">${columns[8]?.textContent.trim() || ''}</span>

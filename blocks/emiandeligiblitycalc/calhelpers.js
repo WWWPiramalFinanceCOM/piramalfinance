@@ -13,6 +13,7 @@ export function workflowHomeLoanCalculation(currentCalculator, calType) {
 
 export function getCalculationResult(currentCalculator, calculatorType) {
   const calDataObj = getCalculatorInput(currentCalculator, calculatorType);
+  if (!calDataObj) return null; // Calculator inputs not ready yet
   const fn = calculator(calDataObj);
   return fn ? fn.result() : null;
 }

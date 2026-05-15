@@ -2,29 +2,53 @@
  * Prepares calculator blocks by adding classes, data attributes,
  * and reading the calculator name, heading & tab names from block metadata.
  *
- * First row structure:
- *   <p>0 = productType   (e.g. "hl", "pl", "bl")
- *   <p>1 = calculatorName (e.g. "emicalculator", "gstcalculator", "aprcalculator")
- *   <p>2 = tabName        (e.g. "EMI Calculator")
- *   <p>3 = heading        (only read from the first block)
- *   ...
+ * Note: Empty text fields don't create DOM elements, so we can't rely on fixed indices.
+ * We robustly find tabLabel and description by checking elements after productType/calcName.
  *
  * @param {Element[]} blocks - Array of calculator block elements
  * @returns {object}
  */
 export function prepareBlocks(blocks) {
   const firstMeta = blocks[0].children[0]?.children[0]?.children;
-  const productType = (firstMeta?.[0]?.textContent?.trim() || 'hl').toLowerCase();
-  const heading = firstMeta?.[3]?.textContent?.trim()
-    || 'Calculate EMI & Check eligibility';
+  const firstMetaArray = Array.from(firstMeta || []);
+  // [0] and [1] are always productType and calcName (dropdowns with defaults)
+  const productType = (firstMetaArray[0]?.textContent?.trim() || 'hl').toLowerCase();
+
+  // Find description: check if [2] or [3] are text (not image), and capture description
+  // Empty fields don't create elements, so indices shift
+  let description = '';
+
+  // Check [2] and [3] - could be tabLabel, description, or image/imageLabel
+  const el2 = firstMetaArray[2];
+  const el3 = firstMetaArray[3];
+
+  // If element contains an image, it's the image field, not tabLabel/description
+  const el2HasImage = el2?.querySelector?.('img') || el2?.querySelector?.('picture');
+  const el3HasImage = el3?.querySelector?.('img') || el3?.querySelector?.('picture');
+
+  // If [2] is text (tabLabel) and [3] is also text (description), get description from [3]
+  if (!el2HasImage && el2?.textContent?.trim()) {
+    if (!el3HasImage && el3?.textContent?.trim()) {
+      description = el3.textContent.trim();
+    }
+  }
 
   const tabNames = [];
   const calcNames = [];
 
   blocks.forEach((blk, idx) => {
     const meta = blk.children[0]?.children[0]?.children;
-    const calcName = (meta?.[1]?.textContent?.trim() || '').toLowerCase();
-    const tabName = meta?.[2]?.textContent?.trim() || `Calculator ${idx + 1}`;
+    const metaArray = Array.from(meta || []);
+    const calcName = (metaArray[1]?.textContent?.trim() || '').toLowerCase();
+
+    // Get tab name for this block - check if [2] is text (not image)
+    let tabName = '';
+    const blockEl2 = metaArray[2];
+    const blockEl2HasImage = blockEl2?.querySelector?.('img') || blockEl2?.querySelector?.('picture');
+    if (!blockEl2HasImage && blockEl2?.textContent?.trim()) {
+      tabName = blockEl2.textContent.trim();
+    }
+
     tabNames.push(tabName);
     calcNames.push(calcName);
 
@@ -42,7 +66,7 @@ export function prepareBlocks(blocks) {
   });
 
   return {
-    heading, tabNames, calcNames, productType,
+    description, tabNames, calcNames, productType,
   };
 }
 

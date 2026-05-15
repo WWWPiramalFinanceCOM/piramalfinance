@@ -326,6 +326,36 @@
    display: none;
  }
 
+ /* Show second-head when it has content (Description subtitle or Tab Label) */
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .mainheading .second-head:not(:empty) {
+   display: block;
+ }
+
+ /* Tab Label styled as orange tab (on second-head for single calculator) */
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .mainheading .second-head.calc-tab-label:not(:empty) {
+   font-family: "Nunito-Extrabold", sans-serif;
+   font-weight: 800;
+   font-size: 1.5rem;
+   line-height: 32px;
+   color: var(--orange);
+   border-bottom: 2px solid var(--orange);
+   padding-bottom: 8px;
+   display: inline-block;
+   margin-top: 8px;
+ }
+
+ /* Hide empty tab label */
+ .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .mainheading .second-head.calc-tab-label:empty {
+   display: none;
+ }
+
+ @media screen and (max-width: 1024px) {
+   .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .mainheading .second-head.calc-tab-label:not(:empty) {
+     font-size: 1rem;
+     line-height: 24px;
+   }
+ }
+
  .homeloancalculator .calculator-parent .calculator-parent-child .cp-child .headingtabs .headul {
    -webkit-box-shadow: rgb(235, 238, 240) 0px -2px 0px inset;
    box-shadow: rgb(235, 238, 240) 0px -2px 0px inset;

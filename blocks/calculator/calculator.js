@@ -66,11 +66,11 @@ function combineSection(section) {
   const blocks = calcWrappers.map((w) => w.querySelector('.calculator.block')).filter(Boolean);
   if (blocks.length < 1) return;
 
-  const { heading, tabNames, productType } = prepareBlocks(blocks);
+  const { description, tabNames, productType } = prepareBlocks(blocks);
   section.classList.add('homeloancalculator');
   const { ctaItems, dcwToRemove } = extractContent(section);
 
-  const calcParent = buildCalculatorParent(heading, tabNames, ctaItems, blocks);
+  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks);
 
   calcWrappers.forEach((w) => w.remove());
   dcwToRemove.forEach((dcw) => dcw.remove());
@@ -411,8 +411,34 @@ export default async function decorate(block) {
   outputDiv.classList.add('outputdiv');
 
   const firstRow = firstRowChildren;
-  const imgEl = firstRow[4]?.querySelector('img');
-  const imgSrc = imgEl ? imgEl.src : (firstRow[4]?.textContent.trim() || '');
+  // Find elements robustly - empty fields don't create DOM elements, so we can't rely on fixed indices
+  // Convert to array for easier manipulation
+  const firstRowArray = Array.from(firstRow || []);
+  
+  // Find the image element (contains picture or img)
+  let imgEl = null;
+  let imageIndex = -1;
+  for (let i = 0; i < firstRowArray.length; i++) {
+    const el = firstRowArray[i];
+    const img = el.querySelector?.('img') || (el.tagName === 'IMG' ? el : null);
+    if (img) {
+      imgEl = img;
+      imageIndex = i;
+      break;
+    }
+  }
+  const imgSrc = imgEl?.src || '';
+  
+  // Text elements after the image: imageLabel, principalLabel, interestLabel
+  // Get text elements that come after the image (or all text elements if no image)
+  const textElementsAfterImage = imageIndex >= 0 
+    ? firstRowArray.slice(imageIndex + 1).filter(el => el.textContent?.trim())
+    : firstRowArray.slice(2).filter(el => el.textContent?.trim() && !el.querySelector('img')); // Skip productType[0], calcName[1]
+  
+  const imageLabel = textElementsAfterImage[0]?.textContent?.trim() || '';
+  const principalLabel = textElementsAfterImage[1]?.textContent?.trim() || '';
+  const interestLabel = textElementsAfterImage[2]?.textContent?.trim() || '';
+  const hasAmountBreakdown = principalLabel || interestLabel;
 
   // Build slider rows from remaining children (skip radio item rows)
   let sliderIndex = 0;
@@ -474,17 +500,19 @@ export default async function decorate(block) {
     sliderIndex += 1;
   });
 
-  const principalLabel = firstRow[6]?.textContent.trim() || '';
-  const interestLabel = firstRow[7]?.textContent.trim() || '';
-  const hasAmountBreakdown = principalLabel || interestLabel;
+  // Build output image HTML only if image exists
+  const outputImgHTML = imgSrc
+    ? `<img data-src="${imgSrc}" class="outputimg lozad" alt="calendar" src="${imgSrc}" data-loaded="true">
+        <img data-src="${imgSrc}" class="outputimg2 lozad" alt="calendar" src="${imgSrc}" data-loaded="true">`
+    : '';
 
+  // imageLabel shows above EMI result (e.g. "Your home loan EMI is a")
   outputDiv.innerHTML = `
     <div class="output-parent">
       <div class="mainoutput">
-        <img data-src="${imgSrc}" class="outputimg lozad" alt="calendar" src="${imgSrc}" data-loaded="true">
-        <img data-src="${imgSrc}" class="outputimg2 lozad" alt="calendar" src="${imgSrc}" data-loaded="true">
+        ${outputImgHTML}
         <p class="outputdes">
-          ${firstRow[5]?.textContent.trim() || ''}
+          ${imageLabel}
         </p>
         <div class="outputans" data-cal-result="resultAmt">₹0/-</div>
       </div>

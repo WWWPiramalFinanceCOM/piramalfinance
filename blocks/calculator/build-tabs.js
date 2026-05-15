@@ -1,35 +1,63 @@
 /**
  * Builds the calculator-parent wrapper with heading, tabs, CTA buttons,
  * and moves calculator blocks into the calctabs container.
- * @param {string} heading
- * @param {string[]} tabNames
+ * @param {string} description - The Description field from authoring
+ * @param {string[]} tabNames - Tab Label field from each calculator
  * @param {HTMLAnchorElement[]} ctaItems
  * @param {Element[]} blocks
  * @returns {HTMLElement}
  */
-export function buildCalculatorParent(heading, tabNames, ctaItems, blocks) {
+export function buildCalculatorParent(description, tabNames, ctaItems, blocks) {
+  // Only create switchable tabs if there are multiple calculators
+  const hasMultipleCalcs = blocks.length > 1;
+
   let tabsLiHTML = '';
-  tabNames.forEach((name, idx) => {
-    const activeClass = idx === 0 ? ' active' : '';
-    const tabClass = idx === 0 ? 'tab-emi-calc' : 'tab-eligibility-calc';
-    tabsLiHTML += `<li class="${tabClass} tab-common${activeClass}" data-tab-index="${idx}"><p>${name}</p></li>\n`;
-  });
-  tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
+  if (hasMultipleCalcs) {
+    tabNames.forEach((name, idx) => {
+      const activeClass = idx === 0 ? ' active' : '';
+      const tabClass = idx === 0 ? 'tab-emi-calc' : 'tab-eligibility-calc';
+      tabsLiHTML += `<li class="${tabClass} tab-common${activeClass}" data-tab-index="${idx}"><p>${name || ''}</p></li>\n`;
+    });
+    tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
+  }
+
+  // Get values (empty string if not authored - HTML structure always present)
+  const tabLabel = tabNames[0] || '';
+  const descriptionText = description || '';
+
+  // Build heading HTML - always render structure
+  // Description comes FIRST (above), Tab Label comes SECOND (below)
+  let headingHTML = '';
+  if (!hasMultipleCalcs) {
+    // Single calculator: Description above, Tab Label as styled tab below
+    headingHTML = `<div class="mainheading">
+          <p class="first-head">${descriptionText}</p>
+          <p class="second-head calc-tab-label">${tabLabel}</p>
+        </div>`;
+  } else {
+    // Multiple calculators: Description as heading above tabs
+    headingHTML = `<div class="mainheading">
+          <p class="first-head">${descriptionText}</p>
+          <p class="second-head"></p>
+        </div>`;
+  }
+
+  // Switchable tabs section for multiple calculators
+  const tabsHTML = hasMultipleCalcs
+    ? `<div class="headingtabs">
+          <ul class="headul">
+            ${tabsLiHTML}
+          </ul>
+        </div>`
+    : '';
 
   const calcParent = document.createElement('div');
   calcParent.className = 'calculator-parent';
   calcParent.innerHTML = `
     <div class="calculator-parent-child">
       <div class="cp-child">
-        <div class="mainheading">
-          <p class="first-head">${heading}</p>
-          <p class="second-head"></p>
-        </div>
-        <div class="headingtabs">
-          <ul class="headul">
-            ${tabsLiHTML}
-          </ul>
-        </div>
+        ${headingHTML}
+        ${tabsHTML}
         <div class="calctabs"></div>
       </div>
     </div>

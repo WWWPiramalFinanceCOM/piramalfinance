@@ -1279,6 +1279,10 @@
                 "value": "gold-loan-branch-carousel"
               },
               {
+                "name": "gold-loan-branch-carousel",
+                "value": "gold-loan-branch-carousel"
+              },
+              {
                 "name": "used-car-loan-branch-carousel",
                 "value": "used-car-loan-branch-carousel"
               },
@@ -2829,83 +2833,6 @@
         "name": "text",
         "value": "",
         "label": "Branch Detail Description",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "banner-carousel-item",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "Image Alt",
-        "value": "",
-        "label": "Desktop Image Alt",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "Mobile Image",
-        "label": "Mobile Image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "Mobile Image Alt",
-        "label": "Mobile Image Alt",
-        "valueType": "string"
-      }
-    ]
-  },
-   {
-    "id": "testimonies",
-    "fields": [
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "classes",
-        "value": "",
-        "label": "Style",
-        "options": [
-          {
-            "name": "With floating Heads",
-            "value": ""
-          },
-          {
-            "name": "Without floating Heads",
-            "value": "no-float"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "testimony",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "media_image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "media_imageAlt",
-        "label": "Image Alt Text"
-      },
-      {
-        "component": "richtext",
-        "name": "descr_text",
-        "value": "",
-        "label": "Text",
         "valueType": "string"
       }
     ]

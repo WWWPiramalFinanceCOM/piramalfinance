@@ -1,8 +1,10 @@
 import { fetchAPI, getProps } from '../../scripts/common.js';
+
+// const AEM_PUBLISH_DOMAIN = 'https://uatmarketing.piramalfinance.com';
+
 /**
  * Resolve API/asset URL - on non-publish environments, prepend AEM publish domain
  */
-
 function resolveUrl(url) {
   if (!url) return url;
   if (url.startsWith('http')) return url;

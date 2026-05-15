@@ -74,16 +74,20 @@ function getResult(calculatorObj) {
 }
 
 function getProductBasedEmiEligibility(income, otherLoan, applicableFoir) {
-  let productType = document.querySelector('#calculator-product-type').value;
+  // Get product type with null safety
+  const productTypeEl = document.querySelector('#calculator-product-type');
+  let productType = productTypeEl?.value || 'hl';
+
   // business loan eligibility emi formula: (income - otherloan) * applicablefoir
   const homePage = document.querySelector('.overlayDiv.show .homeloancalculator');
   if (homePage) {
-    productType = homePage.querySelector('#calculator-product-type').value;
+    const homeProductEl = homePage.querySelector('#calculator-product-type');
+    productType = homeProductEl?.value || productType;
   }
 
   let eligibilityEmi = (income - otherLoan) * applicableFoir;
 
-  if (productType == 'hl') {
+  if (productType === 'hl') {
     // home loan eligibility emi formula: income * applicablefoir - otherloan
     eligibilityEmi = income * applicableFoir - otherLoan;
   }

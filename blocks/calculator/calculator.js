@@ -106,6 +106,21 @@ function combineSection(section) {
   }
 
   initCalculatorTabs();
+
+  // Set initial calculator-parent background based on checked radio (if exists)
+  // First try :checked, then fallback to first radio with data-cal-foir
+  let checkedRadio = section.querySelector('[data-cal-foir]:checked');
+  if (!checkedRadio) {
+    checkedRadio = section.querySelector('[data-cal-foir]');
+  }
+  if (checkedRadio && calcParent) {
+    const foirType = (checkedRadio.dataset && checkedRadio.dataset.calFoir) || 'salaried';
+    const SALARIED_BG = 'rgb(255, 247, 244)';
+    const BUSINESS_BG = 'rgb(238, 243, 255)';
+    calcParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
+    // eslint-disable-next-line no-console
+    console.log('[calculator] combineSection set background for foirType:', foirType);
+  }
 }
 
 /**
@@ -218,6 +233,30 @@ function initSection(section, retryCount = 0) {
 
   // Initialize sliders with clean event handlers (no conflicts with calculator-radio)
   initializeSliders(section);
+
+  // Ensure eligibility calculator is visible if it's the only one
+  const eligibilityCalc = section.querySelector('.eligibilitycalculator');
+  const emiCalc = section.querySelector('.emicalculator');
+  if (eligibilityCalc && !emiCalc) {
+    eligibilityCalc.classList.add('elgblock');
+    eligibilityCalc.style.display = 'block';
+  }
+
+  // Set calculator-parent background based on checked radio's foirType
+  const calculatorParent = section.querySelector('.calculator-parent');
+  // First try :checked, then fallback to first radio with data-cal-foir
+  let checkedRadioForBg = section.querySelector('[data-cal-foir]:checked');
+  if (!checkedRadioForBg) {
+    checkedRadioForBg = section.querySelector('[data-cal-foir]');
+  }
+  if (calculatorParent && checkedRadioForBg) {
+    const foirType = (checkedRadioForBg.dataset && checkedRadioForBg.dataset.calFoir) || 'salaried';
+    const SALARIED_BG = 'rgb(255, 247, 244)';
+    const BUSINESS_BG = 'rgb(238, 243, 255)';
+    calculatorParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
+    // eslint-disable-next-line no-console
+    console.log('[calculator] initSection set background for foirType:', foirType);
+  }
 
   // Store default slider values for reset (same as homeloancalculatorv2)
   const calDefaultValueObj = JSON.parse(sessionStorage.getItem('calDefaultValueObj') || '{}');

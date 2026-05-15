@@ -247,33 +247,45 @@ function initRadioTabs(block) {
 
   /**
    * Updates all backgrounds based on which tab is selected
-   * @param {number} selectedIdx - The selected tab index (0 = salaried, 1 = business)
+   * @param {number} selectedIdx - The selected tab index
    */
   function updateBackgrounds(selectedIdx) {
-    const isSalaried = selectedIdx === 0;
+    // Determine foirType based on the ACTUAL selected tab data, not index
+    const selectedTab = radioTabs[selectedIdx];
+    const selectedRadio = selectedTab?.querySelector('input[data-cal-foir]');
+    const foirType = selectedRadio?.dataset.calFoir || 'salaried';
+    const isSalaried = foirType === 'salaried';
+    const selectedBg = isSalaried ? SALARIED_BG : BUSINESS_BG;
 
-    // Update tab backgrounds
+    // Update tab backgrounds based on foirType
     radioTabs.forEach((tab, idx) => {
+      const tabRadio = tab.querySelector('input[data-cal-foir]');
+      const tabFoirType = tabRadio?.dataset.calFoir || 'salaried';
       if (idx === selectedIdx) {
-        tab.style.background = isSalaried ? SALARIED_BG : BUSINESS_BG;
+        tab.style.background = tabFoirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
       } else {
         tab.style.background = WHITE;
       }
     });
 
-    // Update gradient on the block (50/50 split)
-    // When salaried: coral on left, white on right
-    // When business: white on left, blue on right
-    if (isSalaried) {
-      block.style.background = `linear-gradient(to right, ${SALARIED_BG} 50%, ${WHITE} 50%)`;
+    // Handle block background based on number of tabs
+    if (radioTabs.length === 1) {
+      // Single tab - use solid background color (full width)
+      block.style.background = selectedBg;
     } else {
-      block.style.background = `linear-gradient(to right, ${WHITE} 50%, ${BUSINESS_BG} 50%)`;
+      // Two tabs - use gradient (50/50 split)
+      // Selected tab's color goes on its side (left for idx 0, right for idx 1)
+      if (selectedIdx === 0) {
+        block.style.background = `linear-gradient(to right, ${selectedBg} 50%, ${WHITE} 50%)`;
+      } else {
+        block.style.background = `linear-gradient(to right, ${WHITE} 50%, ${selectedBg} 50%)`;
+      }
     }
 
-    // Update calculator parent background - find it fresh each time
+    // Update calculator parent background - must match selected tab
     const calculatorParent = section.querySelector('.calculator-parent');
     if (calculatorParent) {
-      calculatorParent.style.background = isSalaried ? SALARIED_BG : BUSINESS_BG;
+      calculatorParent.style.background = selectedBg;
     }
   }
 
@@ -386,16 +398,29 @@ export default async function decorate(block) {
     block.classList.add('home-loan-calculator-parent', 'combined-emi-eligibility');
 
     // CRITICAL: Ensure first radio is checked immediately after HTML insertion
-    // The checked="checked" attribute should work, but we set the property explicitly
     const firstRadio = block.querySelector('input[type="radio"][data-cal-foir]');
     if (firstRadio) {
       firstRadio.checked = true;
+      // eslint-disable-next-line no-console
+      console.log('[calculator-radio] First radio data-cal-foir:', firstRadio.dataset.calFoir);
     }
 
-    // Set initial background (salaried = first tab is active)
+    // Read foirType directly from the DOM to be 100% sure
+    const firstFoirType = firstRadio?.dataset?.calFoir || radioItems[0]?.foirType || 'salaried';
+    // eslint-disable-next-line no-console
+    console.log('[calculator-radio] Using firstFoirType:', firstFoirType, 'from radioItems:', radioItems[0]?.foirType);
+
     const SALARIED_BG = 'rgb(255, 247, 244)';
+    const BUSINESS_BG = 'rgb(238, 243, 255)';
     const WHITE = 'rgb(255, 255, 255)';
-    block.style.background = `linear-gradient(to right, ${SALARIED_BG} 50%, ${WHITE} 50%)`;
+    const initialBg = firstFoirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
+
+    // Set initial background - single tab uses solid, multiple uses gradient
+    if (radioItems.length === 1) {
+      block.style.background = initialBg;
+    } else {
+      block.style.background = `linear-gradient(to right, ${initialBg} 50%, ${WHITE} 50%)`;
+    }
 
     // Initialize click handlers and set initial active state
     initRadioTabs(block);
@@ -428,24 +453,53 @@ export default async function decorate(block) {
     const calculatorParent = section?.querySelector('.calculator-parent');
     const rangeInput = section?.querySelector('input[type="range"]');
 
+    // Determine correct background based on radio's foirType
+    // First try to find :checked radio, then fallback to first radio with data-cal-foir
+    let checkedRadio = section?.querySelector('[data-cal-foir]:checked');
+    if (!checkedRadio) {
+      // Fallback: find first radio with data-cal-foir attribute
+      checkedRadio = section?.querySelector('[data-cal-foir]');
+    }
+
+    // Get foirType with explicit fallback handling
+    let foirType = 'salaried'; // default
+    if (checkedRadio && checkedRadio.dataset && checkedRadio.dataset.calFoir) {
+      foirType = checkedRadio.dataset.calFoir;
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('[calculator-radio] triggerInitialCalculation:', {
+      attempt,
+      hasCalculatorParent: !!calculatorParent,
+      hasRangeInput: !!rangeInput,
+      checkedRadioFoir: checkedRadio?.dataset?.calFoir,
+      foirType,
+    });
+
+    const SALARIED_BG = 'rgb(255, 247, 244)';
+    const BUSINESS_BG = 'rgb(238, 243, 255)';
+    const correctBg = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
+
     if (calculatorParent) {
-      calculatorParent.style.background = 'rgb(255, 247, 244)'; // Salaried background
+      calculatorParent.style.background = correctBg;
+      // eslint-disable-next-line no-console
+      console.log('[calculator-radio] Set calculator-parent background to:', correctBg);
     }
 
     // Check if calculator is ready (has range inputs)
     if (rangeInput) {
       // Dispatch event to trigger calculator recalculation now that radio is ready
-      const checkedRadio = section?.querySelector('[data-cal-foir]:checked');
       if (checkedRadio) {
         checkedRadio.dispatchEvent(new Event('change', { bubbles: true }));
       }
       // Also trigger input event on a range slider to force recalculation
       rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
-    } else if (attempt < 10) {
-      // Retry if calculator not ready yet
+    } else if (attempt < 15) {
+      // Retry if calculator not ready yet (increased retries)
       setTimeout(() => triggerInitialCalculation(attempt + 1), 200);
     }
   }
 
-  setTimeout(() => triggerInitialCalculation(), 200);
+  // Start with a slightly longer delay to ensure calculator.js has created calculator-parent
+  setTimeout(() => triggerInitialCalculation(), 300);
 }

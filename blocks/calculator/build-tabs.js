@@ -77,7 +77,18 @@ export function initCalculatorTabs() {
   const tabs = [...calcParent.querySelectorAll('.headingtabs .tab-common:not(.gst-third-tab)')];
   const calcBlocks = [...calcParent.querySelectorAll('.calctabs .commoncalculator')];
 
-  if (calcBlocks.length <= 1 || !tabs.length) return;
+  // IMPORTANT: If only one calculator exists and it's eligibility, make it visible
+  // The CSS hides .eligibilitycalculator by default, so we need to add .elgblock
+  if (calcBlocks.length === 1) {
+    const singleCalc = calcBlocks[0];
+    if (singleCalc.classList.contains('eligibilitycalculator')) {
+      singleCalc.classList.add('elgblock');
+      singleCalc.style.display = 'block';
+    }
+    return;
+  }
+
+  if (!tabs.length) return;
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {

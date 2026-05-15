@@ -20,8 +20,18 @@
   }
 </script>
 <script type="module">
-  import(`/scripts/aem${window.getExtension("js")}`);
-  import(`/scripts/scripts${window.getExtension("js")}`);
+  const categoryTemplate = window.getMetadata('category-type');
+  debugger;
+  if (categoryTemplate) {
+    import(`/scripts/${categoryTemplate}/aem${window.getExtension("js")}`);
+    import(`/scripts/${categoryTemplate}/script${window.getExtension("js")}`);
+  }
+  else {
+    import(`/scripts/aem${window.getExtension("js")}`);
+    import(`/scripts/scripts${window.getExtension("js")}`);
+  }
+
+
 </script>
 <link as="font" crossorigin="" href="/fonts/Nunito-Light.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoRegular.woff2" rel="preconnect" type="font/woff2" />
@@ -32,7 +42,12 @@
 <link as="font" crossorigin="" href="/fonts/NunitoExtraLight.woff2" rel="preconnect" type="font/woff2" />
 
 <script>
-  document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
+  if (window.location.pathname.includes("/investor-detail")) {
+    // document.write(`<link rel="stylesheet" href="/styles/investors/investors${window.getExtension('css')}" />`);
+    document.write(`<link rel="stylesheet" href="/blocks/investor/cards/cards${window.getExtension('css')}" />`);
+  }
+
+  document.write(`<link rel="stylesheet" href="/cards${window.getExtension('css')}" />`);
 </script>
 
 <link rel="apple-touch-icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" />

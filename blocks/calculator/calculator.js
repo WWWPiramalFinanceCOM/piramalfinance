@@ -254,19 +254,20 @@ function initSection(section, retryCount = 0) {
   if (allBlocks.length === 0) return;
   const allReady = allBlocks.every((b) => b.querySelector('.parent-emi'));
 
-  // GST/APR calculators don't need radio inputs - skip that check
-  const isGstOrAprCalc = section.classList.contains('gst-calculator') ||
+  // GST/APR/Part Payment calculators don't need radio inputs - skip that check
+  const isSpecialCalc = section.classList.contains('gst-calculator') ||
     allBlocks.some((b) => b.classList.contains('aprcalculator') || 
                          b.classList.contains('gstcalculatorbuyer') || 
-                         b.classList.contains('gstcalculatorseller'));
+                         b.classList.contains('gstcalculatorseller') ||
+                         b.classList.contains('partpaymentcalculator'));
   
   // Check if calculator-radio has created AND CHECKED a radio input
   // Only required for EMI/Eligibility calculators
   const hasCheckedRadio = section.querySelector('[data-cal-foir]:checked');
 
   // If not ready, retry (up to 30 times = 3 seconds)
-  // GST/APR calculators skip the radio check
-  if (!allReady || (!isGstOrAprCalc && !hasCheckedRadio)) {
+  // GST/APR/Part Payment calculators skip the radio check
+  if (!allReady || (!isSpecialCalc && !hasCheckedRadio)) {
     if (retryCount < 30) {
       setTimeout(() => initSection(section, retryCount + 1), 100);
     }
@@ -287,9 +288,9 @@ function initSection(section, retryCount = 0) {
   }
 
   // Set calculator-parent background
-  // GST calculators get white background, EMI/Eligibility use radio-based background
+  // GST/APR/Part Payment calculators get white background, EMI/Eligibility use radio-based background
   const calculatorParent = section.querySelector('.calculator-parent');
-  if (isGstOrAprCalc && calculatorParent) {
+  if (isSpecialCalc && calculatorParent) {
     calculatorParent.style.background = '#fff';
   } else if (calculatorParent) {
     // First try :checked, then fallback to first radio with data-cal-foir
@@ -334,6 +335,7 @@ function getCalcType(calcPanel) {
       calcPanel.classList.contains('gstcalculatorseller') ||
       calcPanel.classList.contains('gst')) return 'gst';
   if (calcPanel.classList.contains('aprcalculator') || calcPanel.classList.contains('apr')) return 'apr';
+  if (calcPanel.classList.contains('partpaymentcalculator')) return 'partpayment';
   if (calcPanel.classList.contains('eligibilitycalculator')) return 'eligibility';
   return 'emi';
 }
@@ -351,6 +353,8 @@ function runSingleCalculation(section, calcPanel) {
     runGstCalculation(section, calcPanel);
   } else if (calcType === 'apr') {
     runAprCalculation(calcPanel);
+  } else if (calcType === 'partpayment') {
+    runPartPaymentCalculation(section, calcPanel);
   }
 }
 
@@ -391,6 +395,62 @@ function runAprCalculation(calcPanel) {
 
   const aprValue = CheckAprRate(loanAmt, originCharges, roi, tenure);
   resultElement.textContent = `${aprValue}%`;
+}
+
+/* ── Part Payment Calculation ────────────────── */
+
+/**
+ * Calculate PMT (monthly payment) for a loan
+ * @param {number} principal - Loan amount
+ * @param {number} annualRate - Annual interest rate (percentage)
+ * @param {number} tenureYears - Loan tenure in years
+ * @returns {number} Monthly EMI
+ */
+function calculatePMT(principal, annualRate, tenureYears) {
+  const monthlyRate = annualRate / 12 / 100;
+  const totalMonths = tenureYears * 12;
+  if (monthlyRate === 0) return principal / totalMonths;
+  const emi = (principal * monthlyRate) / (1 - (1 + monthlyRate) ** -totalMonths);
+  return Math.round(emi);
+}
+
+/**
+ * Run Part Payment Calculator calculation
+ * Uses slider values (loan amount, ROI, tenure) to calculate EMI and total payment
+ */
+function runPartPaymentCalculation(section, calcPanel) {
+  // Get input values from sliders
+  const loanAmt = Number((calcPanel.querySelector('[data-cal-input=loanamt]')?.value || '').replace(/,/g, '')) || 0;
+  const roi = Number(calcPanel.querySelector('[data-cal-input=roi]')?.value) || 0;
+  const tenure = Number(calcPanel.querySelector('[data-cal-input=tenure]')?.value) || 0;
+
+  if (loanAmt === 0 || tenure === 0) return;
+
+  // Calculate EMI
+  const emi = calculatePMT(loanAmt, roi, tenure);
+  const totalInterest = (emi * tenure * 12) - loanAmt;
+  const totalPayment = loanAmt + totalInterest;
+
+  // Update result elements
+  const totalPaymentEl = calcPanel.querySelector('[data-cal-result=principalAmt]');
+  const emiEl = calcPanel.querySelector('[data-cal-result=interestAmt]');
+  const resultEl = calcPanel.querySelector('[data-cal-result=resultAmt]');
+
+  if (totalPaymentEl) totalPaymentEl.textContent = currenyCommaSeperation(totalPayment);
+  if (emiEl) emiEl.textContent = currenyCommaSeperation(emi);
+  if (resultEl) resultEl.textContent = `₹${currenyCommaSeperation(emi)}/-`;
+
+  // Update the three output metrics if they exist
+  // amount-1: Net Effective ROI (same as input ROI for base calculation)
+  // amount-2: Interest Savings (0 for base, calculated with part payments)
+  // amount-3: Tenure Reduction (0 months for base, calculated with part payments)
+  const roiOutput = calcPanel.querySelector('.amount-1');
+  const savingsOutput = calcPanel.querySelector('.amount-2');
+  const tenureOutput = calcPanel.querySelector('.amount-3');
+
+  if (roiOutput) roiOutput.textContent = `${roi.toFixed(2)}%`;
+  if (savingsOutput) savingsOutput.textContent = currenyCommaSeperation(0);
+  if (tenureOutput) tenureOutput.textContent = '0 Months';
 }
 
 /* ── Event wiring ────────────────────────────── */
@@ -456,6 +516,7 @@ export default async function decorate(block) {
   const firstRowChildren = block.children[0]?.children[0]?.children;
   const calcName = (firstRowChildren?.[1]?.textContent?.trim() || '').toLowerCase();
   const isEligibility = calcName.includes('eligibility');
+  const isPartPayment = calcName.includes('partpayment');
   const sliderPrefix = `c${blockIndex}s`;
 
   const parentEmi = document.createElement('div');
@@ -473,7 +534,33 @@ export default async function decorate(block) {
   // Convert to array for easier manipulation
   const firstRowArray = Array.from(firstRow || []);
   
-  // Find the image element (contains picture or img)
+  // For Part Payment Calculator, find multiple images and their labels
+  // Structure: productType, calcName, tabLabel, description, output1Image, output1Label, output2Image, output2Label, output3Image, output3Label, ...
+  let partPaymentImages = [];
+  let partPaymentLabels = [];
+  
+  if (isPartPayment) {
+    // Collect all images and text elements for Part Payment
+    let currentImages = [];
+    let currentTexts = [];
+    
+    firstRowArray.forEach((el, idx) => {
+      // Skip first 2 elements (productType, calcName)
+      if (idx < 2) return;
+      
+      const img = el.querySelector?.('img') || el.querySelector?.('picture img') || (el.tagName === 'IMG' ? el : null);
+      if (img) {
+        currentImages.push(img.src || '');
+      } else if (el.textContent?.trim()) {
+        currentTexts.push(el.textContent.trim());
+      }
+    });
+    
+    partPaymentImages = currentImages;
+    partPaymentLabels = currentTexts;
+  }
+  
+  // Find the first image element (contains picture or img) - for non-Part Payment calculators
   let imgEl = null;
   let imageIndex = -1;
   for (let i = 0; i < firstRowArray.length; i++) {
@@ -564,28 +651,91 @@ export default async function decorate(block) {
         <img data-src="${imgSrc}" class="outputimg2 lozad" alt="calendar" src="${imgSrc}" data-loaded="true">`
     : '';
 
-  // imageLabel shows above EMI result (e.g. "Your home loan EMI is a")
-  outputDiv.innerHTML = `
-    <div class="output-parent">
-      <div class="mainoutput">
-        ${outputImgHTML}
-        <p class="outputdes">
-          ${imageLabel}
-        </p>
-        <div class="outputans" data-cal-result="resultAmt">₹0/-</div>
+  // Part Payment Calculator has special three-metric output layout
+  if (isPartPayment) {
+    // Part Payment field extraction from authored content
+    // Images: output1Image, output2Image, output3Image (indices 0, 1, 2)
+    // Labels order (after tabLabel[0], description[1]): 
+    //   output1Label[2], output2Label[3], output3Label[4], 
+    //   totalPaymentsLabel[5], emiLabel[6]
+    const output1Img = partPaymentImages[0] || imgSrc || '';
+    const output2Img = partPaymentImages[1] || imgSrc || '';
+    const output3Img = partPaymentImages[2] || imgSrc || '';
+    
+    const metric1Label = partPaymentLabels[2] || 'Net Effective ROI';
+    const metric2Label = partPaymentLabels[3] || 'You will save Interest of';
+    const metric3Label = partPaymentLabels[4] || 'Reduction in Tenure by';
+    const totalPaymentsLabel = partPaymentLabels[5] || 'Total Payments';
+    const emiLabelText = partPaymentLabels[6] || 'EMI';
+    
+    outputDiv.innerHTML = `
+      <div class="output-parent">
+        <div class="mainoutput partPaymentMainOutPut">
+          <div class="parpaymentmainoutputcontainer">
+            <div class="text-and-img">
+              ${output1Img ? `<img data-src="${output1Img}" class="outputimg lozad" alt="roi" src="${output1Img}" data-loaded="true">` : ''}
+              <div class="amountContainer">
+                <p class="outputdes desc-1">${metric1Label}</p>
+                <div class="outputans" data-cal-result="resultAmt"><span class="outputans"></span><span class="amount-1">0%</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="parpaymentmainoutputcontainer">
+            <div class="text-and-img">
+              ${output2Img ? `<img data-src="${output2Img}" class="outputimg lozad" alt="savings" src="${output2Img}" data-loaded="true">` : ''}
+              <div class="amountContainer">
+                <p class="outputdes desc-2">${metric2Label}</p>
+                <div class="outputans" data-cal-result="resultAmt"><span class="outputans">₹</span><span class="amount-2">0</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="parpaymentmainoutputcontainer">
+            <div class="text-and-img">
+              ${output3Img ? `<img data-src="${output3Img}" class="outputimg lozad" alt="tenure" src="${output3Img}" data-loaded="true">` : ''}
+              <div class="amountContainer">
+                <p class="outputdes desc-3">${metric3Label}</p>
+                <div class="outputans" data-cal-result="resultAmt"><span class="outputans"></span><span class="amount-3">0 Months</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="amountdiv">
+          <div class="firstamout">
+            <p>${totalPaymentsLabel}</p>
+            <p class="amount"><span>₹</span><span data-cal-result="principalAmt">0</span></p>
+          </div>
+          <div class="secondamount firstamout">
+            <p>${emiLabelText}</p>
+            <p class="amount"><span>₹</span><span data-cal-result="interestAmt">0</span></p>
+          </div>
+        </div>
       </div>
-      ${hasAmountBreakdown ? `<div class="amountdiv">
-        <div class="firstamout">
-          <p>${principalLabel}</p>
-          <p class="amount"><span>₹</span><span data-cal-result="principalAmt">0</span></p>
+    `;
+  } else {
+    // Standard EMI/Eligibility/GST/APR output layout
+    // imageLabel shows above EMI result (e.g. "Your home loan EMI is a")
+    outputDiv.innerHTML = `
+      <div class="output-parent">
+        <div class="mainoutput">
+          ${outputImgHTML}
+          <p class="outputdes">
+            ${imageLabel}
+          </p>
+          <div class="outputans" data-cal-result="resultAmt">₹0/-</div>
         </div>
-        <div class="secondamount firstamout">
-          <p>${interestLabel}</p>
-          <p class="amount"><span>₹</span><span data-cal-result="interestAmt">0</span></p>
-        </div>
-      </div>` : ''}
-    </div>
-  `;
+        ${hasAmountBreakdown ? `<div class="amountdiv">
+          <div class="firstamout">
+            <p>${principalLabel}</p>
+            <p class="amount"><span>₹</span><span data-cal-result="principalAmt">0</span></p>
+          </div>
+          <div class="secondamount firstamout">
+            <p>${interestLabel}</p>
+            <p class="amount"><span>₹</span><span data-cal-result="interestAmt">0</span></p>
+          </div>
+        </div>` : ''}
+      </div>
+    `;
+  }
 
   // Hide original authored children instead of removing them
   // so the Universal Editor can still track and edit them

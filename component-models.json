@@ -2996,6 +2996,82 @@
         "value": "",
         "label": "Interest Amount Text",
         "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Part Payment Settings",
+        "name": "partPaymentTab",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "reference",
+        "name": "col1_output1Image",
+        "value": "",
+        "label": "Output 1 Icon (e.g., ROI Icon)",
+        "description": "Icon for first output metric (Net Effective ROI)",
+        "valueType": "string",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "text",
+        "name": "col1_output1Label",
+        "value": "Net Effective ROI",
+        "label": "Output 1 Label",
+        "description": "Label for first output metric",
+        "valueType": "string",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "reference",
+        "name": "col1_output2Image",
+        "value": "",
+        "label": "Output 2 Icon (e.g., Savings Icon)",
+        "description": "Icon for second output metric (Interest Savings)",
+        "valueType": "string",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "text",
+        "name": "col1_output2Label",
+        "value": "You will save Interest of",
+        "label": "Output 2 Label",
+        "description": "Label for second output metric",
+        "valueType": "string",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "reference",
+        "name": "col1_output3Image",
+        "value": "",
+        "label": "Output 3 Icon (e.g., Calendar Icon)",
+        "description": "Icon for third output metric (Tenure Reduction)",
+        "valueType": "string",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "text",
+        "name": "col1_output3Label",
+        "value": "Reduction in Tenure by",
+        "label": "Output 3 Label",
+        "description": "Label for third output metric",
+        "valueType": "string",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "text",
+        "name": "col1_totalPaymentsLabel",
+        "value": "Total Payments",
+        "label": "Total Payments Label",
+        "valueType": "string",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "text",
+        "name": "col1_emiLabel",
+        "value": "EMI",
+        "label": "EMI Label",
+        "valueType": "string",
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
       }
     ]
   },

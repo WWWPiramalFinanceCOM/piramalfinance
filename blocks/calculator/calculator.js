@@ -574,15 +574,17 @@ export default async function decorate(block) {
   }
   const imgSrc = imgEl?.src || '';
   
-  // Text elements after the image: imageLabel, principalLabel, interestLabel
+  // Text elements after the image: imageAlt, imageLabel, principalLabel, interestLabel
   // Get text elements that come after the image (or all text elements if no image)
   const textElementsAfterImage = imageIndex >= 0 
     ? firstRowArray.slice(imageIndex + 1).filter(el => el.textContent?.trim())
     : firstRowArray.slice(2).filter(el => el.textContent?.trim() && !el.querySelector('img')); // Skip productType[0], calcName[1]
   
-  const imageLabel = textElementsAfterImage[0]?.textContent?.trim() || '';
-  const principalLabel = textElementsAfterImage[1]?.textContent?.trim() || '';
-  const interestLabel = textElementsAfterImage[2]?.textContent?.trim() || '';
+  // Order: imageAlt[0], imageLabel[1], principalLabel[2], interestLabel[3]
+  const imageAlt = textElementsAfterImage[0]?.textContent?.trim() || 'Calculator';
+  const imageLabel = textElementsAfterImage[1]?.textContent?.trim() || '';
+  const principalLabel = textElementsAfterImage[2]?.textContent?.trim() || '';
+  const interestLabel = textElementsAfterImage[3]?.textContent?.trim() || '';
   const hasAmountBreakdown = principalLabel || interestLabel;
 
   // Build slider rows from remaining children (skip radio item rows)
@@ -645,35 +647,40 @@ export default async function decorate(block) {
     sliderIndex += 1;
   });
 
-  // Build output image HTML only if image exists
+  // Build output image HTML only if image exists - use authored alt text
   const outputImgHTML = imgSrc
-    ? `<img data-src="${imgSrc}" class="outputimg lozad" alt="calendar" src="${imgSrc}" data-loaded="true">
-        <img data-src="${imgSrc}" class="outputimg2 lozad" alt="calendar" src="${imgSrc}" data-loaded="true">`
+    ? `<img data-src="${imgSrc}" class="outputimg lozad" alt="${imageAlt}" src="${imgSrc}" data-loaded="true">
+        <img data-src="${imgSrc}" class="outputimg2 lozad" alt="${imageAlt}" src="${imgSrc}" data-loaded="true">`
     : '';
 
   // Part Payment Calculator has special three-metric output layout
   if (isPartPayment) {
     // Part Payment field extraction from authored content
-    // Images: output1Image, output2Image, output3Image (indices 0, 1, 2)
-    // Labels order (after tabLabel[0], description[1]): 
-    //   output1Label[2], output2Label[3], output3Label[4], 
-    //   totalPaymentsLabel[5], emiLabel[6]
-    const output1Img = partPaymentImages[0] || imgSrc || '';
-    const output2Img = partPaymentImages[1] || imgSrc || '';
-    const output3Img = partPaymentImages[2] || imgSrc || '';
+    // With container model, text order is:
+    //   [0] tabLabel, [1] description,
+    //   [2] output1ImageAlt, [3] output1Label,
+    //   [4] output2ImageAlt, [5] output2Label,
+    //   [6] output3ImageAlt, [7] output3Label,
+    //   [8] totalPaymentsLabel, [9] emiLabel
+    const output1Img = partPaymentImages[0] || '';
+    const output2Img = partPaymentImages[1] || '';
+    const output3Img = partPaymentImages[2] || '';
     
-    const metric1Label = partPaymentLabels[2] || 'Net Effective ROI';
-    const metric2Label = partPaymentLabels[3] || 'You will save Interest of';
-    const metric3Label = partPaymentLabels[4] || 'Reduction in Tenure by';
-    const totalPaymentsLabel = partPaymentLabels[5] || 'Total Payments';
-    const emiLabelText = partPaymentLabels[6] || 'EMI';
+    const output1Alt = partPaymentLabels[2] || 'ROI Icon';
+    const metric1Label = partPaymentLabels[3] || 'Net Effective ROI';
+    const output2Alt = partPaymentLabels[4] || 'Savings Icon';
+    const metric2Label = partPaymentLabels[5] || 'You will save Interest of';
+    const output3Alt = partPaymentLabels[6] || 'Calendar Icon';
+    const metric3Label = partPaymentLabels[7] || 'Reduction in Tenure by';
+    const totalPaymentsLabel = partPaymentLabels[8] || 'Total Payments';
+    const emiLabelText = partPaymentLabels[9] || 'EMI';
     
     outputDiv.innerHTML = `
       <div class="output-parent">
         <div class="mainoutput partPaymentMainOutPut">
           <div class="parpaymentmainoutputcontainer">
             <div class="text-and-img">
-              ${output1Img ? `<img data-src="${output1Img}" class="outputimg lozad" alt="roi" src="${output1Img}" data-loaded="true">` : ''}
+              ${output1Img ? `<img data-src="${output1Img}" class="outputimg lozad" alt="${output1Alt}" src="${output1Img}" data-loaded="true">` : ''}
               <div class="amountContainer">
                 <p class="outputdes desc-1">${metric1Label}</p>
                 <div class="outputans" data-cal-result="resultAmt"><span class="outputans"></span><span class="amount-1">0%</span></div>
@@ -682,7 +689,7 @@ export default async function decorate(block) {
           </div>
           <div class="parpaymentmainoutputcontainer">
             <div class="text-and-img">
-              ${output2Img ? `<img data-src="${output2Img}" class="outputimg lozad" alt="savings" src="${output2Img}" data-loaded="true">` : ''}
+              ${output2Img ? `<img data-src="${output2Img}" class="outputimg lozad" alt="${output2Alt}" src="${output2Img}" data-loaded="true">` : ''}
               <div class="amountContainer">
                 <p class="outputdes desc-2">${metric2Label}</p>
                 <div class="outputans" data-cal-result="resultAmt"><span class="outputans">₹</span><span class="amount-2">0</span></div>
@@ -691,7 +698,7 @@ export default async function decorate(block) {
           </div>
           <div class="parpaymentmainoutputcontainer">
             <div class="text-and-img">
-              ${output3Img ? `<img data-src="${output3Img}" class="outputimg lozad" alt="tenure" src="${output3Img}" data-loaded="true">` : ''}
+              ${output3Img ? `<img data-src="${output3Img}" class="outputimg lozad" alt="${output3Alt}" src="${output3Img}" data-loaded="true">` : ''}
               <div class="amountContainer">
                 <p class="outputdes desc-3">${metric3Label}</p>
                 <div class="outputans" data-cal-result="resultAmt"><span class="outputans"></span><span class="amount-3">0 Months</span></div>

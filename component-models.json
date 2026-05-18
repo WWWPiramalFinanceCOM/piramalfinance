@@ -2974,28 +2974,40 @@
         "name": "col1_image",
         "value": "",
         "label": "Image",
-        "valueType": "string"
+        "valueType": "string",
+        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_imageAlt",
+        "label": "Image Alt Text",
+        "multi": false,
+        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_imageLabel",
         "label": "Image Label",
-        "multi": false
+        "multi": false,
+        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
       },
       {
         "component": "text",
         "name": "col1_resPAmount",
         "value": "",
         "label": "Principal Amount Text",
-        "valueType": "string"
+        "valueType": "string",
+        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
       },
       {
         "component": "text",
         "name": "col1_resInterestAmount",
         "value": "",
         "label": "Interest Amount Text",
-        "valueType": "string"
+        "valueType": "string",
+        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
       },
       {
         "component": "tab",
@@ -3004,58 +3016,103 @@
         "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
       },
       {
-        "component": "reference",
-        "name": "col1_output1Image",
-        "value": "",
-        "label": "Output 1 Icon (e.g., ROI Icon)",
-        "description": "Icon for first output metric (Net Effective ROI)",
-        "valueType": "string",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "component": "container",
+        "name": "col1_output1Container",
+        "label": "Output 1 - Net Effective ROI",
+        "collapsible": true,
+        "collapsed": false,
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "fields": [
+          {
+            "component": "reference",
+            "name": "col1_output1Image",
+            "value": "",
+            "label": "Icon",
+            "description": "Icon for Net Effective ROI metric",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_output1ImageAlt",
+            "value": "ROI Icon",
+            "label": "Icon Alt Text",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_output1Label",
+            "value": "Net Effective ROI",
+            "label": "Label",
+            "description": "Label for first output metric",
+            "valueType": "string"
+          }
+        ]
       },
       {
-        "component": "text",
-        "name": "col1_output1Label",
-        "value": "Net Effective ROI",
-        "label": "Output 1 Label",
-        "description": "Label for first output metric",
-        "valueType": "string",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "component": "container",
+        "name": "col1_output2Container",
+        "label": "Output 2 - Interest Savings",
+        "collapsible": true,
+        "collapsed": true,
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "fields": [
+          {
+            "component": "reference",
+            "name": "col1_output2Image",
+            "value": "",
+            "label": "Icon",
+            "description": "Icon for Interest Savings metric",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_output2ImageAlt",
+            "value": "Savings Icon",
+            "label": "Icon Alt Text",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_output2Label",
+            "value": "You will save Interest of",
+            "label": "Label",
+            "description": "Label for second output metric",
+            "valueType": "string"
+          }
+        ]
       },
       {
-        "component": "reference",
-        "name": "col1_output2Image",
-        "value": "",
-        "label": "Output 2 Icon (e.g., Savings Icon)",
-        "description": "Icon for second output metric (Interest Savings)",
-        "valueType": "string",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
-      },
-      {
-        "component": "text",
-        "name": "col1_output2Label",
-        "value": "You will save Interest of",
-        "label": "Output 2 Label",
-        "description": "Label for second output metric",
-        "valueType": "string",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
-      },
-      {
-        "component": "reference",
-        "name": "col1_output3Image",
-        "value": "",
-        "label": "Output 3 Icon (e.g., Calendar Icon)",
-        "description": "Icon for third output metric (Tenure Reduction)",
-        "valueType": "string",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
-      },
-      {
-        "component": "text",
-        "name": "col1_output3Label",
-        "value": "Reduction in Tenure by",
-        "label": "Output 3 Label",
-        "description": "Label for third output metric",
-        "valueType": "string",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "component": "container",
+        "name": "col1_output3Container",
+        "label": "Output 3 - Tenure Reduction",
+        "collapsible": true,
+        "collapsed": true,
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "fields": [
+          {
+            "component": "reference",
+            "name": "col1_output3Image",
+            "value": "",
+            "label": "Icon",
+            "description": "Icon for Tenure Reduction metric",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_output3ImageAlt",
+            "value": "Calendar Icon",
+            "label": "Icon Alt Text",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_output3Label",
+            "value": "Reduction in Tenure by",
+            "label": "Label",
+            "description": "Label for third output metric",
+            "valueType": "string"
+          }
+        ]
       },
       {
         "component": "text",

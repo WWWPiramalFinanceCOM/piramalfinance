@@ -193,6 +193,12 @@
     "fields": [
       {
         "component": "text",
+        "name": "name",
+        "label": "Section Name",
+        "description": "The label shown for this section in the Content Tree"
+      },
+      {
+        "component": "text",
         "name": "style",
         "value": "",
         "label": "Style",
@@ -1147,7 +1153,7 @@
                 "name": "Button Bottom",
                 "value": "btn-bottom"
               },
-               {
+              {
                 "name": "Two Button Bottom",
                 "value": "two-btn-bottom"
               }
@@ -2863,7 +2869,7 @@
       }
     ]
   },
-   {
+  {
     "id": "testimonies",
     "fields": [
       {
@@ -2910,7 +2916,7 @@
       }
     ]
   },
-   {
+  {
     "id": "calculator",
     "fields": [
       {
@@ -2939,7 +2945,7 @@
           }
         ]
       },
-       {
+      {
         "component": "select",
         "valueType": "string",
         "name": "col1_name",
@@ -3006,7 +3012,14 @@
         "value": "",
         "label": "Image",
         "valueType": "string",
-        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "text",
@@ -3014,7 +3027,14 @@
         "name": "col1_imageAlt",
         "label": "Image Alt Text",
         "multi": false,
-        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "text",
@@ -3022,7 +3042,14 @@
         "name": "col1_imageLabel",
         "label": "Image Label",
         "multi": false,
-        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "text",
@@ -3030,7 +3057,14 @@
         "value": "",
         "label": "Principal Amount Text",
         "valueType": "string",
-        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "text",
@@ -3038,13 +3072,27 @@
         "value": "",
         "label": "Interest Amount Text",
         "valueType": "string",
-        "condition": { "!==": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "tab",
         "label": "Part Payment Settings",
         "name": "partPaymentTab",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -3052,7 +3100,14 @@
         "label": "Output 1 - Net Effective ROI",
         "collapsible": true,
         "collapsed": false,
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
         "fields": [
           {
             "component": "reference",
@@ -3085,7 +3140,14 @@
         "label": "Output 2 - Interest Savings",
         "collapsible": true,
         "collapsed": true,
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
         "fields": [
           {
             "component": "reference",
@@ -3118,7 +3180,14 @@
         "label": "Output 3 - Tenure Reduction",
         "collapsible": true,
         "collapsed": true,
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
         "fields": [
           {
             "component": "reference",
@@ -3151,7 +3220,14 @@
         "label": "Summary Labels (Total Payments & EMI)",
         "collapsible": true,
         "collapsed": true,
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
         "fields": [
           {
             "component": "text",
@@ -3175,7 +3251,14 @@
         "label": "First Loan EMI Date Settings",
         "collapsible": true,
         "collapsed": true,
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
         "fields": [
           {
             "component": "text",
@@ -3214,7 +3297,14 @@
         "label": "Repayment Schedule Settings",
         "collapsible": true,
         "collapsed": true,
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
         "fields": [
           {
             "component": "text",
@@ -3238,7 +3328,14 @@
         "label": "Part Payment Card (Date & Amount)",
         "collapsible": true,
         "collapsed": true,
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
         "fields": [
           {
             "component": "text",
@@ -3283,7 +3380,14 @@
         "label": "Add More Part Payment Button",
         "collapsible": true,
         "collapsed": true,
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
         "fields": [
           {
             "component": "reference",
@@ -3375,7 +3479,7 @@
         "description": "Display label shown above the slider (e.g., 'Loan Amount (Rs.)')",
         "multi": false
       },
-       {
+      {
         "component": "text",
         "valueType": "string",
         "name": "col1_ADefaultValue",
@@ -3383,7 +3487,7 @@
         "description": "Initial value when calculator loads (e.g., 800000 for ₹8 Lakhs)",
         "multi": false
       },
-       {
+      {
         "component": "text",
         "valueType": "string",
         "name": "col1_ADefaultValueIcon",
@@ -3407,7 +3511,7 @@
         "description": "Minimum allowed value (e.g., 100000 for ₹1 Lakh minimum)",
         "multi": false
       },
-       {
+      {
         "component": "text",
         "valueType": "string",
         "name": "col1_BMaxValue",
@@ -3423,7 +3527,7 @@
         "description": "Text shown at left of slider (e.g., '1L' or '5%')",
         "multi": false
       },
-       {
+      {
         "component": "text",
         "valueType": "string",
         "name": "col1_CMaxValue",
@@ -3518,5 +3622,5 @@
         "multi": false
       }
     ]
-   }
+  }
 ]

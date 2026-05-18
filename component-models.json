@@ -3198,50 +3198,51 @@
             "value": "Clear All",
             "label": "Clear All Button Text",
             "valueType": "string"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "col1_partPaymentCardContainer",
+        "label": "Part Payment Card (Date & Amount)",
+        "collapsible": true,
+        "collapsed": true,
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "fields": [
+          {
+            "component": "text",
+            "name": "col1_partPaymentDateLabel",
+            "value": "Enter 1st part payment Date",
+            "label": "Part Payment Date Label",
+            "valueType": "string"
           },
           {
-            "component": "container",
-            "name": "col1_partPaymentCardContainer",
-            "label": "Part Payment Card",
-            "collapsible": true,
-            "collapsed": false,
-            "fields": [
-              {
-                "component": "text",
-                "name": "col1_partPaymentDateLabel",
-                "value": "Enter 1st part payment Date",
-                "label": "Part Payment Date Label",
-                "valueType": "string"
-              },
-              {
-                "component": "text",
-                "name": "col1_partPaymentAmountLabel",
-                "value": "1st Part Payment amount (Rs.)",
-                "label": "Part Payment Amount Label",
-                "valueType": "string"
-              },
-              {
-                "component": "text",
-                "name": "col1_partPaymentMinValue",
-                "value": "0",
-                "label": "Amount Slider Min Value",
-                "valueType": "string"
-              },
-              {
-                "component": "text",
-                "name": "col1_partPaymentMaxValue",
-                "value": "2000000",
-                "label": "Amount Slider Max Value",
-                "valueType": "string"
-              },
-              {
-                "component": "text",
-                "name": "col1_partPaymentMaxLabel",
-                "value": "20L",
-                "label": "Amount Slider Max Label",
-                "valueType": "string"
-              }
-            ]
+            "component": "text",
+            "name": "col1_partPaymentAmountLabel",
+            "value": "1st Part Payment amount (Rs.)",
+            "label": "Part Payment Amount Label",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_partPaymentMinValue",
+            "value": "0",
+            "label": "Amount Slider Min Value",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_partPaymentMaxValue",
+            "value": "2000000",
+            "label": "Amount Slider Max Value",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_partPaymentMaxLabel",
+            "value": "20L",
+            "label": "Amount Slider Max Label",
+            "valueType": "string"
           }
         ]
       },

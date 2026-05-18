@@ -656,15 +656,14 @@ export default async function decorate(block) {
   // Part Payment Calculator has special three-metric output layout
   if (isPartPayment) {
     // Part Payment field extraction from authored content
-    // Container structure in component-models.json (containers don't affect DOM text order):
+    // Container structure in component-models.json (sibling containers, text flattens in order):
     //   Output 1 Container: [2] output1ImageAlt, [3] output1Label
     //   Output 2 Container: [4] output2ImageAlt, [5] output2Label
     //   Output 3 Container: [6] output3ImageAlt, [7] output3Label
     //   Summary Labels Container: [8] totalPaymentsLabel, [9] emiLabel
     //   First Loan Date Container: [10] firstLoanDateLabel, [11] datePlaceholder, [12] datePickerIconAlt
-    //   Repayment Schedule Container:
-    //     - [13] repaymentScheduleTitle, [14] clearAllText
-    //     - Part Payment Card (nested): [15] partPaymentDateLabel, [16] partPaymentAmountLabel,
+    //   Repayment Schedule Container: [13] repaymentScheduleTitle, [14] clearAllText
+    //   Part Payment Card Container: [15] partPaymentDateLabel, [16] partPaymentAmountLabel,
     //       [17] partPaymentMinValue, [18] partPaymentMaxValue, [19] partPaymentMaxLabel
     //   Add More Container: [20] addMoreIconAlt, [21] addMoreText
     // Images: [0] output1, [1] output2, [2] output3, [3] datePickerIcon, [4] addMoreIcon
@@ -692,7 +691,8 @@ export default async function decorate(block) {
     // Repayment Schedule settings
     const repaymentScheduleTitle = partPaymentLabels[13] || 'Repayment Schedule';
     const clearAllText = partPaymentLabels[14] || 'Clear All';
-    // Part Payment Card (nested inside Repayment Schedule)
+    
+    // Part Payment Card (sibling container)
     const partPaymentDateLabel = partPaymentLabels[15] || 'Enter 1st part payment Date';
     const partPaymentAmountLabel = partPaymentLabels[16] || '1st Part Payment amount (Rs.)';
     const partPaymentMinValue = partPaymentLabels[17] || '0';

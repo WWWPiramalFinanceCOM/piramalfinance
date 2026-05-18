@@ -197,6 +197,28 @@
         "value": "",
         "label": "Style",
         "valueType": "string"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Section Options",
+        "description": "Select options for section behavior",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Calculator Options",
+            "children": [
+              {
+                "name": "New Calculator Modal (for teaser section)",
+                "value": "new-calculator-modal"
+              },
+              {
+                "name": "Calculator Container (hidden - used by modal)",
+                "value": "calculator-wrapper"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -2956,6 +2978,20 @@
         ]
       },
       {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Calculator Options",
+        "description": "Select options to configure calculator behavior",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Modal Calculator (show this calculator in teaser modal)",
+            "value": "modal-calculator"
+          }
+        ]
+      },
+      {
         "component": "text",
         "valueType": "string",
         "name": "col1_label",
@@ -3487,5 +3523,5 @@
         "multi": false
       }
     ]
-  }
+   }
 ]

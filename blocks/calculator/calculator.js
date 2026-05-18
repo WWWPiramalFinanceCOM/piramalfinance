@@ -656,15 +656,24 @@ export default async function decorate(block) {
   // Part Payment Calculator has special three-metric output layout
   if (isPartPayment) {
     // Part Payment field extraction from authored content
-    // With container model, text order is:
-    //   [0] tabLabel, [1] description,
-    //   [2] output1ImageAlt, [3] output1Label,
-    //   [4] output2ImageAlt, [5] output2Label,
-    //   [6] output3ImageAlt, [7] output3Label,
-    //   [8] totalPaymentsLabel, [9] emiLabel
+    // Container structure in component-models.json (containers don't affect DOM text order):
+    //   Output 1 Container: [2] output1ImageAlt, [3] output1Label
+    //   Output 2 Container: [4] output2ImageAlt, [5] output2Label
+    //   Output 3 Container: [6] output3ImageAlt, [7] output3Label
+    //   Summary Labels Container: [8] totalPaymentsLabel, [9] emiLabel
+    //   First Loan Date Container: [10] firstLoanDateLabel, [11] datePlaceholder, [12] datePickerIconAlt
+    //   Repayment Schedule Container:
+    //     - [13] repaymentScheduleTitle, [14] clearAllText
+    //     - Part Payment Card (nested): [15] partPaymentDateLabel, [16] partPaymentAmountLabel,
+    //       [17] partPaymentMinValue, [18] partPaymentMaxValue, [19] partPaymentMaxLabel
+    //   Add More Container: [20] addMoreIconAlt, [21] addMoreText
+    // Images: [0] output1, [1] output2, [2] output3, [3] datePickerIcon, [4] addMoreIcon
+    
     const output1Img = partPaymentImages[0] || '';
     const output2Img = partPaymentImages[1] || '';
     const output3Img = partPaymentImages[2] || '';
+    const datePickerIcon = partPaymentImages[3] || '';
+    const addMoreIcon = partPaymentImages[4] || '';
     
     const output1Alt = partPaymentLabels[2] || 'ROI Icon';
     const metric1Label = partPaymentLabels[3] || 'Net Effective ROI';
@@ -675,6 +684,80 @@ export default async function decorate(block) {
     const totalPaymentsLabel = partPaymentLabels[8] || 'Total Payments';
     const emiLabelText = partPaymentLabels[9] || 'EMI';
     
+    // First Loan EMI Date settings
+    const firstLoanDateLabel = partPaymentLabels[10] || 'First Loan EMI Date';
+    const datePlaceholder = partPaymentLabels[11] || 'MM/DD/YYYY';
+    const datePickerIconAlt = partPaymentLabels[12] || 'Calendar';
+    
+    // Repayment Schedule settings
+    const repaymentScheduleTitle = partPaymentLabels[13] || 'Repayment Schedule';
+    const clearAllText = partPaymentLabels[14] || 'Clear All';
+    // Part Payment Card (nested inside Repayment Schedule)
+    const partPaymentDateLabel = partPaymentLabels[15] || 'Enter 1st part payment Date';
+    const partPaymentAmountLabel = partPaymentLabels[16] || '1st Part Payment amount (Rs.)';
+    const partPaymentMinValue = partPaymentLabels[17] || '0';
+    const partPaymentMaxValue = partPaymentLabels[18] || '2000000';
+    const partPaymentMaxLabel = partPaymentLabels[19] || '20L';
+    
+    // Add More button
+    const addMoreIconAlt = partPaymentLabels[20] || 'Add';
+    const addMoreText = partPaymentLabels[21] || 'Add More Part Payment';
+    
+    // Add Part Payment Section to inputDiv (CSS expects it here)
+    inputDiv.innerHTML += `
+      <div class="partpaymentSection">
+        <div class="loanamount partPayment">
+          <div class="data">
+            <label class="description">${firstLoanDateLabel}</label>
+            <div class="inputdivs">
+              <input type="text" class="inputvalue" placeholder="${datePlaceholder}" id="firstLoan" readonly>
+              ${datePickerIcon ? `<img data-src="${datePickerIcon}" src="${datePickerIcon}" alt="${datePickerIconAlt}" class="lozad date-picker-icon">` : `<span class="date-picker-icon">📅</span>`}
+            </div>
+          </div>
+        </div>
+        <div class="paymentInputContainer">
+          <div class="loanamount clearAll">
+            <div class="data">
+              <label class="description">${repaymentScheduleTitle}</label>
+              <div class="clearAllText">${clearAllText}</div>
+            </div>
+          </div>
+          <div class="boxCont" data-date="scds">
+            <div class="loanamount partPayment partpaymentCardContainer" id="partpaymentCardContainer1">
+              <div class="data">
+                <label class="description">${partPaymentDateLabel}</label>
+                <div class="inputdivs dt">
+                  <input type="text" class="inputvalue" placeholder="${datePlaceholder}" readonly id="partpayment1" disabled>
+                  ${datePickerIcon ? `<img data-src="${datePickerIcon}" src="${datePickerIcon}" alt="${datePickerIconAlt}" class="lozad date-picker-icon">` : `<span class="date-picker-icon">📅</span>`}
+                </div>
+              </div>
+              <div class="loanamount">
+                <div class="data">
+                  <label class="description">${partPaymentAmountLabel}</label>
+                  <div class="inputdivs">
+                    <span class="rupee">₹</span>
+                    <input type="text" class="inputvalue slider-value" value="0" data-slider="partPayment1">
+                  </div>
+                </div>
+                <div class="rangediv">
+                  <input type="range" min="${partPaymentMinValue}" step="10000" max="${partPaymentMaxValue}" value="0" id="partPayment1" class="range-slider__range">
+                  <div class="values">
+                    <span class="text">${partPaymentMinValue}</span>
+                    <span class="text">${partPaymentMaxLabel}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="addMorePartPayment">
+            ${addMoreIcon ? `<img data-src="${addMoreIcon}" src="${addMoreIcon}" alt="${addMoreIconAlt}" class="lozad add-more-icon">` : `<span class="add-more-icon">+</span>`}
+            <span class="addMoreText">${addMoreText}</span>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Output section with three metrics only (partpaymentSection is in inputDiv)
     outputDiv.innerHTML = `
       <div class="output-parent">
         <div class="mainoutput partPaymentMainOutPut">

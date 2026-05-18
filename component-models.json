@@ -3115,20 +3115,167 @@
         ]
       },
       {
-        "component": "text",
-        "name": "col1_totalPaymentsLabel",
-        "value": "Total Payments",
-        "label": "Total Payments Label",
-        "valueType": "string",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "component": "container",
+        "name": "col1_summaryLabelsContainer",
+        "label": "Summary Labels (Total Payments & EMI)",
+        "collapsible": true,
+        "collapsed": true,
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "fields": [
+          {
+            "component": "text",
+            "name": "col1_totalPaymentsLabel",
+            "value": "Total Payments",
+            "label": "Total Payments Label",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_emiLabel",
+            "value": "EMI",
+            "label": "EMI Label",
+            "valueType": "string"
+          }
+        ]
       },
       {
-        "component": "text",
-        "name": "col1_emiLabel",
-        "value": "EMI",
-        "label": "EMI Label",
-        "valueType": "string",
-        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] }
+        "component": "container",
+        "name": "col1_firstLoanDateContainer",
+        "label": "First Loan EMI Date Settings",
+        "collapsible": true,
+        "collapsed": true,
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "fields": [
+          {
+            "component": "text",
+            "name": "col1_firstLoanDateLabel",
+            "value": "First Loan EMI Date",
+            "label": "Label",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_datePlaceholder",
+            "value": "MM/DD/YYYY",
+            "label": "Date Placeholder",
+            "valueType": "string"
+          },
+          {
+            "component": "reference",
+            "name": "col1_datePickerIcon",
+            "value": "",
+            "label": "Calendar Icon",
+            "description": "Calendar icon shown in date picker fields",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_datePickerIconAlt",
+            "value": "Calendar",
+            "label": "Calendar Icon Alt Text",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "col1_repaymentScheduleContainer",
+        "label": "Repayment Schedule Settings",
+        "collapsible": true,
+        "collapsed": true,
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "fields": [
+          {
+            "component": "text",
+            "name": "col1_repaymentScheduleTitle",
+            "value": "Repayment Schedule",
+            "label": "Section Title",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_clearAllText",
+            "value": "Clear All",
+            "label": "Clear All Button Text",
+            "valueType": "string"
+          },
+          {
+            "component": "container",
+            "name": "col1_partPaymentCardContainer",
+            "label": "Part Payment Card",
+            "collapsible": true,
+            "collapsed": false,
+            "fields": [
+              {
+                "component": "text",
+                "name": "col1_partPaymentDateLabel",
+                "value": "Enter 1st part payment Date",
+                "label": "Part Payment Date Label",
+                "valueType": "string"
+              },
+              {
+                "component": "text",
+                "name": "col1_partPaymentAmountLabel",
+                "value": "1st Part Payment amount (Rs.)",
+                "label": "Part Payment Amount Label",
+                "valueType": "string"
+              },
+              {
+                "component": "text",
+                "name": "col1_partPaymentMinValue",
+                "value": "0",
+                "label": "Amount Slider Min Value",
+                "valueType": "string"
+              },
+              {
+                "component": "text",
+                "name": "col1_partPaymentMaxValue",
+                "value": "2000000",
+                "label": "Amount Slider Max Value",
+                "valueType": "string"
+              },
+              {
+                "component": "text",
+                "name": "col1_partPaymentMaxLabel",
+                "value": "20L",
+                "label": "Amount Slider Max Label",
+                "valueType": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "col1_addMoreContainer",
+        "label": "Add More Part Payment Button",
+        "collapsible": true,
+        "collapsed": true,
+        "condition": { "===": [{ "var": "col1_name" }, "partpaymentcalculator"] },
+        "fields": [
+          {
+            "component": "reference",
+            "name": "col1_addMoreIcon",
+            "value": "",
+            "label": "Plus Icon",
+            "description": "Plus icon for Add More button",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_addMoreIconAlt",
+            "value": "Add",
+            "label": "Plus Icon Alt Text",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_addMoreText",
+            "value": "Add More Part Payment",
+            "label": "Button Text",
+            "valueType": "string"
+          }
+        ]
       }
     ]
   },

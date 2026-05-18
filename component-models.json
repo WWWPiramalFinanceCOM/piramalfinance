@@ -206,17 +206,12 @@
         "valueType": "string",
         "options": [
           {
-            "name": "Calculator Options",
-            "children": [
-              {
-                "name": "New Calculator Modal (for teaser section)",
-                "value": "new-calculator-modal"
-              },
-              {
-                "name": "Calculator Container (hidden - used by modal)",
-                "value": "calculator-wrapper"
-              }
-            ]
+            "name": "New Calculator Modal (for teaser section)",
+            "value": "new-calculator-modal"
+          },
+          {
+            "name": "Calculator Container (hidden - used by modal)",
+            "value": "calculator-wrapper"
           }
         ]
       }

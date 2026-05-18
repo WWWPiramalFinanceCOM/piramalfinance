@@ -1,4 +1,13 @@
- /* ========== Radio Tab Base Styles ========== */
+/* ========== Modal Calculator Hiding ========== */
+/* Hide sections that are marked for modal-only display */
+.section[data-modal-calculator="true"] {
+  /* display: none; */
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+}
+
+/* ========== Radio Tab Base Styles ========== */
  .homeloancalculator .home-loan-calculator-parent {
    background: -webkit-linear-gradient(right, #ffffff 50%, #fff7f4 50%);
    background: linear-gradient(to left, #ffffff 50%, #fff7f4 50%);

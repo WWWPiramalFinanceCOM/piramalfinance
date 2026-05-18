@@ -1077,7 +1077,20 @@ function runInitialCalculation(section) {
 }
 
 export default async function decorate(block) {
+  // Check if this calculator should only appear in modal (hide on page)
+  const wrapper = block.closest('.calculator-wrapper');
   const section = block.closest('.section.calculator-container') || block.closest('.section');
+  
+  // If modal-calculator class is present, hide the section
+  // This provides JS fallback for browsers that don't support CSS :has()
+  if (wrapper?.classList.contains('modal-calculator') || block.classList.contains('modal-calculator')) {
+    if (section) {
+      section.style.display = 'none';
+      section.setAttribute('data-modal-calculator', 'true');
+    }
+    // Still decorate in case modal needs the structure, but return after setup
+  }
+  
   if (section) combineSection(section);
 
   const blockIndex = block.dataset.resetId?.replace('calid-', '') || '0';

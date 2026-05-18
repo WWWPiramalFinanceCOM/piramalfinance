@@ -3,12 +3,582 @@ import { buildCalculatorParent, initCalculatorTabs } from './build-tabs.js';
 import { workflowHomeLoanCalculation } from '../emiandeligiblitycalc/calhelpers.js';
 import { currenyCommaSeperation } from '../../scripts/common.js';
 import { CheckAprRate } from '../aprcalculator/aprcalculator.js';
+import { updatePartPayment } from '../partpaymentcalculator/partpaymentlogic.js';
 
 /** Track sections already combined so it runs only once per section */
 const combinedSections = new WeakSet();
 
 /** Track sections that have already been fully initialised */
 const initialisedSections = new WeakSet();
+
+/** Track if Part Payment date picker has been initialized */
+let partPaymentDatePickerInitialized = false;
+
+/** Part Payment state variables */
+let partPaymentCount = 2;
+const partPaymentData = {};
+let firstLoanDatePicker = null;
+let partPayment1DatePicker = null;
+
+/** Store all datepicker instances */
+const datePickerInstances = new Map();
+
+/**
+ * Convert date string to standard format
+ */
+function convertDateToStandard(dateStr) {
+  const parts = dateStr.split('/');
+  return new Date(parts[2], parts[0] - 1, parts[1]).toString();
+}
+
+/**
+ * Increase date by one month
+ */
+function increaseByOneMonth(date) {
+  const newDate = new Date(date);
+  newDate.setMonth(newDate.getMonth() + 1);
+  if (newDate.getDate() !== 1) newDate.setDate(1);
+  return newDate;
+}
+
+/**
+ * Calculate months gap between two dates
+ */
+function monthsGap(d1, d2) {
+  let date1 = d1;
+  let date2 = d2;
+  if (date1 > date2) [date1, date2] = [date2, date1];
+  let months = (date2.getFullYear() - date1.getFullYear()) * 12;
+  months += date2.getMonth() - date1.getMonth();
+  return months;
+}
+
+/**
+ * Format number with Indian comma separation
+ */
+function formatIndianNumber(value) {
+  const val = parseFloat(String(value).replace(/,/g, '')) || 0;
+  return val.toLocaleString('en-IN');
+}
+
+/**
+ * Initialize slider functionality for part payment
+ */
+function initPartPaymentSliders(calcPanel) {
+  const sliderValues = calcPanel.querySelectorAll('.partpaymentSection .slider-value');
+  sliderValues.forEach((sliderValue) => {
+    const sliderId = sliderValue.dataset.slider;
+    const rangeSlider = calcPanel.querySelector(`#${sliderId}`);
+    if (!rangeSlider) return;
+    
+    sliderValue.value = formatIndianNumber(rangeSlider.value);
+    
+    rangeSlider.addEventListener('input', () => {
+      const valPercent = ((rangeSlider.value - rangeSlider.min) / (rangeSlider.max - rangeSlider.min)) * 100;
+      rangeSlider.style.background = `linear-gradient(90deg, #da4d34 ${valPercent}%, #dbd7d8 ${valPercent}%)`;
+      sliderValue.value = formatIndianNumber(rangeSlider.value);
+    });
+    
+    sliderValue.addEventListener('change', () => {
+      let parsedValue = parseFloat(sliderValue.value.replace(/,/g, '')) || 0;
+      const min = parseFloat(rangeSlider.min);
+      const max = parseFloat(rangeSlider.max);
+      if (parsedValue < min) parsedValue = min;
+      if (parsedValue > max) parsedValue = max;
+      rangeSlider.value = parsedValue;
+      sliderValue.value = formatIndianNumber(parsedValue);
+      const valPercent = ((parsedValue - min) / (max - min)) * 100;
+      rangeSlider.style.background = `linear-gradient(90deg, #da4d34 ${valPercent}%, #dbd7d8 ${valPercent}%)`;
+    });
+    
+    sliderValue.addEventListener('input', function() {
+      const cleaned = this.value.replace(/[^\d]/g, '');
+      this.value = formatIndianNumber(cleaned);
+    });
+    
+    // Trigger initial update
+    rangeSlider.dispatchEvent(new Event('input'));
+  });
+}
+
+/**
+ * Trigger Part Payment calculation update
+ * Collects all part payment data and calls the calculation function
+ */
+function triggerPartPaymentCalculation(calcPanel) {
+  try {
+    // Get EMI input values
+    const loanAmtInput = calcPanel.querySelector('[data-cal-input="loanamt"]');
+    const roiInput = calcPanel.querySelector('[data-cal-input="roi"]');
+    const tenureInput = calcPanel.querySelector('[data-cal-input="tenure"]');
+    
+    if (!loanAmtInput || !roiInput || !tenureInput) {
+      console.log('[calculator] EMI inputs not found for calculation');
+      return;
+    }
+    
+    const principal = loanAmtInput.value || '500000';
+    const rate = roiInput.value || '18.99';
+    const tenure = tenureInput.value || '5';
+    
+    // Collect all part payment data
+    const partPayments = Object.values(partPaymentData).filter(p => p && p.monthDifference && p.partPayAmount);
+    
+    console.log('[calculator] Triggering calculation:', { principal, rate, tenure, partPayments });
+    
+    // Call the calculation function
+    updatePartPayment(rate, principal, tenure, partPayments);
+    
+  } catch (error) {
+    console.warn('[calculator] Part payment calculation error:', error);
+  }
+}
+
+/**
+ * Scroll to show latest part payment card
+ */
+function scrollPartPayment(calcPanel) {
+  const boxCont = calcPanel.querySelector('.boxCont');
+  const partpayments = calcPanel.querySelectorAll('.partpaymentCardContainer');
+  if (partpayments.length > 3) {
+    boxCont.classList.add('scrolladd');
+    const last = partpayments[partpayments.length - 1];
+    boxCont.scrollTo({ top: last.offsetTop, behavior: 'smooth' });
+  } else if (boxCont?.classList.contains('scrolladd')) {
+    boxCont.classList.remove('scrolladd');
+  }
+}
+
+/**
+ * Reset all part payments
+ */
+function resetAllPartPayments(calcPanel) {
+  console.log('[calculator] Resetting all part payments');
+  
+  // Clear all part payment data
+  Object.keys(partPaymentData).forEach(key => delete partPaymentData[key]);
+  
+  // Remove dynamically added cards
+  calcPanel.querySelectorAll('.reset').forEach(el => {
+    // Clear datepicker instance
+    const input = el.querySelector('input[id^="partpayment"]');
+    if (input) {
+      const selector = '#' + input.id;
+      if (datePickerInstances.has(selector)) {
+        try {
+          datePickerInstances.get(selector).destroy();
+        } catch (e) {
+          console.warn('[calculator] Error destroying datepicker:', e);
+        }
+        datePickerInstances.delete(selector);
+      }
+    }
+    el.remove();
+  });
+  partPaymentCount = 2;
+  
+  // Reset first card
+  const partPayment1 = calcPanel.querySelector('#partpayment1');
+  if (partPayment1) {
+    partPayment1.value = '';
+    partPayment1.disabled = true;
+  }
+  
+  const sliderInput = calcPanel.querySelector('.partpaymentCardContainer .slider-value');
+  if (sliderInput) sliderInput.value = '0';
+  
+  const rangeInput = calcPanel.querySelector('.partpaymentCardContainer .range-slider__range');
+  if (rangeInput) {
+    rangeInput.value = rangeInput.min || '0';
+    rangeInput.style.background = `linear-gradient(90deg, #da4d34 0%, #dbd7d8 0%)`;
+  }
+  
+  // Disable add more button
+  const addMoreBtn = calcPanel.querySelector('.add-more-part-payment-btn');
+  if (addMoreBtn) addMoreBtn.classList.add('disabled');
+  
+  // Clear first loan date
+  const firstLoan = calcPanel.querySelector('#firstLoan');
+  if (firstLoan) firstLoan.value = '';
+  
+  // Clear data
+  // Clear datepicker values (not destroy, just clear)
+  if (firstLoanDatePicker) {
+    try {
+      firstLoanDatePicker.clear();
+    } catch (e) {
+      console.warn('[calculator] Error clearing first loan datepicker:', e);
+    }
+  }
+  if (partPayment1DatePicker) {
+    try {
+      partPayment1DatePicker.clear();
+    } catch (e) {
+      console.warn('[calculator] Error clearing partpayment1 datepicker:', e);
+    }
+  }
+  
+  // Remove scroll
+  const boxCont = calcPanel.querySelector('.boxCont');
+  if (boxCont) boxCont.classList.remove('scrolladd');
+  
+  console.log('[calculator] Reset complete');
+}
+
+/**
+ * Create new part payment card dynamically
+ */
+function createPartPaymentCard(calcPanel, count) {
+  const boxCont = calcPanel.querySelector('.boxCont');
+  const firstCard = calcPanel.querySelector('.partpaymentCardContainer');
+  if (!boxCont || !firstCard) return;
+  
+  const rangeInput = firstCard.querySelector('.range-slider__range');
+  const imagePath = firstCard.querySelector('.inputdivs.dt img')?.src || '/icons/calendar.svg';
+  const minText = firstCard.querySelectorAll('.rangediv .values .text')[0]?.innerText || '0';
+  const maxText = firstCard.querySelectorAll('.rangediv .values .text')[1]?.innerText || '20L';
+  
+  const ordinal = count === 1 ? '1st' : count === 2 ? '2nd' : count === 3 ? '3rd' : `${count}th`;
+  const dateLabel = `Enter ${ordinal} part payment Date`;
+  const amountLabel = `${ordinal} Part Payment amount (Rs.)`;
+  
+  const card = document.createElement('div');
+  card.id = `partpaymentCardContainer${count}`;
+  card.className = 'loanamount partPayment partpaymentCardContainer reset';
+  card.innerHTML = `
+    <div class="data">
+      <label class="description">${dateLabel}</label>
+      <div class="inputdivs dt">
+        <input type="text" class="inputvalue" placeholder="DD/MM/YYYY" readonly id="partpayment${count}">
+        <img src="${imagePath}" alt="calendar">
+      </div>
+    </div>
+    <div class="loanamount">
+      <div class="data">
+        <label class="description">${amountLabel}</label>
+        <div class="inputdivs">
+          <span class="rupee">₹</span>
+          <input type="text" class="inputvalue slider-value" value="0" data-slider="partPayment${count}">
+          <span class="textvalue"></span>
+        </div>
+      </div>
+      <div class="rangediv">
+        <input type="range" min="${rangeInput?.min || 0}" max="${rangeInput?.max || 2000000}" value="0" 
+          class="range-slider__range" id="partPayment${count}" 
+          style="background: linear-gradient(90deg, rgb(218, 77, 52) 0%, rgb(219, 215, 216) 0%);">
+        <div class="values">
+          <span class="text">${minText}</span>
+          <span class="text">${maxText}</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  boxCont.appendChild(card);
+  return card;
+}
+
+/**
+ * Initialize Part Payment date picker and all functionality
+ */
+async function initPartPaymentDatePicker(calcPanel) {
+  if (partPaymentDatePickerInitialized) return;
+  
+  console.log('[calculator] Initializing Part Payment...');
+  
+  try {
+    // Load AirDatepicker CSS
+    if (!document.querySelector('link[href*="datepickerlib.css"]')) {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = '/blocks/datepickerlib/datepickerlib.css';
+      document.head.appendChild(css);
+      console.log('[calculator] Loaded datepicker CSS');
+    }
+    
+    // Import libraries - these set window.AirDatepicker and window.Popper
+    await import('../datepickerlib/datepickerlib.js');
+    await import('../datepickerlib/popper.js');
+    
+    // Wait for globals to be set
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // Get references to the now-global constructors
+    const AirDatepicker = window.AirDatepicker;
+    const Popper = window.Popper;
+    
+    console.log('[calculator] AirDatepicker:', typeof AirDatepicker);
+    console.log('[calculator] Popper:', typeof Popper);
+    
+    if (!AirDatepicker) {
+      console.error('[calculator] AirDatepicker not available after import');
+      return;
+    }
+    
+    const firstLoanInput = calcPanel.querySelector('#firstLoan');
+    const partPayment1Input = calcPanel.querySelector('#partpayment1');
+    const clearAllBtn = calcPanel.querySelector('.clearAllText');
+    const addMoreBtn = calcPanel.querySelector('.add-more-part-payment-btn');
+    const boxCont = calcPanel.querySelector('.boxCont');
+    
+    console.log('[calculator] Elements:', {
+      firstLoanInput: !!firstLoanInput,
+      partPayment1Input: !!partPayment1Input,
+      clearAllBtn: !!clearAllBtn,
+      addMoreBtn: !!addMoreBtn
+    });
+    
+    if (!firstLoanInput) {
+      console.error('[calculator] First loan input not found');
+      return;
+    }
+    
+    // Helper to create datepicker - use selector string like existing code
+    const createDatePicker = (selector, minDate = '') => {
+      console.log('[calculator] Creating datepicker for:', selector, 'minDate:', minDate);
+      
+      const options = {
+        position({ $datepicker, $target, $pointer, done }) {
+          if (Popper && Popper.createPopper) {
+            const popper = Popper.createPopper($target, $datepicker, {
+              placement: 'top',
+              modifiers: [
+                { name: 'flip', options: { fallbackPlacements: ['top', 'bottom'], padding: { top: 10 } } },
+                { name: 'offset', options: { offset: [0, 10] } },
+                { name: 'arrow', options: { element: $pointer } },
+              ],
+            });
+            return function completeHide() {
+              popper.destroy();
+              done();
+            };
+          }
+          return done;
+        },
+        autoClose: true,
+        toggleSelected: false,
+        locale: {
+          days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+          daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+          months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          today: 'Today', clear: 'Clear', dateFormat: 'MM/dd/yyyy', firstDay: 0,
+        },
+        onSelect({ date, formattedDate }) {
+          if (date) {
+            console.log('[calculator] Date selected:', formattedDate);
+            document.querySelector(selector).dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        },
+      };
+      
+      // Only add minDate if it's provided and valid
+      if (minDate && minDate !== '') {
+        options.minDate = minDate;
+      }
+      
+      const picker = new AirDatepicker(selector, options);
+      
+      // Store instance
+      datePickerInstances.set(selector, picker);
+      document.querySelector(selector).classList.add('datepickerInit');
+      
+      console.log('[calculator] Datepicker created for:', selector);
+      return picker;
+    };
+    
+    // Helper to setup icon click handler
+    const setupIconClick = (selector, picker) => {
+      const input = document.querySelector(selector);
+      const icon = input?.parentElement?.querySelector('img');
+      if (icon && picker) {
+        icon.style.cursor = 'pointer';
+        icon.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!input.disabled) {
+            console.log('[calculator] Icon clicked for:', selector);
+            picker.show();
+          }
+        });
+      }
+      if (input) {
+        input.style.cursor = 'pointer';
+      }
+    };
+    
+    // Initialize first loan date picker
+    firstLoanDatePicker = createDatePicker('#firstLoan');
+    setupIconClick('#firstLoan', firstLoanDatePicker);
+    
+    // First loan date change handler
+    firstLoanInput.addEventListener('change', () => {
+      console.log('[calculator] First loan date changed:', firstLoanInput.value);
+      if (!firstLoanInput.value) return;
+      
+      // Enable part payment 1 input
+      partPayment1Input.disabled = false;
+      
+      const minDate = increaseByOneMonth(convertDateToStandard(firstLoanInput.value));
+      console.log('[calculator] Part payment minDate:', minDate);
+      
+      // Initialize or update part payment 1 date picker
+      if (!partPayment1Input.classList.contains('datepickerInit')) {
+        partPayment1DatePicker = createDatePicker('#partpayment1', minDate);
+        setupIconClick('#partpayment1', partPayment1DatePicker);
+      } else if (partPayment1DatePicker) {
+        partPayment1DatePicker.update({ minDate });
+      }
+      
+      // Reset part payment 1 values
+      partPayment1Input.value = '';
+      const sliderInput = calcPanel.querySelector('.partpaymentCardContainer .slider-value');
+      if (sliderInput) sliderInput.value = '0';
+      const rangeInput = calcPanel.querySelector('.partpaymentCardContainer .range-slider__range');
+      if (rangeInput) {
+        rangeInput.value = rangeInput.min;
+        rangeInput.style.background = `linear-gradient(90deg, #da4d34 0%, #dbd7d8 0%)`;
+      }
+      
+      // Remove dynamically added cards
+      calcPanel.querySelectorAll('.reset').forEach(el => {
+        const input = el.querySelector('input[id^="partpayment"]');
+        if (input && datePickerInstances.has('#' + input.id)) {
+          datePickerInstances.get('#' + input.id).destroy();
+          datePickerInstances.delete('#' + input.id);
+        }
+        delete partPaymentData[el.id];
+        el.remove();
+      });
+      partPaymentCount = 2;
+      // Clear first card data as well
+      Object.keys(partPaymentData).forEach(key => delete partPaymentData[key]);
+      
+      // Disable add more button
+      addMoreBtn?.classList.add('disabled');
+      
+      // Update box data
+      if (boxCont) boxCont.dataset.date = minDate;
+      
+      initPartPaymentSliders(calcPanel);
+      
+      // Update calculation with no part payments (reset state)
+      triggerPartPaymentCalculation(calcPanel);
+    });
+    
+    // Part payment card change handler
+    const firstCard = calcPanel.querySelector('.partpaymentCardContainer');
+    if (firstCard) {
+      firstCard.addEventListener('change', () => {
+        const dateInput = firstCard.querySelector('#partpayment1');
+        const amountInput = firstCard.querySelector('.slider-value');
+        
+        if (dateInput?.value && amountInput?.value && amountInput.value !== '0') {
+          // Enable add more button
+          addMoreBtn?.classList.remove('disabled');
+          
+          // Store data
+          const firstDate = firstLoanInput.value;
+          const secondDate = dateInput.value;
+          partPaymentData[firstCard.id] = {
+            monthDifference: monthsGap(new Date(firstDate), new Date(secondDate)),
+            partPayAmount: amountInput.value.replace(/,/g, '')
+          };
+          
+          // Update box date
+          if (boxCont) boxCont.dataset.date = convertDateToStandard(secondDate);
+          
+          // Trigger calculation
+          triggerPartPaymentCalculation(calcPanel);
+        }
+      });
+    }
+    
+    // Clear All button handler
+    if (clearAllBtn) {
+      clearAllBtn.style.cursor = 'pointer';
+      console.log('[calculator] Setting up Clear All handler');
+      clearAllBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('[calculator] Clear All clicked');
+        resetAllPartPayments(calcPanel);
+        initPartPaymentSliders(calcPanel);
+        // Trigger calculation with empty part payments
+        triggerPartPaymentCalculation(calcPanel);
+      });
+    }
+    
+    // Add More button handler
+    if (addMoreBtn) {
+      addMoreBtn.addEventListener('click', () => {
+        console.log('[calculator] Add More clicked');
+        addMoreBtn.classList.add('disabled');
+        
+        const card = createPartPaymentCard(calcPanel, partPaymentCount);
+        if (!card) return;
+        
+        const minDate = increaseByOneMonth(boxCont.dataset.date);
+        const newSelector = `#partpayment${partPaymentCount}`;
+        
+        // Initialize date picker for new card
+        const newDatePicker = createDatePicker(newSelector, minDate);
+        setupIconClick(newSelector, newDatePicker);
+        
+        // Card change handler
+        card.addEventListener('change', () => {
+          const dateInput = card.querySelector('input[id^="partpayment"]');
+          const amountInput = card.querySelector('.slider-value');
+          
+          if (dateInput?.value && amountInput?.value && amountInput.value !== '0') {
+            addMoreBtn.classList.remove('disabled');
+            
+            const firstDate = firstLoanInput.value;
+            partPaymentData[card.id] = {
+              monthDifference: monthsGap(new Date(firstDate), new Date(dateInput.value)),
+              partPayAmount: amountInput.value.replace(/,/g, '')
+            };
+            
+            boxCont.dataset.date = convertDateToStandard(dateInput.value);
+            
+            // Trigger calculation
+            triggerPartPaymentCalculation(calcPanel);
+          }
+        });
+        
+        initPartPaymentSliders(calcPanel);
+        partPaymentCount++;
+        scrollPartPayment(calcPanel);
+      });
+    }
+    
+    // Listen for EMI slider changes to update part payment calculation
+    const inputDiv = calcPanel.querySelector('.inputDiv');
+    if (inputDiv) {
+      inputDiv.addEventListener('change', (event) => {
+        const target = event.target;
+        // If EMI slider (loan amount, tenure, or interest rate) changed, update calculation
+        if (target.dataset?.calInput === 'loanamt' || 
+            target.dataset?.calInput === 'tenure' || 
+            target.dataset?.calInput === 'roi') {
+          triggerPartPaymentCalculation(calcPanel);
+        }
+      });
+    }
+    
+    // Initialize sliders
+    initPartPaymentSliders(calcPanel);
+    
+    // Initial calculation with default values
+    triggerPartPaymentCalculation(calcPanel);
+    
+    partPaymentDatePickerInitialized = true;
+    console.log('[calculator] Part Payment initialization complete');
+    
+  } catch (error) {
+    console.error('[calculator] Failed to initialize Part Payment:', error);
+  }
+}
 
 /**
  * Mapping from authored input names (first <p> in slider rows)
@@ -711,7 +1281,7 @@ export default async function decorate(block) {
             <label class="description">${firstLoanDateLabel}</label>
             <div class="inputdivs">
               <input type="text" class="inputvalue" placeholder="${datePlaceholder}" id="firstLoan" readonly>
-              ${datePickerIcon ? `<img data-src="${datePickerIcon}" src="${datePickerIcon}" alt="${datePickerIconAlt}" class="lozad date-picker-icon">` : `<span class="date-picker-icon">📅</span>`}
+              ${datePickerIcon ? `<img data-src="${datePickerIcon}" src="${datePickerIcon}" alt="${datePickerIconAlt}" class="lozad">` : `<img src="/icons/calendar.svg" alt="calendar">`}
             </div>
           </div>
         </div>
@@ -728,7 +1298,7 @@ export default async function decorate(block) {
                 <label class="description">${partPaymentDateLabel}</label>
                 <div class="inputdivs dt">
                   <input type="text" class="inputvalue" placeholder="${datePlaceholder}" readonly id="partpayment1" disabled>
-                  ${datePickerIcon ? `<img data-src="${datePickerIcon}" src="${datePickerIcon}" alt="${datePickerIconAlt}" class="lozad date-picker-icon">` : `<span class="date-picker-icon">📅</span>`}
+                  ${datePickerIcon ? `<img data-src="${datePickerIcon}" src="${datePickerIcon}" alt="${datePickerIconAlt}" class="lozad">` : `<img src="/icons/calendar.svg" alt="calendar">`}
                 </div>
               </div>
               <div class="loanamount">
@@ -737,10 +1307,11 @@ export default async function decorate(block) {
                   <div class="inputdivs">
                     <span class="rupee">₹</span>
                     <input type="text" class="inputvalue slider-value" value="0" data-slider="partPayment1">
+                    <span class="textvalue"></span>
                   </div>
                 </div>
                 <div class="rangediv">
-                  <input type="range" min="${partPaymentMinValue}" step="10000" max="${partPaymentMaxValue}" value="0" id="partPayment1" class="range-slider__range">
+                  <input type="range" min="${partPaymentMinValue}" step="10000" max="${partPaymentMaxValue}" value="0" id="partPayment1" class="range-slider__range" style="background: linear-gradient(90deg, rgb(218, 77, 52) 0%, rgb(219, 215, 216) 0%);">
                   <div class="values">
                     <span class="text">${partPaymentMinValue}</span>
                     <span class="text">${partPaymentMaxLabel}</span>
@@ -749,10 +1320,10 @@ export default async function decorate(block) {
               </div>
             </div>
           </div>
-          <div class="addMorePartPayment">
-            ${addMoreIcon ? `<img data-src="${addMoreIcon}" src="${addMoreIcon}" alt="${addMoreIconAlt}" class="lozad add-more-icon">` : `<span class="add-more-icon">+</span>`}
-            <span class="addMoreText">${addMoreText}</span>
-          </div>
+        </div>
+        <div class="add-more-part-payment-btn disabled">
+          ${addMoreIcon ? `<img data-src="${addMoreIcon}" src="${addMoreIcon}" alt="${addMoreIconAlt}" class="lozad">` : `<img src="/icons/plus-orange.svg" alt="add">`}
+          <span class="addMorePartPayment">${addMoreText}</span>
         </div>
       </div>
     `;
@@ -837,6 +1408,22 @@ export default async function decorate(block) {
   parentEmi.appendChild(inputDiv);
   parentEmi.appendChild(outputDiv);
   block.appendChild(parentEmi);
+
+  // Initialize Part Payment date picker if this is a Part Payment Calculator
+  if (isPartPayment) {
+    // Reset the initialized flag for this new instance
+    partPaymentDatePickerInitialized = false;
+    partPaymentCount = 2;
+    
+    // Use setTimeout to ensure DOM is fully rendered, then await the async initialization
+    setTimeout(async () => {
+      try {
+        await initPartPaymentDatePicker(block);
+      } catch (err) {
+        console.error('[calculator] Part Payment init error:', err);
+      }
+    }, 200);
+  }
 
   if (section) initSection(section);
 }

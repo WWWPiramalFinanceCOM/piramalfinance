@@ -637,12 +637,20 @@ function combineSection(section) {
   section.classList.add('homeloancalculator');
 
   const calcWrappers = [...section.querySelectorAll('.calculator-wrapper')];
+  // eslint-disable-next-line no-console
+  console.log('[calculator] combineSection: Found', calcWrappers.length, 'calculator-wrappers');
+
   if (calcWrappers.length < 1) return;
 
   const blocks = calcWrappers.map((w) => w.querySelector('.calculator.block')).filter(Boolean);
+  // eslint-disable-next-line no-console
+  console.log('[calculator] combineSection: Found', blocks.length, 'calculator blocks');
+
   if (blocks.length < 1) return;
 
   const { description, tabNames, calcNames, productType } = prepareBlocks(blocks);
+  // eslint-disable-next-line no-console
+  console.log('[calculator] combineSection: tabNames=', tabNames, 'calcNames=', calcNames);
   
   // Add gst-calculator class if any calculator is GST type (for pill-button tab styles)
   const hasGstCalc = calcNames.some((name) => name.includes('gst'));
@@ -653,6 +661,8 @@ function combineSection(section) {
   const { ctaItems, dcwToRemove } = extractContent(section);
 
   const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc);
+  // eslint-disable-next-line no-console
+  console.log('[calculator] combineSection: Built calcParent, tabs exist:', !!calcParent.querySelector('.headingtabs'));
 
   calcWrappers.forEach((w) => w.remove());
   dcwToRemove.forEach((dcw) => dcw.remove());
@@ -662,6 +672,8 @@ function combineSection(section) {
   // Check if calculator-radio block exists - if not, add a hidden fallback radio
   const hasRadioBlock = section.querySelector('.calculator-radio');
   if (!hasRadioBlock) {
+    // eslint-disable-next-line no-console
+    console.log('[calculator] combineSection: No calculator-radio block, adding fallback radio');
     const fallbackRadio = document.createElement('input');
     fallbackRadio.type = 'radio';
     fallbackRadio.name = 'calculator-foir';
@@ -669,6 +681,7 @@ function combineSection(section) {
     fallbackRadio.dataset.calFoir = 'salaried';
     fallbackRadio.value = '65';
     fallbackRadio.checked = true;
+    fallbackRadio.setAttribute('checked', 'checked'); // Also set attribute for :checked selector
     fallbackRadio.style.display = 'none';
     section.appendChild(fallbackRadio);
   }
@@ -687,25 +700,31 @@ function combineSection(section) {
     section.appendChild(hiddenInput);
   }
 
-  initCalculatorTabs();
+  initCalculatorTabs(section);
 
   // Set initial calculator-parent background
   // GST calculators get white background, EMI/Eligibility use radio-based background
+  const SALARIED_BG = 'rgb(255, 247, 244)';
+  const BUSINESS_BG = 'rgb(238, 243, 255)';
+  
   if (hasGstCalc && calcParent) {
     calcParent.style.background = '#fff';
-  } else {
+  } else if (calcParent) {
     // First try :checked, then fallback to first radio with data-cal-foir
     let checkedRadio = section.querySelector('[data-cal-foir]:checked');
     if (!checkedRadio) {
       checkedRadio = section.querySelector('[data-cal-foir]');
     }
-    if (checkedRadio && calcParent) {
+    if (checkedRadio) {
       const foirType = (checkedRadio.dataset && checkedRadio.dataset.calFoir) || 'salaried';
-      const SALARIED_BG = 'rgb(255, 247, 244)';
-      const BUSINESS_BG = 'rgb(238, 243, 255)';
       calcParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
       // eslint-disable-next-line no-console
       console.log('[calculator] combineSection set background for foirType:', foirType);
+    } else {
+      // No radio found at all - default to salaried background
+      calcParent.style.background = SALARIED_BG;
+      // eslint-disable-next-line no-console
+      console.log('[calculator] combineSection: No radio found, defaulting to salaried background');
     }
   }
 }
@@ -840,15 +859,25 @@ function initSection(section, retryCount = 0) {
   // Only required for EMI/Eligibility calculators
   const hasCheckedRadio = section.querySelector('[data-cal-foir]:checked');
 
+  // eslint-disable-next-line no-console
+  console.log('[calculator] initSection: retry=', retryCount, 'allReady=', allReady, 'isSpecialCalc=', isSpecialCalc, 'hasCheckedRadio=', !!hasCheckedRadio);
+
   // If not ready, retry (up to 30 times = 3 seconds)
   // GST/APR/Part Payment calculators skip the radio check
   if (!allReady || (!isSpecialCalc && !hasCheckedRadio)) {
     if (retryCount < 30) {
       setTimeout(() => initSection(section, retryCount + 1), 100);
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn('[calculator] initSection: Max retries reached, proceeding anyway');
+      // Proceed anyway after max retries
     }
-    return;
+    // Don't return - proceed even if not fully ready after max retries
+    if (retryCount < 30) return;
   }
 
+  // eslint-disable-next-line no-console
+  console.log('[calculator] initSection: Proceeding with initialization');
   initialisedSections.add(section);
 
   // Initialize sliders with clean event handlers (no conflicts with calculator-radio)
@@ -918,8 +947,14 @@ function getCalcType(calcPanel) {
 /* ── Calculation runners using existing logic ── */
 
 function runSingleCalculation(section, calcPanel) {
-  if (!calcPanel) return;
+  if (!calcPanel) {
+    // eslint-disable-next-line no-console
+    console.warn('[calculator] runSingleCalculation: No calcPanel provided');
+    return;
+  }
   const calcType = getCalcType(calcPanel);
+  // eslint-disable-next-line no-console
+  console.log('[calculator] runSingleCalculation called, calcType:', calcType, 'panel classes:', calcPanel.className);
 
   if (calcType === 'emi' || calcType === 'eligibility') {
     // Use the existing proven pipeline from emiandeligiblitycalc
@@ -1075,8 +1110,16 @@ function getVisibleCalculator(section) {
 
 function runInitialCalculation(section) {
   const calctabs = section.querySelector('.calctabs');
-  if (!calctabs) return;
-  [...calctabs.querySelectorAll('.commoncalculator')].forEach((panel) => {
+  if (!calctabs) {
+    // eslint-disable-next-line no-console
+    console.warn('[calculator] runInitialCalculation: No .calctabs found');
+    return;
+  }
+  const panels = [...calctabs.querySelectorAll('.commoncalculator')];
+  // eslint-disable-next-line no-console
+  console.log('[calculator] runInitialCalculation: Running calculation for', panels.length, 'panels');
+  
+  panels.forEach((panel) => {
     runSingleCalculation(section, panel);
   });
 }

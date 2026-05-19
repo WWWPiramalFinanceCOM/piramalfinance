@@ -373,10 +373,18 @@ export function calculatePartPayment(annualRate, principalOutstanding, tenureYea
  * @returns {object|null} Calculator input object
  */
 export function getCalculatorInput(calculator, calType) {
-  if (!calculator) return null;
+  if (!calculator) {
+    // eslint-disable-next-line no-console
+    console.warn('[cal-helpers] getCalculatorInput: No calculator element provided');
+    return null;
+  }
 
   const section = calculator.closest('.homeloancalculator');
-  if (!section) return null;
+  if (!section) {
+    // eslint-disable-next-line no-console
+    console.warn('[cal-helpers] getCalculatorInput: No .homeloancalculator section found');
+    return null;
+  }
 
   // Get checked radio - try :checked first, then fall back to first radio
   let checkedRadio = section.querySelector('[data-cal-foir]:checked');
@@ -386,9 +394,20 @@ export function getCalculatorInput(calculator, calType) {
       checkedRadio.checked = true;
     }
   }
-  if (!checkedRadio) return null;
 
-  const loanType = checkedRadio.dataset.calFoir || 'salaried';
+  // For EMI calculations, radio is optional - use defaults if not found
+  // Only eligibility requires FOIR from radio
+  let loanType = 'salaried';
+  let foir = 65;
+  
+  if (checkedRadio) {
+    loanType = checkedRadio.dataset.calFoir || 'salaried';
+    foir = parseFloat(checkedRadio.value) || 65;
+  } else if (calType === 'eligibility') {
+    // eslint-disable-next-line no-console
+    console.warn('[cal-helpers] getCalculatorInput: No radio found for eligibility calc, using defaults');
+  }
+
   const isBusinessTabActive = section.querySelector('.tab-eligibility-calc.active');
   const isCombineEmiEligibility = section.querySelector('.combined-emi-eligibility');
 
@@ -408,12 +427,22 @@ export function getCalculatorInput(calculator, calType) {
   const loanAmt = parseNumber(calculator.querySelector('[data-cal-input=loanamt]')?.value);
   const roi = parseFloat(calculator.querySelector('[data-cal-input=roi]')?.value) || 0;
   const tenure = parseFloat(calculator.querySelector('[data-cal-input=tenure]')?.value) || 0;
-  let foir = parseFloat(checkedRadio.value) || 65;
 
   // Adjust FOIR for business tab
   if (!isCombineEmiEligibility && isBusinessTabActive && loanType === 'biz') {
     foir = 50;
   }
+
+  // eslint-disable-next-line no-console
+  console.log('[cal-helpers] getCalculatorInput:', {
+    calType,
+    loanAmt,
+    roi,
+    tenure,
+    income,
+    foir,
+    loanType,
+  });
 
   return {
     income,
@@ -435,9 +464,15 @@ export function getCalculatorInput(calculator, calType) {
  * @param {object} resultObj - Result object with result, principalAmt, interestAmt
  */
 export function renderData(parentElement, resultObj) {
+  // eslint-disable-next-line no-console
+  console.log('[cal-helpers] renderData called with:', resultObj);
+
   const resultAmt = parentElement.querySelector('[data-cal-result=resultAmt]');
   const principalAmt = parentElement.querySelector('[data-cal-result=principalAmt]');
   const interestAmt = parentElement.querySelector('[data-cal-result=interestAmt]');
+
+  // eslint-disable-next-line no-console
+  console.log('[cal-helpers] renderData: Found elements - resultAmt:', !!resultAmt, 'principalAmt:', !!principalAmt, 'interestAmt:', !!interestAmt);
 
   if (resultAmt) {
     resultAmt.textContent = `₹${formatIndianNumber(resultObj.result || 0)}/-`;
@@ -458,13 +493,22 @@ export function renderData(parentElement, resultObj) {
  * @param {string} calType - 'emi' or 'eligibility'
  */
 export function workflowHomeLoanCalculation(currentCalculator, calType) {
+  // eslint-disable-next-line no-console
+  console.log('[cal-helpers] workflowHomeLoanCalculation called, calType:', calType);
+  
   const inputs = getCalculatorInput(currentCalculator, calType);
-  if (!inputs) return;
+  if (!inputs) {
+    // eslint-disable-next-line no-console
+    console.warn('[cal-helpers] workflowHomeLoanCalculation: No inputs found');
+    return;
+  }
 
   let result;
 
   if (calType === 'emi') {
     result = calculateEMI(inputs.loanAmt, inputs.roi, inputs.tenure);
+    // eslint-disable-next-line no-console
+    console.log('[cal-helpers] EMI calculation result:', result);
   } else {
     // Get product type
     const productTypeEl = document.querySelector('#calculator-product-type');

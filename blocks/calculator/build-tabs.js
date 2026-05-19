@@ -13,6 +13,9 @@ export function buildCalculatorParent(description, tabNames, ctaItems, blocks, i
   const hasMultipleCalcs = blocks.length > 1;
   const showPillTabs = isGstCalculator || hasMultipleCalcs;
 
+  // eslint-disable-next-line no-console
+  console.log('[calculator] buildCalculatorParent: blocks.length=', blocks.length, 'isGstCalculator=', isGstCalculator, 'showPillTabs=', showPillTabs);
+
   let tabsLiHTML = '';
   if (showPillTabs) {
     tabNames.forEach((name, idx) => {
@@ -23,6 +26,8 @@ export function buildCalculatorParent(description, tabNames, ctaItems, blocks, i
     if (hasMultipleCalcs) {
       tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
     }
+    // eslint-disable-next-line no-console
+    console.log('[calculator] buildCalculatorParent: Created tabs HTML:', tabsLiHTML);
   }
 
   // Get values (empty string if not authored - HTML structure always present)
@@ -101,13 +106,36 @@ export function buildCalculatorParent(description, tabNames, ctaItems, blocks, i
  * Initializes calculator tab (EMI / Eligibility) switching.
  * When switching tabs it resets the target calculator to defaults
  * and triggers a recalculation via the workflow events.
+ * @param {Element} section - Optional section element to scope the search
  */
-export function initCalculatorTabs() {
-  const calcParent = document.querySelector('.calculator-parent');
-  if (!calcParent) return;
+export function initCalculatorTabs(section = null) {
+  // Support both scoped (section) and global (document) search
+  const root = section || document;
+  const calcParent = root.querySelector('.calculator-parent');
+  if (!calcParent) {
+    // eslint-disable-next-line no-console
+    console.warn('[calculator] initCalculatorTabs: No calculator-parent found in root:', root);
+    return;
+  }
 
-  const tabs = [...calcParent.querySelectorAll('.headingtabs .tab-common:not(.gst-third-tab)')];
+  const headingtabs = calcParent.querySelector('.headingtabs');
+  if (!headingtabs) {
+    // eslint-disable-next-line no-console
+    console.warn('[calculator] initCalculatorTabs: No .headingtabs found');
+    return;
+  }
+
+  const tabs = [...headingtabs.querySelectorAll('.tab-common:not(.gst-third-tab)')];
   const calcBlocks = [...calcParent.querySelectorAll('.calctabs .commoncalculator')];
+
+  // eslint-disable-next-line no-console
+  console.log('[calculator] initCalculatorTabs: Found', tabs.length, 'tabs and', calcBlocks.length, 'calculator blocks');
+
+  if (!tabs.length) {
+    // eslint-disable-next-line no-console
+    console.warn('[calculator] initCalculatorTabs: No tabs found');
+    return;
+  }
 
   // IMPORTANT: If only one calculator exists and it's eligibility, make it visible
   // The CSS hides .eligibilitycalculator by default, so we need to add .elgblock
@@ -117,47 +145,106 @@ export function initCalculatorTabs() {
       singleCalc.classList.add('elgblock');
       singleCalc.style.display = 'block';
     }
-    return;
   }
 
-  if (!tabs.length) return;
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const tabIndex = parseInt(tab.dataset.tabIndex || '0', 10);
-      const wasActive = tab.classList.contains('active');
-
-      tabs.forEach((t) => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      calcBlocks.forEach((blk, idx) => {
-        if (idx === 0) {
-          blk.style.display = tabIndex === 0 ? '' : 'none';
-        } else if (idx === tabIndex) {
-          blk.classList.add('elgblock');
-          blk.style.display = '';
-        } else {
-          blk.classList.remove('elgblock');
-          blk.style.display = 'none';
-        }
-      });
-
-      // Reset the now-visible block to defaults when switching
-      if (!wasActive) {
-        const targetBlock = calcBlocks[tabIndex] || calcBlocks[0];
-        // Inline reset logic - no dependency on old calculator
-        const calDefaultValueObj = JSON.parse(sessionStorage.getItem('calDefaultValueObj') || '{}');
-        const calId = targetBlock.dataset.resetId;
-        const calObj = calDefaultValueObj[calId] || {};
-        Object.keys(calObj).forEach((id) => {
-          const rangeInput = targetBlock.querySelector(`[id=${id}]`);
-          if (rangeInput) {
-            rangeInput.value = calObj[id];
-            rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
-          }
-        });
-        targetBlock.dispatchEvent(new Event('change', { bubbles: true }));
+  // Set initial state - first tab active, first calc visible
+  if (calcBlocks.length > 0) {
+    calcBlocks.forEach((blk, idx) => {
+      if (idx === 0) {
+        blk.classList.add('elgblock');
+        blk.style.display = 'block';
+      } else {
+        blk.classList.remove('elgblock');
+        blk.style.display = 'none';
       }
     });
+  }
+
+  /**
+   * Handle tab switch
+   * @param {number} tabIndex - Index of tab to activate
+   */
+  function switchToTab(tabIndex) {
+    // eslint-disable-next-line no-console
+    console.log('[calculator] switchToTab called with index:', tabIndex);
+
+    // Update tab active states
+    tabs.forEach((t, i) => {
+      if (i === tabIndex) {
+        t.classList.add('active');
+      } else {
+        t.classList.remove('active');
+      }
+    });
+
+    // Show/hide calculator blocks
+    calcBlocks.forEach((blk, idx) => {
+      if (idx === tabIndex) {
+        blk.classList.add('elgblock');
+        blk.style.display = 'block';
+        // eslint-disable-next-line no-console
+        console.log('[calculator] Showing calculator block', idx);
+      } else {
+        blk.classList.remove('elgblock');
+        blk.style.display = 'none';
+      }
+    });
+
+    // Reset the now-visible block to defaults when switching
+    if (calcBlocks[tabIndex]) {
+      const targetBlock = calcBlocks[tabIndex];
+      // Inline reset logic - no dependency on old calculator
+      const calDefaultValueObj = JSON.parse(sessionStorage.getItem('calDefaultValueObj') || '{}');
+      const calId = targetBlock.dataset.resetId;
+      const calObj = calDefaultValueObj[calId] || {};
+      Object.keys(calObj).forEach((id) => {
+        const rangeInput = targetBlock.querySelector(`[id=${id}]`);
+        if (rangeInput) {
+          rangeInput.value = calObj[id];
+          rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+      // Dispatch change event on the block for calculation
+      targetBlock.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  // Use EVENT DELEGATION on the headingtabs container for more reliable click handling
+  // This is more robust than direct onclick handlers
+  headingtabs.addEventListener('click', function(e) {
+    // Find the clicked tab (could be the li or the p inside)
+    const clickedTab = e.target.closest('.tab-common:not(.gst-third-tab)');
+    if (!clickedTab) return;
+
+    e.preventDefault();
+
+    // Find the index of the clicked tab
+    const tabIndex = tabs.indexOf(clickedTab);
+    if (tabIndex === -1) {
+      // Try using data-tab-index
+      const dataIndex = clickedTab.dataset.tabIndex;
+      if (dataIndex !== undefined) {
+        // eslint-disable-next-line no-console
+        console.log('[calculator] Tab clicked via delegation, dataIndex:', dataIndex);
+        switchToTab(parseInt(dataIndex, 10));
+      }
+      return;
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('[calculator] Tab clicked via delegation, tabIndex:', tabIndex);
+    switchToTab(tabIndex);
   });
+
+  // Also set cursor style on tabs
+  tabs.forEach((tab) => {
+    tab.style.cursor = 'pointer';
+    const pElement = tab.querySelector('p');
+    if (pElement) {
+      pElement.style.cursor = 'pointer';
+    }
+  });
+
+  // eslint-disable-next-line no-console
+  console.log('[calculator] initCalculatorTabs: Event delegation attached to headingtabs');
 }

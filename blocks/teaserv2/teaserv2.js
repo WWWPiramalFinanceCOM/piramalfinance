@@ -61,8 +61,16 @@ async function openNewCalculatorModal(title) {
       || document.querySelector('.calculator-wrapper.modal-calculator')?.closest('.section');
 
     if (!calculatorSection) {
+      // eslint-disable-next-line no-console
+      console.error('[teaserv2] openNewCalculatorModal: No calculator section found');
       return;
     }
+
+    // eslint-disable-next-line no-console
+    console.log('[teaserv2] openNewCalculatorModal: Found calculator section', calculatorSection.className);
+    console.log('[teaserv2] Section has calctabs:', !!calculatorSection.querySelector('.calctabs'));
+    console.log('[teaserv2] Section has commoncalculator:', !!calculatorSection.querySelector('.commoncalculator'));
+    console.log('[teaserv2] Section has calculator-parent:', !!calculatorSection.querySelector('.calculator-parent'));
 
     // Load CSS only once (cached)
     await loadCalculatorCSS();
@@ -108,6 +116,20 @@ async function openNewCalculatorModal(title) {
 
     // Clone the calculator content
     const calcClone = calculatorSection.cloneNode(true);
+
+    // eslint-disable-next-line no-console
+    console.log('[teaserv2] Clone created, checking structure:');
+    console.log('[teaserv2] Clone has calctabs:', !!calcClone.querySelector('.calctabs'));
+    console.log('[teaserv2] Clone has commoncalculator:', !!calcClone.querySelector('.commoncalculator'));
+    console.log('[teaserv2] Clone has calculator-parent:', !!calcClone.querySelector('.calculator-parent'));
+    console.log('[teaserv2] Clone calctabs children:', calcClone.querySelector('.calctabs')?.children?.length);
+    
+    // Debug: List all inputs with data-cal-input
+    const allInputs = calcClone.querySelectorAll('[data-cal-input]');
+    console.log('[teaserv2] Clone has', allInputs.length, 'inputs with data-cal-input');
+    allInputs.forEach((inp, i) => {
+      console.log(`[teaserv2] Input ${i}: type=${inp.dataset.calInput}, value=${inp.value}`);
+    });
 
     // Clear ALL inline display:none styles to ensure everything is visible
     calcClone.style.cssText = '';
@@ -199,10 +221,12 @@ async function openNewCalculatorModal(title) {
     requestAnimationFrame(() => {
       try {
         // ========== CACHED DOM REFERENCES ==========
-        const calcBlocks = calcClone.querySelectorAll('.calctabs > .commoncalculator');
+        // Use descendant selector (not direct child) to handle any wrapper structure
+        const calcBlocks = calcClone.querySelectorAll('.calctabs .commoncalculator');
         const radioTabs = [...calcClone.querySelectorAll('.radiotab > li')];
         const sliderValues = calcClone.querySelectorAll('.slider-value');
-        const calcTabs = calcClone.querySelectorAll('.headul .tab-common');
+        // Filter out hidden gst-third-tab (same as build-tabs.js)
+        const calcTabs = calcClone.querySelectorAll('.headul .tab-common:not(.gst-third-tab)');
         const radiotabContainer = calcClone.querySelector('.radiotab');
         const radioBlock = calcClone.querySelector('.calculator-radio')
           || calcClone.querySelector('.home-loan-calculator-parent');
@@ -215,19 +239,93 @@ async function openNewCalculatorModal(title) {
 
         // ========== DEBOUNCED CALCULATION FUNCTION ==========
         const triggerModalCalculation = debounce(() => {
-          const visibleCalc = calcClone.querySelector(
+          // eslint-disable-next-line no-console
+          console.log('[teaserv2] triggerModalCalculation called');
+          console.log('[teaserv2] calcBlocks length:', calcBlocks.length);
+          
+          // Find a visible calculator block, or fall back to any commoncalculator, or the clone itself
+          let visibleCalc = calcClone.querySelector(
             '.commoncalculator:not([style*="display: none"])',
-          ) || calcBlocks[0];
-          if (!visibleCalc) return;
+          );
+          
+          if (!visibleCalc && calcBlocks.length > 0) {
+            visibleCalc = calcBlocks[0];
+          }
+          
+          if (!visibleCalc) {
+            visibleCalc = calcClone.querySelector('.commoncalculator');
+          }
+          
+          // eslint-disable-next-line no-console
+          console.log('[teaserv2] visibleCalc found:', !!visibleCalc);
+
+          // FALLBACK: If no commoncalculator found, search in the entire clone
+          // This handles cases where the block structure is different
+          const searchRoot = visibleCalc || calcClone;
 
           // Use correct data-cal-input selectors
-          const loanAmtInput = visibleCalc.querySelector('[data-cal-input="loanamt"]');
-          const tenureInput = visibleCalc.querySelector('[data-cal-input="tenure"]');
-          const roiInput = visibleCalc.querySelector('[data-cal-input="roi"]');
+          let loanAmtInput = searchRoot.querySelector('[data-cal-input="loanamt"]');
+          let tenureInput = searchRoot.querySelector('[data-cal-input="tenure"]');
+          let roiInput = searchRoot.querySelector('[data-cal-input="roi"]');
+
+          // POSITION-BASED FALLBACK: If loanamt not found, use position in .inputDiv
+          // This handles authoring errors where loanamt is marked as tenure
+          if (!loanAmtInput && searchRoot.querySelector('.inputDiv')) {
+            const loanAmountDivs = searchRoot.querySelectorAll('.inputDiv .loanamount');
+            // eslint-disable-next-line no-console
+            console.log('[teaserv2] loanamt not found, using position fallback. Found', loanAmountDivs.length, 'loanamount divs');
+            
+            if (loanAmountDivs.length >= 3) {
+              // Position 0 = loan amount, Position 1 = tenure, Position 2 = roi
+              const posLoanAmtInput = loanAmountDivs[0]?.querySelector('input.slider-value');
+              const posTenureInput = loanAmountDivs[1]?.querySelector('input.slider-value');
+              const posRoiInput = loanAmountDivs[2]?.querySelector('input.slider-value');
+              
+              // eslint-disable-next-line no-console
+              console.log('[teaserv2] Position-based inputs:',
+                'loanAmt:', posLoanAmtInput?.value,
+                'tenure:', posTenureInput?.value,
+                'roi:', posRoiInput?.value
+              );
+              
+              // Use position-based if they exist
+              if (posLoanAmtInput) loanAmtInput = posLoanAmtInput;
+              if (posTenureInput) tenureInput = posTenureInput;
+              if (posRoiInput) roiInput = posRoiInput;
+            }
+          }
+
+          // eslint-disable-next-line no-console
+          console.log('[teaserv2] triggerModalCalculation: inputs found:', 
+            'loanAmtEl:', !!loanAmtInput,
+            'loanAmt:', loanAmtInput?.value, 
+            'tenureEl:', !!tenureInput,
+            'tenure:', tenureInput?.value, 
+            'roiEl:', !!roiInput,
+            'roi:', roiInput?.value
+          );
+
+          if (!loanAmtInput && !tenureInput && !roiInput) {
+            // eslint-disable-next-line no-console
+            console.error('[teaserv2] No calculator inputs found! Checking all inputs in clone...');
+            const allInputs = calcClone.querySelectorAll('input');
+            console.log('[teaserv2] Total inputs in clone:', allInputs.length);
+            allInputs.forEach((inp, i) => {
+              console.log(`[teaserv2] Input ${i}:`, inp.type, inp.className, inp.dataset?.calInput, '=', inp.value);
+            });
+            return;
+          }
 
           const loanAmt = parseFloat((loanAmtInput?.value || '0').replace(/,/g, '')) || 0;
           const tenure = parseFloat((tenureInput?.value || '0').replace(/,/g, '')) || 0;
           const roi = parseFloat(roiInput?.value || '0') || 0;
+
+          // eslint-disable-next-line no-console
+          console.log('[teaserv2] triggerModalCalculation: parsed values:', 
+            'loanAmt:', loanAmt, 
+            'tenure:', tenure, 
+            'roi:', roi
+          );
 
           // EMI calculation: EMI = P × r × (1 + r)^n / ((1 + r)^n - 1)
           const monthlyRate = roi / 12 / 100;
@@ -239,12 +337,31 @@ async function openNewCalculatorModal(title) {
             const factor = (1 + monthlyRate) ** months;
             emi = Math.round((loanAmt * monthlyRate * factor) / (factor - 1));
             totalInterest = Math.round((emi * months) - loanAmt);
+          } else {
+            // eslint-disable-next-line no-console
+            console.warn('[teaserv2] Calculation skipped: monthlyRate=', monthlyRate, 'months=', months, 'loanAmt=', loanAmt);
           }
 
-          // Use correct data-cal-result selectors
-          const emiOutput = visibleCalc.querySelector('[data-cal-result="resultAmt"]');
-          const principalOutput = visibleCalc.querySelector('[data-cal-result="principalAmt"]');
-          const interestOutput = visibleCalc.querySelector('[data-cal-result="interestAmt"]');
+          // eslint-disable-next-line no-console
+          console.log('[teaserv2] triggerModalCalculation: result EMI:', emi, 'totalInterest:', totalInterest);
+
+          // Use correct data-cal-result selectors - search in searchRoot first, then clone
+          let emiOutput = searchRoot.querySelector('[data-cal-result="resultAmt"]');
+          let principalOutput = searchRoot.querySelector('[data-cal-result="principalAmt"]');
+          let interestOutput = searchRoot.querySelector('[data-cal-result="interestAmt"]');
+          
+          // Fallback to searching the entire clone
+          if (!emiOutput) emiOutput = calcClone.querySelector('[data-cal-result="resultAmt"]');
+          if (!principalOutput) principalOutput = calcClone.querySelector('[data-cal-result="principalAmt"]');
+          if (!interestOutput) interestOutput = calcClone.querySelector('[data-cal-result="interestAmt"]');
+          
+          // eslint-disable-next-line no-console
+          console.log('[teaserv2] Output elements found:', {
+            emiOutput: !!emiOutput,
+            principalOutput: !!principalOutput,
+            interestOutput: !!interestOutput
+          });
+          
           const formatResult = (val) => Math.round(val).toLocaleString('en-IN');
 
           if (emiOutput) emiOutput.textContent = `₹${formatResult(emi)}/-`;
@@ -342,10 +459,17 @@ async function openNewCalculatorModal(title) {
         }
 
         // ========== INITIALIZE SLIDERS (using cached sliderValues) ==========
+        // IMPORTANT: When cloning, range slider values are reset to HTML defaults.
+        // We need to READ the text input values FIRST (which are correctly cloned),
+        // then sync the range sliders TO the text inputs (not vice versa).
         sliderValues.forEach((sliderValue) => {
           const sliderId = sliderValue.dataset.slider;
           const myRangeSlider = calcClone.querySelector(`#${sliderId}`);
-          if (!myRangeSlider) return;
+          if (!myRangeSlider) {
+            // eslint-disable-next-line no-console
+            console.warn('[teaserv2] Slider not found for ID:', sliderId);
+            return;
+          }
 
           // Update gradient using requestAnimationFrame for smooth updates
           const updateGradient = () => {
@@ -354,12 +478,33 @@ async function openNewCalculatorModal(title) {
             myRangeSlider.style.background = `linear-gradient(90deg, #da4d34 ${pct}%, #dbd7d8 ${pct}%)`;
           };
 
-          // Set initial value
+          // Read the EXISTING text input value (which was correctly cloned)
+          // and sync the range slider TO it (not vice versa)
           const inputType = sliderValue.dataset.calInput;
-          if (inputType === 'roi') {
-            sliderValue.value = parseFloat(myRangeSlider.value);
+          const existingValue = sliderValue.value;
+          
+          if (existingValue && existingValue !== '0') {
+            // Parse the existing value and set the range slider
+            const parsed = parseFloat(existingValue.replace(/,/g, '')) || 0;
+            const min = parseFloat(myRangeSlider.min);
+            const max = parseFloat(myRangeSlider.max);
+            // Clamp to valid range
+            const clamped = Math.max(min, Math.min(max, parsed));
+            myRangeSlider.value = clamped;
+            
+            // Re-format the text input in case the value was out of range
+            if (inputType === 'roi') {
+              sliderValue.value = parseFloat(clamped);
+            } else {
+              sliderValue.value = formatNum(clamped);
+            }
           } else {
-            sliderValue.value = formatNum(myRangeSlider.value);
+            // No existing value - use range slider default
+            if (inputType === 'roi') {
+              sliderValue.value = parseFloat(myRangeSlider.value);
+            } else {
+              sliderValue.value = formatNum(myRangeSlider.value);
+            }
           }
           updateGradient();
 
@@ -423,7 +568,14 @@ async function openNewCalculatorModal(title) {
         const businessRadio = calcClone.querySelector('[data-cal-foir="biz"]');
 
         calcBlocks.forEach((b, i) => {
-          b.style.display = i === 0 ? 'block' : 'none';
+          if (i === 0) {
+            // Show first calculator - add elgblock for eligibility CSS compatibility
+            b.classList.add('elgblock');
+            b.style.display = 'block';
+          } else {
+            b.classList.remove('elgblock');
+            b.style.display = 'none';
+          }
         });
 
         calcTabs.forEach((tab, idx) => {
@@ -432,7 +584,15 @@ async function openNewCalculatorModal(title) {
             calcTabs.forEach((t) => t.classList.remove('active'));
             tab.classList.add('active');
             calcBlocks.forEach((b, i) => {
-              b.style.display = i === idx ? 'block' : 'none';
+              if (i === idx) {
+                // Show this calculator - add elgblock class for eligibility CSS compatibility
+                b.classList.add('elgblock');
+                b.style.display = 'block';
+              } else {
+                // Hide other calculators
+                b.classList.remove('elgblock');
+                b.style.display = 'none';
+              }
             });
 
             // Hide/show radio tabs based on loan type
@@ -444,11 +604,13 @@ async function openNewCalculatorModal(title) {
               if (salaryTab) {
                 salaryTab.style.display = 'none';
                 salaryTab.style.background = WHITE;
+                salaryTab.classList.remove('active');
               }
               if (businessTab) {
                 businessTab.style.width = '50%';
                 businessTab.style.borderRadius = '0px 12px 0px 0px';
                 businessTab.style.background = BUSINESS_BG;
+                businessTab.classList.add('active');
               }
               if (radiotabContainer) {
                 radiotabContainer.style.background = '';
@@ -459,22 +621,32 @@ async function openNewCalculatorModal(title) {
               if (calculatorParent) {
                 calculatorParent.style.background = BUSINESS_BG;
               }
+              // Uncheck salaried, check business
+              if (salariedRadio) {
+                salariedRadio.checked = false;
+                salariedRadio.removeAttribute('checked');
+                const salParent = salariedRadio.closest('.salary-parent');
+                if (salParent) salParent.classList.remove('is-checked');
+              }
               if (businessRadio) {
                 businessRadio.checked = true;
+                businessRadio.setAttribute('checked', 'checked');
                 const bizParent = businessRadio.closest('.salary-parent');
                 if (bizParent) bizParent.classList.add('is-checked');
               }
             } else {
-              // Home Loan: show both radios
+              // Home Loan: show both radios, select Salaried by default
               if (salaryTab) {
                 salaryTab.style.display = '';
                 salaryTab.style.width = '50%';
                 salaryTab.style.background = SALARIED_BG;
+                salaryTab.classList.add('active');
               }
               if (businessTab) {
                 businessTab.style.width = '50%';
                 businessTab.style.borderRadius = '12px 0 0 0';
                 businessTab.style.background = WHITE;
+                businessTab.classList.remove('active');
               }
               if (radiotabContainer) {
                 radiotabContainer.style.background = '';
@@ -485,8 +657,16 @@ async function openNewCalculatorModal(title) {
               if (calculatorParent) {
                 calculatorParent.style.background = SALARIED_BG;
               }
+              // Uncheck business, check salaried
+              if (businessRadio) {
+                businessRadio.checked = false;
+                businessRadio.removeAttribute('checked');
+                const bizParent = businessRadio.closest('.salary-parent');
+                if (bizParent) bizParent.classList.remove('is-checked');
+              }
               if (salariedRadio) {
                 salariedRadio.checked = true;
+                salariedRadio.setAttribute('checked', 'checked');
                 const salParent = salariedRadio.closest('.salary-parent');
                 if (salParent) salParent.classList.add('is-checked');
               }

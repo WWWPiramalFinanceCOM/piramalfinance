@@ -15,12 +15,19 @@ export function nearestLoction(placeholders) {
     const eachCity = eachLocation.City;
     const eachLocationCode = eachLocation['Location Code'];
     const eachLocationAdd = eachLocation.Location;
+    const hasCoords = eachLocation.Latitude && eachLocation.Longitude;
+    const directionsBtn = hasCoords
+      ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${eachLocation.Latitude},${eachLocation.Longitude}" target="_blank" rel="noopener noreferrer" class='directions-btn'>${placeholders.directionstext || 'Directions'}</a>`
+      : '';
     branch_cards += `
         <div class='card-box'>
         <h3 class='card-title'>${eachLocation.Location}</h3>
         <p class='card-address'>${eachLocation.Address}</p>
-        <p class='card-gmail'> <span> <img src='/images/gmail.svg' alt='gmail-icon'/> </span> ${placeholders.branchlocatorgmail}</p> 
-        <a href="${branchURLStr(eachLocationAdd, eachCity, eachState, 'loans', eachLocationCode)}" id='more-details-btn'> ${placeholders.moredetailtext} </a> 
+        <p class='card-gmail'> <span> <img src='/images/gmail.svg' alt='gmail-icon'/> </span> ${placeholders.branchlocatorgmail}</p>
+        <div class='card-actions'>
+          <a href="${branchURLStr(eachLocationAdd, eachCity, eachState, 'loans', eachLocationCode)}" class='more-details-btn'>${placeholders.moredetailtext}</a>
+          ${directionsBtn}
+        </div>
         </div>`;
     // <a href="/branch-locator/${eachState}/${eachCity}/loans-in-${eachCity}-${eachState}-${eachLocationCode}" id='more-details-btn'> More details </a>
   });

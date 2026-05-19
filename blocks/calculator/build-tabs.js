@@ -145,14 +145,18 @@ export function initCalculatorTabs() {
       // Reset the now-visible block to defaults when switching
       if (!wasActive) {
         const targetBlock = calcBlocks[tabIndex] || calcBlocks[0];
-        try {
-          // Lazy‑import resetCalculator from the existing legacy module
-          import('../emiandeligiblitycalc/resetCalculator.js').then(({ resetCalculator }) => {
-            resetCalculator(targetBlock);
-            // Fire a change event so the workflow picks up the reset values
-            targetBlock.dispatchEvent(new Event('change', { bubbles: true }));
-          });
-        } catch (_) { /* noop if module not found */ }
+        // Inline reset logic - no dependency on old calculator
+        const calDefaultValueObj = JSON.parse(sessionStorage.getItem('calDefaultValueObj') || '{}');
+        const calId = targetBlock.dataset.resetId;
+        const calObj = calDefaultValueObj[calId] || {};
+        Object.keys(calObj).forEach((id) => {
+          const rangeInput = targetBlock.querySelector(`[id=${id}]`);
+          if (rangeInput) {
+            rangeInput.value = calObj[id];
+            rangeInput.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        });
+        targetBlock.dispatchEvent(new Event('change', { bubbles: true }));
       }
     });
   });

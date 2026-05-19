@@ -1,5 +1,30 @@
 @import url(investor/investor.css);
 
+/* ========== MODAL CALCULATOR HIDING (loads immediately) ========== */
+/* Hide calculator sections marked for modal-only display */
+.section[data-modal-calculator="true"] {
+    visibility: hidden;
+    position: absolute;
+    left: -9999px;
+    pointer-events: none;
+}
+
+/* Hide calculator-ssr sections by default until JS processes them */
+.section.calculator-ssr {
+    visibility: hidden;
+    position: absolute;
+    left: -9999px;
+    pointer-events: none;
+}
+
+/* Show calculator-ssr when it has the homeloancalculator class (JS ran successfully) */
+.section.calculator-ssr.homeloancalculator {
+    visibility: visible;
+    position: relative;
+    left: auto;
+    pointer-events: auto;
+}
+
 html {
     scroll-behavior: smooth
 }

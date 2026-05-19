@@ -1,14 +1,17 @@
 import { prepareBlocks, extractContent } from './extract-content.js';
 import { buildCalculatorParent, initCalculatorTabs } from './build-tabs.js';
-import { workflowHomeLoanCalculation } from '../emiandeligiblitycalc/calhelpers.js';
+// Use standalone local helpers - NO dependencies on old calculator blocks
+import {
+  workflowHomeLoanCalculation,
+  CheckAprRate,
+  updatePartPayment,
+} from './cal-helpers.js';
 import { currenyCommaSeperation } from '../../scripts/common.js';
-import { CheckAprRate } from '../aprcalculator/aprcalculator.js';
-import { updatePartPayment } from '../partpaymentcalculator/partpaymentlogic.js';
 
 /** Track sections already combined so it runs only once per section */
 const combinedSections = new WeakSet();
 
-/** Track sections that have already been fully initialised */
+/** Track sections that have already been fully init alised */
 const initialisedSections = new WeakSet();
 
 /** Track if Part Payment date picker has been initialized */
@@ -630,6 +633,9 @@ function combineSection(section) {
   if (combinedSections.has(section)) return;
   combinedSections.add(section);
 
+  // Add homeloancalculator class EARLY so CSS applies even if we return early
+  section.classList.add('homeloancalculator');
+
   const calcWrappers = [...section.querySelectorAll('.calculator-wrapper')];
   if (calcWrappers.length < 1) return;
 
@@ -637,7 +643,6 @@ function combineSection(section) {
   if (blocks.length < 1) return;
 
   const { description, tabNames, calcNames, productType } = prepareBlocks(blocks);
-  section.classList.add('homeloancalculator');
   
   // Add gst-calculator class if any calculator is GST type (for pill-button tab styles)
   const hasGstCalc = calcNames.some((name) => name.includes('gst'));

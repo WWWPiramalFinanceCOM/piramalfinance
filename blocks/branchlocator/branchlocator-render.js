@@ -1,5 +1,5 @@
 import { showingStateCity } from "../../scripts/common.js";
-import { onClickCity, onClickState } from "./branchlocator-biz.js";
+import { onClickCity, onClickState, onClickBusinessType } from "./branchlocator-biz.js";
 import { setLocationObj } from "./branchlocator-init.js";
 import { sortElements } from "./sort.js";
 
@@ -40,8 +40,15 @@ function setupDropdownToggle(block, toggleSelector, otherWrapperSelector) {
     const searchInputs = section.querySelectorAll(".search-input");
     showingStateCity(searchInputs);
 
-    otherWrapper.classList.add("dp-none");
-    otherWrapper.querySelector("input").value = "";
+    // Close all other dropdowns
+    section.querySelectorAll(".dropdown-option-wrapper").forEach((wrapper) => {
+      if (wrapper !== dropdownWrapper) {
+        wrapper.classList.add("dp-none");
+        const input = wrapper.querySelector("input");
+        if (input) input.value = "";
+      }
+    });
+
     dropdownWrapper.classList.toggle("dp-none");
   });
 }
@@ -59,4 +66,16 @@ function setupSearch(block) {
       });
     });
   });
+}
+
+export function renderBusinessType(block) {
+  const renderTypeLi = block.closest(".section").querySelector(".businesstype-wrapper > .option-wrapper");
+  renderTypeLi.innerHTML = setLocationObj.businessTypeLi || '';
+  setupBusinessTypeInteractions(block);
+}
+
+function setupBusinessTypeInteractions(block) {
+  setupDropdownToggle(block, ".default-businesstype-selected", ".state-wrapper");
+  setupSearch(block);
+  onClickBusinessType(block);
 }

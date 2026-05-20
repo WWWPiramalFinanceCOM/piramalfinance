@@ -6,6 +6,8 @@ export const setLocationObj = {
   lng: 0,
   stateLi: "",
   cityLi: "",
+  businessTypeLi: "",
+  selectedBusinessType: "All",
   cityhash: {},
   geoInfo: {
     city: "",

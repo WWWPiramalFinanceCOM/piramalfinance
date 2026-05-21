@@ -47,8 +47,8 @@ function generateFeatureHTML(props) {
   leftSideImageAlt = leftSideImageAlt?.textContent.trim() || '';
   rightSideImage = rightSideImage?.querySelector('div > picture > img')?.src || '';
   rightSideImageAlt = rightSideImageAlt?.textContent?.trim() || '';
-  // rightSideImageLink = rightSideImageLink?.textContent?.trim() || '';
-  rightSideImageLink = rightSideImageLink.querySelector("a")?.href || '';
+  rightSideImageLink = rightSideImageLink?.textContent?.trim() || '';
+  // rightSideImageLink = rightSideImageLink.querySelector("a")?.href || rightSideImageLink?.textContent?.trim() || '';
   keyFeatureTitle = keyFeatureTitle?.textContent?.trim() || '';
   keyFeatureImagePlus = keyFeatureImagePlus?.querySelector('div > picture > img')?.src || '';
   keyFeatureImageMinus = keyFeatureImageMinus?.querySelector('div > picture > img')?.src || '';

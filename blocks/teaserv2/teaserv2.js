@@ -63,8 +63,8 @@ export function renderTeaserHTMLFactory(props, block) {
     return element;
   };
 
-  // const mainLink = mainHref?.textContent.trim() || '';
-  const mainLink = mainHref?.querySelector('a')?.href || '';
+  const mainLink = mainHref?.textContent.trim() || mainHref?.querySelector('a')?.href || '';
+  // const mainLink = mainHref?.querySelector('a')?.href || mainHref?.textContent.trim() || '';
   const container = document.createElement('a');
   // Fix WCAG 2.4.6: Add descriptive aria-label from title instead of generic text
   const titleText = title?.textContent.trim() || '';

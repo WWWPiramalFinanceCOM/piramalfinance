@@ -1905,7 +1905,7 @@
     "id": "teaserv2",
     "fields": [
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
         "name": "href",
         "value": "",

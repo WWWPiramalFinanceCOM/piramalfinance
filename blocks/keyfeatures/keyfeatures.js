@@ -41,13 +41,13 @@ function generateFeatureHTML(props) {
     keyFeatureInnerText3,
   ] = props;
 
-  containerLink = containerLink?.textContent?.trim() || containerLink.querySelector('a')?.href || '';
+  containerLink = containerLink?.querySelector('a')?.href || containerLink?.textContent?.trim() || '';
   cardDescription = cardDescription?.querySelector('div > div') || '';
   leftSideImage = leftSideImage?.querySelector('div > picture > img')?.src || '';
   leftSideImageAlt = leftSideImageAlt?.textContent.trim() || '';
   rightSideImage = rightSideImage?.querySelector('div > picture > img')?.src || '';
   rightSideImageAlt = rightSideImageAlt?.textContent?.trim() || '';
-  rightSideImageLink = rightSideImageLink?.textContent?.trim() || rightSideImageLink.querySelector("a")?.href || '';
+  rightSideImageLink = rightSideImageLink?.querySelector('a')?.href || rightSideImageLink?.textContent?.trim() || '';
   // rightSideImageLink = rightSideImageLink.querySelector("a")?.href || rightSideImageLink?.textContent?.trim() || '';
   keyFeatureTitle = keyFeatureTitle?.textContent?.trim() || '';
   keyFeatureImagePlus = keyFeatureImagePlus?.querySelector('div > picture > img')?.src || '';

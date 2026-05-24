@@ -73,6 +73,24 @@
       ]
     },
     {
+      "title": "Investor Section",
+      "id": "investor-section",
+      "components": [
+        {
+          "title": "Investor Section",
+          "id": "investor-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {}
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "title": "Blocks",
       "id": "blocks",
       "components": [

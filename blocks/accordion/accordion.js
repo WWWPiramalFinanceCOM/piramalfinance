@@ -88,10 +88,14 @@ function KYCDocuments(data) {
   return html;
 }
 
-export function documentRequired() {
-  if (document.querySelector('.documents-required-brown').querySelectorAll('.accordion.block').length > 0) {
-    const ulDiv = document.querySelector('.documents-required-brown').querySelectorAll('.accordion.block')[1]?.querySelectorAll('div > ul');
-    if (ulDiv.length > 0) {
+export function documentRequired(scopeElement) {
+  // Scoped Access - only use provided scope, no document fallback
+  if (!scopeElement) return;
+  
+  const accordionBlocks = scopeElement.querySelectorAll('.accordion.block');
+  if (accordionBlocks.length > 0) {
+    const ulDiv = accordionBlocks[1]?.querySelectorAll('div > ul');
+    if (ulDiv && ulDiv.length > 0) {
       const firstUl = ulDiv[0];
       firstUl.classList.add('cmp-text--doc-salary');
       const secondUl = ulDiv[1];

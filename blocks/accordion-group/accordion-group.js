@@ -48,14 +48,27 @@ export default async function decorate(block) {
     openFunctionFAQ(block);
     // Pass block to viewMoreLogicFAQ for scoped access
     block.closest('.faq-view-more-logic') ? viewMoreLogicFAQ(block) : '';
-    // Scoped Access - search within block's section only, no document fallback
-    const section = block.closest('.section');
-    const documentsRequiredSection = section?.closest('.documents-required-brown') 
-      || section?.querySelector('.documents-required-brown')
-      || block.closest('.documents-required-brown');
-    if (documentsRequiredSection) {
-      documentRequired(documentsRequiredSection);
-    }
+    
+    // Robust deferred execution - works in both parallel and sequential loading
+    // Uses RAF + retry to ensure sibling accordion blocks are ready
+    const initDocumentsRequired = () => {
+      requestAnimationFrame(() => {
+        const section = block.closest('.section');
+        const documentsRequiredSection = section?.closest('.documents-required-brown') 
+          || section?.querySelector('.documents-required-brown')
+          || block.closest('.documents-required-brown');
+        if (documentsRequiredSection) {
+          const accordionBlocks = documentsRequiredSection.querySelectorAll('.accordion.block');
+          if (accordionBlocks.length > 0) {
+            documentRequired(documentsRequiredSection);
+          } else {
+            // Retry if accordion blocks not found yet (parallel loading)
+            setTimeout(() => documentRequired(documentsRequiredSection), 100);
+          }
+        }
+      });
+    };
+    initDocumentsRequired();
   } catch (error) {
     console.warn(error);
   }

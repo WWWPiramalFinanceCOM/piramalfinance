@@ -25,7 +25,21 @@ export default async function decorate(block) {
   const mainContainer = block.closest('main') || block.closest('body');
   
   try {
-    applyLoanFormClick(mainContainer);
+    // Robust deferred execution - works in both parallel and sequential loading
+    // Uses RAF + retry mechanism to ensure sibling blocks are ready
+    const initFormClick = () => {
+      requestAnimationFrame(() => {
+        const loanForm = mainContainer.querySelector('.loan-form-sub-parent');
+        if (loanForm) {
+          applyLoanFormClick(mainContainer);
+        } else {
+          // Retry once more if form not found (parallel loading case)
+          setTimeout(() => applyLoanFormClick(mainContainer), 100);
+        }
+      });
+    };
+    initFormClick();
+    
     applyLoanPopper();
     loanutmForm();
     stateMasterApi();

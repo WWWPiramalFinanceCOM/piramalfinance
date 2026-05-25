@@ -60,11 +60,14 @@ export default async function decorate(block) {
   // Get main container for scoped queries (avoids document.querySelector in handler)
   const mainContainer = block.closest('main') || block.closest('body');
   
-  // Defer event dispatch to ensure all blocks are loaded
+  // Robust deferred execution - works in both parallel and sequential loading
+  // Double RAF ensures all sibling blocks have completed their decorate() calls
   requestAnimationFrame(() => {
-    window.dispatchEvent(new CustomEvent('pf:branch-loan-filter', {
-      detail: { loanTypesToHide, city, mappingData: jsonResponseData, mainContainer }
-    }));
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new CustomEvent('pf:branch-loan-filter', {
+        detail: { loanTypesToHide, city, mappingData: jsonResponseData, mainContainer }
+      }));
+    });
   });
 
   block.classList.add('dp-none');

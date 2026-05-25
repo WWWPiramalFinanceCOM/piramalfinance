@@ -1,4 +1,4 @@
-import { calculatorFlatStrLogic, CFApiCall, fetchAPI } from '../../scripts/common.js';
+import { calculatorFlatStrLogic, CFApiCall, fetchAPI, whenBlocksReady } from '../../scripts/common.js';
 import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js';
 import { homeloanCalHTML } from '../homeloancalculatorv2/templatehtmlv2.js';
 
@@ -11,38 +11,42 @@ export default async function decorate(block) {
 
   block.innerHTML = homeloanCalHTML(jsonResponseData);
 
-  let elgCalDiv; let
-    elgOverlay;
+  const section = block.closest('.section');
+  
+  // Robust deferred execution - works in both parallel and sequential loading
+  whenBlocksReady(() => {
+    let elgCalDiv;
+    let elgOverlay;
 
-  try {
-    // Scoped Access - search within block's section only, no document fallback
-    const section = block.closest('.section');
-    elgCalDiv = section?.querySelector('.home-page-calculator-call-xf') 
-      || section?.closest('.home-page-calculator-call-xf')
-      || block.closest('.home-page-calculator-call-xf');
-    if (elgCalDiv) {
-      elgOverlay = elgCalDiv.querySelector('.cmp-container--caloverlay');
-    }
-
-    const currentSection = elgCalDiv || section;
-
-    const homeLoanCalcParent = section?.querySelector('.home-loan-calculator-parent');
-    if (homeLoanCalcParent?.classList.contains('combined-emi-eligibility')) {
-      homeLoanCalcParent.classList.remove('combined-emi-eligibility');
-      const homeloancalc = homeLoanCalcParent.closest('.homeloancalculator') 
-        || section?.querySelector('.homeloancalculator');
-      const eligibilityCalc = homeloancalc?.querySelector('.eligibilitycalculator');
-      if (eligibilityCalc) {
-        eligibilityCalc.style.display = 'block';
+    try {
+      // Scoped Access - search within block's section only, no document fallback
+      elgCalDiv = section?.querySelector('.home-page-calculator-call-xf') 
+        || section?.closest('.home-page-calculator-call-xf')
+        || block.closest('.home-page-calculator-call-xf');
+      if (elgCalDiv) {
+        elgOverlay = elgCalDiv.querySelector('.cmp-container--caloverlay');
       }
-    }
 
-    homeLoanCalcFunc(currentSection);
-    onloadAPRCalc(section);
-    readMoreFucn(block);
-  } catch (error) {
-    console.warn(error);
-  }
+      const currentSection = elgCalDiv || section;
+
+      const homeLoanCalcParent = section?.querySelector('.home-loan-calculator-parent');
+      if (homeLoanCalcParent?.classList.contains('combined-emi-eligibility')) {
+        homeLoanCalcParent.classList.remove('combined-emi-eligibility');
+        const homeloancalc = homeLoanCalcParent.closest('.homeloancalculator') 
+          || section?.querySelector('.homeloancalculator');
+        const eligibilityCalc = homeloancalc?.querySelector('.eligibilitycalculator');
+        if (eligibilityCalc) {
+          eligibilityCalc.style.display = 'block';
+        }
+      }
+
+      homeLoanCalcFunc(currentSection);
+      onloadAPRCalc(section);
+      readMoreFucn(block);
+    } catch (error) {
+      console.warn(error);
+    }
+  }, { waitFor: '.homeloancalculator', scope: section });
 }
 
 function onloadAPRCalc(section) {

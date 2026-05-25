@@ -184,6 +184,14 @@ export function initCalculatorTabs(section = null) {
         blk.style.display = 'block';
         // eslint-disable-next-line no-console
         console.log('[calculator] Showing calculator block', idx);
+        
+        // Update description text based on active calculator's description
+        const descriptionEl = calcParent.querySelector('.first-head');
+        if (descriptionEl && blk.dataset.calcDescription) {
+          descriptionEl.textContent = blk.dataset.calcDescription;
+          // eslint-disable-next-line no-console
+          console.log('[calculator] Updated description to:', blk.dataset.calcDescription);
+        }
       } else {
         blk.classList.remove('elgblock');
         blk.style.display = 'none';

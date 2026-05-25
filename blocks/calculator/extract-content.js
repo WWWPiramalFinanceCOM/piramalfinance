@@ -14,27 +14,9 @@ export function prepareBlocks(blocks) {
   // [0] and [1] are always productType and calcName (dropdowns with defaults)
   const productType = (firstMetaArray[0]?.textContent?.trim() || 'hl').toLowerCase();
 
-  // Find description: check if [2] or [3] are text (not image), and capture description
-  // Empty fields don't create elements, so indices shift
-  let description = '';
-
-  // Check [2] and [3] - could be tabLabel, description, or image/imageLabel
-  const el2 = firstMetaArray[2];
-  const el3 = firstMetaArray[3];
-
-  // If element contains an image, it's the image field, not tabLabel/description
-  const el2HasImage = el2?.querySelector?.('img') || el2?.querySelector?.('picture');
-  const el3HasImage = el3?.querySelector?.('img') || el3?.querySelector?.('picture');
-
-  // If [2] is text (tabLabel) and [3] is also text (description), get description from [3]
-  if (!el2HasImage && el2?.textContent?.trim()) {
-    if (!el3HasImage && el3?.textContent?.trim()) {
-      description = el3.textContent.trim();
-    }
-  }
-
   const tabNames = [];
   const calcNames = [];
+  const descriptions = []; // Store description for EACH calculator
 
   blocks.forEach((blk, idx) => {
     const meta = blk.children[0]?.children[0]?.children;
@@ -43,17 +25,30 @@ export function prepareBlocks(blocks) {
 
     // Get tab name for this block - check if [2] is text (not image)
     let tabName = '';
+    let blockDescription = '';
     const blockEl2 = metaArray[2];
+    const blockEl3 = metaArray[3];
     const blockEl2HasImage = blockEl2?.querySelector?.('img') || blockEl2?.querySelector?.('picture');
+    const blockEl3HasImage = blockEl3?.querySelector?.('img') || blockEl3?.querySelector?.('picture');
+    
+    // [2] = tabLabel (if text), [3] = description (if text)
     if (!blockEl2HasImage && blockEl2?.textContent?.trim()) {
       tabName = blockEl2.textContent.trim();
+      // Check if [3] is description (text, not image)
+      if (!blockEl3HasImage && blockEl3?.textContent?.trim()) {
+        blockDescription = blockEl3.textContent.trim();
+      }
     }
 
     tabNames.push(tabName);
     calcNames.push(calcName);
+    descriptions.push(blockDescription);
 
     blk.classList.add('commoncalculator');
     blk.dataset.resetId = `calid-${idx}`;
+    // Store description on the block for tab switching
+    blk.dataset.calcDescription = blockDescription;
+    
     // Add the calculator name as a class (e.g. emicalculator, gstcalculator)
     if (calcName) blk.classList.add(calcName);
 
@@ -65,8 +60,11 @@ export function prepareBlocks(blocks) {
     }
   });
 
+  // Use first description as default (for backwards compatibility)
+  const description = descriptions[0] || '';
+
   return {
-    description, tabNames, calcNames, productType,
+    description, descriptions, tabNames, calcNames, productType,
   };
 }
 

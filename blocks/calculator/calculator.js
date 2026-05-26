@@ -1205,17 +1205,23 @@ export default async function decorate(block) {
   }
   const imgSrc = imgEl?.src || '';
   
-  // Text elements after the image: imageAlt, imageLabel, principalLabel, interestLabel
+  // Text elements after the image: imageLabel, principalLabel, interestLabel
   // Get text elements that come after the image (or all text elements if no image)
-  const textElementsAfterImage = imageIndex >= 0 
+  // imageAlt comes from the actual img tag's alt attribute
+  const allTextAfterImage = imageIndex >= 0 
     ? firstRowArray.slice(imageIndex + 1).filter(el => el.textContent?.trim())
     : firstRowArray.slice(2).filter(el => el.textContent?.trim() && !el.querySelector('img')); // Skip productType[0], calcName[1]
   
-  // Order: imageAlt[0], imageLabel[1], principalLabel[2], interestLabel[3]
-  const imageAlt = textElementsAfterImage[0]?.textContent?.trim() || 'Calculator';
-  const imageLabel = textElementsAfterImage[1]?.textContent?.trim() || '';
-  const principalLabel = textElementsAfterImage[2]?.textContent?.trim() || '';
-  const interestLabel = textElementsAfterImage[3]?.textContent?.trim() || '';
+  // Limit to first 3 elements max - the expected output fields (imageLabel, principalLabel, interestLabel)
+  const textElementsAfterImage = allTextAfterImage.slice(0, 3);
+  
+  // Get imageAlt from actual img tag's alt attribute
+  const imageAlt = imgEl?.alt || 'Calculator';
+  
+  // Order: imageLabel[0], principalLabel[1], interestLabel[2]
+  const imageLabel = textElementsAfterImage[0]?.textContent?.trim() || '';
+  const principalLabel = textElementsAfterImage[1]?.textContent?.trim() || '';
+  const interestLabel = textElementsAfterImage[2]?.textContent?.trim() || '';
   const hasAmountBreakdown = principalLabel || interestLabel;
 
   // Build slider rows from remaining children (skip radio item rows)

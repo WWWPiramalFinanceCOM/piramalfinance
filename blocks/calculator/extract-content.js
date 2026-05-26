@@ -17,16 +17,6 @@ export function prepareBlocks(blocks) {
   const tabNames = [];
   const calcNames = [];
   const descriptions = []; // Store description for EACH calculator
-  
-  // Disclaimer data - extracted from first block that has it
-  let disclaimer = {
-    title: '',
-    para1: '',
-    para2: '',
-    para3: '',
-    readMoreText: 'Read more',
-    readLessText: 'Read less',
-  };
 
   blocks.forEach((blk, idx) => {
     const meta = blk.children[0]?.children[0]?.children;
@@ -68,81 +58,14 @@ export function prepareBlocks(blocks) {
     } else if (calcName.includes('emi') || calcName.includes('homeloan')) {
       blk.classList.add('emicalculator');
     }
-    
-    // Extract disclaimer from this block (use first one that has it)
-    if (!disclaimer.title) {
-      const blockDisclaimer = extractDisclaimer(blk);
-      if (blockDisclaimer.title) {
-        disclaimer = blockDisclaimer;
-      }
-    }
   });
 
   // Use first description as default (for backwards compatibility)
   const description = descriptions[0] || '';
 
   return {
-    description, descriptions, tabNames, calcNames, productType, disclaimer,
+    description, descriptions, tabNames, calcNames, productType,
   };
-}
-
-/**
- * Extracts disclaimer data from a calculator block.
- * Disclaimer fields appear after output-related fields in the first row.
- * @param {Element} block - Calculator block element
- * @returns {object} Disclaimer data object
- */
-function extractDisclaimer(block) {
-  const disclaimer = {
-    title: '',
-    para1: '',
-    para2: '',
-    para3: '',
-    readMoreText: 'Read more',
-    readLessText: 'Read less',
-  };
-  
-  const meta = block.children[0]?.children[0]?.children;
-  if (!meta) return disclaimer;
-  
-  const metaArray = Array.from(meta);
-  
-  // Collect all text elements (exclude images/pictures)
-  const textElements = metaArray.filter((el) => {
-    const hasImage = el.querySelector?.('img') || el.querySelector?.('picture');
-    return !hasImage && el.textContent?.trim();
-  });
-  
-  // Disclaimer fields are at the end of text elements
-  // Order: ...other fields..., disclaimerTitle, disclaimerPara1, disclaimerPara2, disclaimerPara3, readMoreText, readLessText
-  // Since we have variable number of fields before disclaimer, look for the pattern
-  // The disclaimer title usually contains "Disclaimer" or similar keyword
-  
-  // Find disclaimer title by looking for text containing "disclaimer" (case-insensitive)
-  // or if it's simply the 6th-to-last text element
-  const len = textElements.length;
-  
-  // Look for explicit "Disclaimer" text, or use positional extraction
-  let disclaimerStartIdx = -1;
-  for (let i = 0; i < len; i++) {
-    const text = textElements[i].textContent.trim().toLowerCase();
-    if (text.includes('disclaimer')) {
-      disclaimerStartIdx = i;
-      break;
-    }
-  }
-  
-  // If found by keyword, extract from that position
-  if (disclaimerStartIdx >= 0 && disclaimerStartIdx + 1 < len) {
-    disclaimer.title = textElements[disclaimerStartIdx]?.textContent?.trim() || '';
-    disclaimer.para1 = textElements[disclaimerStartIdx + 1]?.innerHTML?.trim() || textElements[disclaimerStartIdx + 1]?.textContent?.trim() || '';
-    disclaimer.para2 = textElements[disclaimerStartIdx + 2]?.innerHTML?.trim() || textElements[disclaimerStartIdx + 2]?.textContent?.trim() || '';
-    disclaimer.para3 = textElements[disclaimerStartIdx + 3]?.innerHTML?.trim() || textElements[disclaimerStartIdx + 3]?.textContent?.trim() || '';
-    disclaimer.readMoreText = textElements[disclaimerStartIdx + 4]?.textContent?.trim() || 'Read more';
-    disclaimer.readLessText = textElements[disclaimerStartIdx + 5]?.textContent?.trim() || 'Read less';
-  }
-  
-  return disclaimer;
 }
 
 /**

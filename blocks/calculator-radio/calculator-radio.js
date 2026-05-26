@@ -347,6 +347,9 @@ export default async function decorate(block) {
   const section = block.closest('.section');
   const productType = getProductType(block);
 
+  // Hide block immediately to prevent flicker during transformation
+  // block.style.visibility = 'hidden';
+
   // In editor mode, preserve the original DOM structure for authoring
   // The Universal Editor needs the original structure to allow adding/editing children
   if (isEditorMode()) {
@@ -367,6 +370,9 @@ export default async function decorate(block) {
     if (section) {
       section.classList.add('homeloancalculator');
     }
+
+    // Show block in editor mode
+    // block.style.visibility = 'visible';
 
     // Don't replace innerHTML - let the editor manage the content
     return;
@@ -446,6 +452,9 @@ export default async function decorate(block) {
   if (section) {
     section.classList.add('homeloancalculator');
   }
+
+  // Show block now that transformation is complete
+  // block.style.visibility = 'visible';
 
   // Set initial calculator-parent background (wait for calculator block to be ready)
   // Use longer delay and retry to ensure calculator is fully initialized

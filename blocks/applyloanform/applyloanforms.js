@@ -39,14 +39,18 @@ export let overlay; export let emiOverlay; export let elgOverlay; export let loa
   const loanInput = loanProduct();
   let currentLoanType = loanInput?.dataset?.loanType;
   if (!currentLoanType && loanInput?.value) {
-    const allOptions = document.querySelectorAll('.loan-form-drpdown .subpoints[data-loan-type]');
-    allOptions.forEach((opt) => {
-      if (opt.textContent.trim().toLowerCase() === loanInput.value.trim().toLowerCase()) {
-        currentLoanType = opt.dataset.loanType;
-        loanInput.dataset.loanType = opt.dataset.loanType;
-        loanInput.dataset.loanName = opt.dataset.loanName;
-      }
-    });
+    // Scoped Access - use loaninnerform to scope queries (loaninnerform set by applyLoanFormClick)
+    const formContainer = loaninnerform;
+    if (formContainer) {
+      const allOptions = formContainer.querySelectorAll('.loan-form-drpdown .subpoints[data-loan-type]');
+      allOptions.forEach((opt) => {
+        if (opt.textContent.trim().toLowerCase() === loanInput.value.trim().toLowerCase()) {
+          currentLoanType = opt.dataset.loanType;
+          loanInput.dataset.loanType = opt.dataset.loanType;
+          loanInput.dataset.loanName = opt.dataset.loanName;
+        }
+      });
+    }
   }
   statemasterGetStatesApi(currentLoanType);
   validationJSFunc();
@@ -87,14 +91,21 @@ export function createOverlay(el) {
 
 export let formOverlay = {};
 
-export function applyLoanFormClick() {
-  loaninnerform = document.querySelector('.loan-form-sub-parent');
-  loaninnerform = document.querySelector('.loan-form-sub-parent');
-  const homeloancalcontainer = document.querySelector('.homeloancalculator.block') || document.createElement('div');
+export function applyLoanFormClick(mainContainer) {
+  // Scoped Access - use passed mainContainer, no document.querySelector
+  if (!mainContainer) {
+    console.warn('applyLoanFormClick: mainContainer parameter required');
+    return;
+  }
+  loaninnerform = mainContainer.querySelector('.loan-form-sub-parent');
+  const section = loaninnerform?.closest('.section');
+  const homeloancalcontainer = section?.querySelector('.homeloancalculator.block') 
+    || mainContainer.querySelector('.homeloancalculator.block') 
+    || mainContainer.ownerDocument.createElement('div');
   formOverlay = createOverlay(homeloancalcontainer);
   if (loaninnerform) {
     // checkbox logic
-    const checkboxDiv = document.querySelectorAll('.cmp-form-option-parent');
+    const checkboxDiv = mainContainer.querySelectorAll('.cmp-form-option-parent');
 
     checkboxDiv[0].style.border = '1px solid #f26841';
 
@@ -110,22 +121,22 @@ export function applyLoanFormClick() {
     });
 
     //  Display of form
-    const crossIcon = document.querySelectorAll('.crossimage, .failformcross');
-    const buttonExpert = document.querySelectorAll('.expert');
-    overlay = document.querySelector('.modal-overlay');
-    const firstformbtn = document.querySelector('.first-form-button .cmp-container');
-    bodyElement = document.body;
-    const secondformbtn = document.querySelector('.loan-form-otp-button-container .cmp-container');
-    const otparrow = document.querySelector('.leftarrow');
-    const documentWhatsAppBtn = document.querySelector('.cmp-container--documentrequired .cmp-container .extendedbutton');
-    const productBannerButton = document.querySelector('#loan-banner .cmp-teaser__content .cmp-teaser__action-container .cmp-teaser__action-link');
-    const stickyFooter = document.getElementById('sticky-btn-loan-form');
-    const locationCardButton = document.querySelectorAll(
+    const crossIcon = mainContainer.querySelectorAll('.crossimage, .failformcross');
+    const buttonExpert = mainContainer.querySelectorAll('.expert');
+    overlay = mainContainer.querySelector('.modal-overlay');
+    const firstformbtn = mainContainer.querySelector('.first-form-button .cmp-container');
+    bodyElement = mainContainer.ownerDocument.body;
+    const secondformbtn = mainContainer.querySelector('.loan-form-otp-button-container .cmp-container');
+    const otparrow = mainContainer.querySelector('.leftarrow');
+    const documentWhatsAppBtn = mainContainer.querySelector('.cmp-container--documentrequired .cmp-container .extendedbutton');
+    const productBannerButton = mainContainer.querySelector('#loan-banner .cmp-teaser__content .cmp-teaser__action-container .cmp-teaser__action-link');
+    const stickyFooter = mainContainer.querySelector('#sticky-btn-loan-form');
+    const locationCardButton = mainContainer.querySelectorAll(
       '.cmp-container--branches .cmp-contentfragmentlist .cmp-contentfragment .cmp-contentfragment__elements .cmp-contentfragment__element--ctaName .cmp-contentfragment__element-value',
     );
-    const bannerFormButton = document.querySelectorAll('.cmp-teaser--open-form-action .cmp-teaser .cmp-teaser__action-container .cmp-teaser__action-link');
-    const neeyatBtn = document.querySelectorAll('.open-form-btn');
-    const cardlink = document.querySelector('.location-link');
+    const bannerFormButton = mainContainer.querySelectorAll('.cmp-teaser--open-form-action .cmp-teaser .cmp-teaser__action-container .cmp-teaser__action-link');
+    const neeyatBtn = mainContainer.querySelectorAll('.open-form-btn');
+    const cardlink = mainContainer.querySelector('.location-link');
 
     buttonExpert.forEach((button) => {
       button.addEventListener('click', (e) => {
@@ -244,7 +255,7 @@ export function applyLoanFormClick() {
         }
 
         // formOverlay.hide()
-        const checkingFormopen = document.querySelector('.home-page-calculator-call-xf');
+        const checkingFormopen = mainContainer.querySelector('.home-page-calculator-call-xf');
         /* if (emiOverlay || elgOverlay) {
           if (emiOverlay.classList.contains("show") || elgOverlay.classList.contains("show")) { */
         if (checkingFormopen) {
@@ -264,8 +275,8 @@ export function applyLoanFormClick() {
             loaninnerform.classList.remove('loan-form--open');
             // overlay.classList.remove("show");
 
-            document.querySelector('.modal-overlay').classList.remove('overlay');
-            document.querySelector('.modal-overlay').classList.add('dp-none');
+            overlay.classList.remove('overlay');
+            overlay.classList.add('dp-none');
 
             loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
             loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
@@ -283,8 +294,8 @@ export function applyLoanFormClick() {
           loaninnerform.classList.remove('loan-form--open');
           // overlay.classList.remove("show");
 
-          document.querySelector('.modal-overlay').classList.remove('overlay');
-          document.querySelector('.modal-overlay').classList.add('dp-none');
+          overlay.classList.remove('overlay');
+          overlay.classList.add('dp-none');
 
 
           loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
@@ -315,19 +326,19 @@ export function applyLoanFormClick() {
       firstformbtn.addEventListener('click', () => {
         loaninnerform.classList.add('loan-form-sub-otp');
         otpPhoneNum().textContent = cutomerNo().value;
-        document.querySelector('.wrongotpmessage').style.display = 'none';
+        mainContainer.querySelector('.wrongotpmessage').style.display = 'none';
         startTimer(footer_time_limit, footer_time_out);
-        const timerElement = document.querySelector('.applyloanform .timer');
+        const timerElement = mainContainer.querySelector('.applyloanform .timer');
         if (timerElement) {
           timerElement.style.display = 'block';
         }
         loanOtpInput().value = '';
 
-        document.querySelector('#otp-digits').textContent = '0/4 Digits';
+        mainContainer.querySelector('#otp-digits').textContent = '0/4 Digits';
       });
     }
 
-    const resendOtpBtn = document.querySelector('#loan-form-resend-otp');
+    const resendOtpBtn = mainContainer.querySelector('#loan-form-resend-otp');
     if (resendOtpBtn) {
       resendOtpBtn.addEventListener('click', () => {
         startTimer(footer_time_limit, footer_time_out);
@@ -336,19 +347,19 @@ export function applyLoanFormClick() {
 
     otparrow.addEventListener('click', (e) => {
       loaninnerform.classList.remove('loan-form-sub-otp');
-      document.querySelector('.wrongotpmessage').style.display = 'none';
+      mainContainer.querySelector('.wrongotpmessage').style.display = 'none';
       clearInterval(intervalTime);
       loanOtpInput().value = '';
     });
 
-    const loanSubParent = document.querySelector('.loan-form-sub-parent .cmp-container');
-    emiOverlay = document.querySelector('.cmp-container--emicaloverlay');
-    elgOverlay = document.querySelector('.cmp-container--elgcaloverlay');
+    const loanSubParent = mainContainer.querySelector('.loan-form-sub-parent .cmp-container');
+    emiOverlay = mainContainer.querySelector('.cmp-container--emicaloverlay');
+    elgOverlay = mainContainer.querySelector('.cmp-container--elgcaloverlay');
 
     loaninnerform.addEventListener('click', (event) => {
       if (event.target.classList.contains('subpoints')) {
         const inputId = event.target.dataset.getInput;
-        const input = document.querySelector(`#${inputId}`);
+        const input = mainContainer.querySelector(`#${inputId}`);
         input.value = event.target.textContent.trim();
 
         if (input.id == 'form-loan-type') {
@@ -378,12 +389,12 @@ export function applyLoanFormClick() {
             overlay.style.zIndex = '1000';
           } else {
             // overlay.classList.remove("show");
-            document.querySelector('.modal-overlay').classList.remove('overlay');
-            document.querySelector('.modal-overlay').classList.add('dp-none');
+            overlay.classList.remove('overlay');
+            overlay.classList.add('dp-none');
             loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
             loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
             loaninnerform.style.visibility = 'hidden';
-            document.body.style.overflowY = 'auto';
+            bodyElement.style.overflowY = 'auto';
             resetLoanForm();
             clearInterval(intervalTime);
             loanOtpInput().value = '';
@@ -391,12 +402,12 @@ export function applyLoanFormClick() {
           }
         } else {
           // overlay.classList.remove("show");
-          document.querySelector('.modal-overlay').classList.remove('overlay');
-          document.querySelector('.modal-overlay').classList.add('dp-none');
+          overlay.classList.remove('overlay');
+          overlay.classList.add('dp-none');
           loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
           loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
           loaninnerform.style.visibility = 'hidden';
-          document.body.style.overflowY = 'auto';
+          bodyElement.style.overflowY = 'auto';
           resetLoanForm();
           clearInterval(intervalTime);
           loanOtpInput().value = '';
@@ -416,8 +427,8 @@ export function applyLoanFormClick() {
     overlay.addEventListener('click', (event) => {
       if (window.matchMedia('(max-width: 1024px)').matches) {
         // overlay.classList.remove("show");
-        document.querySelector('.modal-overlay').classList.remove('overlay');
-        document.querySelector('.modal-overlay').classList.add('dp-none');
+        overlay.classList.remove('overlay');
+        overlay.classList.add('dp-none');
         loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
         loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
         loaninnerform.style.visibility = 'hidden';
@@ -455,19 +466,19 @@ export function applyLoanFormClick() {
       arrowImage.classList.toggle('inverted');
     }
 
-    const statecontainer = document.getElementById('statecontainer');
-    const stateparent = document.getElementById('stateparent');
-    const branchcontainer = document.getElementById('branchcontainer');
-    const branchparent = document.getElementById('branchparent');
-    const multiSelect = document.querySelector('.multiselectoptions');
+    const statecontainer = mainContainer.querySelector('#statecontainer');
+    const stateparent = mainContainer.querySelector('#stateparent');
+    const branchcontainer = mainContainer.querySelector('#branchcontainer');
+    const branchparent = mainContainer.querySelector('#branchparent');
+    const multiSelect = mainContainer.querySelector('.multiselectoptions');
     const multiSelectDropdown = multiSelect.nextElementSibling;
-    // let multiSelectContainer=document.querySelector(".multiselectoptions");
+    // let multiSelectContainer=mainContainer.querySelector(".multiselectoptions");
 
     let isStateContainerVisible = false;
     let isBranchContainerVisible = false;
     let isLoanContainerVisible = false;
 
-    document.addEventListener('click', handleClickOutside);
+    mainContainer.ownerDocument.addEventListener('click', handleClickOutside);
 
     function handleClickOutside(event) {
       if (
@@ -499,7 +510,7 @@ export function applyLoanFormClick() {
       }
     }
 
-    const branchArrowImg = document.querySelector('#branchparent .arrowimage');
+    const branchArrowImg = mainContainer.querySelector('#branchparent .arrowimage');
     stateparent.addEventListener('click', function (event) {
       branchcontainer.style.visibility = 'hidden';
       branchArrowImg.classList.remove('inverted');
@@ -512,7 +523,7 @@ export function applyLoanFormClick() {
       event.stopPropagation();
     });
 
-    const stateArrowImg = document.querySelector('#stateparent .arrowimage');
+    const stateArrowImg = mainContainer.querySelector('#stateparent .arrowimage');
     branchparent.addEventListener('click', function (event) {
       statecontainer.style.visibility = 'hidden';
       stateArrowImg.classList.remove('inverted');
@@ -541,8 +552,8 @@ export function applyLoanFormClick() {
       event.stopPropagation();
     });
 
-    const checkbox = document.getElementById('loanformcheck');
-    const circle = document.querySelector('.circle');
+    const checkbox = mainContainer.querySelector('#loanformcheck');
+    const circle = mainContainer.querySelector('.circle');
 
     checkbox.addEventListener('change', function () {
       if (this.checked) {
@@ -555,7 +566,7 @@ export function applyLoanFormClick() {
     });
 
     function resetLoanForm() {
-      const applyloanform = document.querySelector('.applyloanform');
+      const applyloanform = mainContainer.querySelector('.applyloanform');
       const errorMessages = applyloanform.querySelectorAll('.loan-form-err');
 
       errorMessages.forEach((errMsg) => {
@@ -567,9 +578,9 @@ export function applyLoanFormClick() {
       inputs.forEach((i) => (i.value = ''));
 
       formTc().checked = false;
-      document.querySelector('#radio-salary').checked = true;
+      mainContainer.querySelector('#radio-salary').checked = true;
 
-      const submitBtns = document.querySelectorAll('.loan-form-button-container .cmp-container');
+      const submitBtns = mainContainer.querySelectorAll('.loan-form-button-container .cmp-container');
       submitBtns.forEach((btn) => {
         btn.classList.remove('loan-form-button-active');
       });
@@ -580,9 +591,9 @@ export function applyLoanFormClick() {
     let intervalTime;
 
     otpNumChange().addEventListener('click', () => {
-      const loaninnerform = document.querySelector('.loan-form-sub-parent');
+      // Use module-scoped loaninnerform (already set by applyLoanFormClick)
       loaninnerform.classList.remove('loan-form-sub-otp');
-      document.querySelector('.wrongotpmessage').style.display = 'none';
+      mainContainer.querySelector('.wrongotpmessage').style.display = 'none';
       clearInterval(intervalTime);
       loanOtpInput().value = '';
     });
@@ -595,20 +606,21 @@ export function applyLoanFormClick() {
     function startTimer(footer_time_limit, footer_time_out) {
       clearInterval(footer_time_out);
       clearInterval(intervalTime);
-      const resendOtpBtn = document.querySelector('#loan-form-resend-otp');
+      const resendOtpBtn = mainContainer.querySelector('#loan-form-resend-otp');
+      const timerEl = mainContainer.querySelector('.applyloanform .timer');
       intervalTime = setInterval(() => {
         if (footer_time_limit >= 0) {
-          document.querySelector('.applyloanform .timer').style.display = 'block';
+          timerEl.style.display = 'block';
           if (footer_time_limit <= 9) {
-            document.querySelector('.applyloanform .timer').innerHTML = '00:' + `0${footer_time_limit}`;
+            timerEl.innerHTML = '00:' + `0${footer_time_limit}`;
           } else {
-            document.querySelector('.applyloanform .timer').innerHTML = `00:${footer_time_limit}`;
+            timerEl.innerHTML = `00:${footer_time_limit}`;
           }
           footer_time_limit--;
           resendOtpBtn.style.pointerEvents = 'none';
         } else {
           clearInterval(footer_time_out);
-          document.querySelector('.applyloanform .timer').style.display = 'none';
+          timerEl.style.display = 'none';
           resendOtpBtn.style.pointerEvents = 'unset';
         }
       }, 1000);
@@ -618,11 +630,14 @@ export function applyLoanFormClick() {
 
 export function formOpen() {
   // formOverlay.show();
+  // Use module-scoped overlay variable (set by applyLoanFormClick)
+  if (!overlay) return;
+  
   if (window.matchMedia('(max-width: 1024px)').matches) {
     // overlay.classList.add("show");
 
-    document.querySelector('.modal-overlay').classList.add('overlay');
-    document.querySelector('.modal-overlay').classList.remove('dp-none');
+    overlay.classList.add('overlay');
+    overlay.classList.remove('dp-none');
 
     loaninnerform.classList.add('loan-form--open');
     loaninnerform.style.visibility = 'visible';
@@ -631,15 +646,17 @@ export function formOpen() {
   } else {
     // overlay.classList.add("show");
 
-    document.querySelector('.modal-overlay').classList.add('overlay');
-    document.querySelector('.modal-overlay').classList.remove('dp-none');
+    overlay.classList.add('overlay');
+    overlay.classList.remove('dp-none');
 
     /* if (emiOverlay || elgOverlay) {
       if (emiOverlay.classList.contains("show") || elgOverlay.classList.contains("show")) {
         overlay.style.zIndex = "1205";
       }
     } */
-    const checkingFormopen = document.querySelector('.home-page-calculator-call-xf');
+    // Scoped Access - search within loaninnerform's main container
+    const mainEl = loaninnerform?.closest('main');
+    const checkingFormopen = mainEl?.querySelector('.home-page-calculator-call-xf');
 
     if (checkingFormopen) {
       if (checkingFormopen.querySelector('.homeloancalculator-wrapper .show') || checkingFormopen.querySelector('.eligibilitycalculator-wrapper .show')) {
@@ -659,5 +676,5 @@ window.addEventListener('pageshow', (event) => {
   }
 });
 
-
-  handleOpenFormOnClick(document);
+// Note: handleOpenFormOnClick should be called by blocks with scoped element
+// e.g., handleOpenFormOnClick(block.closest('main'))

@@ -2,6 +2,61 @@ import { selectBranchInteraction } from '../dl.js';
 import {getMetadata} from './aem.js';
 import { targetObject } from './scripts.js'
 
+/**
+ * Deferred execution for cross-block communication.
+ * Works in both parallel loading (blocks load simultaneously) and sequential loading.
+ * 
+ * @param {Function} callback - Function to execute when siblings are ready
+ * @param {Object} options - Configuration options
+ * @param {string} options.waitFor - Optional CSS selector to wait for before executing
+ * @param {Element} options.scope - Element scope to search within (default: document)
+ * @param {number} options.maxRetries - Maximum retry attempts (default: 3)
+ * @param {number} options.retryDelay - Delay between retries in ms (default: 100)
+ */
+export function whenBlocksReady(callback, options = {}) {
+  const { waitFor, scope = document, maxRetries = 3, retryDelay = 100 } = options;
+  
+  const execute = (retryCount = 0) => {
+    // If no waitFor selector, execute immediately in next frame
+    if (!waitFor) {
+      requestAnimationFrame(() => {
+        try {
+          callback();
+        } catch (error) {
+          console.warn('whenBlocksReady callback error:', error);
+        }
+      });
+      return;
+    }
+    
+    // Check if target element exists
+    const targetExists = scope.querySelector(waitFor);
+    
+    if (targetExists) {
+      // Target found - execute callback
+      try {
+        callback();
+      } catch (error) {
+        console.warn('whenBlocksReady callback error:', error);
+      }
+    } else if (retryCount < maxRetries) {
+      // Target not found - retry after delay (handles parallel loading)
+      setTimeout(() => execute(retryCount + 1), retryDelay);
+    } else {
+      // Max retries reached - execute anyway (target may be optional)
+      console.warn(`whenBlocksReady: "${waitFor}" not found after ${maxRetries} retries, executing anyway`);
+      try {
+        callback();
+      } catch (error) {
+        console.warn('whenBlocksReady callback error:', error);
+      }
+    }
+  };
+  
+  // Start with RAF to ensure current block's DOM is ready
+  requestAnimationFrame(() => execute());
+}
+
 export function moveAttributes(from, to, attributes) {
   if (!attributes) {
     // eslint-disable-next-line no-param-reassign

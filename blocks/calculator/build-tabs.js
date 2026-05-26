@@ -6,10 +6,9 @@
  * @param {HTMLAnchorElement[]} ctaItems
  * @param {Element[]} blocks
  * @param {boolean} isGstCalculator - Whether this is a GST calculator
- * @param {object} disclaimer - Disclaimer data object
  * @returns {HTMLElement}
  */
-export function buildCalculatorParent(description, tabNames, ctaItems, blocks, isGstCalculator = false, disclaimer = {}) {
+export function buildCalculatorParent(description, tabNames, ctaItems, blocks, isGstCalculator = false) {
   // For GST: always show pill-button tabs even with single calculator
   // For EMI/Eligibility: only show tabs with multiple calculators
   const hasMultipleCalcs = blocks.length > 1;
@@ -62,19 +61,6 @@ export function buildCalculatorParent(description, tabNames, ctaItems, blocks, i
         </div>`
     : '';
 
-  // Build disclaimer HTML if authored
-  const disclaimerHTML = disclaimer?.title
-    ? `<div class="discalimer-calc">
-        <span class="title">${disclaimer.title}</span>
-        <p class="discalimer-first-para">${disclaimer.para1 || ''}</p>
-        <div class="disclaimer-container dp-none">
-          <p class="discalimer-second-para">${disclaimer.para2 || ''}</p>
-          <p class="discalimer-thrid-para">${disclaimer.para3 || ''}</p>
-        </div>
-        <button class="read-more-discalimer-calc" data-read-more="${disclaimer.readMoreText || 'Read more'}" data-read-less="${disclaimer.readLessText || 'Read less'}">${disclaimer.readMoreText || 'Read more'}</button>
-      </div>`
-    : '';
-
   const calcParent = document.createElement('div');
   calcParent.className = 'calculator-parent';
   calcParent.innerHTML = `
@@ -85,27 +71,7 @@ export function buildCalculatorParent(description, tabNames, ctaItems, blocks, i
         <div class="calctabs"></div>
       </div>
     </div>
-    <div class="discalimer-details${disclaimer?.title ? '' : ' dp-none'}">${disclaimerHTML}</div>
   `;
-
-  // Wire up disclaimer Read more/Read less toggle
-  if (disclaimer?.title) {
-    const readMoreBtn = calcParent.querySelector('.read-more-discalimer-calc');
-    const disclaimerContainer = calcParent.querySelector('.disclaimer-container');
-    if (readMoreBtn && disclaimerContainer) {
-      readMoreBtn.addEventListener('click', (e) => {
-        const btn = e.target;
-        const isExpanded = !disclaimerContainer.classList.contains('dp-none');
-        if (isExpanded) {
-          disclaimerContainer.classList.add('dp-none');
-          btn.textContent = btn.dataset.readMore || 'Read more';
-        } else {
-          disclaimerContainer.classList.remove('dp-none');
-          btn.textContent = btn.dataset.readLess || 'Read less';
-        }
-      });
-    }
-  }
 
   // CTA buttons
   if (ctaItems.length > 0) {

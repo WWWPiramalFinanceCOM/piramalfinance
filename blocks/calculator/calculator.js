@@ -116,7 +116,6 @@ function triggerPartPaymentCalculation(calcPanel) {
     const tenureInput = calcPanel.querySelector('[data-cal-input="tenure"]');
     
     if (!loanAmtInput || !roiInput || !tenureInput) {
-      console.log('[calculator] EMI inputs not found for calculation');
       return;
     }
     
@@ -126,8 +125,6 @@ function triggerPartPaymentCalculation(calcPanel) {
     
     // Collect all part payment data
     const partPayments = Object.values(partPaymentData).filter(p => p && p.monthDifference && p.partPayAmount);
-    
-    console.log('[calculator] Triggering calculation:', { principal, rate, tenure, partPayments });
     
     // Call the calculation function
     updatePartPayment(rate, principal, tenure, partPayments);
@@ -156,8 +153,6 @@ function scrollPartPayment(calcPanel) {
  * Reset all part payments
  */
 function resetAllPartPayments(calcPanel) {
-  console.log('[calculator] Resetting all part payments');
-  
   // Clear all part payment data
   Object.keys(partPaymentData).forEach(key => delete partPaymentData[key]);
   
@@ -224,8 +219,6 @@ function resetAllPartPayments(calcPanel) {
   // Remove scroll
   const boxCont = calcPanel.querySelector('.boxCont');
   if (boxCont) boxCont.classList.remove('scrolladd');
-  
-  console.log('[calculator] Reset complete');
 }
 
 /**
@@ -287,8 +280,6 @@ function createPartPaymentCard(calcPanel, count) {
 async function initPartPaymentDatePicker(calcPanel) {
   if (partPaymentDatePickerInitialized) return;
   
-  console.log('[calculator] Initializing Part Payment...');
-  
   try {
     // Load AirDatepicker CSS
     if (!document.querySelector('link[href*="datepickerlib.css"]')) {
@@ -296,7 +287,6 @@ async function initPartPaymentDatePicker(calcPanel) {
       css.rel = 'stylesheet';
       css.href = '/blocks/datepickerlib/datepickerlib.css';
       document.head.appendChild(css);
-      console.log('[calculator] Loaded datepicker CSS');
     }
     
     // Import libraries - these set window.AirDatepicker and window.Popper
@@ -310,9 +300,6 @@ async function initPartPaymentDatePicker(calcPanel) {
     const AirDatepicker = window.AirDatepicker;
     const Popper = window.Popper;
     
-    console.log('[calculator] AirDatepicker:', typeof AirDatepicker);
-    console.log('[calculator] Popper:', typeof Popper);
-    
     if (!AirDatepicker) {
       console.error('[calculator] AirDatepicker not available after import');
       return;
@@ -324,13 +311,6 @@ async function initPartPaymentDatePicker(calcPanel) {
     const addMoreBtn = calcPanel.querySelector('.add-more-part-payment-btn');
     const boxCont = calcPanel.querySelector('.boxCont');
     
-    console.log('[calculator] Elements:', {
-      firstLoanInput: !!firstLoanInput,
-      partPayment1Input: !!partPayment1Input,
-      clearAllBtn: !!clearAllBtn,
-      addMoreBtn: !!addMoreBtn
-    });
-    
     if (!firstLoanInput) {
       console.error('[calculator] First loan input not found');
       return;
@@ -338,8 +318,6 @@ async function initPartPaymentDatePicker(calcPanel) {
     
     // Helper to create datepicker - use selector string like existing code
     const createDatePicker = (selector, minDate = '') => {
-      console.log('[calculator] Creating datepicker for:', selector, 'minDate:', minDate);
-      
       const options = {
         position({ $datepicker, $target, $pointer, done }) {
           if (Popper && Popper.createPopper) {
@@ -370,7 +348,6 @@ async function initPartPaymentDatePicker(calcPanel) {
         },
         onSelect({ date, formattedDate }) {
           if (date) {
-            console.log('[calculator] Date selected:', formattedDate);
             document.querySelector(selector).dispatchEvent(new Event('change', { bubbles: true }));
           }
         },
@@ -387,7 +364,6 @@ async function initPartPaymentDatePicker(calcPanel) {
       datePickerInstances.set(selector, picker);
       document.querySelector(selector).classList.add('datepickerInit');
       
-      console.log('[calculator] Datepicker created for:', selector);
       return picker;
     };
     
@@ -401,7 +377,6 @@ async function initPartPaymentDatePicker(calcPanel) {
           e.preventDefault();
           e.stopPropagation();
           if (!input.disabled) {
-            console.log('[calculator] Icon clicked for:', selector);
             picker.show();
           }
         });
@@ -417,14 +392,12 @@ async function initPartPaymentDatePicker(calcPanel) {
     
     // First loan date change handler
     firstLoanInput.addEventListener('change', () => {
-      console.log('[calculator] First loan date changed:', firstLoanInput.value);
       if (!firstLoanInput.value) return;
       
       // Enable part payment 1 input
       partPayment1Input.disabled = false;
       
       const minDate = increaseByOneMonth(convertDateToStandard(firstLoanInput.value));
-      console.log('[calculator] Part payment minDate:', minDate);
       
       // Initialize or update part payment 1 date picker
       if (!partPayment1Input.classList.contains('datepickerInit')) {
@@ -501,10 +474,8 @@ async function initPartPaymentDatePicker(calcPanel) {
     // Clear All button handler
     if (clearAllBtn) {
       clearAllBtn.style.cursor = 'pointer';
-      console.log('[calculator] Setting up Clear All handler');
       clearAllBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('[calculator] Clear All clicked');
         resetAllPartPayments(calcPanel);
         initPartPaymentSliders(calcPanel);
         // Trigger calculation with empty part payments
@@ -515,7 +486,6 @@ async function initPartPaymentDatePicker(calcPanel) {
     // Add More button handler
     if (addMoreBtn) {
       addMoreBtn.addEventListener('click', () => {
-        console.log('[calculator] Add More clicked');
         addMoreBtn.classList.add('disabled');
         
         const card = createPartPaymentCard(calcPanel, partPaymentCount);
@@ -576,7 +546,6 @@ async function initPartPaymentDatePicker(calcPanel) {
     triggerPartPaymentCalculation(calcPanel);
     
     partPaymentDatePickerInitialized = true;
-    console.log('[calculator] Part Payment initialization complete');
     
   } catch (error) {
     console.error('[calculator] Failed to initialize Part Payment:', error);
@@ -637,20 +606,14 @@ function combineSection(section) {
   section.classList.add('homeloancalculator');
 
   const calcWrappers = [...section.querySelectorAll('.calculator-wrapper')];
-  // eslint-disable-next-line no-console
-  console.log('[calculator] combineSection: Found', calcWrappers.length, 'calculator-wrappers');
 
   if (calcWrappers.length < 1) return;
 
   const blocks = calcWrappers.map((w) => w.querySelector('.calculator.block')).filter(Boolean);
-  // eslint-disable-next-line no-console
-  console.log('[calculator] combineSection: Found', blocks.length, 'calculator blocks');
 
   if (blocks.length < 1) return;
 
   const { description, tabNames, calcNames, productType } = prepareBlocks(blocks);
-  // eslint-disable-next-line no-console
-  console.log('[calculator] combineSection: tabNames=', tabNames, 'calcNames=', calcNames);
   
   // Add gst-calculator class if any calculator is GST type (for pill-button tab styles)
   const hasGstCalc = calcNames.some((name) => name.includes('gst'));
@@ -661,8 +624,6 @@ function combineSection(section) {
   const { ctaItems, dcwToRemove } = extractContent(section);
 
   const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc);
-  // eslint-disable-next-line no-console
-  console.log('[calculator] combineSection: Built calcParent, tabs exist:', !!calcParent.querySelector('.headingtabs'));
 
   calcWrappers.forEach((w) => w.remove());
   dcwToRemove.forEach((dcw) => dcw.remove());
@@ -672,8 +633,6 @@ function combineSection(section) {
   // Check if calculator-radio block exists - if not, add a hidden fallback radio
   const hasRadioBlock = section.querySelector('.calculator-radio');
   if (!hasRadioBlock) {
-    // eslint-disable-next-line no-console
-    console.log('[calculator] combineSection: No calculator-radio block, adding fallback radio');
     const fallbackRadio = document.createElement('input');
     fallbackRadio.type = 'radio';
     fallbackRadio.name = 'calculator-foir';
@@ -718,13 +677,9 @@ function combineSection(section) {
     if (checkedRadio) {
       const foirType = (checkedRadio.dataset && checkedRadio.dataset.calFoir) || 'salaried';
       calcParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
-      // eslint-disable-next-line no-console
-      console.log('[calculator] combineSection set background for foirType:', foirType);
     } else {
       // No radio found at all - default to salaried background
       calcParent.style.background = SALARIED_BG;
-      // eslint-disable-next-line no-console
-      console.log('[calculator] combineSection: No radio found, defaulting to salaried background');
     }
   }
 }
@@ -859,9 +814,6 @@ function initSection(section, retryCount = 0) {
   // Only required for EMI/Eligibility calculators
   const hasCheckedRadio = section.querySelector('[data-cal-foir]:checked');
 
-  // eslint-disable-next-line no-console
-  console.log('[calculator] initSection: retry=', retryCount, 'allReady=', allReady, 'isSpecialCalc=', isSpecialCalc, 'hasCheckedRadio=', !!hasCheckedRadio);
-
   // If not ready, retry (up to 30 times = 3 seconds)
   // GST/APR/Part Payment calculators skip the radio check
   if (!allReady || (!isSpecialCalc && !hasCheckedRadio)) {
@@ -876,8 +828,6 @@ function initSection(section, retryCount = 0) {
     if (retryCount < 30) return;
   }
 
-  // eslint-disable-next-line no-console
-  console.log('[calculator] initSection: Proceeding with initialization');
   initialisedSections.add(section);
 
   // Initialize sliders with clean event handlers (no conflicts with calculator-radio)
@@ -907,8 +857,6 @@ function initSection(section, retryCount = 0) {
       const SALARIED_BG = 'rgb(255, 247, 244)';
       const BUSINESS_BG = 'rgb(238, 243, 255)';
       calculatorParent.style.background = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
-      // eslint-disable-next-line no-console
-      console.log('[calculator] initSection set background for foirType:', foirType);
     }
   }
 
@@ -948,13 +896,9 @@ function getCalcType(calcPanel) {
 
 function runSingleCalculation(section, calcPanel) {
   if (!calcPanel) {
-    // eslint-disable-next-line no-console
-    console.warn('[calculator] runSingleCalculation: No calcPanel provided');
     return;
   }
   const calcType = getCalcType(calcPanel);
-  // eslint-disable-next-line no-console
-  console.log('[calculator] runSingleCalculation called, calcType:', calcType, 'panel classes:', calcPanel.className);
 
   if (calcType === 'emi' || calcType === 'eligibility') {
     // Use the existing proven pipeline from emiandeligiblitycalc
@@ -1111,13 +1055,9 @@ function getVisibleCalculator(section) {
 function runInitialCalculation(section) {
   const calctabs = section.querySelector('.calctabs');
   if (!calctabs) {
-    // eslint-disable-next-line no-console
-    console.warn('[calculator] runInitialCalculation: No .calctabs found');
     return;
   }
   const panels = [...calctabs.querySelectorAll('.commoncalculator')];
-  // eslint-disable-next-line no-console
-  console.log('[calculator] runInitialCalculation: Running calculation for', panels.length, 'panels');
   
   panels.forEach((panel) => {
     runSingleCalculation(section, panel);
@@ -1148,9 +1088,6 @@ export default async function decorate(block) {
   const calcName = (firstRowChildren?.[1]?.textContent?.trim() || '').toLowerCase();
   const isEligibility = calcName.includes('eligibility');
   const isPartPayment = calcName.includes('partpayment');
-  
-  // Debug: Log calculator type detection
-  console.log('[calculator] decorate: calcName=', calcName, 'isPartPayment=', isPartPayment, 'isEligibility=', isEligibility);
   const sliderPrefix = `c${blockIndex}s`;
 
   const parentEmi = document.createElement('div');
@@ -1217,9 +1154,6 @@ export default async function decorate(block) {
   
   // Get imageAlt from actual img tag's alt attribute
   const imageAlt = imgEl?.alt || 'Calculator';
-  
-  // Debug: Log all text elements after image to see AEM output
-  console.log('[calculator] allTextAfterImage:', allTextAfterImage.map(el => el.textContent?.trim()));
   
   // For GST/APR calculators: only use imageLabel (no principal/interest breakdown)
   // For EMI/Eligibility: use imageLabel, principalLabel, interestLabel
@@ -1311,7 +1245,6 @@ export default async function decorate(block) {
 
   // Part Payment Calculator has special three-metric output layout
   if (isPartPayment) {
-    console.log('[calculator] Building Part Payment output layout for calcName:', calcName);
     // Part Payment field extraction from authored content
     // Container structure in component-models.json (sibling containers, text flattens in order):
     //   Output 1 Container: [2] output1ImageAlt, [3] output1Label
@@ -1461,7 +1394,6 @@ export default async function decorate(block) {
     `;
   } else {
     // Standard EMI/Eligibility/GST/APR output layout
-    console.log('[calculator] Building standard output for calcName:', calcName, 'imageLabel:', imageLabel, 'hasAmountBreakdown:', hasAmountBreakdown);
     // imageLabel shows above EMI result (e.g. "Your home loan EMI is a")
     outputDiv.innerHTML = `
       <div class="output-parent">

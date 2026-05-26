@@ -2922,11 +2922,15 @@
       {
         "component": "select",
         "name": "col1_type",
-        "value": "hl",
+        "value": "",
         "label": "Loan Product Type",
-        "description": "Select the loan product this calculator is for",
+        "description": "Select the loan product this calculator is for (leave empty for GST/APR/Part Payment calculators)",
         "valueType": "string",
         "options": [
+          {
+            "name": "None (Not Applicable)",
+            "value": ""
+          },
           {
             "name": "Home Loan (HL)",
             "value": "hl"
@@ -3543,11 +3547,15 @@
       {
         "component": "select",
         "name": "col1_productType",
-        "value": "hl",
+        "value": "",
         "label": "Loan Product Type",
-        "description": "Select the loan product for hidden tracking (used for analytics)",
+        "description": "Select the loan product for hidden tracking (leave empty for GST/APR/Part Payment calculators)",
         "valueType": "string",
         "options": [
+          {
+            "name": "None (Not Applicable)",
+            "value": ""
+          },
           {
             "name": "Home Loan (HL)",
             "value": "hl"

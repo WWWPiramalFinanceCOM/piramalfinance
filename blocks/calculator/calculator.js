@@ -1148,6 +1148,9 @@ export default async function decorate(block) {
   const calcName = (firstRowChildren?.[1]?.textContent?.trim() || '').toLowerCase();
   const isEligibility = calcName.includes('eligibility');
   const isPartPayment = calcName.includes('partpayment');
+  
+  // Debug: Log calculator type detection
+  console.log('[calculator] decorate: calcName=', calcName, 'isPartPayment=', isPartPayment, 'isEligibility=', isEligibility);
   const sliderPrefix = `c${blockIndex}s`;
 
   const parentEmi = document.createElement('div');
@@ -1212,16 +1215,32 @@ export default async function decorate(block) {
     ? firstRowArray.slice(imageIndex + 1).filter(el => el.textContent?.trim())
     : firstRowArray.slice(2).filter(el => el.textContent?.trim() && !el.querySelector('img')); // Skip productType[0], calcName[1]
   
-  // Limit to first 3 elements max - the expected output fields (imageLabel, principalLabel, interestLabel)
-  const textElementsAfterImage = allTextAfterImage.slice(0, 3);
-  
   // Get imageAlt from actual img tag's alt attribute
   const imageAlt = imgEl?.alt || 'Calculator';
   
-  // Order: imageLabel[0], principalLabel[1], interestLabel[2]
-  const imageLabel = textElementsAfterImage[0]?.textContent?.trim() || '';
-  const principalLabel = textElementsAfterImage[1]?.textContent?.trim() || '';
-  const interestLabel = textElementsAfterImage[2]?.textContent?.trim() || '';
+  // Debug: Log all text elements after image to see AEM output
+  console.log('[calculator] allTextAfterImage:', allTextAfterImage.map(el => el.textContent?.trim()));
+  
+  // For GST/APR calculators: only use imageLabel (no principal/interest breakdown)
+  // For EMI/Eligibility: use imageLabel, principalLabel, interestLabel
+  const isGstOrApr = calcName.includes('gst') || calcName.includes('apr');
+  
+  // First element is always imageLabel
+  const imageLabel = allTextAfterImage[0]?.textContent?.trim() || '';
+  
+  // Principal/Interest only matter for EMI/Eligibility calculators
+  // GST/APR/PartPayment: no breakdown section
+  let principalLabel = '';
+  let interestLabel = '';
+  
+  if (!isGstOrApr && !isPartPayment) {
+    // Take only first 3 elements: imageLabel, principalLabel, interestLabel
+    // Any extras beyond that are due to Part Payment field defaults leaking
+    const limitedText = allTextAfterImage.slice(0, 3);
+    principalLabel = limitedText[1]?.textContent?.trim() || '';
+    interestLabel = limitedText[2]?.textContent?.trim() || '';
+  }
+  
   const hasAmountBreakdown = principalLabel || interestLabel;
 
   // Build slider rows from remaining children (skip radio item rows)
@@ -1292,6 +1311,7 @@ export default async function decorate(block) {
 
   // Part Payment Calculator has special three-metric output layout
   if (isPartPayment) {
+    console.log('[calculator] Building Part Payment output layout for calcName:', calcName);
     // Part Payment field extraction from authored content
     // Container structure in component-models.json (sibling containers, text flattens in order):
     //   Output 1 Container: [2] output1ImageAlt, [3] output1Label
@@ -1441,6 +1461,7 @@ export default async function decorate(block) {
     `;
   } else {
     // Standard EMI/Eligibility/GST/APR output layout
+    console.log('[calculator] Building standard output for calcName:', calcName, 'imageLabel:', imageLabel, 'hasAmountBreakdown:', hasAmountBreakdown);
     // imageLabel shows above EMI result (e.g. "Your home loan EMI is a")
     outputDiv.innerHTML = `
       <div class="output-parent">

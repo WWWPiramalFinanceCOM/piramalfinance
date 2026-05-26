@@ -648,7 +648,7 @@ function combineSection(section) {
 
   if (blocks.length < 1) return;
 
-  const { description, tabNames, calcNames, productType } = prepareBlocks(blocks);
+  const { description, tabNames, calcNames, productType, disclaimer } = prepareBlocks(blocks);
   // eslint-disable-next-line no-console
   console.log('[calculator] combineSection: tabNames=', tabNames, 'calcNames=', calcNames);
   
@@ -660,7 +660,7 @@ function combineSection(section) {
   
   const { ctaItems, dcwToRemove } = extractContent(section);
 
-  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc);
+  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc, disclaimer);
   // eslint-disable-next-line no-console
   console.log('[calculator] combineSection: Built calcParent, tabs exist:', !!calcParent.querySelector('.headingtabs'));
 

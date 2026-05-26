@@ -3412,6 +3412,59 @@
             "valueType": "string"
           }
         ]
+      },
+      {
+        "component": "tab",
+        "label": "Disclaimer Settings",
+        "name": "disclaimerTab"
+      },
+      {
+        "component": "text",
+        "name": "col1_disclaimerTitle",
+        "value": "",
+        "label": "Disclaimer Heading",
+        "description": "Heading for disclaimer section (e.g., 'Disclaimer')",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "col1_disclaimerPara1",
+        "value": "",
+        "label": "Disclaimer - First Paragraph (Visible)",
+        "description": "This paragraph is always visible. Use for the main disclaimer text.",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "col1_disclaimerPara2",
+        "value": "",
+        "label": "Disclaimer - Second Paragraph (Hidden)",
+        "description": "This paragraph is hidden until 'Read more' is clicked.",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "col1_disclaimerPara3",
+        "value": "",
+        "label": "Disclaimer - Third Paragraph (Hidden)",
+        "description": "This paragraph is hidden until 'Read more' is clicked.",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "col1_disclaimerReadMoreText",
+        "value": "Read more",
+        "label": "Read More Button Text",
+        "description": "Text for the expand/collapse button",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "col1_disclaimerReadLessText",
+        "value": "Read less",
+        "label": "Read Less Button Text",
+        "description": "Text shown when disclaimer is expanded",
+        "valueType": "string"
       }
     ]
   },

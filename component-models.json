@@ -180,6 +180,13 @@
         "multi": false
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
         "component": "richtext",
         "name": "text",
         "value": "",
@@ -444,12 +451,28 @@
         "multi": false
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReference1Alt",
+        "value": "",
+        "label": "Ribbon Image 1 Alt Text",
+        "description": "Sets the alt text for ribbon image 1."
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "fileReference2",
         "label": "Ribbon Image 2",
         "description": "Sets the ribbon image of the testimonial.",
         "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReference2Alt",
+        "value": "",
+        "label": "Ribbon Image 2 Alt Text",
+        "description": "Sets the alt text for ribbon image 2."
       },
       {
         "component": "reference",
@@ -460,12 +483,28 @@
         "multi": false
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReference3Alt",
+        "value": "",
+        "label": "Ribbon Image 3 Alt Text",
+        "description": "Sets the alt text for ribbon image 3."
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "fileReference4",
         "label": "Ribbon Image 4",
         "description": "Sets the ribbon image of the testimonial.",
         "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReference4Alt",
+        "value": "",
+        "label": "Ribbon Image 4 Alt Text",
+        "description": "Sets the alt text for ribbon image 4."
       },
       {
         "component": "select",
@@ -634,6 +673,14 @@
         "value": "",
         "label": "Offer documents image",
         "description": "Sets the image of the documents."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "offer-documents-image-alt",
+        "value": "",
+        "label": "Offer documents image alt text",
+        "description": "Sets the alt text of the documents image."
       }
     ]
   },
@@ -648,11 +695,25 @@
         "label": "Previous Icon"
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "previconAlt",
+        "value": "",
+        "label": "Previous Icon Alt Text"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "nexticon",
         "value": "",
         "label": "Next Icon"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nexticonAlt",
+        "value": "",
+        "label": "Next Icon Alt Text"
       },
       {
         "component": "select",
@@ -787,11 +848,25 @@
         "label": "Set previous icon on tab carousel"
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabpictureprevAlt",
+        "value": "",
+        "label": "Previous Tab Icon Alt Text"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "tabpicturenext",
         "value": "",
         "label": "Set next icon on tab carousel"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabpicturenextAlt",
+        "value": "",
+        "label": "Next Tab Icon Alt Text"
       },
       {
         "component": "text",
@@ -865,11 +940,25 @@
         "label": "Set previous icon on tab carousel"
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabpictureprevAlt",
+        "value": "",
+        "label": "Previous Tab Icon Alt Text"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "tabpicturenext",
         "value": "",
         "label": "Set next icon on tab carousel"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabpicturenextAlt",
+        "value": "",
+        "label": "Next Tab Icon Alt Text"
       },
       {
         "component": "text",
@@ -905,6 +994,14 @@
         "description": "Sets the path of the image on the tab."
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab-image-1-alt",
+        "value": "",
+        "label": "Tab Image 1 Alt Text",
+        "description": "Sets the alt text of tab image 1."
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "tab-image-2",
@@ -913,12 +1010,28 @@
         "description": "Sets the path of the image on the tab."
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab-image-2-alt",
+        "value": "",
+        "label": "Tab Image 2 Alt Text",
+        "description": "Sets the alt text of tab image 2."
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "tab-image-3",
         "value": "",
         "label": "Tab Image 3",
         "description": "Sets the path of the image on the tab."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab-image-3-alt",
+        "value": "",
+        "label": "Tab Image 3 Alt Text",
+        "description": "Sets the alt text of tab image 3."
       }
     ]
   },
@@ -987,11 +1100,25 @@
         "label": "Previous Icon"
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "previconAlt",
+        "value": "",
+        "label": "Previous Icon Alt Text"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "nexticon",
         "value": "",
         "label": "Next Icon"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nexticonAlt",
+        "value": "",
+        "label": "Next Icon Alt Text"
       },
       {
         "component": "select",
@@ -1053,12 +1180,28 @@
         "multi": false
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReferenceBackgroundAlt",
+        "value": "",
+        "label": "Background Image Alt Text",
+        "description": "Alt text for the background image."
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "fileReference1",
         "label": "The Multi teaser image",
         "description": "The Multi teaser image",
         "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReference1Alt",
+        "value": "",
+        "label": "Multi Teaser Image Alt Text",
+        "description": "Alt text for the multi teaser image."
       },
       {
         "component": "text",
@@ -1603,6 +1746,14 @@
       {
         "component": "text",
         "valueType": "string",
+        "name": "mobile-bg-image-alt",
+        "value": "",
+        "label": "Mobile Background Image Alt Text",
+        "description": "Alt text for mobile background image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
         "name": "bgcolorcode",
         "value": "",
         "label": "Teaser Background Color Code",
@@ -2003,6 +2154,14 @@
         "name": "fileReference3",
         "label": "Mobile Image",
         "description": "Mobile Image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReference3Alt",
+        "value": "",
+        "label": "Mobile Image Alt Text",
+        "description": "Alt text for mobile image"
       }
     ]
   },
@@ -2167,16 +2326,34 @@
         "label": "Key Feature Image Plus"
       },
       {
+        "component": "text",
+        "name": "keyfeatureimageplusalt",
+        "label": "Key Feature Image Plus Alt",
+        "valueType": "string"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "keyfeatureimageminus",
         "label": "Key Feature Image Minus"
       },
       {
+        "component": "text",
+        "name": "keyfeatureimageminusalt",
+        "label": "Key Feature Image Minus Alt",
+        "valueType": "string"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "keyfeatureimageinnerimage1",
         "label": "Key Feature Inner Image"
+      },
+      {
+        "component": "text",
+        "name": "keyfeatureimageinnerimage1alt",
+        "label": "Key Feature Inner Image 1 Alt",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -2191,6 +2368,12 @@
         "label": "Key Feature Inner Image"
       },
       {
+        "component": "text",
+        "name": "keyfeatureimageinnerimage2alt",
+        "label": "Key Feature Inner Image 2 Alt",
+        "valueType": "string"
+      },
+      {
         "component": "richtext",
         "name": "keyfeatureinnertext2",
         "label": "Key Feature Inner Text",
@@ -2201,6 +2384,12 @@
         "valueType": "string",
         "name": "keyfeatureimageinnerimage3",
         "label": "Key Feature Inner Image"
+      },
+      {
+        "component": "text",
+        "name": "keyfeatureimageinnerimage3alt",
+        "label": "Key Feature Inner Image 3 Alt",
+        "valueType": "string"
       },
       {
         "component": "richtext",
@@ -2224,6 +2413,13 @@
         "valueType": "string",
         "name": "thumbnail",
         "label": "thumbnail"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "thumbnailAlt",
+        "value": "",
+        "label": "Thumbnail Alt Text"
       }
     ]
   },
@@ -2444,6 +2640,12 @@
         "component": "reference",
         "label": "Front Image",
         "name": "reference2",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "reference2Alt",
+        "label": "Front Image Alt Text",
         "valueType": "string"
       },
       {

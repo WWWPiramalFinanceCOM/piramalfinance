@@ -41,7 +41,7 @@ function generateFeatureHTML(props) {
     keyFeatureInnerText3,
   ] = props;
 
-  containerLink = containerLink?.querySelector('a')?.href || containerLink?.textContent?.trim() || '';
+  // containerLink = containerLink?.querySelector('a')?.href || containerLink?.textContent?.trim() || '';
   cardDescription = cardDescription?.querySelector('div > div') || '';
   leftSideImage = leftSideImage?.querySelector('div > picture > img')?.src || '';
   leftSideImageAlt = leftSideImageAlt?.textContent.trim() || '';
@@ -49,6 +49,9 @@ function generateFeatureHTML(props) {
   rightSideImageAlt = rightSideImageAlt?.textContent?.trim() || '';
   rightSideImageLink = rightSideImageLink?.querySelector('a')?.href || rightSideImageLink?.textContent?.trim() || '';
   // rightSideImageLink = rightSideImageLink.querySelector("a")?.href || rightSideImageLink?.textContent?.trim() || '';
+  // Use rightSideImageLink as fallback for containerLink if no valid link
+  const containerAnchor = containerLink?.querySelector('a')?.href;
+  containerLink = containerAnchor || rightSideImageLink;
   keyFeatureTitle = keyFeatureTitle?.textContent?.trim() || '';
   keyFeatureImagePlus = keyFeatureImagePlus?.querySelector('div > picture > img')?.src || '';
   keyFeatureImageMinus = keyFeatureImageMinus?.querySelector('div > picture > img')?.src || '';
@@ -238,7 +241,7 @@ function viewLogic(block) {
   });
 
   const buttonContainer = wrapper.querySelector('.button-container');
-  if (buttonContainer) {
+  if (buttonContainer && buttonContainer.textContent.trim() === 'View More') {
     const buttonText = buttonContainer?.textContent.trim();
     buttonContainer.innerHTML = buttonText;
     viewMoreLogic(viewMoreSection);

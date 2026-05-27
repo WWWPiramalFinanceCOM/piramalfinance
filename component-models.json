@@ -3538,6 +3538,99 @@
         "label": "Max Value Label",
         "description": "Text shown at right of slider (e.g., '50L' or '20%')",
         "multi": false
+      },
+      {
+        "component": "tab",
+        "label": "Disclaimer Settings",
+        "name": "disclaimerTab"
+      },
+      {
+        "component": "boolean",
+        "name": "col1_showDisclaimer",
+        "value": false,
+        "label": "Show Disclaimer",
+        "description": "Enable to display a disclaimer section below the calculator",
+        "valueType": "boolean"
+      },
+      {
+        "component": "text",
+        "name": "col1_disclaimerTitle",
+        "value": "Disclaimer",
+        "label": "Disclaimer Title",
+        "description": "Title text for the disclaimer section",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_showDisclaimer"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "col1_disclaimerPara1",
+        "value": "",
+        "label": "Disclaimer Text (Visible)",
+        "description": "First paragraph - always visible (use for summary text)",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_showDisclaimer"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "col1_disclaimerPara2",
+        "value": "",
+        "label": "Disclaimer Text (Expandable)",
+        "description": "Additional text shown when 'Read more' is clicked",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_showDisclaimer"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "col1_readMoreText",
+        "value": "Read more",
+        "label": "Read More Button Text",
+        "description": "Text for the expand button",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_showDisclaimer"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "col1_readLessText",
+        "value": "Read less",
+        "label": "Read Less Button Text",
+        "description": "Text for the collapse button",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_showDisclaimer"
+            },
+            true
+          ]
+        }
       }
     ]
   },

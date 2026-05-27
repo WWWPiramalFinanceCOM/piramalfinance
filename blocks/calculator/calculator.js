@@ -1,5 +1,5 @@
 import { prepareBlocks, extractContent } from './extract-content.js';
-import { buildCalculatorParent, initCalculatorTabs } from './build-tabs.js';
+import { buildCalculatorParent, buildDisclaimer, initCalculatorTabs, initDisclaimerToggle } from './build-tabs.js';
 // Use standalone local helpers - NO dependencies on old calculator blocks
 import {
   workflowHomeLoanCalculation,
@@ -613,7 +613,7 @@ function combineSection(section) {
 
   if (blocks.length < 1) return;
 
-  const { description, tabNames, calcNames, productType } = prepareBlocks(blocks);
+  const { description, tabNames, calcNames, productType, disclaimer } = prepareBlocks(blocks);
   
   // Add gst-calculator class if any calculator is GST type (for pill-button tab styles)
   const hasGstCalc = calcNames.some((name) => name.includes('gst'));
@@ -623,7 +623,7 @@ function combineSection(section) {
   
   const { ctaItems, dcwToRemove } = extractContent(section);
 
-  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc);
+  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc, disclaimer);
 
   calcWrappers.forEach((w) => w.remove());
   dcwToRemove.forEach((dcw) => dcw.remove());
@@ -657,6 +657,14 @@ function combineSection(section) {
     hiddenInput.id = 'calculator-product-type';
     hiddenInput.value = productType;
     section.appendChild(hiddenInput);
+  }
+  
+  // Build and append disclaimer if configured
+  const disclaimerEl = buildDisclaimer(disclaimer);
+  if (disclaimerEl) {
+    section.appendChild(disclaimerEl);
+    // Initialize read more/less toggle
+    initDisclaimerToggle(section);
   }
 
   initCalculatorTabs(section);

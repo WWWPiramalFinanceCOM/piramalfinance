@@ -6,16 +6,14 @@
  * @param {HTMLAnchorElement[]} ctaItems
  * @param {Element[]} blocks
  * @param {boolean} isGstCalculator - Whether this is a GST calculator
+ * @param {object|null} disclaimer - Disclaimer data object or null
  * @returns {HTMLElement}
  */
-export function buildCalculatorParent(description, tabNames, ctaItems, blocks, isGstCalculator = false) {
+export function buildCalculatorParent(description, tabNames, ctaItems, blocks, isGstCalculator = false, disclaimer = null) {
   // For GST: always show pill-button tabs even with single calculator
   // For EMI/Eligibility: only show tabs with multiple calculators
   const hasMultipleCalcs = blocks.length > 1;
   const showPillTabs = isGstCalculator || hasMultipleCalcs;
-
-  // eslint-disable-next-line no-console
-  console.log('[calculator] buildCalculatorParent: blocks.length=', blocks.length, 'isGstCalculator=', isGstCalculator, 'showPillTabs=', showPillTabs);
 
   let tabsLiHTML = '';
   if (showPillTabs) {
@@ -27,8 +25,6 @@ export function buildCalculatorParent(description, tabNames, ctaItems, blocks, i
     if (hasMultipleCalcs) {
       tabsLiHTML += '<li class="tab-eligibility-calc tab-common gst-third-tab"><p></p></li>';
     }
-    // eslint-disable-next-line no-console
-    console.log('[calculator] buildCalculatorParent: Created tabs HTML:', tabsLiHTML);
   }
 
   // Get values (empty string if not authored - HTML structure always present)
@@ -103,6 +99,72 @@ export function buildCalculatorParent(description, tabNames, ctaItems, blocks, i
 }
 
 /**
+ * Builds the disclaimer section HTML.
+ * @param {object} disclaimer - Disclaimer data object
+ * @returns {HTMLElement|null} Disclaimer element or null
+ */
+export function buildDisclaimer(disclaimer) {
+  if (!disclaimer) return null;
+  
+  const { title, para1, para2, readMoreText, readLessText } = disclaimer;
+  
+  // Only render if there's content
+  if (!para1 && !para2) return null;
+  
+  const disclaimerDiv = document.createElement('div');
+  disclaimerDiv.className = 'discalimer-details';
+  
+  // Build expandable content HTML (only if para2 exists)
+  const expandableHTML = para2 
+    ? `<div class="disclaimer-container dp-none">${para2}</div>` 
+    : '';
+  
+  // Only show read more button if there's expandable content
+  const readMoreHTML = para2 
+    ? `<button class="read-more-discalimer-calc" data-read-more="${readMoreText}" data-read-less="${readLessText}">${readMoreText}</button>` 
+    : '';
+  
+  disclaimerDiv.innerHTML = `
+    <div class="discalimer-calc">
+      <span class="title">${title}</span>
+      <div class="discalimer-first-para">${para1}</div>
+      ${expandableHTML}
+      ${readMoreHTML}
+    </div>
+  `;
+  
+  return disclaimerDiv;
+}
+
+/**
+ * Initializes the disclaimer read more/less toggle functionality.
+ * @param {Element} section - The calculator section element
+ */
+export function initDisclaimerToggle(section) {
+  const readMoreBtn = section.querySelector('.read-more-discalimer-calc');
+  if (!readMoreBtn) return;
+  
+  const disclaimerContainer = section.querySelector('.disclaimer-container');
+  if (!disclaimerContainer) return;
+  
+  const readMoreText = readMoreBtn.dataset.readMore || 'Read more';
+  const readLessText = readMoreBtn.dataset.readLess || 'Read less';
+  
+  readMoreBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const isExpanded = !disclaimerContainer.classList.contains('dp-none');
+    
+    if (isExpanded) {
+      disclaimerContainer.classList.add('dp-none');
+      readMoreBtn.textContent = readMoreText;
+    } else {
+      disclaimerContainer.classList.remove('dp-none');
+      readMoreBtn.textContent = readLessText;
+    }
+  });
+}
+
+/**
  * Initializes calculator tab (EMI / Eligibility) switching.
  * When switching tabs it resets the target calculator to defaults
  * and triggers a recalculation via the workflow events.
@@ -127,9 +189,6 @@ export function initCalculatorTabs(section = null) {
 
   const tabs = [...headingtabs.querySelectorAll('.tab-common:not(.gst-third-tab)')];
   const calcBlocks = [...calcParent.querySelectorAll('.calctabs .commoncalculator')];
-
-  // eslint-disable-next-line no-console
-  console.log('[calculator] initCalculatorTabs: Found', tabs.length, 'tabs and', calcBlocks.length, 'calculator blocks');
 
   if (!tabs.length) {
     // eslint-disable-next-line no-console
@@ -165,9 +224,6 @@ export function initCalculatorTabs(section = null) {
    * @param {number} tabIndex - Index of tab to activate
    */
   function switchToTab(tabIndex) {
-    // eslint-disable-next-line no-console
-    console.log('[calculator] switchToTab called with index:', tabIndex);
-
     // Update tab active states
     tabs.forEach((t, i) => {
       if (i === tabIndex) {
@@ -182,15 +238,11 @@ export function initCalculatorTabs(section = null) {
       if (idx === tabIndex) {
         blk.classList.add('elgblock');
         blk.style.display = 'block';
-        // eslint-disable-next-line no-console
-        console.log('[calculator] Showing calculator block', idx);
         
         // Update description text based on active calculator's description
         const descriptionEl = calcParent.querySelector('.first-head');
         if (descriptionEl && blk.dataset.calcDescription) {
           descriptionEl.textContent = blk.dataset.calcDescription;
-          // eslint-disable-next-line no-console
-          console.log('[calculator] Updated description to:', blk.dataset.calcDescription);
         }
       } else {
         blk.classList.remove('elgblock');
@@ -232,15 +284,11 @@ export function initCalculatorTabs(section = null) {
       // Try using data-tab-index
       const dataIndex = clickedTab.dataset.tabIndex;
       if (dataIndex !== undefined) {
-        // eslint-disable-next-line no-console
-        console.log('[calculator] Tab clicked via delegation, dataIndex:', dataIndex);
         switchToTab(parseInt(dataIndex, 10));
       }
       return;
     }
 
-    // eslint-disable-next-line no-console
-    console.log('[calculator] Tab clicked via delegation, tabIndex:', tabIndex);
     switchToTab(tabIndex);
   });
 
@@ -252,7 +300,4 @@ export function initCalculatorTabs(section = null) {
       pElement.style.cursor = 'pointer';
     }
   });
-
-  // eslint-disable-next-line no-console
-  console.log('[calculator] initCalculatorTabs: Event delegation attached to headingtabs');
 }

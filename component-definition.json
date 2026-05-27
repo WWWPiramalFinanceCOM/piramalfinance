@@ -338,7 +338,7 @@
                 "template": {
                   "name": "Banner Slider",
                   "model": "banner-slider",
-                  "filter": "banner-slider",
+                  "filter": "banner-slider-slide",
                   "banner-slider-slide": {
                     "name": "Banner Slider Slide",
                     "model": "banner-slider-slide",
@@ -363,7 +363,8 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Banner Slider Slide",
-                  "model": "banner-slider-slide"
+                  "model": "banner-slider-slide",
+                  "filter": "banner-slider-slide"
                 }
               }
             }

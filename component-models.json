@@ -823,10 +823,10 @@
         ]
       },
       {
-        "component": "number",
-        "valueType": "number",
+        "component": "text",
+        "valueType": "string",
         "name": "autoplaydelay",
-        "value": 7000,
+        "value": "7000",
         "label": "Auto Rotate Delay (ms)"
       }
     ]

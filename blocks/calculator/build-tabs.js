@@ -6,10 +6,9 @@
  * @param {HTMLAnchorElement[]} ctaItems
  * @param {Element[]} blocks
  * @param {boolean} isGstCalculator - Whether this is a GST calculator
- * @param {object|null} disclaimer - Disclaimer data object or null
  * @returns {HTMLElement}
  */
-export function buildCalculatorParent(description, tabNames, ctaItems, blocks, isGstCalculator = false, disclaimer = null) {
+export function buildCalculatorParent(description, tabNames, ctaItems, blocks, isGstCalculator = false) {
   // For GST: always show pill-button tabs even with single calculator
   // For EMI/Eligibility: only show tabs with multiple calculators
   const hasMultipleCalcs = blocks.length > 1;
@@ -96,72 +95,6 @@ export function buildCalculatorParent(description, tabNames, ctaItems, blocks, i
   blocks.forEach((blk) => calctabs.appendChild(blk));
 
   return calcParent;
-}
-
-/**
- * Builds the disclaimer section HTML.
- * @param {object} disclaimer - Disclaimer data object
- * @returns {HTMLElement|null} Disclaimer element or null
- */
-export function buildDisclaimer(disclaimer) {
-  if (!disclaimer) return null;
-  
-  const { title, para1, para2, readMoreText, readLessText } = disclaimer;
-  
-  // Only render if there's content
-  if (!para1 && !para2) return null;
-  
-  const disclaimerDiv = document.createElement('div');
-  disclaimerDiv.className = 'discalimer-details';
-  
-  // Build expandable content HTML (only if para2 exists)
-  const expandableHTML = para2 
-    ? `<div class="disclaimer-container dp-none">${para2}</div>` 
-    : '';
-  
-  // Only show read more button if there's expandable content
-  const readMoreHTML = para2 
-    ? `<button class="read-more-discalimer-calc" data-read-more="${readMoreText}" data-read-less="${readLessText}">${readMoreText}</button>` 
-    : '';
-  
-  disclaimerDiv.innerHTML = `
-    <div class="discalimer-calc">
-      <span class="title">${title}</span>
-      <div class="discalimer-first-para">${para1}</div>
-      ${expandableHTML}
-      ${readMoreHTML}
-    </div>
-  `;
-  
-  return disclaimerDiv;
-}
-
-/**
- * Initializes the disclaimer read more/less toggle functionality.
- * @param {Element} section - The calculator section element
- */
-export function initDisclaimerToggle(section) {
-  const readMoreBtn = section.querySelector('.read-more-discalimer-calc');
-  if (!readMoreBtn) return;
-  
-  const disclaimerContainer = section.querySelector('.disclaimer-container');
-  if (!disclaimerContainer) return;
-  
-  const readMoreText = readMoreBtn.dataset.readMore || 'Read more';
-  const readLessText = readMoreBtn.dataset.readLess || 'Read less';
-  
-  readMoreBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const isExpanded = !disclaimerContainer.classList.contains('dp-none');
-    
-    if (isExpanded) {
-      disclaimerContainer.classList.add('dp-none');
-      readMoreBtn.textContent = readMoreText;
-    } else {
-      disclaimerContainer.classList.remove('dp-none');
-      readMoreBtn.textContent = readLessText;
-    }
-  });
 }
 
 /**

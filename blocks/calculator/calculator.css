@@ -1771,13 +1771,15 @@
    ══════════════════════════════════════════════════════════════════════════════ */
 
 .homeloancalculator .discalimer-details {
-  padding-bottom: 48px;
+  padding: 24px 0 48px;
+  background: inherit;
 }
 
 .homeloancalculator .discalimer-details .discalimer-calc {
   max-width: 1240px;
   width: 100%;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .homeloancalculator .discalimer-details .discalimer-calc .title {
@@ -1787,7 +1789,6 @@
   font-weight: 700;
   line-height: 24px;
   padding-bottom: 8px;
-  padding-top: 16px;
   color: var(--darkcharcoal, #333);
 }
 
@@ -1800,7 +1801,7 @@
 }
 
 /* Truncate to 3 lines when collapsed */
-.homeloancalculator .discalimer-details .discalimer-calc:has(.dp-none) .discalimer-first-para {
+.homeloancalculator .discalimer-details .discalimer-calc.collapsed .discalimer-first-para {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -1833,6 +1834,7 @@
   font-weight: 400;
   line-height: 20.4px;
   text-decoration: none;
+  display: inline-block;
 }
 
 .homeloancalculator .discalimer-details .discalimer-calc .read-more-discalimer-calc:hover {
@@ -1847,7 +1849,6 @@
 
   .homeloancalculator .discalimer-details .discalimer-calc .title {
     font-size: 1rem;
-    padding-top: 8px;
   }
 
   .homeloancalculator .discalimer-details .discalimer-calc .discalimer-first-para,
@@ -1859,13 +1860,6 @@
   .homeloancalculator .discalimer-details .discalimer-calc .read-more-discalimer-calc {
     font-size: 0.75rem;
     line-height: 16px;
-  }
-}
-
-/* Tablet styles */
-@media screen and (max-width: 1024px) {
-  .homeloancalculator .discalimer-details .discalimer-calc {
-    padding: 0 16px;
   }
 }
 

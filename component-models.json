@@ -3451,7 +3451,7 @@
         "name": "col1_disclaimerPara1",
         "value": "",
         "label": "Disclaimer Text (Visible)",
-        "description": "First paragraph - always visible (use for summary text)",
+        "description": "First paragraph - always visible",
         "valueType": "string",
         "condition": {
           "===": [
@@ -3467,7 +3467,7 @@
         "name": "col1_disclaimerPara2",
         "value": "",
         "label": "Disclaimer Text (Expandable)",
-        "description": "Additional text shown when 'Read more' is clicked",
+        "description": "Additional text shown when Read more is clicked",
         "valueType": "string",
         "condition": {
           "===": [
@@ -3483,7 +3483,6 @@
         "name": "col1_readMoreText",
         "value": "Read more",
         "label": "Read More Button Text",
-        "description": "Text for the expand button",
         "valueType": "string",
         "condition": {
           "===": [
@@ -3499,7 +3498,6 @@
         "name": "col1_readLessText",
         "value": "Read less",
         "label": "Read Less Button Text",
-        "description": "Text for the collapse button",
         "valueType": "string",
         "condition": {
           "===": [

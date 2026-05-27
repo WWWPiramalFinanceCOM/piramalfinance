@@ -1,5 +1,5 @@
 import { prepareBlocks, extractContent } from './extract-content.js';
-import { buildCalculatorParent, buildDisclaimer, initCalculatorTabs, initDisclaimerToggle } from './build-tabs.js';
+import { buildCalculatorParent, initCalculatorTabs } from './build-tabs.js';
 // Use standalone local helpers - NO dependencies on old calculator blocks
 import {
   workflowHomeLoanCalculation,
@@ -613,7 +613,33 @@ function combineSection(section) {
 
   if (blocks.length < 1) return;
 
-  const { description, tabNames, calcNames, productType, disclaimer } = prepareBlocks(blocks);
+  const { description, tabNames, calcNames, productType } = prepareBlocks(blocks);
+  
+  // Extract disclaimer data from first block's raw content
+  let disclaimerData = null;
+  const firstBlock = blocks[0];
+  const firstRowChildren = firstBlock?.children[0]?.children[0]?.children;
+  if (firstRowChildren) {
+    const firstRowArray = Array.from(firstRowChildren);
+    const disclaimerStartIdx = firstRowArray.findIndex(el => {
+      const text = el.textContent?.trim().toLowerCase();
+      return text === 'true' || text === 'false';
+    });
+    
+    if (disclaimerStartIdx !== -1) {
+      const showDisclaimer = firstRowArray[disclaimerStartIdx]?.textContent?.trim().toLowerCase() === 'true';
+      if (showDisclaimer) {
+        const disclaimerElements = firstRowArray.slice(disclaimerStartIdx);
+        disclaimerData = {
+          title: disclaimerElements[1]?.textContent?.trim() || 'Disclaimer',
+          para1: disclaimerElements[2]?.innerHTML?.trim() || disclaimerElements[2]?.textContent?.trim() || '',
+          para2: disclaimerElements[3]?.innerHTML?.trim() || disclaimerElements[3]?.textContent?.trim() || '',
+          readMoreText: disclaimerElements[4]?.textContent?.trim() || 'Read more',
+          readLessText: disclaimerElements[5]?.textContent?.trim() || 'Read less',
+        };
+      }
+    }
+  }
   
   // Add gst-calculator class if any calculator is GST type (for pill-button tab styles)
   const hasGstCalc = calcNames.some((name) => name.includes('gst'));
@@ -623,12 +649,55 @@ function combineSection(section) {
   
   const { ctaItems, dcwToRemove } = extractContent(section);
 
-  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc, disclaimer);
+  const calcParent = buildCalculatorParent(description, tabNames, ctaItems, blocks, hasGstCalc);
 
   calcWrappers.forEach((w) => w.remove());
   dcwToRemove.forEach((dcw) => dcw.remove());
 
   section.appendChild(calcParent);
+  
+  // Build and append disclaimer if configured
+  if (disclaimerData && (disclaimerData.para1 || disclaimerData.para2)) {
+    const disclaimerDiv = document.createElement('div');
+    disclaimerDiv.className = 'discalimer-details';
+    
+    const hasExpandable = disclaimerData.para2 && disclaimerData.para2.trim();
+    
+    disclaimerDiv.innerHTML = `
+      <div class="discalimer-calc${hasExpandable ? ' collapsed' : ''}">
+        <span class="title">${disclaimerData.title}</span>
+        <div class="discalimer-first-para">${disclaimerData.para1}</div>
+        ${hasExpandable ? `<div class="disclaimer-container dp-none">${disclaimerData.para2}</div>` : ''}
+        ${hasExpandable ? `<button class="read-more-discalimer-calc" data-read-more="${disclaimerData.readMoreText}" data-read-less="${disclaimerData.readLessText}">${disclaimerData.readMoreText}</button>` : ''}
+      </div>
+    `;
+    
+    section.appendChild(disclaimerDiv);
+    
+    // Initialize read more/less toggle
+    if (hasExpandable) {
+      const readMoreBtn = disclaimerDiv.querySelector('.read-more-discalimer-calc');
+      const disclaimerContainer = disclaimerDiv.querySelector('.disclaimer-container');
+      const disclaimerCalc = disclaimerDiv.querySelector('.discalimer-calc');
+      
+      if (readMoreBtn && disclaimerContainer) {
+        readMoreBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isExpanded = !disclaimerContainer.classList.contains('dp-none');
+          
+          if (isExpanded) {
+            disclaimerContainer.classList.add('dp-none');
+            disclaimerCalc.classList.add('collapsed');
+            readMoreBtn.textContent = disclaimerData.readMoreText;
+          } else {
+            disclaimerContainer.classList.remove('dp-none');
+            disclaimerCalc.classList.remove('collapsed');
+            readMoreBtn.textContent = disclaimerData.readLessText;
+          }
+        });
+      }
+    }
+  }
 
   // Check if calculator-radio block exists - if not, add a hidden fallback radio
   const hasRadioBlock = section.querySelector('.calculator-radio');
@@ -657,14 +726,6 @@ function combineSection(section) {
     hiddenInput.id = 'calculator-product-type';
     hiddenInput.value = productType;
     section.appendChild(hiddenInput);
-  }
-  
-  // Build and append disclaimer if configured
-  const disclaimerEl = buildDisclaimer(disclaimer);
-  if (disclaimerEl) {
-    section.appendChild(disclaimerEl);
-    // Initialize read more/less toggle
-    initDisclaimerToggle(section);
   }
 
   initCalculatorTabs(section);
@@ -1122,10 +1183,18 @@ export default async function decorate(block) {
     // Collect all images and text elements for Part Payment
     let currentImages = [];
     let currentTexts = [];
+    let foundDisclaimer = false;
     
     firstRowArray.forEach((el, idx) => {
       // Skip first 2 elements (productType, calcName)
       if (idx < 2) return;
+      
+      // Stop collecting when we hit disclaimer content
+      const text = el.textContent?.trim().toLowerCase();
+      if (text === 'true' || text === 'false') {
+        foundDisclaimer = true;
+      }
+      if (foundDisclaimer) return;
       
       const img = el.querySelector?.('img') || el.querySelector?.('picture img') || (el.tagName === 'IMG' ? el : null);
       if (img) {
@@ -1156,9 +1225,34 @@ export default async function decorate(block) {
   // Text elements after the image: imageLabel, principalLabel, interestLabel
   // Get text elements that come after the image (or all text elements if no image)
   // imageAlt comes from the actual img tag's alt attribute
-  const allTextAfterImage = imageIndex >= 0 
+  let allTextAfterImage = imageIndex >= 0 
     ? firstRowArray.slice(imageIndex + 1).filter(el => el.textContent?.trim())
     : firstRowArray.slice(2).filter(el => el.textContent?.trim() && !el.querySelector('img')); // Skip productType[0], calcName[1]
+  
+  // Detect and extract disclaimer content
+  // Disclaimer starts when we find "true" or "false" (the showDisclaimer toggle)
+  let disclaimerData = null;
+  const disclaimerStartIdx = allTextAfterImage.findIndex(el => {
+    const text = el.textContent?.trim().toLowerCase();
+    return text === 'true' || text === 'false';
+  });
+  
+  if (disclaimerStartIdx !== -1) {
+    const showDisclaimer = allTextAfterImage[disclaimerStartIdx]?.textContent?.trim().toLowerCase() === 'true';
+    if (showDisclaimer) {
+      // Extract disclaimer fields: [showDisclaimer, title, para1, para2, readMoreText, readLessText]
+      const disclaimerElements = allTextAfterImage.slice(disclaimerStartIdx);
+      disclaimerData = {
+        title: disclaimerElements[1]?.textContent?.trim() || 'Disclaimer',
+        para1: disclaimerElements[2]?.innerHTML?.trim() || disclaimerElements[2]?.textContent?.trim() || '',
+        para2: disclaimerElements[3]?.innerHTML?.trim() || disclaimerElements[3]?.textContent?.trim() || '',
+        readMoreText: disclaimerElements[4]?.textContent?.trim() || 'Read more',
+        readLessText: disclaimerElements[5]?.textContent?.trim() || 'Read less',
+      };
+    }
+    // Remove disclaimer elements from label extraction
+    allTextAfterImage = allTextAfterImage.slice(0, disclaimerStartIdx);
+  }
   
   // Get imageAlt from actual img tag's alt attribute
   const imageAlt = imgEl?.alt || 'Calculator';
@@ -1436,6 +1530,11 @@ export default async function decorate(block) {
   parentEmi.appendChild(inputDiv);
   parentEmi.appendChild(outputDiv);
   block.appendChild(parentEmi);
+
+  // Store disclaimer data on block for use by combineSection
+  if (disclaimerData) {
+    block.dataset.disclaimer = JSON.stringify(disclaimerData);
+  }
 
   // Initialize Part Payment date picker if this is a Part Payment Calculator
   if (isPartPayment) {

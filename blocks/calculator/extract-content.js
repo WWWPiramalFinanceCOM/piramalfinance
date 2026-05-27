@@ -17,9 +17,6 @@ export function prepareBlocks(blocks) {
   const tabNames = [];
   const calcNames = [];
   const descriptions = []; // Store description for EACH calculator
-  
-  // Disclaimer data - extracted from first calculator block only
-  let disclaimer = null;
 
   blocks.forEach((blk, idx) => {
     const meta = blk.children[0]?.children[0]?.children;
@@ -41,11 +38,6 @@ export function prepareBlocks(blocks) {
       if (!blockEl3HasImage && blockEl3?.textContent?.trim()) {
         blockDescription = blockEl3.textContent.trim();
       }
-    }
-    
-    // Extract disclaimer from first block only (disclaimer is shared across calculators)
-    if (idx === 0) {
-      disclaimer = extractDisclaimer(metaArray);
     }
 
     tabNames.push(tabName);
@@ -72,60 +64,7 @@ export function prepareBlocks(blocks) {
   const description = descriptions[0] || '';
 
   return {
-    description, descriptions, tabNames, calcNames, productType, disclaimer,
-  };
-}
-
-/**
- * Extracts disclaimer data from calculator metadata array.
- * Looks for "true" text followed by disclaimer content.
- * @param {Array} metaArray - Array of metadata elements from first row
- * @returns {object|null} Disclaimer data or null if not enabled
- */
-function extractDisclaimer(metaArray) {
-  // Find the "true" element which indicates showDisclaimer is enabled
-  // Disclaimer fields come after all other calculator fields
-  let showDisclaimerIdx = -1;
-  
-  for (let i = 0; i < metaArray.length; i++) {
-    const text = metaArray[i]?.textContent?.trim().toLowerCase();
-    if (text === 'true') {
-      // Check next element looks like a disclaimer title
-      const nextText = metaArray[i + 1]?.textContent?.trim();
-      if (nextText && nextText.length < 100) {
-        showDisclaimerIdx = i;
-        break;
-      }
-    }
-  }
-  
-  if (showDisclaimerIdx === -1) {
-    return null;
-  }
-  
-  // Extract disclaimer fields starting after the "true" boolean
-  // Order: title, para1 (richtext), para2 (richtext), readMoreText, readLessText
-  const titleEl = metaArray[showDisclaimerIdx + 1];
-  const para1El = metaArray[showDisclaimerIdx + 2];
-  const para2El = metaArray[showDisclaimerIdx + 3];
-  const readMoreEl = metaArray[showDisclaimerIdx + 4];
-  const readLessEl = metaArray[showDisclaimerIdx + 5];
-  
-  const title = titleEl?.textContent?.trim() || 'Disclaimer';
-  
-  // For richtext fields, get innerHTML to preserve formatting
-  const para1 = para1El?.innerHTML?.trim() || para1El?.textContent?.trim() || '';
-  const para2 = para2El?.innerHTML?.trim() || para2El?.textContent?.trim() || '';
-  
-  const readMoreText = readMoreEl?.textContent?.trim() || 'Read more';
-  const readLessText = readLessEl?.textContent?.trim() || 'Read less';
-  
-  return {
-    title,
-    para1,
-    para2,
-    readMoreText,
-    readLessText,
+    description, descriptions, tabNames, calcNames, productType,
   };
 }
 

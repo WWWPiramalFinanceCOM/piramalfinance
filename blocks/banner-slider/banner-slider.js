@@ -38,6 +38,7 @@ function createSlide(panel, index) {
     backgroundImage,
     foregroundImage,
     classesCell,
+    eyebrow,
     title,
     description,
     primaryCta,
@@ -87,6 +88,7 @@ function createSlide(panel, index) {
     <div class="banner-slider-surface">
       <div class="banner-slider-content">
         <div class="banner-slider-copy">
+          ${eyebrow?.textContent?.trim() ? `<div class="banner-slider-eyebrow">${eyebrow.innerHTML}</div>` : ''}
           <div class="banner-slider-title">${title?.innerHTML || ''}</div>
           <div class="banner-slider-description">${description?.innerHTML || ''}</div>
           ${buttonsMarkup ? `<div class="banner-slider-cta">${buttonsMarkup}</div>` : ''}

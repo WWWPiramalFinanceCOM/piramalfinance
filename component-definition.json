@@ -343,6 +343,7 @@
                     "name": "Banner Slider Slide",
                     "model": "banner-slider-slide",
                     "fileReference": "/content/dam/default-teaser-banner.png",
+                    "eyebrow": "Eyebrow",
                     "title": "Banner Slider Title",
                     "titleType": "h1",
                     "longDescr": "<p>Banner slider description</p>",

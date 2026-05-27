@@ -68,6 +68,15 @@
   text-align: center;
 }
 
+.banner-slider-eyebrow {
+  color: var(--black);
+  font-family: Nunito-Bold, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
 .banner-slider-title :where(h1, h2, h3, h4, h5, h6) {
   color: var(--black);
   font-family: Nunito-Extrabold, sans-serif;
@@ -206,6 +215,10 @@
   color: var(--white);
 }
 
+.banner-slider-slide.dark .banner-slider-eyebrow {
+  color: var(--white);
+}
+
 .banner-slider-slide.dark .banner-slider-arrow {
   background: rgb(17 24 39 / 40%);
   color: var(--white);
@@ -267,6 +280,10 @@
   .banner-slider-title :where(h1, h2, h3, h4, h5, h6) {
     font-size: 2rem;
     line-height: 1.15;
+  }
+
+  .banner-slider-eyebrow {
+    font-size: 1.25rem;
   }
 
   .banner-slider-cta {

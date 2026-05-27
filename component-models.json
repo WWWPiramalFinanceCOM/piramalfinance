@@ -1196,14 +1196,6 @@
         "description": "Alt text for the multi teaser image."
       },
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "fileReference1Alt",
-        "value": "",
-        "label": "Multi Teaser Image Description",
-        "description": "A descriptive text of the multi teaser image."
-      },
-      {
         "component": "multiselect",
         "name": "classes",
         "label": "Style",
@@ -2071,19 +2063,19 @@
         "description": "Background Image"
       },
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "fileReference1",
-        "label": "Image",
-        "description": "Front Image"
-      },
-      {
         "component": "text",
         "valueType": "string",
         "name": "fileReferenceAlt",
         "value": "",
         "label": "Alt Text Background Image",
         "description": "Alt text for background image"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "fileReference1",
+        "label": "Image",
+        "description": "Front Image"
       },
       {
         "component": "text",

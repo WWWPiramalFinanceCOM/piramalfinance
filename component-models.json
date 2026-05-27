@@ -677,7 +677,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "offer-documents-image-alt",
+        "name": "offer-documents-imageAlt",
         "value": "",
         "label": "Offer documents image alt text",
         "description": "Sets the alt text of the documents image."
@@ -996,7 +996,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "tab-image-1-alt",
+        "name": "tab-image-1Alt",
         "value": "",
         "label": "Tab Image 1 Alt Text",
         "description": "Sets the alt text of tab image 1."
@@ -1012,7 +1012,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "tab-image-2-alt",
+        "name": "tab-image-2Alt",
         "value": "",
         "label": "Tab Image 2 Alt Text",
         "description": "Sets the alt text of tab image 2."
@@ -1028,7 +1028,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "tab-image-3-alt",
+        "name": "tab-image-3Alt",
         "value": "",
         "label": "Tab Image 3 Alt Text",
         "description": "Sets the alt text of tab image 3."
@@ -1182,7 +1182,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "fileReferenceBackgroundAlt",
+        "name": "fileReferenceAlt",
         "value": "",
         "label": "Background Image Alt Text",
         "description": "Alt text for the background image."
@@ -1746,7 +1746,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "mobile-bg-image-alt",
+        "name": "mobile-bg-imageAlt",
         "value": "",
         "label": "Mobile Background Image Alt Text",
         "description": "Alt text for mobile background image"
@@ -2327,7 +2327,7 @@
       },
       {
         "component": "text",
-        "name": "keyfeatureimageplusalt",
+        "name": "keyfeatureimageplusAlt",
         "label": "Key Feature Image Plus Alt",
         "valueType": "string"
       },
@@ -2339,7 +2339,7 @@
       },
       {
         "component": "text",
-        "name": "keyfeatureimageminusalt",
+        "name": "keyfeatureimageminusAlt",
         "label": "Key Feature Image Minus Alt",
         "valueType": "string"
       },
@@ -2351,7 +2351,7 @@
       },
       {
         "component": "text",
-        "name": "keyfeatureimageinnerimage1alt",
+        "name": "keyfeatureimageinnerimage1Alt",
         "label": "Key Feature Inner Image 1 Alt",
         "valueType": "string"
       },
@@ -2369,7 +2369,7 @@
       },
       {
         "component": "text",
-        "name": "keyfeatureimageinnerimage2alt",
+        "name": "keyfeatureimageinnerimage2Alt",
         "label": "Key Feature Inner Image 2 Alt",
         "valueType": "string"
       },
@@ -2387,7 +2387,7 @@
       },
       {
         "component": "text",
-        "name": "keyfeatureimageinnerimage3alt",
+        "name": "keyfeatureimageinnerimage3Alt",
         "label": "Key Feature Inner Image 3 Alt",
         "valueType": "string"
       },

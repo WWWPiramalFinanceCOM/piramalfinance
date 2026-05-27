@@ -775,6 +775,63 @@
     ]
   },
   {
+    "id": "banner-slider",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "previcon",
+        "value": "",
+        "label": "Previous Icon"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "previconAlt",
+        "value": "",
+        "label": "Previous Icon Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "nexticon",
+        "value": "",
+        "label": "Next Icon"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nexticonAlt",
+        "value": "",
+        "label": "Next Icon Alt"
+      },
+      {
+        "component": "select",
+        "name": "autorotate",
+        "value": "rotate-on",
+        "label": "Auto Rotate",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "rotate-on",
+            "value": "rotate-on"
+          },
+          {
+            "name": "rotate-off",
+            "value": "rotate-off"
+          }
+        ]
+      },
+      {
+        "component": "number",
+        "valueType": "number",
+        "name": "autoplaydelay",
+        "value": 7000,
+        "label": "Auto Rotate Delay (ms)"
+      }
+    ]
+  },
+  {
     "id": "tab-container",
     "fields": [
       {
@@ -1750,6 +1807,225 @@
         "value": "",
         "label": "Teaser Background linear Gradient Color",
         "description": "Teaser Background linear Gradient Color"
+      }
+    ]
+  },
+  {
+    "id": "banner-slider-slide",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "fileReference",
+        "label": "Background Image",
+        "description": "Background image for the slide.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReferenceAlt",
+        "value": "",
+        "label": "Background Image Alt Text",
+        "description": "Alt text for the background image."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "fileReference1",
+        "label": "Foreground Image",
+        "description": "Main banner image shown inside the slide.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "fileReference1Alt",
+        "value": "",
+        "label": "Foreground Image Alt Text",
+        "description": "Alt text for the foreground image."
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Theme",
+            "children": [
+              {
+                "name": "Light",
+                "value": "light"
+              },
+              {
+                "name": "Dark",
+                "value": "dark"
+              }
+            ]
+          },
+          {
+            "name": "Content Alignment",
+            "children": [
+              {
+                "name": "Left",
+                "value": "content-left"
+              },
+              {
+                "name": "Center",
+                "value": "content-center"
+              }
+            ]
+          },
+          {
+            "name": "Image Position",
+            "children": [
+              {
+                "name": "Right",
+                "value": "image-right"
+              },
+              {
+                "name": "Left",
+                "value": "image-left"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Heading",
+        "description": "Sets the main title of the slide.",
+        "multi": true
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "titleType",
+        "value": "h1",
+        "label": "Heading Type",
+        "options": [
+          {
+            "name": "H1",
+            "value": "h1"
+          },
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          },
+          {
+            "name": "H4",
+            "value": "h4"
+          },
+          {
+            "name": "H5",
+            "value": "h5"
+          },
+          {
+            "name": "H6",
+            "value": "h6"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "longDescr",
+        "value": "",
+        "label": "Description",
+        "description": "Slide description copy."
+      },
+      {
+        "component": "select",
+        "name": "cta1Type",
+        "value": "primary",
+        "label": "Primary CTA Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta1Text",
+        "value": "",
+        "label": "Primary CTA Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta1",
+        "value": "",
+        "label": "Primary CTA Link"
+      },
+      {
+        "component": "select",
+        "name": "cta2Type",
+        "value": "secondary",
+        "label": "Secondary CTA Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta2Text",
+        "value": "",
+        "label": "Secondary CTA Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cta2",
+        "value": "",
+        "label": "Secondary CTA Link"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobile-bg-image",
+        "label": "Mobile Background Image",
+        "description": "Mobile background image for the slide."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobile-bg-imageAlt",
+        "value": "",
+        "label": "Mobile Background Image Alt Text",
+        "description": "Alt text for the mobile background image."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "bgcolorcode",
+        "value": "#dff1fb",
+        "label": "Background Color",
+        "description": "Fallback background color for the slide."
       }
     ]
   },

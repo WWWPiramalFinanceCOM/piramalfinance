@@ -111,6 +111,7 @@
       "branchcarousel",
       "branchkeyfeatures",
       "branches",
+      "banner-slider",
       "banner-carousel",
       "testimonies",
       "searchunclaimeddividend"
@@ -134,6 +135,12 @@
       "hero",
       "teaser",
       "detailed-teaser"
+    ]
+  },
+  {
+    "id": "banner-slider",
+    "components": [
+      "banner-slider-slide"
     ]
   },
   {
@@ -197,7 +204,7 @@
     "id": "container",
     "components": []
   },
-   {
+  {
     "id": "banner-carousel",
     "components": ["banner-carousel-item"]
   },

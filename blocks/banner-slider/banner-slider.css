@@ -28,7 +28,7 @@
   background-position: center right;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 520px;
+  /* min-height: 520px; */
 }
 
 .banner-slider-copy {

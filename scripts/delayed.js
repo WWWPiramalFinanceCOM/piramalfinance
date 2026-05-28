@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-cycle
 import { fetchPlaceholders, getMetadata, sampleRUM } from './aem.js';
+import { tr } from './dom-helper.js';
+
 import eventInit from './events.js';
 
-
-
+eventInit();
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-eventInit();
 
 function loadServiceWorker() {
   if ('serviceWorker' in navigator) {
@@ -165,8 +165,9 @@ async function loadAdobeScript() {
 //   })
 // };
 
+const thirdPartyEnabled = getMetadata("third-party") == 'true';
 
-if (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('author')) {
+if (!thirdPartyEnabled && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('author')) {
   loadServiceWorker();
   loadHeadGTM();
   loadBodyGTM();

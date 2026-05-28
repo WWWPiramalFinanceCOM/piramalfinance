@@ -130,6 +130,8 @@ function createSlide(row, index) {
 
   const ctaHref = hrefFromParagraph(leftParagraphs[11]);
   const ctaText = (leftParagraphs[12]?.textContent || '').trim() || 'Apply Now';
+  const shortDescription = leftParagraphs[14];
+  const shortDescriptionHtml = shortDescription?.textContent?.trim() ? shortDescription.outerHTML : '';
 
   const slide = document.createElement('div');
   slide.className = 'banner-slider-slide';
@@ -154,6 +156,7 @@ function createSlide(row, index) {
           <div class="banner-slider-description">${descriptionHtml}</div>
           ${featureItems(leftParagraphs)}
           ${ctaHref ? `<div class="banner-slider-cta"><a class="button primary" href="${ctaHref}">${ctaText}</a></div>` : ''}
+          ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
         </div>
         <div class="banner-slider-media">${foreground ? createPicture(foreground, '') : ''}</div>
       </div>

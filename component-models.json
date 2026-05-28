@@ -3247,6 +3247,13 @@
         "label": "Col1 Background Colour Text"
       },
       {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col1_shortDescription",
+        "value": "",
+        "label": "Col1 Short Description"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "col2_bgImage",

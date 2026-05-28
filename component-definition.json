@@ -1100,6 +1100,7 @@
                     "col1_cta": "Apply Now",
                     "col1_ctaLink": "#",
                     "col1_bgcolourText": "#dff1fb",
+                    "col1_shortDescription": "<p>Already Applied? <a href=\"#\">Track Application</a></p>",
                     "col2_bgImage": "/content/dam/default-teaser-banner.png"
                   }
                 }

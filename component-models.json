@@ -1889,6 +1889,145 @@
                 "value": "image-left"
               }
             ]
+          },
+          {
+            "name": "Title Position",
+            "children": [
+              {
+                "name": "Left",
+                "value": "title-pos-left"
+              },
+              {
+                "name": "Right",
+                "value": "title-pos-right"
+              },
+              {
+                "name": "Top",
+                "value": "title-pos-top"
+              }
+            ]
+          },
+          {
+            "name": "CTA Position",
+            "children": [
+              {
+                "name": "Flow (Default)",
+                "value": "cta-pos-flow"
+              },
+              {
+                "name": "Top Left",
+                "value": "cta-pos-top-left"
+              },
+              {
+                "name": "Top Center",
+                "value": "cta-pos-top-center"
+              },
+              {
+                "name": "Top Right",
+                "value": "cta-pos-top-right"
+              },
+              {
+                "name": "Middle Left",
+                "value": "cta-pos-middle-left"
+              },
+              {
+                "name": "Middle Center",
+                "value": "cta-pos-middle-center"
+              },
+              {
+                "name": "Middle Right",
+                "value": "cta-pos-middle-right"
+              },
+              {
+                "name": "Bottom Left",
+                "value": "cta-pos-bottom-left"
+              },
+              {
+                "name": "Bottom Center",
+                "value": "cta-pos-bottom-center"
+              },
+              {
+                "name": "Bottom Right",
+                "value": "cta-pos-bottom-right"
+              }
+            ]
+          },
+          {
+            "name": "Button Position Slots (18)",
+            "children": [
+              {
+                "name": "Button Slot 1",
+                "value": "btn-1"
+              },
+              {
+                "name": "Button Slot 2",
+                "value": "btn-2"
+              },
+              {
+                "name": "Button Slot 3",
+                "value": "btn-3"
+              },
+              {
+                "name": "Button Slot 4",
+                "value": "btn-4"
+              },
+              {
+                "name": "Button Slot 5",
+                "value": "btn-5"
+              },
+              {
+                "name": "Button Slot 6",
+                "value": "btn-6"
+              },
+              {
+                "name": "Button Slot 7",
+                "value": "btn-7"
+              },
+              {
+                "name": "Button Slot 8",
+                "value": "btn-8"
+              },
+              {
+                "name": "Button Slot 9",
+                "value": "btn-9"
+              },
+              {
+                "name": "Button Slot 10",
+                "value": "btn-10"
+              },
+              {
+                "name": "Button Slot 11",
+                "value": "btn-11"
+              },
+              {
+                "name": "Button Slot 12",
+                "value": "btn-12"
+              },
+              {
+                "name": "Button Slot 13",
+                "value": "btn-13"
+              },
+              {
+                "name": "Button Slot 14",
+                "value": "btn-14"
+              },
+              {
+                "name": "Button Slot 15",
+                "value": "btn-15"
+              },
+              {
+                "name": "Button Slot 16",
+                "value": "btn-16"
+              },
+              {
+                "name": "Button Slot 17",
+                "value": "btn-17"
+              },
+              {
+                "name": "Button Slot 18",
+                "value": "btn-18"
+              }
+            ]
           }
         ]
       },
@@ -2034,6 +2173,93 @@
         "value": "#dff1fb",
         "label": "Background Color",
         "description": "Fallback background color for the slide."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "featureIcon1",
+        "label": "Feature Icon 1",
+        "description": "First highlight icon (e.g. Safe & Secure).",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureIcon1Alt",
+        "value": "",
+        "label": "Feature Icon 1 Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureText1",
+        "value": "",
+        "label": "Feature Text 1"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureLink1",
+        "value": "",
+        "label": "Feature Link 1"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "featureIcon2",
+        "label": "Feature Icon 2",
+        "description": "Second highlight icon.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureIcon2Alt",
+        "value": "",
+        "label": "Feature Icon 2 Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureText2",
+        "value": "",
+        "label": "Feature Text 2"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureLink2",
+        "value": "",
+        "label": "Feature Link 2"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "featureIcon3",
+        "label": "Feature Icon 3",
+        "description": "Third highlight icon.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureIcon3Alt",
+        "value": "",
+        "label": "Feature Icon 3 Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureText3",
+        "value": "",
+        "label": "Feature Text 3"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "featureLink3",
+        "value": "",
+        "label": "Feature Link 3"
       }
     ]
   },

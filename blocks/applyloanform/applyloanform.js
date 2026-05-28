@@ -20,8 +20,12 @@ export default async function decorate(block) {
 
 
   block.innerHTML = appplyLoanTemplate(jsonResponseData);
+
+  // Scoped access - use block's container instead of document
+  const mainContainer = block.closest('main') || document;
+
   try {
-    applyLoanFormClick();
+    applyLoanFormClick(mainContainer);
     applyLoanPopper();
     loanutmForm();
     stateMasterApi();

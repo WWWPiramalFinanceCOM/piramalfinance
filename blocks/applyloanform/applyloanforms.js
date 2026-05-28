@@ -87,14 +87,14 @@ export function createOverlay(el) {
 
 export let formOverlay = {};
 
-export function applyLoanFormClick() {
-  loaninnerform = document.querySelector('.loan-form-sub-parent');
-  loaninnerform = document.querySelector('.loan-form-sub-parent');
-  const homeloancalcontainer = document.querySelector('.homeloancalculator.block') || document.createElement('div');
+export function applyLoanFormClick(mainContainer = document) {
+  loaninnerform = mainContainer.querySelector('.loan-form-sub-parent');
+  loaninnerform = mainContainer.querySelector('.loan-form-sub-parent');
+  const homeloancalcontainer = mainContainer.querySelector('.homeloancalculator.block') || document.createElement('div');
   formOverlay = createOverlay(homeloancalcontainer);
   if (loaninnerform) {
     // checkbox logic
-    const checkboxDiv = document.querySelectorAll('.cmp-form-option-parent');
+    const checkboxDiv = mainContainer.querySelectorAll('.cmp-form-option-parent');
 
     checkboxDiv[0].style.border = '1px solid #f26841';
 

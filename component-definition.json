@@ -1091,10 +1091,10 @@
                 "template": {
                   "name": "Banner Slider",
                   "model": "banner-slider",
-                  "filter": "banner-slides",
-                  "banner-slides": {
+                  "filter": "banner-slide",
+                  "banner-slide": {
                     "name": "Banner Slide",
-                    "model": "banner-slides",
+                    "model": "banner-slide",
                     "col1_title": "Banner Slider Title",
                     "col1_description": "<p>Banner slider description</p>",
                     "col1_cta": "Apply Now",
@@ -1109,14 +1109,14 @@
         },
         {
           "title": "Banner Slides",
-          "id": "banner-slides",
+          "id": "banner-slide",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Banner Slide",
-                  "model": "banner-slides"
+                  "model": "banner-slide"
                 }
               }
             }

@@ -46,9 +46,16 @@ export default async function decorate(block) {
   block.classList.add('shade-box');
   try {
     openFunctionFAQ(block);
-    block.closest('.faq-view-more-logic') ? viewMoreLogicFAQ() : '';
-    if (document.querySelector('.documents-required-brown')) {
-      documentRequired();
+    // Pass block to viewMoreLogicFAQ for scoped access
+    block.closest('.faq-view-more-logic') ? viewMoreLogicFAQ(block) : '';
+    
+    // Scoped access - find documentsRequiredSection within block's context
+    const section = block.closest('.section');
+    const documentsRequiredSection = section?.closest('.documents-required-brown') 
+      || section?.querySelector('.documents-required-brown')
+      || block.closest('.documents-required-brown');
+    if (documentsRequiredSection) {
+      documentRequired(documentsRequiredSection);
     }
   } catch (error) {
     console.warn(error);
@@ -96,8 +103,10 @@ function openFunctionFAQ(block) {
   });
 }
 
-function viewMoreLogicFAQ() {
-  document.querySelectorAll('.faq-section-wrapper.faq-view-more-logic').forEach((each) => {
+function viewMoreLogicFAQ(block) {
+  // Scoped Access - use block's main container instead of document
+  const mainContainer = block.closest('main') || block.closest('body');
+  mainContainer.querySelectorAll('.faq-section-wrapper.faq-view-more-logic').forEach((each) => {
     const allFAQSection = each.querySelectorAll('.accordion.block');
 
     allFAQSection.forEach((eachFAQ, index) => {

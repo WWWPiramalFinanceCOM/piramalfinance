@@ -16,17 +16,22 @@ export default async function decorate(block) {
     const reponseData = cfRepsonse && cfRepsonse.data;
     jsonResponseData = groupAllKeys(reponseData);
     sessionStorage.setItem('branchloanmapping', JSON.stringify(jsonResponseData));
-    /* const repsonseData = cfRepsonse && cfRepsonse.data[0].branchloanmapping;
-    const jsonResponseData = repsonseData && JSON.parse(repsonseData); */
   }
 
+  // Scoped access - use mainContainer instead of document
+  const mainContainer = block.closest('main') || block.closest('body');
 
   Object.keys(jsonResponseData).forEach((eachKey) => {
     if (!jsonResponseData[eachKey].includes(city)) {
-      const getDataPanel = document.querySelector(`.${eachKey}-branch-carousel`).getAttribute('data-panel');
-      document.querySelectorAll(`[data-panel=${getDataPanel}]`).forEach((eachEle) => {
-        eachEle.remove();
-      });
+      const targetEl = mainContainer.querySelector(`.${eachKey}-branch-carousel`);
+      if (targetEl) {
+        const getDataPanel = targetEl.getAttribute('data-panel');
+        if (getDataPanel) {
+          mainContainer.querySelectorAll(`[data-panel=${getDataPanel}]`).forEach((eachEle) => {
+            eachEle.remove();
+          });
+        }
+      }
     }
   });
 

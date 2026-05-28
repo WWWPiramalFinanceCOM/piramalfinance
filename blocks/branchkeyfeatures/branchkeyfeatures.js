@@ -21,53 +21,59 @@ export default async function decorate(block) {
     const reponseData = cfRepsonse && cfRepsonse.data;
     jsonResponseData = groupAllKeys(reponseData);
     sessionStorage.setItem('branchloanmapping', JSON.stringify(jsonResponseData));
-  
-    /* const repsonseData = cfRepsonse && cfRepsonse.data[0].branchloanmapping;
-    const jsonResponseData = repsonseData && JSON.parse(repsonseData); */
   }
+
+  // Scoped access - use mainContainer instead of document
+  const mainContainer = block.closest('main') || block.closest('body');
 
   Object.keys(jsonResponseData).forEach((eachKey) => {
     if (jsonResponseData[eachKey].includes(city)) {
-      const getKeyFeatureEle = document.querySelector(`.${eachKey}-key-feature`);
+      const getKeyFeatureEle = mainContainer.querySelector(`.${eachKey}-key-feature`);
       if (getKeyFeatureEle) {
         getKeyFeatureEle.querySelectorAll('.keyfeatures-wrapper').forEach((eachKeyFeatureEle) => {
           keyFeatureDiv.append(eachKeyFeatureEle);
         });
       }
-    }else{
-      if(eachKey == 'personal-loan'){
-        document.querySelector('.personal-loan-key-feature').querySelector('.wrapper-creation-container').querySelectorAll('.keyfeatures-wrapper').forEach(function (eachfeature) {
+    } else {
+      if(eachKey === 'personal-loan'){
+        const personalLoanFeature = mainContainer.querySelector('.personal-loan-key-feature');
+        const wrapperContainer = personalLoanFeature?.querySelector('.wrapper-creation-container');
+        wrapperContainer?.querySelectorAll('.keyfeatures-wrapper').forEach(function (eachfeature) {
           eachfeature.remove();
         });
       }
     }
   });
 
-  document.querySelectorAll('.loans-fragment').forEach((eachEle) => {
+  mainContainer.querySelectorAll('.loans-fragment').forEach((eachEle) => {
     eachEle.remove();
   });
 
-  document.querySelector('.view-more-less-js .wrapper-creation-container').insertAdjacentHTML('beforeend', keyFeatureDiv.innerHTML);
+  const viewMoreLessContainer = mainContainer.querySelector('.view-more-less-js .wrapper-creation-container');
+  if (viewMoreLessContainer) {
+    viewMoreLessContainer.insertAdjacentHTML('beforeend', keyFeatureDiv.innerHTML);
+  }
 
-
-  let mainFeatureDiv = document.querySelector('.view-more-less-js.wrappercreation-container');
-  let featureWrapperCheck = document.querySelectorAll('.view-more-less-js .wrapper-creation-container .keyfeatures-wrapper').length;
+  const mainFeatureDiv = mainContainer.querySelector('.view-more-less-js.wrappercreation-container');
+  const featureWrapperCheck = mainContainer.querySelectorAll('.view-more-less-js .wrapper-creation-container .keyfeatures-wrapper').length;
   if(featureWrapperCheck > 0){
-    document.querySelectorAll('.view-more-less-js .wrapper-creation-container .keyfeatures-wrapper').forEach((eackfeatures, index) => {
+    mainContainer.querySelectorAll('.view-more-less-js .wrapper-creation-container .keyfeatures-wrapper').forEach((eackfeatures, index) => {
       if (index <= 2) {
         eackfeatures.classList.remove('dp-none');
       } else {
         eackfeatures.classList.add('dp-none');
       }
     });
-  }else{
+  } else if (mainFeatureDiv) {
     mainFeatureDiv.classList.add('dp-none');
   }
 
-  const featurePlus = document.querySelector('.view-more-less-js .wrapper-creation-container');
+  const featurePlus = mainContainer.querySelector('.view-more-less-js .wrapper-creation-container');
 
   try {
-    featureDropDownClick(featurePlus);
+    if (featurePlus) {
+      featureDropDownClick(featurePlus);
+    }
   } catch (error) {
     console.warn(error);
   }

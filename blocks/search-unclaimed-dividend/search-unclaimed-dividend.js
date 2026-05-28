@@ -281,13 +281,13 @@ function updateTable(result, content) {
 function getYearOptions() {
   // Hardcoded years matching production dropdown
   return [
+    '2024-2025',
     '2023-2024',
     '2022-2023',
     '2021-2022',
     '2020-2021',
     '2019-2020',
-    '2018-2019',
-    '2017-2018'
+    '2018-2019'
   ];
 }
 

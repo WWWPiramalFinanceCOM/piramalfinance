@@ -3050,6 +3050,165 @@
       }
     ]
   },
+  {
+    "id": "banner-slides",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_title",
+        "value": "",
+        "label": "Col1 Title"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col1_description",
+        "value": "",
+        "label": "Col1 Description"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_Icon",
+        "label": "Col1 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_IconText",
+        "value": "",
+        "label": "Col1 Icon Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_IconAlt",
+        "value": "",
+        "label": "Col1 Icon Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_Icon2",
+        "label": "Col1 Icon 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_Icon2Text",
+        "value": "",
+        "label": "Col1 Icon 2 Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_Icon2Alt",
+        "value": "",
+        "label": "Col1 Icon 2 Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_Icon3",
+        "label": "Col1 Icon 3",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_Icon3Text",
+        "value": "",
+        "label": "Col1 Icon 3 Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_Icon3Alt",
+        "value": "",
+        "label": "Col1 Icon 3 Alt"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_ctaLink",
+        "value": "",
+        "label": "Col1 CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_cta",
+        "value": "",
+        "label": "Col1 CTA Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_bgcolourText",
+        "value": "",
+        "label": "Col1 Background Colour Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_bgImage",
+        "label": "Col2 Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_bgImageAlt",
+        "value": "",
+        "label": "Col2 Background Image Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_mobbgImg",
+        "label": "Col2 Mobile Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_mobbgImgAlt",
+        "value": "",
+        "label": "Col2 Mobile Background Image Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_ForegroundImg",
+        "label": "Col2 Foreground Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_foregroundImgAlt",
+        "value": "",
+        "label": "Col2 Foreground Image Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_ForegroundmobImg",
+        "label": "Col2 Foreground Mobile Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_ForegroundmobImgAlt",
+        "value": "",
+        "label": "Col2 Foreground Mobile Image Alt"
+      }
+    ]
+  },
    {
     "id": "searchunclaimeddividend",
     "fields": [

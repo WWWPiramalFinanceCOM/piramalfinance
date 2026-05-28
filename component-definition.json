@@ -1091,7 +1091,7 @@
                 "template": {
                   "name": "Banner Slider",
                   "model": "banner-slider",
-                  "filter": "banner-slider",
+                  "filter": "banner-slides",
                   "banner-slides": {
                     "name": "Banner Slide",
                     "model": "banner-slides",

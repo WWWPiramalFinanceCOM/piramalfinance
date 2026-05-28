@@ -246,6 +246,7 @@ function createSlide(panel, index) {
 }
 
 export default function decorate(block) {
+  const originalMarkup = block.innerHTML;
   try {
     const blockRows = [...block.children];
     const firstSlideRowIndex = blockRows.findIndex((row) => row.children.length > 1);
@@ -299,6 +300,8 @@ export default function decorate(block) {
     block.append(stage, controls);
 
     if (!slideElements.length) {
+      block.innerHTML = originalMarkup;
+      block.classList.remove('banner-slider--ready');
       return;
     }
 
@@ -346,7 +349,8 @@ export default function decorate(block) {
     setActiveSlide(0);
     restartAutoplay();
   } catch (error) {
-    block.textContent = '';
+    block.innerHTML = originalMarkup;
+    block.classList.remove('banner-slider--ready');
     console.warn('banner-slider decoration failed', error);
   }
 }

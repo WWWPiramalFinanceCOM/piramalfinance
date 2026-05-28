@@ -56,22 +56,45 @@ function imageSources(cell) {
   return [...new Set(values)];
 }
 
-function featureItems(leftCell) {
-  const content = firstContent(leftCell);
-  if (!content) {
+function hrefFromParagraph(paragraph) {
+  if (!paragraph) {
     return '';
   }
 
-  const pictures = [...content.querySelectorAll('picture')].slice(0, 3);
-  const textCandidates = [...content.querySelectorAll('p, span, div')]
-    .map((el) => el.textContent?.trim() || '')
-    .filter((value) => value && !/^#/.test(value) && !/^https?:\/\//i.test(value))
-    .slice(1, 4);
+  const anchor = paragraph.querySelector('a');
+  if (anchor?.href) {
+    return anchor.href;
+  }
 
-  const items = textCandidates.map((text, idx) => ({
-    text,
-    icon: pictures[idx] ? pictures[idx].outerHTML : '',
-  })).filter((item) => item.text);
+  const raw = paragraph.textContent?.trim() || '';
+  if (raw.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(raw)) {
+    return raw;
+  }
+
+  return '';
+}
+
+function featureItems(leftParagraphs) {
+  if (!leftParagraphs?.length) {
+    return '';
+  }
+
+  const slots = [
+    { icon: 2, text: 3, alt: 4 },
+    { icon: 5, text: 6, alt: 7 },
+    { icon: 8, text: 9, alt: 10 },
+  ];
+
+  const items = slots.map((slot) => {
+    const iconSrc = hrefFromParagraph(leftParagraphs[slot.icon]);
+    const text = (leftParagraphs[slot.text]?.textContent || '').trim();
+    const altText = (leftParagraphs[slot.alt]?.textContent || '').trim();
+
+    return {
+      text,
+      icon: iconSrc ? createPicture(iconSrc, altText || text) : '',
+    };
+  }).filter((item) => item.text || item.icon);
 
   if (!items.length) {
     return '';
@@ -90,7 +113,8 @@ function featureItems(leftCell) {
 }
 
 function createSlide(row, index) {
-  const [leftCell, rightCell] = [...row.children].map((child) => firstContent(child));
+  const [leftCell, rightCell] = [...row.children];
+  const leftParagraphs = [...leftCell?.querySelectorAll('p') || []];
 
   const rightSources = imageSources(rightCell);
   const desktopBackground = rightSources[0] || '';
@@ -98,19 +122,20 @@ function createSlide(row, index) {
   const foreground = rightSources[2] || '';
 
   const heading = leftCell?.querySelector('h1, h2, h3, h4, h5, h6');
-  const titleHtml = heading ? heading.outerHTML : `<h2>${textOf(leftCell)}</h2>`;
+  const titleText = (leftParagraphs[0]?.textContent || textOf(leftCell)).trim();
+  const titleHtml = heading ? heading.outerHTML : `<h2>${titleText}</h2>`;
 
-  const paragraphs = [...leftCell?.querySelectorAll('p') || []];
-  const description = paragraphs.find((p) => !p.querySelector('a'));
+  const descriptionText = (leftParagraphs[1]?.textContent || '').trim();
+  const descriptionHtml = descriptionText ? `<p>${descriptionText}</p>` : '';
 
-  const ctaLink = [...leftCell?.querySelectorAll('a') || []]
-    .find((a) => !/\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(a.getAttribute('href') || ''));
+  const ctaHref = hrefFromParagraph(leftParagraphs[11]);
+  const ctaText = (leftParagraphs[12]?.textContent || '').trim() || 'Apply Now';
 
   const slide = document.createElement('div');
   slide.className = 'banner-slider-slide';
   slide.dataset.slideIndex = `${index}`;
 
-  const bgColor = (textOf(leftCell).match(/#[0-9a-f]{3,8}/i) || [])[0];
+  const bgColor = (leftParagraphs[13]?.textContent || textOf(leftCell)).match(/#[0-9a-f]{3,8}/i)?.[0];
   if (bgColor) {
     slide.style.setProperty('--banner-slider-bg-color', bgColor);
   }
@@ -126,9 +151,9 @@ function createSlide(row, index) {
       <div class="banner-slider-content">
         <div class="banner-slider-copy">
           <div class="banner-slider-title">${titleHtml}</div>
-          <div class="banner-slider-description">${description ? description.innerHTML : ''}</div>
-          ${featureItems(leftCell)}
-          ${ctaLink ? `<div class="banner-slider-cta"><a class="button primary" href="${ctaLink.getAttribute('href')}">${ctaLink.textContent?.trim() || 'Apply Now'}</a></div>` : ''}
+          <div class="banner-slider-description">${descriptionHtml}</div>
+          ${featureItems(leftParagraphs)}
+          ${ctaHref ? `<div class="banner-slider-cta"><a class="button primary" href="${ctaHref}">${ctaText}</a></div>` : ''}
         </div>
         <div class="banner-slider-media">${foreground ? createPicture(foreground, '') : ''}</div>
       </div>
@@ -166,6 +191,9 @@ export default function decorate(block) {
   block.append(stage, dots);
 
   let active = 0;
+  const autoPlayDelay = 25000;
+  let autoPlayTimer;
+
   const activate = (index) => {
     active = (index + slides.length) % slides.length;
     slides.forEach((slide, idx) => {
@@ -181,13 +209,50 @@ export default function decorate(block) {
     });
   };
 
+  const startAutoPlay = () => {
+    if (slides.length < 2 || autoPlayTimer) {
+      return;
+    }
+
+    autoPlayTimer = window.setInterval(() => {
+      if (!document.hidden) {
+        activate(active + 1);
+      }
+    }, autoPlayDelay);
+  };
+
+  const stopAutoPlay = () => {
+    if (!autoPlayTimer) {
+      return;
+    }
+
+    window.clearInterval(autoPlayTimer);
+    autoPlayTimer = undefined;
+  };
+
+  const resetAutoPlay = () => {
+    stopAutoPlay();
+    startAutoPlay();
+  };
+
   dots.addEventListener('click', (event) => {
     const dot = event.target.closest('.banner-slider-dot');
     if (!dot) {
       return;
     }
+
     activate(Number.parseInt(dot.dataset.slideIndex, 10));
+    resetAutoPlay();
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoPlay();
+    } else {
+      startAutoPlay();
+    }
   });
 
   activate(0);
+  startAutoPlay();
 }

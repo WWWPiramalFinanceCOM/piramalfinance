@@ -775,6 +775,101 @@
     ]
   },
   {
+    "id": "banner-slider",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "previcon",
+        "value": "",
+        "label": "Previous Icon"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "previconAlt",
+        "value": "",
+        "label": "Previous Icon Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "nexticon",
+        "value": "",
+        "label": "Next Icon"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nexticonAlt",
+        "value": "",
+        "label": "Next Icon Alt"
+      },
+      {
+        "component": "select",
+        "name": "carouselshowtype",
+        "value": "primary",
+        "label": "Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "primary",
+            "value": "primary"
+          },
+          {
+            "name": "secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "autorotate",
+        "value": "rotate-off",
+        "label": "Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "rotate-on",
+            "value": "rotate-on"
+          },
+          {
+            "name": "rotate-off",
+            "value": "rotate-off"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "carouselversion",
+        "value": "One",
+        "label": "Version",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "One",
+            "value": "One"
+          },
+          {
+            "name": "Two",
+            "value": "Two"
+          },
+          {
+            "name": "Glider",
+            "value": "Glider"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "config",
+        "value": "",
+        "label": "Config"
+      }
+    ]
+  },
+  {
     "id": "tab-container",
     "fields": [
       {

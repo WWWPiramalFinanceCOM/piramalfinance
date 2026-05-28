@@ -2045,8 +2045,7 @@
         "name": "title",
         "value": "",
         "label": "Heading",
-        "description": "Sets the main title of the slide.",
-        "multi": true
+        "description": "Sets the main title of the slide."
       },
       {
         "component": "select",

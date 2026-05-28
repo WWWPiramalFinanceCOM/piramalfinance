@@ -1,261 +1,266 @@
-function firstContent(cell) {
-  return cell?.firstElementChild || cell;
-}
+// import Swiper from '../banner-carousel/swiper-bundle.min.js';
 
-function textOf(cell) {
-  return firstContent(cell)?.textContent?.trim() || '';
-}
+// function firstContent(cell) {
+//   return cell?.firstElementChild || cell;
+// }
 
-function createPicture(src, alt = '') {
-  if (!src) {
-    return '';
-  }
+// function textOf(cell) {
+//   return firstContent(cell)?.textContent?.trim() || '';
+// }
 
-  const picture = document.createElement('picture');
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = alt;
-  img.loading = 'lazy';
-  picture.append(img);
-  return picture.outerHTML;
-}
+// function createPicture(src, alt = '') {
+//   if (!src) {
+//     return '';
+//   }
 
-function imageSources(cell) {
-  const values = [];
-  const candidates = [cell, firstContent(cell)].filter(Boolean);
+//   const picture = document.createElement('picture');
+//   const img = document.createElement('img');
+//   img.src = src;
+//   img.alt = alt;
+//   img.loading = 'lazy';
+//   picture.append(img);
+//   return picture.outerHTML;
+// }
 
-  candidates.forEach((candidate) => {
-    const pics = candidate.tagName === 'PICTURE' ? [candidate] : [...candidate.querySelectorAll?.('picture') || []];
-    pics.forEach((picture) => {
-      const img = picture.querySelector('img');
-      if (img?.src) {
-        values.push(img.src);
-      }
-    });
+// function imageSources(cell) {
+//   const values = [];
+//   const candidates = [cell, firstContent(cell)].filter(Boolean);
 
-    const imgs = candidate.tagName === 'IMG' ? [candidate] : [...candidate.querySelectorAll?.('img') || []];
-    imgs.forEach((img) => {
-      if (img?.src) {
-        values.push(img.src);
-      }
-    });
+//   candidates.forEach((candidate) => {
+//     const pics = candidate.tagName === 'PICTURE' ? [candidate] : [...candidate.querySelectorAll?.('picture') || []];
+//     pics.forEach((picture) => {
+//       const img = picture.querySelector('img');
+//       if (img?.src) {
+//         values.push(img.src);
+//       }
+//     });
 
-    const links = candidate.tagName === 'A' ? [candidate] : [...candidate.querySelectorAll?.('a') || []];
-    links.forEach((link) => {
-      if (link?.href && (link.href.includes('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(link.href))) {
-        values.push(link.href);
-      }
-    });
+//     const imgs = candidate.tagName === 'IMG' ? [candidate] : [...candidate.querySelectorAll?.('img') || []];
+//     imgs.forEach((img) => {
+//       if (img?.src) {
+//         values.push(img.src);
+//       }
+//     });
 
-    const rawText = candidate.textContent?.trim();
-    if (rawText && (rawText.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(rawText))) {
-      values.push(rawText);
-    }
-  });
+//     const links = candidate.tagName === 'A' ? [candidate] : [...candidate.querySelectorAll?.('a') || []];
+//     links.forEach((link) => {
+//       if (link?.href && (link.href.includes('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(link.href))) {
+//         values.push(link.href);
+//       }
+//     });
 
-  return [...new Set(values)];
-}
+//     const rawText = candidate.textContent?.trim();
+//     if (rawText && (rawText.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(rawText))) {
+//       values.push(rawText);
+//     }
+//   });
 
-function hrefFromParagraph(paragraph) {
-  if (!paragraph) {
-    return '';
-  }
+//   return [...new Set(values)];
+// }
 
-  const anchor = paragraph.querySelector('a');
-  if (anchor?.href) {
-    return anchor.href;
-  }
+// function hrefFromParagraph(paragraph) {
+//   if (!paragraph) {
+//     return '';
+//   }
 
-  const raw = paragraph.textContent?.trim() || '';
-  if (raw.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(raw)) {
-    return raw;
-  }
+//   const anchor = paragraph.querySelector('a');
+//   if (anchor?.href) {
+//     return anchor.href;
+//   }
 
-  return '';
-}
+//   const raw = paragraph.textContent?.trim() || '';
+//   if (raw.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(raw)) {
+//     return raw;
+//   }
 
-function featureItems(leftParagraphs) {
-  if (!leftParagraphs?.length) {
-    return '';
-  }
+//   return '';
+// }
 
-  const slots = [
-    { icon: 2, text: 3, alt: 4 },
-    { icon: 5, text: 6, alt: 7 },
-    { icon: 8, text: 9, alt: 10 },
-  ];
+// function featureItems(leftParagraphs) {
+//   if (!leftParagraphs?.length) {
+//     return '';
+//   }
 
-  const items = slots.map((slot) => {
-    const iconSrc = hrefFromParagraph(leftParagraphs[slot.icon]);
-    const text = (leftParagraphs[slot.text]?.textContent || '').trim();
-    const altText = (leftParagraphs[slot.alt]?.textContent || '').trim();
+//   const slots = [
+//     { icon: 2, text: 3, alt: 4 },
+//     { icon: 5, text: 6, alt: 7 },
+//     { icon: 8, text: 9, alt: 10 },
+//   ];
 
-    return {
-      text,
-      icon: iconSrc ? createPicture(iconSrc, altText || text) : '',
-    };
-  }).filter((item) => item.text || item.icon);
+//   const items = slots.map((slot) => {
+//     const iconSrc = hrefFromParagraph(leftParagraphs[slot.icon]);
+//     const text = (leftParagraphs[slot.text]?.textContent || '').trim();
+//     const altText = (leftParagraphs[slot.alt]?.textContent || '').trim();
 
-  if (!items.length) {
-    return '';
-  }
+//     return {
+//       text,
+//       icon: iconSrc ? createPicture(iconSrc, altText || text) : '',
+//     };
+//   }).filter((item) => item.text || item.icon);
 
-  return `
-    <div class="banner-slider-features" role="list" aria-label="Slide highlights">
-      ${items.map((item) => `
-        <div class="banner-slider-feature" role="listitem">
-          <div class="banner-slider-feature-icon">${item.icon}</div>
-          <span class="banner-slider-feature-text">${item.text}</span>
-        </div>
-      `).join('')}
-    </div>
-  `;
-}
+//   if (!items.length) {
+//     return '';
+//   }
 
-function createSlide(row, index) {
-  const [leftCell, rightCell] = [...row.children];
-  const leftParagraphs = [...leftCell?.querySelectorAll('p') || []];
+//   return `
+//     <div class="banner-slider-features" role="list" aria-label="Slide highlights">
+//       ${items.map((item) => `
+//         <div class="banner-slider-feature" role="listitem">
+//           <div class="banner-slider-feature-icon">${item.icon}</div>
+//           <span class="banner-slider-feature-text">${item.text}</span>
+//         </div>
+//       `).join('')}
+//     </div>
+//   `;
+// }
 
-  const rightSources = imageSources(rightCell);
-  const desktopBackground = rightSources[0] || '';
-  const mobileBackground = rightSources[1] || desktopBackground;
-  const foreground = rightSources[2] || '';
+// function resolveImageAssets(rightSources) {
+//   if (!rightSources.length) {
+//     return {
+//       desktopBackground: '',
+//       mobileBackground: '',
+//       foreground: '',
+//     };
+//   }
 
-  const heading = leftCell?.querySelector('h1, h2, h3, h4, h5, h6');
-  const titleText = (leftParagraphs[0]?.textContent || textOf(leftCell)).trim();
-  const titleHtml = heading ? heading.outerHTML : `<h2>${titleText}</h2>`;
+//   // Support compact authoring: if only one image is supplied, treat it as foreground.
+//   if (rightSources.length === 1) {
+//     return {
+//       desktopBackground: '',
+//       mobileBackground: '',
+//       foreground: rightSources[0],
+//     };
+//   }
 
-  const descriptionText = (leftParagraphs[1]?.textContent || '').trim();
-  const descriptionHtml = descriptionText ? `<p>${descriptionText}</p>` : '';
+//   if (rightSources.length >= 3) {
+//     return {
+//       desktopBackground: rightSources[0],
+//       mobileBackground: rightSources[1] || rightSources[0],
+//       foreground: rightSources[2] || '',
+//     };
+//   }
 
-  const ctaHref = hrefFromParagraph(leftParagraphs[11]);
-  const ctaText = (leftParagraphs[12]?.textContent || '').trim() || 'Apply Now';
-  const shortDescription = leftParagraphs[14];
-  const shortDescriptionHtml = shortDescription?.textContent?.trim() ? shortDescription.outerHTML : '';
+//   return {
+//     desktopBackground: rightSources[0],
+//     mobileBackground: rightSources[0],
+//     foreground: rightSources[1],
+//   };
+// }
 
-  const slide = document.createElement('div');
-  slide.className = 'banner-slider-slide';
-  slide.dataset.slideIndex = `${index}`;
+// function createSlide(row, index) {
+//   const [leftCell, rightCell] = [...row.children];
+//   const leftParagraphs = [...leftCell?.querySelectorAll('p') || []];
 
-  const bgColor = (leftParagraphs[13]?.textContent || textOf(leftCell)).match(/#[0-9a-f]{3,8}/i)?.[0];
-  if (bgColor) {
-    slide.style.setProperty('--banner-slider-bg-color', bgColor);
-  }
-  if (desktopBackground) {
-    slide.style.setProperty('--banner-slider-bg-image', `url("${desktopBackground}")`);
-  }
-  if (mobileBackground) {
-    slide.style.setProperty('--banner-slider-mobile-bg-image', `url("${mobileBackground}")`);
-  }
+//   const rightSources = imageSources(rightCell);
+//   const {
+//     desktopBackground,
+//     mobileBackground,
+//     foreground,
+//   } = resolveImageAssets(rightSources);
 
-  slide.innerHTML = `
-    <div class="banner-slider-surface">
-      <div class="banner-slider-content">
-        <div class="banner-slider-copy">
-          <div class="banner-slider-title">${titleHtml}</div>
-          <div class="banner-slider-description">${descriptionHtml}</div>
-          ${featureItems(leftParagraphs)}
-          ${ctaHref ? `<div class="banner-slider-cta"><a class="button primary" href="${ctaHref}">${ctaText}</a></div>` : ''}
-          ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
-        </div>
-        <div class="banner-slider-media">${foreground ? createPicture(foreground, '') : ''}</div>
-      </div>
-    </div>
-  `;
+//   const heading = leftCell?.querySelector('h1, h2, h3, h4, h5, h6');
+//   const titleText = (leftParagraphs[0]?.textContent || textOf(leftCell)).trim();
+//   const titleHtml = heading ? heading.outerHTML : `<h2>${titleText}</h2>`;
 
-  return slide;
-}
+//   const descriptionText = (leftParagraphs[1]?.textContent || '').trim();
+//   const descriptionHtml = descriptionText ? `<p>${descriptionText}</p>` : '';
 
-export default function decorate(block) {
-  const rows = [...block.children].filter((row) => row.children.length >= 2);
-  if (!rows.length) {
-    return;
-  }
+//   const ctaHref = hrefFromParagraph(leftParagraphs[11]);
+//   const ctaText = (leftParagraphs[12]?.textContent || '').trim() || 'Apply Now';
+//   const shortDescription = leftParagraphs[14];
+//   const shortDescriptionHtml = shortDescription?.textContent?.trim() ? shortDescription.outerHTML : '';
 
-  const stage = document.createElement('div');
-  stage.className = 'banner-slider-stage';
+//   const slide = document.createElement('div');
+//   slide.className = 'banner-slider-slide swiper-slide';
+//   slide.dataset.slideIndex = `${index}`;
 
-  const dots = document.createElement('div');
-  dots.className = 'banner-slider-dots';
+//   const bgColor = (leftParagraphs[13]?.textContent || textOf(leftCell)).match(/#[0-9a-f]{3,8}/i)?.[0];
+//   if (bgColor) {
+//     slide.style.setProperty('--banner-slider-bg-color', bgColor);
+//   }
+//   if (desktopBackground) {
+//     slide.style.setProperty('--banner-slider-bg-image', `url("${desktopBackground}")`);
+//   }
+//   if (mobileBackground) {
+//     slide.style.setProperty('--banner-slider-mobile-bg-image', `url("${mobileBackground}")`);
+//   }
 
-  const slides = rows.map((row, index) => createSlide(row, index));
-  slides.forEach((slide, idx) => {
-    stage.append(slide);
-    const dot = document.createElement('button');
-    dot.type = 'button';
-    dot.className = 'banner-slider-dot';
-    dot.dataset.slideIndex = `${idx}`;
-    dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
-    dots.append(dot);
-  });
+//   slide.innerHTML = `
+//     <div class="banner-slider-surface">
+//       <div class="banner-slider-content">
+//         <div class="banner-slider-copy">
+//           <div class="banner-slider-title">${titleHtml}</div>
+//           <div class="banner-slider-description">${descriptionHtml}</div>
+//           ${featureItems(leftParagraphs)}
+//           ${ctaHref ? `<div class="banner-slider-cta"><a class="button primary" href="${ctaHref}">${ctaText}</a></div>` : ''}
+//           ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
+//         </div>
+//         <div class="banner-slider-media">${foreground ? createPicture(foreground, '') : ''}</div>
+//       </div>
+//     </div>
+//   `;
 
-  block.textContent = '';
-  block.classList.add('banner-slider', 'banner-slider--ready');
-  block.append(stage, dots);
+//   return slide;
+// }
 
-  let active = 0;
-  const autoPlayDelay = 25000;
-  let autoPlayTimer;
+// export default function decorate(block) {
+//   const rows = [...block.children].filter((row) => row.children.length >= 2);
+//   if (!rows.length) {
+//     return;
+//   }
 
-  const activate = (index) => {
-    active = (index + slides.length) % slides.length;
-    slides.forEach((slide, idx) => {
-      const on = idx === active;
-      slide.classList.toggle('is-active', on);
-      slide.setAttribute('aria-hidden', on ? 'false' : 'true');
-    });
+//   const stage = document.createElement('div');
+//   stage.className = 'banner-slider-stage swiper';
 
-    [...dots.children].forEach((dot, idx) => {
-      const on = idx === active;
-      dot.classList.toggle('is-active', on);
-      dot.setAttribute('aria-current', on ? 'true' : 'false');
-    });
-  };
+//   const wrapper = document.createElement('div');
+//   wrapper.className = 'swiper-wrapper';
 
-  const startAutoPlay = () => {
-    if (slides.length < 2 || autoPlayTimer) {
-      return;
-    }
+//   const dots = document.createElement('div');
+//   dots.className = 'banner-slider-dots swiper-pagination';
 
-    autoPlayTimer = window.setInterval(() => {
-      if (!document.hidden) {
-        activate(active + 1);
-      }
-    }, autoPlayDelay);
-  };
+//   const slides = rows.map((row, index) => createSlide(row, index));
+//   slides.forEach((slide) => {
+//     wrapper.append(slide);
+//   });
 
-  const stopAutoPlay = () => {
-    if (!autoPlayTimer) {
-      return;
-    }
+//   block.textContent = '';
+//   block.classList.add('banner-slider', 'banner-slider--ready');
+//   stage.append(wrapper, dots);
+//   block.append(stage);
 
-    window.clearInterval(autoPlayTimer);
-    autoPlayTimer = undefined;
-  };
+//   const swiper = new Swiper(stage, {
+//     loop: slides.length > 1,
+//     effect: 'fade',
+//     fadeEffect: {
+//       crossFade: true,
+//     },
+//     speed: 850,
+//     autoplay: slides.length > 1 ? {
+//       delay: 2800,
+//       disableOnInteraction: false,
+//       pauseOnMouseEnter: true,
+//     } : false,
+//     watchOverflow: true,
+//     pagination: {
+//       el: dots,
+//       clickable: true,
+//       bulletClass: 'banner-slider-dot',
+//       bulletActiveClass: 'is-active',
+//       renderBullet(index, className) {
+//         return `<button type="button" class="${className}" aria-label="Go to slide ${index + 1}"></button>`;
+//       },
+//     },
+//   });
 
-  const resetAutoPlay = () => {
-    stopAutoPlay();
-    startAutoPlay();
-  };
+//   document.addEventListener('visibilitychange', () => {
+//     if (!swiper.autoplay) {
+//       return;
+//     }
 
-  dots.addEventListener('click', (event) => {
-    const dot = event.target.closest('.banner-slider-dot');
-    if (!dot) {
-      return;
-    }
-
-    activate(Number.parseInt(dot.dataset.slideIndex, 10));
-    resetAutoPlay();
-  });
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      stopAutoPlay();
-    } else {
-      startAutoPlay();
-    }
-  });
-
-  activate(0);
-  startAutoPlay();
-}
+//     if (document.hidden) {
+//       swiper.autoplay.stop();
+//     } else {
+//       swiper.autoplay.start();
+//     }
+//   });
+// }

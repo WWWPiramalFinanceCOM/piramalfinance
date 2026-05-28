@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-cycle
 import { fetchPlaceholders, getMetadata, sampleRUM } from './aem.js';
-import { tr } from './dom-helper.js';
-
 import eventInit from './events.js';
 
-eventInit();
+
+
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
+eventInit();
 
 function loadServiceWorker() {
   if ('serviceWorker' in navigator) {
@@ -175,3 +175,4 @@ if (!thirdPartyEnabled && !window.location.hostname.includes('localhost') && !wi
   // handleReltags();
   loadAdobeScript();
 }
+console.log("Third-party scripts loaded: ", thirdPartyEnabled);

@@ -1,4 +1,9 @@
-import { ctaClick, ctaClickInteraction, documentRequiredInteraction, faqInteraction } from '../../dl.js';
+import {
+  ctaClick,
+  ctaClickInteraction,
+  documentRequiredInteraction,
+  faqInteraction,
+} from '../../dl.js';
 import { fetchPlaceholders } from '../../scripts/aem.js';
 import { targetObject } from '../../scripts/scripts.js';
 import { documentRequired, generateAccordionDOM } from '../accordion/accordion.js';

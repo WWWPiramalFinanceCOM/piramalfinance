@@ -1327,7 +1327,7 @@
                 "name": "Button Bottom",
                 "value": "btn-bottom"
               },
-               {
+              {
                 "name": "Two Button Bottom",
                 "value": "two-btn-bottom"
               }
@@ -1814,38 +1814,6 @@
     "id": "banner-slider-slide",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "fileReference",
-        "label": "Background Image",
-        "description": "Background image for the slide.",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "fileReferenceAlt",
-        "value": "",
-        "label": "Background Image Alt Text",
-        "description": "Alt text for the background image."
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "fileReference1",
-        "label": "Foreground Image",
-        "description": "Main banner image shown inside the slide.",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "fileReference1Alt",
-        "value": "",
-        "label": "Foreground Image Alt Text",
-        "description": "Alt text for the foreground image."
-      },
-      {
         "component": "multiselect",
         "name": "classes",
         "label": "Style",
@@ -2032,233 +2000,20 @@
         ]
       },
       {
-        "component": "text",
+        "component": "reference",
         "valueType": "string",
-        "name": "eyebrow",
-        "value": "",
-        "label": "Eyebrow",
-        "description": "Sets the small pre-title above the title."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "title",
-        "value": "",
-        "label": "Heading",
-        "description": "Sets the main title of the slide."
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "titleType",
-        "value": "h1",
-        "label": "Heading Type",
-        "options": [
-          {
-            "name": "H1",
-            "value": "h1"
-          },
-          {
-            "name": "H2",
-            "value": "h2"
-          },
-          {
-            "name": "H3",
-            "value": "h3"
-          },
-          {
-            "name": "H4",
-            "value": "h4"
-          },
-          {
-            "name": "H5",
-            "value": "h5"
-          },
-          {
-            "name": "H6",
-            "value": "h6"
-          }
-        ]
+        "name": "mediaAssets",
+        "label": "Media Assets",
+        "description": "Ordered list: 1) Desktop background, 2) Foreground image, 3) Mobile background (optional), 4-6) Feature icons (optional).",
+        "multi": true
       },
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "longDescr",
-        "value": "",
-        "label": "Description",
-        "description": "Slide description copy."
-      },
-      {
-        "component": "select",
-        "name": "cta1Type",
-        "value": "primary",
-        "label": "Primary CTA Type",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cta1Text",
-        "value": "",
-        "label": "Primary CTA Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cta1",
-        "value": "",
-        "label": "Primary CTA Link"
-      },
-      {
-        "component": "select",
-        "name": "cta2Type",
-        "value": "secondary",
-        "label": "Secondary CTA Type",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cta2Text",
-        "value": "",
-        "label": "Secondary CTA Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cta2",
-        "value": "",
-        "label": "Secondary CTA Link"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "mobile-bg-image",
-        "label": "Mobile Background Image",
-        "description": "Mobile background image for the slide."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "mobile-bg-imageAlt",
-        "value": "",
-        "label": "Mobile Background Image Alt Text",
-        "description": "Alt text for the mobile background image."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bgcolorcode",
-        "value": "#dff1fb",
-        "label": "Background Color",
-        "description": "Fallback background color for the slide."
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "featureIcon1",
-        "label": "Feature Icon 1",
-        "description": "First highlight icon (e.g. Safe & Secure).",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureIcon1Alt",
-        "value": "",
-        "label": "Feature Icon 1 Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureText1",
-        "value": "",
-        "label": "Feature Text 1"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureLink1",
-        "value": "",
-        "label": "Feature Link 1"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "featureIcon2",
-        "label": "Feature Icon 2",
-        "description": "Second highlight icon.",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureIcon2Alt",
-        "value": "",
-        "label": "Feature Icon 2 Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureText2",
-        "value": "",
-        "label": "Feature Text 2"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureLink2",
-        "value": "",
-        "label": "Feature Link 2"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "featureIcon3",
-        "label": "Feature Icon 3",
-        "description": "Third highlight icon.",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureIcon3Alt",
-        "value": "",
-        "label": "Feature Icon 3 Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureText3",
-        "value": "",
-        "label": "Feature Text 3"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "featureLink3",
-        "value": "",
-        "label": "Feature Link 3"
+        "name": "content",
+        "value": "<p class=eyebrow>Eyebrow</p><h1>Banner Slider Title</h1><p>Banner slider description</p><p><strong><a href=#>Apply Now</a></strong> <em><a href=#>Learn More</a></em></p>",
+        "label": "Content",
+        "description": "Use .eyebrow paragraph for eyebrow, H1-H6 for title, paragraph for description, and links for CTA. Optional: add up to 3 bullet items for feature text."
       }
     ]
   },
@@ -3559,7 +3314,7 @@
       }
     ]
   },
-   {
+  {
     "id": "searchunclaimeddividend",
     "fields": [
       {

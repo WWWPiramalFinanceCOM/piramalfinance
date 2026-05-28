@@ -110,6 +110,123 @@ function createCtaCell(typeCell, textCell, linkCell) {
   return cell;
 }
 
+function createFeatureMarkup(items) {
+  if (!items.length) {
+    return '';
+  }
+
+  return `
+    <div class="banner-slider-features" role="list" aria-label="Slide highlights">
+      ${items.map((item) => {
+    const textMarkup = item.href
+      ? `<a href="${item.href}" class="banner-slider-feature-text">${item.text}</a>`
+      : `<span class="banner-slider-feature-text">${item.text}</span>`;
+    return `
+          <div class="banner-slider-feature" role="listitem">
+            <div class="banner-slider-feature-icon">${item.iconMarkup || ''}</div>
+            ${textMarkup}
+          </div>
+        `;
+  }).join('')}
+    </div>
+  `;
+}
+
+function extractImageSources(cell) {
+  const sources = [];
+  const candidates = [cell, getCellContent(cell)].filter(Boolean);
+
+  candidates.forEach((candidate) => {
+    const pictures = candidate.tagName === 'PICTURE' ? [candidate] : [...candidate.querySelectorAll?.('picture') || []];
+    pictures.forEach((picture) => {
+      const img = picture.querySelector('img');
+      if (img?.src) {
+        sources.push(img.src);
+      }
+    });
+
+    const images = candidate.tagName === 'IMG' ? [candidate] : [...candidate.querySelectorAll?.('img') || []];
+    images.forEach((img) => {
+      if (img?.src) {
+        sources.push(img.src);
+      }
+    });
+
+    const links = candidate.tagName === 'A' ? [candidate] : [...candidate.querySelectorAll?.('a') || []];
+    links.forEach((link) => {
+      if (link?.href && (link.href.includes('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(link.href))) {
+        sources.push(link.href);
+      }
+    });
+
+    const text = candidate.textContent?.trim();
+    if (text && (text.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(text))) {
+      sources.push(text);
+    }
+  });
+
+  return [...new Set(sources)];
+}
+
+function parseCompactContent(cell) {
+  const content = getCellContent(cell);
+  if (!content) {
+    return {
+      eyebrowHtml: '',
+      titleHtml: '',
+      descriptionHtml: '',
+      buttonsMarkup: '',
+      titleTag: '',
+      featureTexts: [],
+    };
+  }
+
+  const titleElement = content.querySelector('h1, h2, h3, h4, h5, h6');
+  const titleTag = titleElement?.tagName?.toLowerCase() || '';
+  const titleHtml = titleElement ? titleElement.outerHTML : '';
+
+  const eyebrowElement = content.querySelector('.eyebrow');
+  const eyebrowHtml = eyebrowElement ? eyebrowElement.innerHTML : '';
+
+  const featureTexts = [...content.querySelectorAll('li')]
+    .map((item) => item.textContent?.trim() || '')
+    .filter(Boolean)
+    .slice(0, 3);
+
+  const paragraphs = [...content.querySelectorAll('p')]
+    .filter((paragraph) => !paragraph.classList.contains('eyebrow'));
+  const descriptionParagraph = paragraphs.find((paragraph) => !paragraph.querySelector('a'));
+  const descriptionHtml = descriptionParagraph ? descriptionParagraph.innerHTML : '';
+
+  const anchors = [...content.querySelectorAll('a')].slice(0, 2);
+  const buttonsMarkup = anchors.map((anchor, index) => {
+    const clone = anchor.cloneNode(true);
+    clone.classList.add('button');
+
+    const parentTag = anchor.parentElement?.tagName;
+    if (parentTag === 'EM') {
+      clone.classList.add('secondary');
+    } else if (parentTag === 'STRONG') {
+      clone.classList.add('primary');
+    } else if (index === 0) {
+      clone.classList.add('primary');
+    } else {
+      clone.classList.add('secondary');
+    }
+
+    return clone.outerHTML;
+  }).join('');
+
+  return {
+    eyebrowHtml,
+    titleHtml,
+    descriptionHtml,
+    buttonsMarkup,
+    titleTag,
+    featureTexts,
+  };
+}
+
 function createFeatureItems(cells) {
   const startIndex = 18;
   const items = [];
@@ -133,29 +250,91 @@ function createFeatureItems(cells) {
     }
   }
 
-  if (!items.length) {
-    return '';
+  return createFeatureMarkup(items);
+}
+
+function createSlideFromCompactSchema(panel, index, cells) {
+  const classesCell = cells[0];
+  const mediaCell = cells[1];
+  const contentCell = cells[2];
+
+  const classes = getClasses(classesCell);
+  const mediaSources = extractImageSources(mediaCell);
+  const desktopBackground = mediaSources[0] || '';
+  const foregroundImage = mediaSources[1] || '';
+  const mobileBackground = mediaSources[2] || desktopBackground;
+
+  const {
+    eyebrowHtml,
+    titleHtml,
+    descriptionHtml,
+    buttonsMarkup,
+    titleTag,
+    featureTexts,
+  } = parseCompactContent(contentCell);
+
+  const features = featureTexts.map((text, featureIndex) => {
+    const iconSrc = mediaSources[3 + featureIndex];
+    return {
+      text,
+      href: '',
+      iconMarkup: iconSrc ? createPictureFromPath(iconSrc, text)?.outerHTML || '' : '',
+    };
+  });
+
+  panel.textContent = '';
+  panel.className = 'banner-slider-slide';
+  panel.dataset.slideIndex = `${index}`;
+  panel.dataset.titleType = titleTag;
+  panel.dataset.backgroundImageAlt = '';
+  panel.dataset.mobileBackgroundImageAlt = '';
+
+  classes.forEach((className) => panel.classList.add(className));
+  if (!classes.some((className) => className === 'image-left' || className === 'image-right')) {
+    panel.classList.add('image-right');
+  }
+  if (!classes.some((className) => className === 'content-left' || className === 'content-center')) {
+    panel.classList.add('content-left');
+  }
+  if (!classes.includes('light') && !classes.includes('dark')) {
+    panel.classList.add('light');
   }
 
-  return `
-    <div class="banner-slider-features" role="list" aria-label="Slide highlights">
-      ${items.map((item) => {
-    const textMarkup = item.href
-      ? `<a href="${item.href}" class="banner-slider-feature-text">${item.text}</a>`
-      : `<span class="banner-slider-feature-text">${item.text}</span>`;
-    return `
-          <div class="banner-slider-feature" role="listitem">
-            <div class="banner-slider-feature-icon">${item.iconMarkup}</div>
-            ${textMarkup}
-          </div>
-        `;
-  }).join('')}
+  panel.classList.add(getClassWithPrefix(classes, 'title-pos-', 'title-pos-left'));
+  panel.classList.add(getClassWithPrefix(classes, 'cta-pos-', 'cta-pos-flow'));
+
+  if (desktopBackground) {
+    panel.style.setProperty('--banner-slider-bg-image', `url("${desktopBackground}")`);
+  }
+  if (mobileBackground) {
+    panel.style.setProperty('--banner-slider-mobile-bg-image', `url("${mobileBackground}")`);
+  }
+
+  panel.innerHTML = `
+    <div class="banner-slider-surface">
+      <div class="banner-slider-content">
+        <div class="banner-slider-copy">
+          ${eyebrowHtml ? `<div class="banner-slider-eyebrow">${eyebrowHtml}</div>` : ''}
+          <div class="banner-slider-title">${titleHtml}</div>
+          <div class="banner-slider-description">${descriptionHtml}</div>
+          ${createFeatureMarkup(features)}
+          ${buttonsMarkup ? `<div class="banner-slider-cta">${buttonsMarkup}</div>` : ''}
+        </div>
+        <div class="banner-slider-media">${foregroundImage ? createPictureFromPath(foregroundImage, '')?.outerHTML || '' : ''}</div>
+      </div>
     </div>
   `;
+
+  return panel;
 }
 
 function createSlide(panel, index) {
   const cells = [...panel.children].map((child) => getCellContent(child));
+  const isCompactSchema = cells.length === 3 && /(?:banner-slider-slide|light|dark|content-|image-|title-pos-|cta-pos-|btn-)/i.test(getCellText(cells[0]));
+  if (isCompactSchema) {
+    return createSlideFromCompactSchema(panel, index, cells);
+  }
+
   const hasExtendedSchema = cells.length >= 18;
 
   const backgroundImage = cells[0];

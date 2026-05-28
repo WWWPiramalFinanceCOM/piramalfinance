@@ -342,13 +342,9 @@
                   "banner-slider-slide": {
                     "name": "Banner Slider Slide",
                     "model": "banner-slider-slide",
-                    "fileReference": "/content/dam/default-teaser-banner.png",
-                    "eyebrow": "Eyebrow",
-                    "title": "Banner Slider Title",
-                    "titleType": "h1",
-                    "longDescr": "<p>Banner slider description</p>",
-                    "bgcolorcode": "#dff1fb",
-                    "classes": ["light", "content-left", "image-right"]
+                    "classes": ["light", "content-left", "image-right", "title-pos-left", "cta-pos-flow"],
+                    "mediaAssets": ["/content/dam/default-teaser-banner.png"],
+                    "content": "<p class=\"eyebrow\">Eyebrow</p><h1>Banner Slider Title</h1><p>Banner slider description</p><p><strong><a href=\"#\">Apply Now</a></strong></p>"
                   }
                 }
               }

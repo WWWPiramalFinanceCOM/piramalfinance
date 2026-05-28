@@ -167,7 +167,7 @@ async function loadAdobeScript() {
 
 const thirdPartyEnabled = getMetadata("third-party") == 'true';
 
-if (!thirdPartyEnabled && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('author')) {
+if (thirdPartyEnabled && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('author')) {
   loadServiceWorker();
   loadHeadGTM();
   loadBodyGTM();

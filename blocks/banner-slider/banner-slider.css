@@ -4,14 +4,11 @@
 
 .banner-slider-stage {
   position: relative;
+  overflow: hidden;
 }
 
 .banner-slider-slide {
-  display: none;
-}
-
-.banner-slider-slide.is-active {
-  display: block;
+  height: auto;
 }
 
 .banner-slider-surface {
@@ -19,7 +16,7 @@
   background-image: var(--banner-slider-bg-image);
   background-position: center right;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   min-height: 520px;
 }
 
@@ -121,6 +118,7 @@
 .banner-slider-media picture,
 .banner-slider-media img {
   display: block;
+  margin-left: auto;
   max-height: 420px;
   max-width: 100%;
   object-fit: contain;
@@ -150,10 +148,21 @@
   width: 24px;
 }
 
+.banner-slider-stage .swiper-pagination-bullet {
+  margin: 0;
+  opacity: 1;
+}
+
+.banner-slider-stage .swiper-pagination-bullet-active {
+  background: var(--black);
+  width: 24px;
+}
+
 @media (width <= 991px) {
   .banner-slider-surface {
     background-image: var(--banner-slider-mobile-bg-image, var(--banner-slider-bg-image));
     background-position: center;
+    background-size: cover;
   }
 
   .banner-slider-content {

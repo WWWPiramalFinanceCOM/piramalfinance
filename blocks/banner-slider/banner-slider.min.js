@@ -245,6 +245,35 @@ const CONTENT_POSITION_CLASSES = new Set([
   'content-pos-top',
 ]);
 
+const PLACEMENT_LABEL_TO_CLASS = {
+  'top far left': 'btn-pos-top-far-left',
+  'top left': 'btn-pos-top-left',
+  'top mid left': 'btn-pos-top-mid-left',
+  'top center': 'btn-pos-top-center',
+  'top mid right': 'btn-pos-top-mid-right',
+  'top right': 'btn-pos-top-right',
+  'middle far left': 'btn-pos-middle-far-left',
+  'middle left': 'btn-pos-middle-left',
+  'middle mid left': 'btn-pos-middle-mid-left',
+  'middle center': 'btn-pos-middle-center',
+  'middle mid right': 'btn-pos-middle-mid-right',
+  'middle right': 'btn-pos-middle-right',
+  'bottom far left': 'btn-pos-bottom-far-left',
+  'bottom left': 'btn-pos-bottom-left',
+  'bottom mid left': 'btn-pos-bottom-mid-left',
+  'bottom center': 'btn-pos-bottom-center',
+  'bottom mid right': 'btn-pos-bottom-mid-right',
+  'bottom right': 'btn-pos-bottom-right',
+  'content top left': 'content-pos-top-left',
+  'content top center': 'content-pos-top-center',
+  'content top right': 'content-pos-top-right',
+  'content left': 'content-pos-left',
+  'content right': 'content-pos-right',
+  'content top': 'content-pos-top',
+  'text green': 'text-green',
+  'green text': 'green-text',
+};
+
 function classTokens(value = '') {
   return value
     .replace(/[\n,]+/g, ' ')
@@ -254,6 +283,12 @@ function classTokens(value = '') {
 }
 
 function extractPlacementClassesFromSlot(slot) {
+  const rawValue = (slot?.textContent || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const mappedClass = PLACEMENT_LABEL_TO_CLASS[rawValue];
+  if (mappedClass && SLIDE_PLACEMENT_CLASSES.has(mappedClass)) {
+    return [mappedClass];
+  }
+
   const tokens = classTokens(slot?.textContent || '');
   if (!tokens.length) {
     return [];

@@ -245,25 +245,10 @@
     justify-self: start;
   }
 
+  /* content-pos-right now only swaps columns; keep internal copy alignment unchanged */
   .banner-slider-slide.content-pos-right .banner-slider-copy {
     align-self: center;
-    justify-self: end;
-  }
-
-  .banner-slider-slide.content-pos-right .banner-slider-copy,
-  .banner-slider-slide.content-pos-top-right .banner-slider-copy {
-    text-align: right;
-  }
-
-  .banner-slider-slide.content-pos-right .banner-slider-actions,
-  .banner-slider-slide.content-pos-top-right .banner-slider-actions {
-    justify-content: flex-end;
-  }
-
-  .banner-slider-slide.content-pos-right .banner-slider-short-description,
-  .banner-slider-slide.content-pos-top-right .banner-slider-short-description {
-    align-items: flex-end;
-    text-align: right;
+    justify-self: start;
   }
 
   .banner-slider-slide[class*='btn-pos-'] .banner-slider-content {

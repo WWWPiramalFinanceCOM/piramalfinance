@@ -1,0 +1,3 @@
+# Environment-specific files - keep local version during merge
+fstab.yaml merge=ours
+robots.txt merge=ours

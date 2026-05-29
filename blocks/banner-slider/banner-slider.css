@@ -91,8 +91,13 @@
   margin: 16px 0 0;
 }
 
-/* Apply on section: section class text-green */
-.section.text-green .banner-slider .banner-slider-description :is(p, h1, h2, h3, h4, h5, h6) {
+/* Apply green emphasis when text-green/green-text is authored on section, block, or slide */
+.section.text-green .banner-slider .banner-slider-description :is(p, h1, h2, h3, h4, h5, h6),
+.section.green-text .banner-slider .banner-slider-description :is(p, h1, h2, h3, h4, h5, h6),
+.banner-slider.text-green .banner-slider-description :is(p, h1, h2, h3, h4, h5, h6),
+.banner-slider.green-text .banner-slider-description :is(p, h1, h2, h3, h4, h5, h6),
+.banner-slider-slide.text-green .banner-slider-description :is(p, h1, h2, h3, h4, h5, h6),
+.banner-slider-slide.green-text .banner-slider-description :is(p, h1, h2, h3, h4, h5, h6) {
   color: var(--gradient-gray);
   font-family: Nunito-Regular, sans-serif;
   font-size: 1.5rem;
@@ -101,14 +106,17 @@
   margin: 16px 0 0;
 }
 
-.section.text-green .banner-slider .banner-slider-description :is(strong, h1, h2, h3, h4, h5, h6) {
+.section.text-green .banner-slider .banner-slider-description :is(strong, b),
+.section.green-text .banner-slider .banner-slider-description :is(strong, b),
+.banner-slider.text-green .banner-slider-description :is(strong, b),
+.banner-slider.green-text .banner-slider-description :is(strong, b),
+.banner-slider-slide.text-green .banner-slider-description :is(strong, b),
+.banner-slider-slide.green-text .banner-slider-description :is(strong, b) {
   color: #349e58;
   font-family: Nunito-Extrabold, sans-serif;
-  font-size: 3rem;
   font-weight: 800;
-  line-height: 1.1;
-  margin: 8px 0 0;
-  display: block;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .banner-slider-features {

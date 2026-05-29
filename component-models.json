@@ -3254,11 +3254,126 @@
         "label": "Col1 Short Description"
       },
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_positionClasses",
+        "component": "select",
+        "name": "col1_buttonPositionClass",
         "value": "",
-        "label": "Col1 Position Classes"
+        "label": "Col1 Button Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Top Far Left",
+            "value": "btn-pos-top-far-left"
+          },
+          {
+            "name": "Top Left",
+            "value": "btn-pos-top-left"
+          },
+          {
+            "name": "Top Mid Left",
+            "value": "btn-pos-top-mid-left"
+          },
+          {
+            "name": "Top Center",
+            "value": "btn-pos-top-center"
+          },
+          {
+            "name": "Top Mid Right",
+            "value": "btn-pos-top-mid-right"
+          },
+          {
+            "name": "Top Right",
+            "value": "btn-pos-top-right"
+          },
+          {
+            "name": "Middle Far Left",
+            "value": "btn-pos-middle-far-left"
+          },
+          {
+            "name": "Middle Left",
+            "value": "btn-pos-middle-left"
+          },
+          {
+            "name": "Middle Mid Left",
+            "value": "btn-pos-middle-mid-left"
+          },
+          {
+            "name": "Middle Center",
+            "value": "btn-pos-middle-center"
+          },
+          {
+            "name": "Middle Mid Right",
+            "value": "btn-pos-middle-mid-right"
+          },
+          {
+            "name": "Middle Right",
+            "value": "btn-pos-middle-right"
+          },
+          {
+            "name": "Bottom Far Left",
+            "value": "btn-pos-bottom-far-left"
+          },
+          {
+            "name": "Bottom Left",
+            "value": "btn-pos-bottom-left"
+          },
+          {
+            "name": "Bottom Mid Left",
+            "value": "btn-pos-bottom-mid-left"
+          },
+          {
+            "name": "Bottom Center",
+            "value": "btn-pos-bottom-center"
+          },
+          {
+            "name": "Bottom Mid Right",
+            "value": "btn-pos-bottom-mid-right"
+          },
+          {
+            "name": "Bottom Right",
+            "value": "btn-pos-bottom-right"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "col1_contentPositionClass",
+        "value": "",
+        "label": "Col1 Content Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Top Left",
+            "value": "content-pos-top-left"
+          },
+          {
+            "name": "Top Center",
+            "value": "content-pos-top-center"
+          },
+          {
+            "name": "Top Right",
+            "value": "content-pos-top-right"
+          },
+          {
+            "name": "Left",
+            "value": "content-pos-left"
+          },
+          {
+            "name": "Right",
+            "value": "content-pos-right"
+          },
+          {
+            "name": "Top",
+            "value": "content-pos-top"
+          }
+        ]
       },
       {
         "component": "reference",

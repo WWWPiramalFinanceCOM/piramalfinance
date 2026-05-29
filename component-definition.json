@@ -1101,7 +1101,8 @@
                     "col1_ctaLink": "#",
                     "col1_bgcolourText": "#dff1fb",
                     "col1_shortDescription": "<p>Already Applied? <a href=\"#\">Track Application</a></p>",
-                    "col1_positionClasses": "",
+                    "col1_buttonPositionClass": "",
+                    "col1_contentPositionClass": "",
                     "col2_bgImage": "/content/dam/default-teaser-banner.png"
                   }
                 }

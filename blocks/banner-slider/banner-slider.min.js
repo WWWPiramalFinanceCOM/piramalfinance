@@ -180,6 +180,42 @@ const SLIDE_PLACEMENT_CLASSES = new Set([
   'content-pos-left',
   'content-pos-right',
   'content-pos-top',
+  'text-green',
+  'green-text',
+]);
+
+const BUTTON_POSITION_CLASSES = new Set([
+  'btn-pos-top-far-left',
+  'btn-pos-top-left',
+  'btn-pos-top-mid-left',
+  'btn-pos-top-center',
+  'btn-pos-top-mid-right',
+  'btn-pos-top-right',
+  'btn-pos-middle-far-left',
+  'btn-pos-middle-left',
+  'btn-pos-middle-mid-left',
+  'btn-pos-middle-center',
+  'btn-pos-middle-mid-right',
+  'btn-pos-middle-right',
+  'btn-pos-bottom-far-left',
+  'btn-pos-bottom-left',
+  'btn-pos-bottom-mid-left',
+  'btn-pos-bottom-center',
+  'btn-pos-bottom-mid-right',
+  'btn-pos-bottom-right',
+  'btn-pos-top',
+  'btn-pos-bottom',
+  'btn-pos-left',
+  'btn-pos-right',
+]);
+
+const CONTENT_POSITION_CLASSES = new Set([
+  'content-pos-top-left',
+  'content-pos-top-center',
+  'content-pos-top-right',
+  'content-pos-left',
+  'content-pos-right',
+  'content-pos-top',
 ]);
 
 function classTokens(value = '') {
@@ -199,6 +235,21 @@ function extractPlacementClassesFromSlot(slot) {
   return tokens.every((token) => SLIDE_PLACEMENT_CLASSES.has(token)) ? tokens : [];
 }
 
+function reservedPlacementSlots(leftSlots) {
+  const trailingSlots = leftSlots.slice(-2);
+  const reservedSlots = trailingSlots.filter((slot) => extractPlacementClassesFromSlot(slot).length > 0);
+  if (reservedSlots.length === 2) {
+    return reservedSlots;
+  }
+
+  const legacySlot = leftSlots[leftSlots.length - 1];
+  return extractPlacementClassesFromSlot(legacySlot).length > 0 ? [legacySlot] : [];
+}
+
+function slotIsReservedPlacement(slot, reservedSlots) {
+  return reservedSlots.includes(slot);
+}
+
 function collectSlidePlacementClasses(row, leftCell, rightCell, leftSlots) {
   const nodeClasses = [
     ...classTokens(row?.className || ''),
@@ -206,8 +257,8 @@ function collectSlidePlacementClasses(row, leftCell, rightCell, leftSlots) {
     ...classTokens(rightCell?.className || ''),
   ];
 
-  // Dedicated authoring field: the last left-column field can contain only placement classes.
-  const reservedPlacementClasses = extractPlacementClassesFromSlot(leftSlots[leftSlots.length - 1]);
+  const reservedSlots = reservedPlacementSlots(leftSlots);
+  const reservedPlacementClasses = reservedSlots.flatMap((slot) => extractPlacementClassesFromSlot(slot));
   const fallbackTokenClasses = reservedPlacementClasses.length
     ? []
     : leftSlots.flatMap((slot) => extractPlacementClassesFromSlot(slot));
@@ -291,8 +342,9 @@ function createSlide(row, index) {
   const [leftCell, rightCell] = [...row.children];
   const leftSlots = [...leftCell?.children || []];
   const leftParagraphs = [...leftCell?.querySelectorAll('p') || []];
+  const reservedSlots = reservedPlacementSlots(leftSlots);
   const placementClasses = collectSlidePlacementClasses(row, leftCell, rightCell, leftSlots);
-  const slotMeta = leftSlots.map((slot, slotIndex) => {
+  const slotMeta = leftSlots.filter((slot) => !slotIsReservedPlacement(slot, reservedSlots)).map((slot, slotIndex) => {
     const text = (slot.textContent || '').trim();
     const href = hrefFromParagraph(slot);
     return {
@@ -367,6 +419,11 @@ function createSlide(row, index) {
 
   const featureLeftSlots = [...leftSlots];
   featureLeftSlots.forEach((slot) => {
+    if (slotIsReservedPlacement(slot, reservedSlots)) {
+      slot.dataset.featureIgnore = 'true';
+      return;
+    }
+
     const raw = (slot.textContent || '').trim();
     const placementClasses = extractPlacementClassesFromSlot(slot);
     const isPlacementOnlyToken = placementClasses.length > 0;

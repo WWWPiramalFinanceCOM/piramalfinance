@@ -496,3 +496,118 @@
   border-radius: 16px;
   margin-top: 24px;
 }
+
+/* Pagination Styles */
+.search-unclaimed-dividend .search-dividend-pagination {
+  align-items: center;
+  border-top: 1px solid var(--pattensblue, #e0e0e0);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.search-unclaimed-dividend .pagination-info {
+  color: var(--grey, #666666);
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 0.875rem;
+}
+
+.search-unclaimed-dividend .pagination-controls {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.search-unclaimed-dividend .pagination-btn {
+  align-items: center;
+  background-color: var(--white, #ffffff);
+  border: 1px solid var(--pattensblue, #d1d1d1);
+  border-radius: 6px;
+  color: var(--black, #333333);
+  cursor: pointer;
+  display: flex;
+  font-family: 'Nunito-SemiBold', sans-serif;
+  font-size: 0.875rem;
+  height: 36px;
+  justify-content: center;
+  min-width: 80px;
+  padding: 0 12px;
+  transition: all 0.2s ease;
+}
+
+.search-unclaimed-dividend .pagination-btn:hover:not(:disabled) {
+  background-color: var(--orange, #F26841);
+  border-color: var(--orange, #F26841);
+  color: var(--white, #ffffff);
+}
+
+.search-unclaimed-dividend .pagination-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.search-unclaimed-dividend .page-numbers {
+  display: flex;
+  gap: 4px;
+}
+
+.search-unclaimed-dividend .page-btn {
+  align-items: center;
+  background-color: var(--white, #ffffff);
+  border: 1px solid var(--pattensblue, #d1d1d1);
+  border-radius: 6px;
+  color: var(--black, #333333);
+  cursor: pointer;
+  display: flex;
+  font-family: 'Nunito-Regular', sans-serif;
+  font-size: 0.875rem;
+  height: 36px;
+  justify-content: center;
+  min-width: 36px;
+  padding: 0 8px;
+  transition: all 0.2s ease;
+}
+
+.search-unclaimed-dividend .page-btn:hover {
+  border-color: var(--orange, #F26841);
+  color: var(--orange, #F26841);
+}
+
+.search-unclaimed-dividend .page-btn.active {
+  background-color: var(--orange, #F26841);
+  border-color: var(--orange, #F26841);
+  color: var(--white, #ffffff);
+}
+
+/* Pagination Responsive */
+@media screen and (max-width: 768px) {
+  .search-unclaimed-dividend .search-dividend-pagination {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-unclaimed-dividend .pagination-info {
+    order: 2;
+    text-align: center;
+  }
+
+  .search-unclaimed-dividend .pagination-controls {
+    order: 1;
+  }
+
+  .search-unclaimed-dividend .pagination-btn {
+    font-size: 0.75rem;
+    height: 32px;
+    min-width: 60px;
+    padding: 0 8px;
+  }
+
+  .search-unclaimed-dividend .page-btn {
+    font-size: 0.75rem;
+    height: 32px;
+    min-width: 32px;
+  }
+}

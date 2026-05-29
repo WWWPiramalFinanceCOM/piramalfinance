@@ -222,6 +222,131 @@ function createResultsTable(content, data = []) {
   return tableContainer;
 }
 
+// Pagination state
+const PAGINATION_CONFIG = {
+  itemsPerPage: 10,
+  currentPage: 1,
+  totalData: []
+};
+
+/**
+ * Render table rows for current page
+ * @param {array} data all data
+ * @param {number} page current page number
+ */
+function renderTablePage(data, page) {
+  const tbody = document.getElementById('dividend-table-body');
+  if (!tbody) return;
+
+  tbody.innerHTML = '';
+
+  const startIndex = (page - 1) * PAGINATION_CONFIG.itemsPerPage;
+  const endIndex = startIndex + PAGINATION_CONFIG.itemsPerPage;
+  const pageData = data.slice(startIndex, endIndex);
+
+  pageData.forEach((row, index) => {
+    const tr = createTag('tr');
+    // Serial number based on overall position (startIndex + index + 1)
+    tr.appendChild(createTag('td', {}, (startIndex + index + 1).toString()));
+    tr.appendChild(createTag('td', {}, row.folioNo || '-'));
+    tr.appendChild(createTag('td', {}, row.warrantNo || '-'));
+    tr.appendChild(createTag('td', {}, row.name || '-'));
+    tr.appendChild(createTag('td', {}, row.shares || '0'));
+    tr.appendChild(createTag('td', {}, row.amount || '0.00'));
+    tr.appendChild(createTag('td', {}, row.micrNo || '-'));
+    tbody.appendChild(tr);
+  });
+}
+
+/**
+ * Create pagination controls
+ * @param {number} totalItems total number of items
+ * @param {number} currentPage current page number
+ */
+function createPaginationControls(totalItems, currentPage) {
+  const totalPages = Math.ceil(totalItems / PAGINATION_CONFIG.itemsPerPage);
+  
+  // Remove existing pagination
+  const existingPagination = document.querySelector('.search-dividend-pagination');
+  if (existingPagination) {
+    existingPagination.remove();
+  }
+
+  // Don't show pagination if only one page
+  if (totalPages <= 1) return;
+
+  const paginationContainer = createTag('div', { class: 'search-dividend-pagination' });
+
+  // Results info
+  const startItem = (currentPage - 1) * PAGINATION_CONFIG.itemsPerPage + 1;
+  const endItem = Math.min(currentPage * PAGINATION_CONFIG.itemsPerPage, totalItems);
+  const resultsInfo = createTag('span', { class: 'pagination-info' }, 
+    `Showing ${startItem}-${endItem} of ${totalItems} results`);
+  paginationContainer.appendChild(resultsInfo);
+
+  const controlsWrapper = createTag('div', { class: 'pagination-controls' });
+
+  // Previous button
+  const prevBtn = createTag('button', { 
+    class: 'pagination-btn prev-btn',
+    disabled: currentPage === 1 ? 'disabled' : null
+  }, '&laquo; Prev');
+  prevBtn.addEventListener('click', () => {
+    if (PAGINATION_CONFIG.currentPage > 1) {
+      PAGINATION_CONFIG.currentPage--;
+      renderTablePage(PAGINATION_CONFIG.totalData, PAGINATION_CONFIG.currentPage);
+      createPaginationControls(totalItems, PAGINATION_CONFIG.currentPage);
+    }
+  });
+  controlsWrapper.appendChild(prevBtn);
+
+  // Page numbers
+  const pageNumbers = createTag('span', { class: 'page-numbers' });
+  
+  // Show max 5 page numbers
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(totalPages, startPage + 4);
+  if (endPage - startPage < 4) {
+    startPage = Math.max(1, endPage - 4);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    const pageBtn = createTag('button', { 
+      class: `page-btn ${i === currentPage ? 'active' : ''}`,
+      'data-page': i
+    }, i.toString());
+    pageBtn.addEventListener('click', () => {
+      PAGINATION_CONFIG.currentPage = i;
+      renderTablePage(PAGINATION_CONFIG.totalData, i);
+      createPaginationControls(totalItems, i);
+    });
+    pageNumbers.appendChild(pageBtn);
+  }
+  controlsWrapper.appendChild(pageNumbers);
+
+  // Next button
+  const nextBtn = createTag('button', { 
+    class: 'pagination-btn next-btn',
+    disabled: currentPage === totalPages ? 'disabled' : null
+  }, 'Next &raquo;');
+  nextBtn.addEventListener('click', () => {
+    if (PAGINATION_CONFIG.currentPage < totalPages) {
+      PAGINATION_CONFIG.currentPage++;
+      renderTablePage(PAGINATION_CONFIG.totalData, PAGINATION_CONFIG.currentPage);
+      createPaginationControls(totalItems, PAGINATION_CONFIG.currentPage);
+    }
+  });
+  controlsWrapper.appendChild(nextBtn);
+
+  paginationContainer.appendChild(controlsWrapper);
+
+  // Append after table container
+  const tableContainer = document.querySelector('.search-dividend-table-container');
+  if (tableContainer) {
+    tableContainer.appendChild(paginationContainer);
+  }
+}
+
 /**
  * Update table with search results
  * @param {object} result API response with {success, message, data}
@@ -231,12 +356,22 @@ function updateTable(result, content) {
   const tbody = document.getElementById('dividend-table-body');
   const messageContainer = document.getElementById('dividend-message');
 
+  // Remove existing pagination
+  const existingPagination = document.querySelector('.search-dividend-pagination');
+  if (existingPagination) {
+    existingPagination.remove();
+  }
+
   if (!tbody || !messageContainer) return;
 
   // Clear existing data
   tbody.innerHTML = '';
   messageContainer.innerHTML = '';
   messageContainer.className = 'search-dividend-message';
+
+  // Reset pagination
+  PAGINATION_CONFIG.currentPage = 1;
+  PAGINATION_CONFIG.totalData = [];
 
   if (result === null) {
     // API error
@@ -262,20 +397,14 @@ function updateTable(result, content) {
     return;
   }
 
-  // Populate table with data
-  // Map API field names to table columns based on actual API response:
-  // { srNo, folioNo, warrantNo, name, shares, amount, micrNo }
-  data.forEach((row) => {
-    const tr = createTag('tr');
-    tr.appendChild(createTag('td', {}, row.srNo || '-'));
-    tr.appendChild(createTag('td', {}, row.folioNo || '-'));
-    tr.appendChild(createTag('td', {}, row.warrantNo || '-'));
-    tr.appendChild(createTag('td', {}, row.name || '-'));
-    tr.appendChild(createTag('td', {}, row.shares || '0'));
-    tr.appendChild(createTag('td', {}, row.amount || '0.00'));
-    tr.appendChild(createTag('td', {}, row.micrNo || '-'));
-    tbody.appendChild(tr);
-  });
+  // Store data for pagination
+  PAGINATION_CONFIG.totalData = data;
+
+  // Render first page
+  renderTablePage(data, 1);
+
+  // Create pagination controls if needed
+  createPaginationControls(data.length, 1);
 }
 
 /**

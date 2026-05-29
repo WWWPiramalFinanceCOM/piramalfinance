@@ -1,3 +1,6 @@
+import { applyLoanNow, bannerClick, ctaClick } from '../../dl.js';
+import { targetObject } from '../../scripts/scripts.js';
+
 function firstContent(cell) {
   return cell?.firstElementChild || cell;
 }
@@ -81,6 +84,7 @@ function hrefFromParagraph(paragraph) {
 function isLikelyUrl(value = '') {
   const text = value.trim();
   return /^https?:\/\//i.test(text)
+    || text.startsWith('#')
     || text.startsWith('/')
     || text.includes('/content/dam/')
     || /^www\./i.test(text);
@@ -97,6 +101,29 @@ function normalizeHref(value = '') {
   }
 
   return text;
+}
+
+function isHashLink(value = '') {
+  const text = value.trim();
+  if (!text) {
+    return false;
+  }
+
+  if (text === '#') {
+    return true;
+  }
+
+  try {
+    const parsed = new URL(text, window.location.href);
+    return parsed.hash === '#' && parsed.origin === window.location.origin && parsed.pathname === window.location.pathname;
+  } catch (error) {
+    return false;
+  }
+}
+
+function isApplyLoanLabel(value = '') {
+  const normalized = value.trim().toLowerCase();
+  return normalized === 'apply loan now' || normalized === 'apply now';
 }
 
 function isTokenValue(value = '') {
@@ -400,6 +427,7 @@ function createSlide(row, index) {
     ? slotMeta.slice(ctaLinkSlot.slotIndex + 1).find((item) => item.text && !item.isHex && !item.isUrl && !item.imageHref)
     : null;
   const ctaText = (ctaTextSlot?.text || '').trim();
+  const ctaOpensLoanForm = isHashLink(ctaHref);
 
   // Short description is the first non-hex/non-url/non-image text slot after the CTA text slot.
   // Empty fields are omitted from the DOM so we cannot use a fixed index.
@@ -449,6 +477,9 @@ function createSlide(row, index) {
 
   const slide = document.createElement('div');
   slide.className = 'banner-slider-slide';
+  if (ctaOpensLoanForm) {
+    slide.classList.add('open-form-on-click');
+  }
   placementClasses.forEach((name) => slide.classList.add(name));
   slide.dataset.slideIndex = `${index}`;
 
@@ -474,7 +505,7 @@ function createSlide(row, index) {
           <div class="banner-slider-description">${descriptionHtml}</div>
           ${featureItems(featurePreparedSlots)}
           <div class="banner-slider-actions">
-            ${ctaHref && ctaText ? `<div class="banner-slider-cta"><a class="button primary" href="${ctaHref}">${ctaText}</a></div>` : ''}
+            ${ctaHref && ctaText ? `<div class="banner-slider-cta button-container"><a class="button primary" href="${ctaHref}" data-cta-open-form="${ctaOpensLoanForm ? 'true' : 'false'}">${ctaText}</a></div>` : ''}
             ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
           </div>
         </div>
@@ -514,6 +545,62 @@ export default function decorate(block) {
   block.classList.add('banner-slider', 'banner-slider--ready');
   stage.replaceChildren(track, dots);
   block.replaceChildren(stage);
+
+  const ctaAnchors = [...block.querySelectorAll('.banner-slider-cta .button.primary')];
+  ctaAnchors.forEach((anchor) => {
+    anchor.addEventListener('click', async (event) => {
+      const clickText = (anchor.textContent || '').trim();
+      const href = (anchor.getAttribute('href') || '').trim();
+      const ctaCategory = 'banner-slider';
+      const ctaPosition = 'banner-slider';
+      const pageType = targetObject?.pageName || '';
+      const shouldOpenLoanForm = isHashLink(href);
+
+      if (shouldOpenLoanForm) {
+        event.preventDefault();
+
+        try {
+          bannerClick(clickText || href, pageType);
+          ctaClick(clickText || href, ctaCategory, ctaPosition, pageType);
+          if (isApplyLoanLabel(clickText)) {
+            applyLoanNow('banner', pageType, ctaPosition, pageType);
+          }
+        } catch (error) {
+          console.warn(error);
+        }
+
+        try {
+          const { applyLoanFormClick, onCLickApplyFormOpen, formOpen } = await import('../applyloanform/applyloanforms.js');
+          const mainContainer = block.closest('main') || document.querySelector('main') || document.body;
+
+          if (typeof applyLoanFormClick === 'function') {
+            applyLoanFormClick(mainContainer);
+          }
+
+          if (typeof onCLickApplyFormOpen === 'function' && mainContainer.querySelector('.loan-form-sub-parent')) {
+            onCLickApplyFormOpen(event);
+            return;
+          }
+          if (typeof formOpen === 'function') {
+            formOpen();
+          }
+        } catch (error) {
+          console.warn(error);
+        }
+        return;
+      }
+
+      try {
+        bannerClick(clickText || href, pageType);
+        ctaClick(clickText || href, ctaCategory, ctaPosition, pageType);
+        if ((clickText || '').trim().toLowerCase() === 'apply loan now') {
+          applyLoanNow('banner', pageType, ctaPosition, pageType);
+        }
+      } catch (error) {
+        console.warn(error);
+      }
+    });
+  });
 
   let activeIndex = 0;
   let timerId = null;

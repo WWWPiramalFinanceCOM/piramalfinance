@@ -288,9 +288,11 @@ function createPaginationControls(totalItems, currentPage) {
 
   // Previous button
   const prevBtn = createTag('button', { 
-    class: 'pagination-btn prev-btn',
-    disabled: currentPage === 1 ? 'disabled' : null
+    class: 'pagination-btn prev-btn'
   }, '&laquo; Prev');
+  if (currentPage === 1) {
+    prevBtn.disabled = true;
+  }
   prevBtn.addEventListener('click', () => {
     if (PAGINATION_CONFIG.currentPage > 1) {
       PAGINATION_CONFIG.currentPage--;
@@ -326,9 +328,11 @@ function createPaginationControls(totalItems, currentPage) {
 
   // Next button
   const nextBtn = createTag('button', { 
-    class: 'pagination-btn next-btn',
-    disabled: currentPage === totalPages ? 'disabled' : null
+    class: 'pagination-btn next-btn'
   }, 'Next &raquo;');
+  if (currentPage === totalPages) {
+    nextBtn.disabled = true;
+  }
   nextBtn.addEventListener('click', () => {
     if (PAGINATION_CONFIG.currentPage < totalPages) {
       PAGINATION_CONFIG.currentPage++;

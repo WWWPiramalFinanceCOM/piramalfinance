@@ -1,11 +1,13 @@
-import Swiper from '../banner-carousel/swiper-bundle.min.js';
-
 function firstContent(cell) {
   return cell?.firstElementChild || cell;
 }
 
 function textOf(cell) {
   return firstContent(cell)?.textContent?.trim() || '';
+}
+
+function isImageLike(value = '') {
+  return value.includes('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(value);
 }
 
 function createPicture(src, alt = '') {
@@ -44,13 +46,13 @@ function imageSources(cell) {
 
     const links = candidate.tagName === 'A' ? [candidate] : [...candidate.querySelectorAll?.('a') || []];
     links.forEach((link) => {
-      if (link?.href && (link.href.includes('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(link.href))) {
+      if (link?.href && isImageLike(link.href)) {
         values.push(link.href);
       }
     });
 
     const rawText = candidate.textContent?.trim();
-    if (rawText && (rawText.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(rawText))) {
+    if (rawText && (rawText.startsWith('/content/dam/') || isImageLike(rawText))) {
       values.push(rawText);
     }
   });
@@ -69,34 +71,172 @@ function hrefFromParagraph(paragraph) {
   }
 
   const raw = paragraph.textContent?.trim() || '';
-  if (raw.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(raw)) {
+  if (isLikelyUrl(raw) || raw.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(raw)) {
     return raw;
   }
 
   return '';
 }
 
-function featureItems(leftParagraphs) {
-  if (!leftParagraphs?.length) {
+function isLikelyUrl(value = '') {
+  const text = value.trim();
+  return /^https?:\/\//i.test(text)
+    || text.startsWith('/')
+    || text.includes('/content/dam/')
+    || /^www\./i.test(text);
+}
+
+function normalizeHref(value = '') {
+  const text = value.trim();
+  if (!text) {
     return '';
   }
 
-  const slots = [
-    { icon: 2, text: 3, alt: 4 },
-    { icon: 5, text: 6, alt: 7 },
-    { icon: 8, text: 9, alt: 10 },
+  if (/^www\./i.test(text)) {
+    return `https://${text}`;
+  }
+
+  return text;
+}
+
+function isTokenValue(value = '') {
+  const text = value.trim();
+  return !text || isLikelyUrl(text) || /^#[0-9a-f]{3,8}$/i.test(text);
+}
+
+function normalizeForCompare(value = '') {
+  return value
+    .toLowerCase()
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function contentHtml(cell) {
+  if (!cell) {
+    return '';
+  }
+
+  // If the cell itself is a block element (heading, p, ul, etc.), use its outerHTML
+  // so the tag is preserved (e.g. <h2>Quick &amp; Hassle-Free</h2>).
+  const tag = (cell.tagName || '').toLowerCase();
+  const isBlockElement = /^(h[1-6]|p|ul|ol|div|blockquote)$/.test(tag);
+  if (isBlockElement) {
+    return cell.outerHTML?.trim() || '';
+  }
+
+  const markup = cell.innerHTML?.trim() || '';
+  // For wrapper cells, preserve authored richtext markup (p/heading/strong/links) as-is.
+  if (/<[^>]+>/.test(markup)) {
+    return markup;
+  }
+
+  return '';
+}
+
+function imageHrefFromParagraph(paragraph) {
+  const href = hrefFromParagraph(paragraph);
+  return isImageLike(href) ? href : '';
+}
+
+function imageSourceFromCell(cell) {
+  const values = imageSources(cell);
+  return values.length ? values[0] : '';
+}
+
+function isAuthorEnvironment() {
+  const { hostname, pathname } = window.location;
+  return hostname.includes('author') || pathname.includes('/editor.html/');
+}
+
+const SLIDE_PLACEMENT_CLASSES = new Set([
+  'btn-pos-top-far-left',
+  'btn-pos-top-left',
+  'btn-pos-top-mid-left',
+  'btn-pos-top-center',
+  'btn-pos-top-mid-right',
+  'btn-pos-top-right',
+  'btn-pos-middle-far-left',
+  'btn-pos-middle-left',
+  'btn-pos-middle-mid-left',
+  'btn-pos-middle-center',
+  'btn-pos-middle-mid-right',
+  'btn-pos-middle-right',
+  'btn-pos-bottom-far-left',
+  'btn-pos-bottom-left',
+  'btn-pos-bottom-mid-left',
+  'btn-pos-bottom-center',
+  'btn-pos-bottom-mid-right',
+  'btn-pos-bottom-right',
+  // Legacy aliases retained for existing authored slides.
+  'btn-pos-top',
+  'btn-pos-bottom',
+  'btn-pos-left',
+  'btn-pos-right',
+  'content-pos-top-left',
+  'content-pos-top-center',
+  'content-pos-top-right',
+  'content-pos-left',
+  'content-pos-right',
+  'content-pos-top',
+]);
+
+function classTokens(value = '') {
+  return value
+    .replace(/[\n,]+/g, ' ')
+    .split(/\s+/)
+    .map((token) => token.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function extractPlacementClassesFromSlot(slot) {
+  const tokens = classTokens(slot?.textContent || '');
+  if (!tokens.length) {
+    return [];
+  }
+
+  return tokens.every((token) => SLIDE_PLACEMENT_CLASSES.has(token)) ? tokens : [];
+}
+
+function collectSlidePlacementClasses(row, leftCell, rightCell, leftSlots) {
+  const nodeClasses = [
+    ...classTokens(row?.className || ''),
+    ...classTokens(leftCell?.className || ''),
+    ...classTokens(rightCell?.className || ''),
   ];
 
-  const items = slots.map((slot) => {
-    const iconSrc = hrefFromParagraph(leftParagraphs[slot.icon]);
-    const text = (leftParagraphs[slot.text]?.textContent || '').trim();
-    const altText = (leftParagraphs[slot.alt]?.textContent || '').trim();
+  // Dedicated authoring field: the last left-column field can contain only placement classes.
+  const reservedPlacementClasses = extractPlacementClassesFromSlot(leftSlots[leftSlots.length - 1]);
+  const fallbackTokenClasses = reservedPlacementClasses.length
+    ? []
+    : leftSlots.flatMap((slot) => extractPlacementClassesFromSlot(slot));
+  const allCandidates = [...nodeClasses, ...reservedPlacementClasses, ...fallbackTokenClasses];
 
+  return [...new Set(allCandidates.filter((name) => SLIDE_PLACEMENT_CLASSES.has(name)))];
+}
+
+function featureItems(leftSlots) {
+  if (!leftSlots?.length) {
+    return '';
+  }
+
+  const iconValues = leftSlots
+    .map((slot) => imageSourceFromCell(slot))
+    .filter(Boolean)
+    .slice(0, 3);
+
+  const textValues = leftSlots
+    .map((slot) => (slot.textContent || '').trim())
+    .filter((text) => text && !isLikelyUrl(text) && !/^#[0-9a-f]{3,8}$/i.test(text));
+
+  const items = iconValues.map((icon, index) => {
+    const text = textValues[index] || '';
     return {
       text,
-      icon: iconSrc ? createPicture(iconSrc, altText || text) : '',
+      icon: text ? createPicture(icon, text) : '',
     };
-  }).filter((item) => item.text || item.icon);
+  }).filter((item) => item.text && item.icon);
 
   if (!items.length) {
     return '';
@@ -149,7 +289,24 @@ function resolveImageAssets(rightSources) {
 
 function createSlide(row, index) {
   const [leftCell, rightCell] = [...row.children];
+  const leftSlots = [...leftCell?.children || []];
   const leftParagraphs = [...leftCell?.querySelectorAll('p') || []];
+  const placementClasses = collectSlidePlacementClasses(row, leftCell, rightCell, leftSlots);
+  const slotMeta = leftSlots.map((slot, slotIndex) => {
+    const text = (slot.textContent || '').trim();
+    const href = hrefFromParagraph(slot);
+    return {
+      slot,
+      slotIndex,
+      text,
+      href,
+      imageHref: imageHrefFromParagraph(slot),
+      isHex: /^#[0-9a-f]{3,8}$/i.test(text),
+      // isUrl = true only when the slot's visible text IS a raw URL (e.g. pasted CTA link).
+      // Slots that merely contain an <a> link (like short description) must NOT be flagged.
+      isUrl: isLikelyUrl(text),
+    };
+  });
 
   const rightSources = imageSources(rightCell);
   const {
@@ -158,23 +315,87 @@ function createSlide(row, index) {
     foreground,
   } = resolveImageAssets(rightSources);
 
-  const heading = leftCell?.querySelector('h1, h2, h3, h4, h5, h6');
-  const titleText = (leftParagraphs[0]?.textContent || textOf(leftCell)).trim();
-  const titleHtml = heading ? heading.outerHTML : `<h2>${titleText}</h2>`;
+  const titleCell = leftSlots[0] || null;
+  const descriptionCell = leftSlots[1] || null;
 
-  const descriptionText = (leftParagraphs[1]?.textContent || '').trim();
-  const descriptionHtml = descriptionText ? `<p>${descriptionText}</p>` : '';
+  const titleTextRaw = (titleCell?.textContent || leftParagraphs[0]?.textContent || textOf(leftCell)).trim();
+  const titleText = isTokenValue(titleTextRaw) ? '' : titleTextRaw;
+  // If the description cell has an authored heading, the title is a kicker label (p).
+  // Otherwise the title IS the main heading (h2).
+  // If the description cell itself IS a heading, or contains a heading in its innerHTML,
+  // the title acts as a small kicker label. Otherwise title IS the main heading.
+  const descriptionHasHeading = /^h[1-6]$/i.test(descriptionCell?.tagName || '')
+    || /<h[1-6][\s>]/i.test(descriptionCell?.innerHTML || '');
+  const titleHtml = titleText
+    ? (descriptionHasHeading ? `<p class="banner-slider-kicker">${titleText}</p>` : `<h2>${titleText}</h2>`)
+    : '';
 
-  const ctaHref = hrefFromParagraph(leftParagraphs[11]);
-  const ctaText = (leftParagraphs[12]?.textContent || '').trim() || 'Apply Now';
-  const shortDescription = leftParagraphs[14];
-  const shortDescriptionHtml = shortDescription?.textContent?.trim() ? shortDescription.outerHTML : '';
+  const descriptionTextRaw = (descriptionCell?.textContent || leftParagraphs[1]?.textContent || '').trim();
+  const descriptionHtmlRaw = contentHtml(descriptionCell);
+  const titleCompare = normalizeForCompare(titleTextRaw);
+  const descriptionCompare = normalizeForCompare(descriptionTextRaw);
+  const descriptionText = (isTokenValue(descriptionTextRaw) || (titleCompare && titleCompare === descriptionCompare)) ? '' : descriptionTextRaw;
+  const descriptionHtml = descriptionText
+    ? (descriptionHtmlRaw || `<p>${descriptionText}</p>`)
+    : '';
+
+  const inlineCtaAnchor = [...leftCell?.querySelectorAll('a') || []]
+    .find((anchor) => anchor?.href && !isImageLike(anchor.href));
+
+  const ctaLinkSlot = slotMeta.find((item) => item.href && item.isUrl && !isImageLike(item.href));
+  const ctaHref = normalizeHref(ctaLinkSlot?.href || inlineCtaAnchor?.href || '');
+  const ctaTextSlot = ctaLinkSlot
+    ? slotMeta.slice(ctaLinkSlot.slotIndex + 1).find((item) => item.text && !item.isHex && !item.isUrl && !item.imageHref)
+    : null;
+  const ctaText = (ctaTextSlot?.text || '').trim();
+
+  // Short description is the first non-hex/non-url/non-image text slot after the CTA text slot.
+  // Empty fields are omitted from the DOM so we cannot use a fixed index.
+  const shortDescriptionSlot = ctaTextSlot
+    ? slotMeta.slice(ctaTextSlot.slotIndex + 1).find((item) => item.text && !item.isHex && !item.isUrl && !item.imageHref)?.slot
+    : null;
+  const shortDescriptionText = shortDescriptionSlot?.textContent?.trim() || '';
+  const shortDescriptionHtml = shortDescriptionText ? shortDescriptionSlot.outerHTML : '';
+
+  // Build feature texts from authored values after excluding non-feature content.
+  const exclusionList = [
+    titleTextRaw,
+    descriptionTextRaw,
+    ctaText,
+    shortDescriptionText,
+  ].map((text) => (text || '').replace(/\s+/g, ' ').trim().toLowerCase()).filter(Boolean);
+
+  const featureLeftSlots = [...leftSlots];
+  featureLeftSlots.forEach((slot) => {
+    const raw = (slot.textContent || '').trim();
+    const placementClasses = extractPlacementClassesFromSlot(slot);
+    const isPlacementOnlyToken = placementClasses.length > 0;
+    if (isPlacementOnlyToken) {
+      slot.dataset.featureIgnore = 'true';
+      return;
+    }
+
+    const normalized = raw.replace(/\s+/g, ' ').trim().toLowerCase();
+    if (normalized && exclusionList.includes(normalized)) {
+      slot.dataset.featureIgnore = 'true';
+    }
+  });
+
+  const featurePreparedSlots = featureLeftSlots.map((slot) => {
+    if (slot.dataset.featureIgnore === 'true') {
+      const clone = slot.cloneNode(true);
+      clone.textContent = '';
+      return clone;
+    }
+    return slot;
+  });
 
   const slide = document.createElement('div');
-  slide.className = 'banner-slider-slide swiper-slide';
+  slide.className = 'banner-slider-slide';
+  placementClasses.forEach((name) => slide.classList.add(name));
   slide.dataset.slideIndex = `${index}`;
 
-  const bgColor = (leftParagraphs[13]?.textContent || textOf(leftCell)).match(/#[0-9a-f]{3,8}/i)?.[0];
+  const bgColor = (leftSlots[13]?.textContent || leftParagraphs[13]?.textContent || textOf(leftCell)).match(/#[0-9a-f]{3,8}/i)?.[0];
   if (bgColor) {
     slide.style.setProperty('--banner-slider-bg-color', bgColor);
   }
@@ -184,6 +405,9 @@ function createSlide(row, index) {
   if (mobileBackground) {
     slide.style.setProperty('--banner-slider-mobile-bg-image', `url("${mobileBackground}")`);
   }
+  if (!bgColor && desktopBackground) {
+    slide.classList.add('banner-slider-slide--bg-cover');
+  }
 
   slide.innerHTML = `
     <div class="banner-slider-surface">
@@ -191,9 +415,11 @@ function createSlide(row, index) {
         <div class="banner-slider-copy">
           <div class="banner-slider-title">${titleHtml}</div>
           <div class="banner-slider-description">${descriptionHtml}</div>
-          ${featureItems(leftParagraphs)}
-          ${ctaHref ? `<div class="banner-slider-cta"><a class="button primary" href="${ctaHref}">${ctaText}</a></div>` : ''}
-          ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
+          ${featureItems(featurePreparedSlots)}
+          <div class="banner-slider-actions">
+            ${ctaHref && ctaText ? `<div class="banner-slider-cta"><a class="button primary" href="${ctaHref}">${ctaText}</a></div>` : ''}
+            ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
+          </div>
         </div>
         <div class="banner-slider-media">${foreground ? createPicture(foreground, '') : ''}</div>
       </div>
@@ -204,63 +430,113 @@ function createSlide(row, index) {
 }
 
 export default function decorate(block) {
+  if (isAuthorEnvironment()) {
+    return;
+  }
+
   const rows = [...block.children].filter((row) => row.children.length >= 2);
   if (!rows.length) {
     return;
   }
 
   const stage = document.createElement('div');
-  stage.className = 'banner-slider-stage swiper';
+  stage.className = 'banner-slider-stage';
 
-  const wrapper = document.createElement('div');
-  wrapper.className = 'swiper-wrapper';
+  const track = document.createElement('div');
+  track.className = 'banner-slider-track';
 
   const dots = document.createElement('div');
-  dots.className = 'banner-slider-dots swiper-pagination';
+  dots.className = 'banner-slider-dots';
 
   const slides = rows.map((row, index) => createSlide(row, index));
   slides.forEach((slide) => {
-    wrapper.appendChild(slide);
+    track.appendChild(slide);
   });
 
   block.textContent = '';
   block.classList.add('banner-slider', 'banner-slider--ready');
-  stage.replaceChildren(wrapper, dots);
+  stage.replaceChildren(track, dots);
   block.replaceChildren(stage);
 
-  const swiper = new Swiper(stage, {
-    loop: slides.length > 1,
-    effect: 'fade',
-    fadeEffect: {
-      crossFade: true,
-    },
-    speed: 850,
-    autoplay: slides.length > 1 ? {
-      delay: 2800,
-      disableOnInteraction: false,
-      pauseOnMouseEnter: true,
-    } : false,
-    watchOverflow: true,
-    pagination: {
-      el: dots,
-      clickable: true,
-      bulletClass: 'banner-slider-dot',
-      bulletActiveClass: 'is-active',
-      renderBullet(index, className) {
-        return `<button type="button" class="${className}" aria-label="Go to slide ${index + 1}"></button>`;
-      },
-    },
+  let activeIndex = 0;
+  let timerId = null;
+  let isPaused = false;
+
+  const dotButtons = slides.map((_, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'banner-slider-dot';
+    button.setAttribute('aria-label', `Go to slide ${index + 1}`);
+    button.addEventListener('click', () => {
+      setActiveSlide(index);
+      restartAutoplay();
+    });
+    dots.appendChild(button);
+    return button;
   });
 
-  document.addEventListener('visibilitychange', () => {
-    if (!swiper.autoplay) {
+  function normalizeIndex(index) {
+    return (index + slides.length) % slides.length;
+  }
+
+  function setActiveSlide(index) {
+    activeIndex = normalizeIndex(index);
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('is-active', i === activeIndex);
+      slide.setAttribute('aria-hidden', i === activeIndex ? 'false' : 'true');
+    });
+
+    dotButtons.forEach((button, i) => {
+      const isActive = i === activeIndex;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+  }
+
+  function stopAutoplay() {
+    if (!timerId) {
       return;
     }
 
-    if (document.hidden) {
-      swiper.autoplay.stop();
+    window.clearInterval(timerId);
+    timerId = null;
+  }
+
+  function startAutoplay() {
+    if (slides.length <= 1 || timerId || isPaused) {
+      return;
+    }
+
+    timerId = window.setInterval(() => {
+      setActiveSlide(activeIndex + 1);
+    }, 2800);
+  }
+
+  function restartAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+  }
+
+  stage.addEventListener('mouseenter', () => {
+    isPaused = true;
+    stopAutoplay();
+  });
+
+  stage.addEventListener('mouseleave', () => {
+    isPaused = false;
+    startAutoplay();
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    isPaused = document.hidden;
+    if (isPaused) {
+      stopAutoplay();
     } else {
-      swiper.autoplay.start();
+      startAutoplay();
     }
   });
+
+  setActiveSlide(0);
+  startAutoplay();
 }

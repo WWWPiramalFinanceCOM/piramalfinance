@@ -3254,6 +3254,13 @@
         "label": "Col1 Short Description"
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_positionClasses",
+        "value": "",
+        "label": "Col1 Position Classes"
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "col2_bgImage",

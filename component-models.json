@@ -3430,7 +3430,14 @@
         "name": "col2_ForegroundmobImgAlt",
         "value": "",
         "label": "Col2 Foreground Mobile Image Alt"
-      }
+      },
+      {
+  "component": "text",
+  "valueType": "string",
+  "name": "col2_youtubeUrl",
+  "value": "",
+  "label": "Col2 YouTube Video URL"
+}
     ]
   },
    {

@@ -671,6 +671,8 @@ export default function decorate(block) {
       button.classList.toggle('is-active', isActive);
       button.setAttribute('aria-current', isActive ? 'true' : 'false');
     });
+
+    track.style.transform = `translateX(-${activeIndex * 100}%)`;
   }
 
   function stopAutoplay() {
@@ -715,6 +717,84 @@ export default function decorate(block) {
       startAutoplay();
     }
   });
+
+  // Touch swipe support (mobile)
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchMoved = false;
+
+  stage.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchMoved = false;
+  }, { passive: true });
+
+  stage.addEventListener('touchmove', (e) => {
+    const dx = Math.abs(e.touches[0].clientX - touchStartX);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+    if (dx > dy && dx > 5) {
+      touchMoved = true;
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  stage.addEventListener('touchend', (e) => {
+    if (!touchMoved) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(deltaX) > 40) {
+      setActiveSlide(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
+      restartAutoplay();
+    }
+    touchMoved = false;
+  });
+
+  // Mouse drag support (desktop horizontal swipe)
+  let dragStartX = 0;
+  let isDragging = false;
+  let didDrag = false;
+
+  stage.addEventListener('mousedown', (e) => {
+    dragStartX = e.clientX;
+    isDragging = true;
+    didDrag = false;
+    stage.classList.add('is-dragging');
+  });
+
+  stage.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    if (Math.abs(e.clientX - dragStartX) > 5) didDrag = true;
+  });
+
+  stage.addEventListener('mouseup', (e) => {
+    if (!isDragging) return;
+    stage.classList.remove('is-dragging');
+    isDragging = false;
+    if (didDrag) {
+      const deltaX = e.clientX - dragStartX;
+      if (Math.abs(deltaX) > 40) {
+        setActiveSlide(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
+        restartAutoplay();
+      }
+    }
+    didDrag = false;
+  });
+
+  stage.addEventListener('mouseleave', () => {
+    if (isDragging) {
+      stage.classList.remove('is-dragging');
+      isDragging = false;
+      didDrag = false;
+    }
+  });
+
+  // Prevent accidental click at end of drag
+  stage.addEventListener('click', (e) => {
+    if (didDrag) {
+      e.stopPropagation();
+      e.preventDefault();
+      didDrag = false;
+    }
+  }, true);
 
   setActiveSlide(0);
   startAutoplay();

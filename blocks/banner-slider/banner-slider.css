@@ -5,6 +5,7 @@
 .banner-slider-stage {
   overflow: hidden;
   position: relative;
+  touch-action: pan-y;
 }
 
 .banner-slider-track {
@@ -645,3 +646,35 @@
     padding-top: 40px;
   }
   }
+
+/* ── Horizontal slide transition: matches production scroll-snap behavior ── */
+.banner-slider--ready .banner-slider-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.banner-slider--ready .banner-slider-slide {
+  flex: 0 0 100%;
+  min-width: 100%;
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+  transition: none;
+  visibility: visible;
+}
+
+/* Disable interaction on slides not being viewed */
+.banner-slider--ready .banner-slider-slide:not(.is-active) {
+  pointer-events: none;
+}
+
+/* Cursor and selection guard during drag */
+.banner-slider-stage.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.banner-slider-stage.is-dragging .banner-slider-slide * {
+  pointer-events: none;
+}

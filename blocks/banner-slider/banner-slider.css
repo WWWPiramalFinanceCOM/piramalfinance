@@ -203,6 +203,12 @@
   display: flex;
   gap: 24px;
   margin-top: 24px;
+
+  @media only screen and (max-width: 1024px) {
+    gap: unset;
+    margin-top: unset;
+  }
+
 }
 
 @media (width <= 1024px) {
@@ -522,3 +528,79 @@
   }
 }
 
+.banner-slider-stage .banner-slider-track .banner-slider-description p{
+  @media only screen and (max-width: 1024px){
+            font-size: .875rem !important;
+        line-height: 20px !important;
+  }}
+
+  .banner-slider-stage .banner-slider-track .banner-slider-title h2{
+      @media only screen and (max-width: 1024px){
+        font-size: 1.5rem !important;
+        line-height: 32px !important;
+  }
+  }
+  .banner-slider-stage .banner-slider-track .banner-slider-actions .banner-slider-cta.button-container a{
+      @media only screen and (max-width: 1024px){
+    font-size: .875rem !important;
+    line-height: 17px !important;
+    padding: 14px 16px !important;
+  }
+  }
+
+  .banner-slider-stage .banner-slider-track .banner-slider-title p{
+    @media only screen and (max-width: 1024px){
+                font-size: 1.5rem !important;
+        line-height: 32px !important;
+        color: var(--darkcharcoal);
+    }
+  }
+
+  .banner-slider-stage .banner-slider-track .banner-slider-description h2{
+    @media only screen and (max-width: 1024px){
+                font-size: .875rem;
+        line-height: 20px;
+      }
+  }
+
+  .banner-slider-stage .banner-slider-track .banner-slider-description h2{
+      @media only screen and (max-width: 1024px){
+                font-size: 1.5rem !important;
+        line-height: 32px !important;
+                color: var(--darkcharcoal) !important;
+        margin: unset !important;
+    }
+  }
+
+  .banner-slider-features{
+    @media only screen and (max-width: 1024px){
+      display: flex;
+    column-gap: 10px;
+    align-items: flex-start;
+    }
+  }
+
+  @media only screen and (max-width:1024px){
+
+    .banner-slider-feature-icon picture,
+    .banner-slider-feature-icon img {
+      height: 40px;
+      width: 40px;
+    }
+
+    .banner-slider-feature-text{
+      color: var(--darkcharcoal);
+              font-size: .875rem;
+        line-height: 20px;
+        padding-top: 4px;
+    }
+    .banner-slider-feature{
+      max-width: 80px;
+    }
+
+    /* .banner-slider-stage .banner-slider-track .banner-slider-title .banner-slider-kicker{
+          color: var(--black);
+    font-family: Nunito-Extrabold, sans-serif;
+    padding-bottom: 16px;
+    } */
+  }

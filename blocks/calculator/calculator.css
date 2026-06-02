@@ -1,6 +1,6 @@
 /* ========== Modal Calculator Hiding ========== */
 /* Hide sections that are marked for modal-only display */
-.section[data-modal-calculator="true"] {
+.calculator-ssr.homeloancalculator.section[data-modal-calculator="true"] {
   /* display: none; */
   visibility: hidden;
   position: absolute;

@@ -865,6 +865,101 @@
     ]
   },
   {
+    "id": "banner-slider",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "previcon",
+        "value": "",
+        "label": "Previous Icon"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "previconAlt",
+        "value": "",
+        "label": "Previous Icon Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "nexticon",
+        "value": "",
+        "label": "Next Icon"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nexticonAlt",
+        "value": "",
+        "label": "Next Icon Alt"
+      },
+      {
+        "component": "select",
+        "name": "carouselshowtype",
+        "value": "primary",
+        "label": "Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "primary",
+            "value": "primary"
+          },
+          {
+            "name": "secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "autorotate",
+        "value": "rotate-off",
+        "label": "Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "rotate-on",
+            "value": "rotate-on"
+          },
+          {
+            "name": "rotate-off",
+            "value": "rotate-off"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "carouselversion",
+        "value": "One",
+        "label": "Version",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "One",
+            "value": "One"
+          },
+          {
+            "name": "Two",
+            "value": "Two"
+          },
+          {
+            "name": "Glider",
+            "value": "Glider"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "config",
+        "value": "",
+        "label": "Config"
+      }
+    ]
+  },
+  {
     "id": "tab-container",
     "fields": [
       {
@@ -3138,6 +3233,301 @@
         "label": "Branch Detail Description",
         "valueType": "string"
       }
+    ]
+  },
+  {
+    "id": "banner-slide",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_title",
+        "value": "",
+        "label": "Col1 Title"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col1_description",
+        "value": "",
+        "label": "Col1 Description"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_Icon",
+        "label": "Col1 Icon",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_IconText",
+        "value": "",
+        "label": "Col1 Icon Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_IconAlt",
+        "value": "",
+        "label": "Col1 Icon Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_Icon2",
+        "label": "Col1 Icon 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_Icon2Text",
+        "value": "",
+        "label": "Col1 Icon 2 Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_Icon2Alt",
+        "value": "",
+        "label": "Col1 Icon 2 Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_Icon3",
+        "label": "Col1 Icon 3",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_Icon3Text",
+        "value": "",
+        "label": "Col1 Icon 3 Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_Icon3Alt",
+        "value": "",
+        "label": "Col1 Icon 3 Alt"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_ctaLink",
+        "value": "",
+        "label": "Col1 CTA Link"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_cta",
+        "value": "",
+        "label": "Col1 CTA Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_bgcolourText",
+        "value": "",
+        "label": "Col1 Background Colour Text"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col1_shortDescription",
+        "value": "",
+        "label": "Col1 Short Description"
+      },
+      {
+        "component": "select",
+        "name": "col1_buttonPositionClass",
+        "value": "",
+        "label": "Col1 Button Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Top Far Left",
+            "value": "btn-pos-top-far-left"
+          },
+          {
+            "name": "Top Left",
+            "value": "btn-pos-top-left"
+          },
+          {
+            "name": "Top Mid Left",
+            "value": "btn-pos-top-mid-left"
+          },
+          {
+            "name": "Top Center",
+            "value": "btn-pos-top-center"
+          },
+          {
+            "name": "Top Mid Right",
+            "value": "btn-pos-top-mid-right"
+          },
+          {
+            "name": "Top Right",
+            "value": "btn-pos-top-right"
+          },
+          {
+            "name": "Middle Far Left",
+            "value": "btn-pos-middle-far-left"
+          },
+          {
+            "name": "Middle Left",
+            "value": "btn-pos-middle-left"
+          },
+          {
+            "name": "Middle Mid Left",
+            "value": "btn-pos-middle-mid-left"
+          },
+          {
+            "name": "Middle Center",
+            "value": "btn-pos-middle-center"
+          },
+          {
+            "name": "Middle Mid Right",
+            "value": "btn-pos-middle-mid-right"
+          },
+          {
+            "name": "Middle Right",
+            "value": "btn-pos-middle-right"
+          },
+          {
+            "name": "Bottom Far Left",
+            "value": "btn-pos-bottom-far-left"
+          },
+          {
+            "name": "Bottom Left",
+            "value": "btn-pos-bottom-left"
+          },
+          {
+            "name": "Bottom Mid Left",
+            "value": "btn-pos-bottom-mid-left"
+          },
+          {
+            "name": "Bottom Center",
+            "value": "btn-pos-bottom-center"
+          },
+          {
+            "name": "Bottom Mid Right",
+            "value": "btn-pos-bottom-mid-right"
+          },
+          {
+            "name": "Bottom Right",
+            "value": "btn-pos-bottom-right"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "col1_contentPositionClass",
+        "value": "",
+        "label": "Col1 Content Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Top Left",
+            "value": "content-pos-top-left"
+          },
+          {
+            "name": "Top Center",
+            "value": "content-pos-top-center"
+          },
+          {
+            "name": "Top Right",
+            "value": "content-pos-top-right"
+          },
+          {
+            "name": "Left",
+            "value": "content-pos-left"
+          },
+          {
+            "name": "Right",
+            "value": "content-pos-right"
+          },
+          {
+            "name": "Top",
+            "value": "content-pos-top"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_bgImage",
+        "label": "Col2 Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_bgImageAlt",
+        "value": "",
+        "label": "Col2 Background Image Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_mobbgImg",
+        "label": "Col2 Mobile Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_mobbgImgAlt",
+        "value": "",
+        "label": "Col2 Mobile Background Image Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_ForegroundImg",
+        "label": "Col2 Foreground Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_foregroundImgAlt",
+        "value": "",
+        "label": "Col2 Foreground Image Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_ForegroundmobImg",
+        "label": "Col2 Foreground Mobile Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_ForegroundmobImgAlt",
+        "value": "",
+        "label": "Col2 Foreground Mobile Image Alt"
+      },
+      {
+  "component": "text",
+  "valueType": "string",
+  "name": "col2_youtubeUrl",
+  "value": "",
+  "label": "Col2 YouTube Video URL"
+}
     ]
   },
    {

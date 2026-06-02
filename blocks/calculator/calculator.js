@@ -1229,6 +1229,14 @@ export default async function decorate(block) {
     ? firstRowArray.slice(imageIndex + 1).filter(el => el.textContent?.trim())
     : firstRowArray.slice(2).filter(el => el.textContent?.trim() && !el.querySelector('img')); // Skip productType[0], calcName[1]
   
+  // Filter out disclaimer-related text that may leak into labels
+  // These are never valid calculator output labels
+  const disclaimerKeywords = ['read more', 'read less', 'disclaimer'];
+  allTextAfterImage = allTextAfterImage.filter(el => {
+    const text = el.textContent?.trim().toLowerCase();
+    return !disclaimerKeywords.includes(text);
+  });
+  
   // Detect and extract disclaimer content
   // Disclaimer starts when we find "true" or "false" (the showDisclaimer toggle)
   let disclaimerData = null;
@@ -1238,10 +1246,15 @@ export default async function decorate(block) {
   });
   
   if (disclaimerStartIdx !== -1) {
-    const showDisclaimer = allTextAfterImage[disclaimerStartIdx]?.textContent?.trim().toLowerCase() === 'true';
+    // Re-extract from original array to get all disclaimer content
+    const originalIdx = firstRowArray.findIndex(el => {
+      const text = el.textContent?.trim().toLowerCase();
+      return text === 'true' || text === 'false';
+    });
+    const showDisclaimer = firstRowArray[originalIdx]?.textContent?.trim().toLowerCase() === 'true';
     if (showDisclaimer) {
       // Extract disclaimer fields: [showDisclaimer, title, para1, para2, readMoreText, readLessText]
-      const disclaimerElements = allTextAfterImage.slice(disclaimerStartIdx);
+      const disclaimerElements = firstRowArray.slice(originalIdx);
       disclaimerData = {
         title: disclaimerElements[1]?.textContent?.trim() || 'Disclaimer',
         para1: disclaimerElements[2]?.innerHTML?.trim() || disclaimerElements[2]?.textContent?.trim() || '',

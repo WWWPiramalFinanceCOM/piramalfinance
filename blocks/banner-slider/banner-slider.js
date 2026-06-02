@@ -168,6 +168,59 @@ function attachLoanFormCloseFallback(scope) {
   formNode.dataset.bannerSliderCloseFallbackBound = 'true';
 }
 
+function keepLeadFormDropdownsBelow(scope) {
+  const formNode = scope?.querySelector('.loan-form-sub-parent') || document.querySelector('.loan-form-sub-parent');
+  if (!formNode || formNode.dataset.bannerSliderDropdownBound === 'true') {
+    return;
+  }
+
+  const pinBelow = (trigger, container) => {
+    if (!trigger || !container) {
+      return;
+    }
+
+    const offsetParent = container.offsetParent || formNode;
+    const triggerRect = trigger.getBoundingClientRect();
+    const parentRect = offsetParent.getBoundingClientRect();
+    const top = Math.max(0, triggerRect.bottom - parentRect.top);
+    const left = Math.max(0, triggerRect.left - parentRect.left);
+
+    container.style.setProperty('position', 'absolute', 'important');
+    container.style.setProperty('inset', 'auto', 'important');
+    container.style.setProperty('bottom', 'auto', 'important');
+    container.style.setProperty('left', `${left}px`, 'important');
+    container.style.setProperty('right', 'auto', 'important');
+    container.style.setProperty('top', `${top}px`, 'important');
+    container.style.setProperty('transform', 'none', 'important');
+    container.dataset.popperPlacement = 'bottom';
+  };
+
+  const bindBelowHandler = (triggerSelector, containerSelector) => {
+    const trigger = formNode.querySelector(triggerSelector);
+    const container = formNode.querySelector(containerSelector);
+    if (!trigger || !container) {
+      return;
+    }
+
+    trigger.addEventListener('click', () => {
+      // Popper writes styles during/after click; enforce below placement in a few ticks.
+      window.requestAnimationFrame(() => {
+        pinBelow(trigger, container);
+      });
+      window.setTimeout(() => {
+        pinBelow(trigger, container);
+      }, 0);
+      window.setTimeout(() => {
+        pinBelow(trigger, container);
+      }, 60);
+    });
+  };
+
+  bindBelowHandler('#stateparent', '#statecontainer');
+  bindBelowHandler('#branchparent', '#branchcontainer');
+  formNode.dataset.bannerSliderDropdownBound = 'true';
+}
+
 function isApplyLoanLabel(value = '') {
   const normalized = value.trim().toLowerCase();
   return normalized === 'apply loan now' || normalized === 'apply now';
@@ -654,7 +707,7 @@ export default function decorate(block) {
         }
 
         try {
-          const { applyLoanFormClick, onCLickApplyFormOpen, formOpen } = await import('../applyloanform/applyloanforms.js');
+          const { onCLickApplyFormOpen, formOpen } = await import('../applyloanform/applyloanforms.js');
           const mainContainer = block.closest('main') || document.querySelector('main') || document.body;
           const loanFormNode = mainContainer.querySelector('.loan-form-sub-parent') || document.querySelector('.loan-form-sub-parent');
           const overlayNode = mainContainer.querySelector('.modal-overlay') || document.querySelector('.modal-overlay');
@@ -665,14 +718,6 @@ export default function decorate(block) {
 
             return window.getComputedStyle(loanFormNode).visibility !== 'hidden';
           };
-
-          if (typeof applyLoanFormClick === 'function') {
-            try {
-              applyLoanFormClick(mainContainer);
-            } catch (error) {
-              console.warn(error);
-            }
-          }
 
           let formOpened = false;
           if (typeof onCLickApplyFormOpen === 'function' && mainContainer.querySelector('.loan-form-sub-parent')) {
@@ -706,6 +751,7 @@ export default function decorate(block) {
           }
 
           attachLoanFormCloseFallback(mainContainer);
+          keepLeadFormDropdownsBelow(mainContainer);
         } catch (error) {
           console.warn(error);
         }

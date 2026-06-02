@@ -60,6 +60,7 @@
       "imgwithlink",
       "testimonial",
       "financialreports",
+      "financial-results-report",
       "faq",
       "schema-tag",
       "offer-documents",
@@ -113,7 +114,8 @@
       "banner-carousel",
       "testimonies",
       "calculator",
-      "calculator-radio"
+      "calculator-radio",
+      "searchunclaimeddividend"
     ]
   },
   {

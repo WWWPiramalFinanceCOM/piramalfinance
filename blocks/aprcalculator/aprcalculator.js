@@ -1,4 +1,4 @@
-import { calculatorFlatStrLogic, CFApiCall, fetchAPI } from '../../scripts/common.js';
+import { calculatorFlatStrLogic, CFApiCall, fetchAPI, whenBlocksReady } from '../../scripts/common.js';
 import { homeLoanCalcFunc } from '../emiandeligiblitycalc/homeloancalculators.js';
 import { homeloanCalHTML } from '../homeloancalculatorv2/templatehtmlv2.js';
 
@@ -11,31 +11,48 @@ export default async function decorate(block) {
 
   block.innerHTML = homeloanCalHTML(jsonResponseData);
 
-  let elgCalDiv; let
-    elgOverlay;
+  const section = block.closest('.section');
+  
+  // Robust deferred execution - works in both parallel and sequential loading
+  whenBlocksReady(() => {
+    let elgCalDiv;
+    let elgOverlay;
 
-  try {
-    elgCalDiv = document.querySelector('.home-page-calculator-call-xf');
-    elgOverlay = elgCalDiv.querySelector('.cmp-container--caloverlay');
+    try {
+      // Scoped Access - search within block's section only, no document fallback
+      elgCalDiv = section?.querySelector('.home-page-calculator-call-xf') 
+        || section?.closest('.home-page-calculator-call-xf')
+        || block.closest('.home-page-calculator-call-xf');
+      if (elgCalDiv) {
+        elgOverlay = elgCalDiv.querySelector('.cmp-container--caloverlay');
+      }
 
-    const currentSection = document.querySelector('.home-page-calculator-call-xf');
+      const currentSection = elgCalDiv || section;
 
-    if (document.querySelector('.home-loan-calculator-parent').classList.contains('combined-emi-eligibility')) {
-      document.querySelector('.home-loan-calculator-parent').classList.remove('combined-emi-eligibility');
-      document.querySelector('.homeloancalculator').querySelector('.eligibilitycalculator')
-        && (document.querySelector('.homeloancalculator').querySelector('.eligibilitycalculator').style.display = 'block');
+      const homeLoanCalcParent = section?.querySelector('.home-loan-calculator-parent');
+      if (homeLoanCalcParent?.classList.contains('combined-emi-eligibility')) {
+        homeLoanCalcParent.classList.remove('combined-emi-eligibility');
+        const homeloancalc = homeLoanCalcParent.closest('.homeloancalculator') 
+          || section?.querySelector('.homeloancalculator');
+        const eligibilityCalc = homeloancalc?.querySelector('.eligibilitycalculator');
+        if (eligibilityCalc) {
+          eligibilityCalc.style.display = 'block';
+        }
+      }
+
+      homeLoanCalcFunc(currentSection);
+      onloadAPRCalc(section);
+      readMoreFucn(block);
+    } catch (error) {
+      console.warn(error);
     }
-
-    homeLoanCalcFunc(currentSection);
-    onloadAPRCalc();
-    readMoreFucn(block);
-  } catch (error) {
-    console.warn(error);
-  }
+  }, { waitFor: '.homeloancalculator', scope: section });
 }
 
-function onloadAPRCalc() {
-  const isAprCalculator = document.querySelector('.homeloancalculator .apr');
+function onloadAPRCalc(section) {
+  // Scoped Access - use section only, no document fallback
+  if (!section) return;
+  const isAprCalculator = section.querySelector('.homeloancalculator .apr');
   if (isAprCalculator) {
     const parentElement = isAprCalculator.closest('.homeloancalculator');
     const resultElement = parentElement.querySelector('[data-cal-result=resultAmt]');
@@ -131,7 +148,12 @@ export const CheckAprRate = (LA, LO, IR, LT) => {
 };
 
 function readMoreFucn(block) {
-  document.querySelector('.discalimer-details').classList.remove('dp-none');
+  // Scoped Access - search within block's section only, no document fallback
+  const section = block.closest('.section');
+  const disclaimerDetails = section?.querySelector('.discalimer-details');
+  if (disclaimerDetails) {
+    disclaimerDetails.classList.remove('dp-none');
+  }
   if (block.querySelector('.discalimer-calc')) {
     const readMoreBtn = block.querySelector('.read-more-discalimer-calc');
     const discalimerContainer = block.querySelector('.disclaimer-container');

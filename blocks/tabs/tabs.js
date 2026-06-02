@@ -27,13 +27,46 @@ function changeTabs(e) {
   const tabMenu = target.parentNode;
   const tabContent = tabMenu.nextElementSibling;
 
-  tabMenu.querySelectorAll('[aria-selected="true"]').forEach((t) => t.setAttribute('aria-selected', false));
+  // Update aria-selected and tabindex for all tabs
+  tabMenu.querySelectorAll('[role="tab"]').forEach((t) => {
+    t.setAttribute('aria-selected', 'false');
+    t.setAttribute('tabindex', '-1');
+  });
 
-  target.setAttribute('aria-selected', true);
+  target.setAttribute('aria-selected', 'true');
+  target.setAttribute('tabindex', '0');
 
   tabContent.querySelectorAll('[role="tabpanel"]').forEach((p) => p.classList.remove('active'));
 
   tabContent.parentNode.querySelector(`#${target.getAttribute('aria-controls')}`).classList.add('active');
+}
+
+// Fix WCAG 2.1.1: Keyboard navigation for tabs
+function handleTabKeydown(e) {
+  const tab = e.target;
+  const tabList = tab.parentNode;
+  const tabs = Array.from(tabList.querySelectorAll('[role="tab"]'));
+  const index = tabs.indexOf(tab);
+
+  let newIndex;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    newIndex = (index + 1) % tabs.length;
+    e.preventDefault();
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    newIndex = (index - 1 + tabs.length) % tabs.length;
+    e.preventDefault();
+  } else if (e.key === 'Home') {
+    newIndex = 0;
+    e.preventDefault();
+  } else if (e.key === 'End') {
+    newIndex = tabs.length - 1;
+    e.preventDefault();
+  }
+
+  if (newIndex !== undefined) {
+    tabs[newIndex].focus();
+    tabs[newIndex].click();
+  }
 }
 
 function initTabs(block) {
@@ -41,6 +74,7 @@ function initTabs(block) {
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', changeTabs);
+    tab.addEventListener('keydown', handleTabKeydown);
   });
 }
 
@@ -72,7 +106,7 @@ export default function decorate(block) {
       role: 'tab',
       class: 'tab-title',
       id: `tab-${initCount}-${i}`,
-      tabindex: i > 0 ? '0' : '-1',
+      tabindex: i === 0 ? '0' : '-1',
       'aria-selected': i === 0 ? 'true' : 'false',
       'aria-controls': `tab-panel-${initCount}-${i}`,
       'aria-label': name,

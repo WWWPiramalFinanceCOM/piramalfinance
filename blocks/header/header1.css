@@ -107,8 +107,8 @@ header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li>ul
 header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p:first-child a:first-child {
   align-items: center;
   background: var(--rosewhite);
-  border: 1px solid;
-  color: var(--orange);
+  border: 1px solid #C04A1D;
+  color: #C04A1D;
   display: flex;
   font-size: var(--body-font-size-xxs) rem;
   line-height: 1rem;
@@ -667,7 +667,7 @@ header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li p 
   bottom: 32px;
   justify-content: center;
   align-items: center;
-  background-color: var(--green);
+  background-color: #2E7D32;
   border-radius: 4px;
   color: var(--piramal-white-100);
   cursor: pointer;
@@ -746,7 +746,7 @@ header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(7)>ul {
 header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(6)>ul>li:nth-child(1)>ul>li:nth-child(4)>sup {
   content: "New";
   position: absolute;
-  background-color: var(--green);
+  background-color: #2E7D32;
   border-radius: 4px;
   color: var(--piramal-white-100);
   font-family: nunito, sans-serif;
@@ -877,7 +877,7 @@ header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(2)>ul>li>p
 
   header .nav-brand .default-content-wrapper>ul>li>ul>li>p>sup {
     align-items: center;
-    background-color: var(--green);
+    background-color: #2E7D32;
     border-radius: 4px;
     color: var(--piramal-white-100);
     display: flex;
@@ -892,7 +892,7 @@ header .nav-wrapper #nav>div.section.nav-sections>div>ul>li:nth-child(2)>ul>li>p
   }
 
   header #nav>div.section.nav-brand>div>ul>li:nth-child(3)>ul>li:nth-child(1)>ul>li:nth-child(4)>sup {
-    background-color: var(--green);
+    background-color: #2E7D32;
     border-radius: 4px;
     color: var(--piramal-white-100);
     font-family: nunito, sans-serif;

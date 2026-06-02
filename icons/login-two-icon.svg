@@ -1,0 +1,7 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Head -->
+  <circle cx="150" cy="90" r="50" fill="none" stroke="black" stroke-width="25"></circle>
+
+  <!-- Shoulders -->
+  <path d="M40 260 A110 110 0 0 1 260 260" fill="none" stroke="black" stroke-width="25" stroke-linecap="round"></path>
+</svg>

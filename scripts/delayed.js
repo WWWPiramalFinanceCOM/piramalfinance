@@ -165,8 +165,9 @@ async function loadAdobeScript() {
 //   })
 // };
 
+const thirdPartyEnabled = getMetadata("third-party") == 'true';
 
-if (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('author')) {
+if (thirdPartyEnabled && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('author')) {
   loadServiceWorker();
   loadHeadGTM();
   loadBodyGTM();
@@ -174,3 +175,4 @@ if (!window.location.hostname.includes('localhost') && !window.location.hostname
   // handleReltags();
   loadAdobeScript();
 }
+console.log("Third-party scripts loaded: ", thirdPartyEnabled);

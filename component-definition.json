@@ -259,6 +259,21 @@
           }
         },
         {
+          "title": "Financial Results Report",
+          "id": "financial-results-report",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Financial Results Report",
+                  "model": "financial-results-report"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "FAQ",
           "id": "faq",
           "plugins": {
@@ -306,7 +321,10 @@
                     "title": "Teaser Title",
                     "titleType": "h3",
                     "longDescr": "<p>Teaser Description</p>",
-                    "classes": ["light", "left"]
+                    "classes": [
+                      "light",
+                      "left"
+                    ]
                   }
                 }
               }
@@ -338,7 +356,9 @@
                 "template": {
                   "name": "Tab Name",
                   "model": "tab-name",
-                  "classes": ["tab-name"]
+                  "classes": [
+                    "tab-name"
+                  ]
                 }
               }
             }
@@ -354,7 +374,9 @@
                 "template": {
                   "name": "Tab Name Nested",
                   "model": "tab-name-nested",
-                  "classes": ["tab-name-nested"]
+                  "classes": [
+                    "tab-name-nested"
+                  ]
                 }
               }
             }
@@ -378,7 +400,10 @@
                     "title": "Teaser Title",
                     "titleType": "h3",
                     "longDescr": "<p>Teaser Description</p>",
-                    "classes": ["light", "left"]
+                    "classes": [
+                      "light",
+                      "left"
+                    ]
                   }
                 }
               }
@@ -399,7 +424,10 @@
                   "title": "Teaser Title",
                   "titleType": "h3",
                   "longDescr": "<p>Teaser Description</p>",
-                  "classes": ["light", "left"]
+                  "classes": [
+                    "light",
+                    "left"
+                  ]
                 }
               }
             }
@@ -464,7 +492,11 @@
                   "titleType": "h3",
                   "description": "Description",
                   "subject": "/content/dam/summit-subject.png",
-                  "classes": ["light", "left", "detailed-teaser"]
+                  "classes": [
+                    "light",
+                    "left",
+                    "detailed-teaser"
+                  ]
                 }
               }
             }
@@ -1066,37 +1098,37 @@
             }
           }
         },
-         {
-    "id": "banner-carousel-item",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "Image Alt",
-        "value": "",
-        "label": "Desktop Image Alt",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "Mobile Image",
-        "label": "Mobile Image",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "Mobile Image Alt",
-        "label": "Mobile Image Alt",
-        "valueType": "string"
-      }
-    ]
-  },
-         {
+        {
+          "id": "banner-carousel-item",
+          "fields": [
+            {
+              "component": "reference",
+              "name": "image",
+              "label": "Image",
+              "valueType": "string"
+            },
+            {
+              "component": "text",
+              "name": "Image Alt",
+              "value": "",
+              "label": "Desktop Image Alt",
+              "valueType": "string"
+            },
+            {
+              "component": "reference",
+              "name": "Mobile Image",
+              "label": "Mobile Image",
+              "valueType": "string"
+            },
+            {
+              "component": "text",
+              "name": "Mobile Image Alt",
+              "label": "Mobile Image Alt",
+              "valueType": "string"
+            }
+          ]
+        },
+        {
           "title": "Testimonies",
           "id": "testimonies",
           "plugins": {
@@ -1129,6 +1161,21 @@
           }
         },
         {
+          "title": "Search Unclaimed Dividend",
+          "id": "searchunclaimeddividend",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Search Unclaimed Dividend",
+                  "model": "searchunclaimeddividend"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "calculator",
           "id": "calculator",
           "plugins": {
@@ -1137,7 +1184,7 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "calculator",
-                  "model":"calculator",
+                  "model": "calculator",
                   "filter": "calculator"
                 }
               }

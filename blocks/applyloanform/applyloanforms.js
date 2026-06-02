@@ -241,7 +241,7 @@ export function applyLoanFormClick(mainContainer) {
       });
     }
 
-    loanTypeDropdownSelect();
+    loanTypeDropdownSelect(mainContainer);
 
     crossIcon.forEach((e) => {
       e.addEventListener('click', (e) => {
@@ -345,12 +345,14 @@ export function applyLoanFormClick(mainContainer) {
       });
     }
 
-    otparrow.addEventListener('click', (e) => {
-      loaninnerform.classList.remove('loan-form-sub-otp');
-      mainContainer.querySelector('.wrongotpmessage').style.display = 'none';
-      clearInterval(intervalTime);
-      loanOtpInput().value = '';
-    });
+    if (otparrow) {
+      otparrow.addEventListener('click', (e) => {
+        loaninnerform.classList.remove('loan-form-sub-otp');
+        mainContainer.querySelector('.wrongotpmessage').style.display = 'none';
+        clearInterval(intervalTime);
+        loanOtpInput().value = '';
+      });
+    }
 
     const loanSubParent = mainContainer.querySelector('.loan-form-sub-parent .cmp-container');
     emiOverlay = mainContainer.querySelector('.cmp-container--emicaloverlay');
@@ -424,24 +426,28 @@ export function applyLoanFormClick(mainContainer) {
       }
     });
 
-    overlay.addEventListener('click', (event) => {
-      if (window.matchMedia('(max-width: 1024px)').matches) {
-        // overlay.classList.remove("show");
-        overlay.classList.remove('overlay');
-        overlay.classList.add('dp-none');
-        loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
-        loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
-        loaninnerform.style.visibility = 'hidden';
-        bodyElement.style.overflowY = 'auto';
+    if (overlay) {
+      overlay.addEventListener('click', (event) => {
+        if (window.matchMedia('(max-width: 1024px)').matches) {
+          // overlay.classList.remove("show");
+          overlay.classList.remove('overlay');
+          overlay.classList.add('dp-none');
+          loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
+          loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
+          loaninnerform.style.visibility = 'hidden';
+          bodyElement.style.overflowY = 'auto';
 
-        /* if(loaninnerform){
-          let ulFormBranch = document.createElement('li');
-          ulFormBranch.textContent = "No options";
-          ulFormBranch.classList.add('orangepoints');
-          loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
-        } */
-      }
-    });
+          /* if(loaninnerform){
+            let ulFormBranch = document.createElement('li');
+            ulFormBranch.textContent = "No options";
+            ulFormBranch.classList.add('orangepoints');
+            loaninnerform.querySelector('#branchcontainer ul').innerHTML = ulFormBranch.outerHTML;
+          } */
+        }
+      });
+    } else {
+      console.warn('applyLoanFormClick: .modal-overlay not found, skipping overlay click binding');
+    }
 
     // })
 
@@ -471,86 +477,90 @@ export function applyLoanFormClick(mainContainer) {
     const branchcontainer = mainContainer.querySelector('#branchcontainer');
     const branchparent = mainContainer.querySelector('#branchparent');
     const multiSelect = mainContainer.querySelector('.multiselectoptions');
-    const multiSelectDropdown = multiSelect.nextElementSibling;
+    const multiSelectDropdown = multiSelect?.nextElementSibling;
     // let multiSelectContainer=mainContainer.querySelector(".multiselectoptions");
 
     let isStateContainerVisible = false;
     let isBranchContainerVisible = false;
     let isLoanContainerVisible = false;
 
-    mainContainer.ownerDocument.addEventListener('click', handleClickOutside);
+    if (statecontainer && stateparent && branchcontainer && branchparent && multiSelect && multiSelectDropdown) {
+      mainContainer.ownerDocument.addEventListener('click', handleClickOutside);
 
-    function handleClickOutside(event) {
-      if (
-        (event.target.closest('#statecontainer') && event.target.classList.contains('subpoints'))
-        || (isStateContainerVisible && !stateparent.contains(event.target) && !statecontainer.contains(event.target))
-      ) {
-        toggleOptionSelect(statecontainer);
-        toggleArrowImage(stateparent.querySelector('.arrowimage'));
-        loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
-        isStateContainerVisible = false;
+      function handleClickOutside(event) {
+        if (
+          (event.target.closest('#statecontainer') && event.target.classList.contains('subpoints'))
+          || (isStateContainerVisible && !stateparent.contains(event.target) && !statecontainer.contains(event.target))
+        ) {
+          toggleOptionSelect(statecontainer);
+          toggleArrowImage(stateparent.querySelector('.arrowimage'));
+          loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
+          isStateContainerVisible = false;
+        }
+        if (
+          (event.target.closest('#branchcontainer') && event.target.classList.contains('subpoints'))
+          || (isBranchContainerVisible && !branchparent.contains(event.target) && !branchcontainer.contains(event.target))
+        ) {
+          toggleOptionSelect(branchcontainer);
+          toggleArrowImage(branchparent.querySelector('.arrowimage'));
+          loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
+          isBranchContainerVisible = false;
+        }
+        if (
+          (event.target.closest('.cmp-form-text') && event.target.classList.contains('subpoints'))
+          || (isLoanContainerVisible && !multiSelect.contains(event.target) && !multiSelectDropdown.contains(event.target))
+        ) {
+          const optionFormParent = multiSelect.nextElementSibling;
+          toggleOptionForm(optionFormParent);
+          toggleArrowImage(multiSelect.querySelector('.arrowimage'));
+          isLoanContainerVisible = false;
+        }
       }
-      if (
-        (event.target.closest('#branchcontainer') && event.target.classList.contains('subpoints'))
-        || (isBranchContainerVisible && !branchparent.contains(event.target) && !branchcontainer.contains(event.target))
-      ) {
-        toggleOptionSelect(branchcontainer);
-        toggleArrowImage(branchparent.querySelector('.arrowimage'));
-        loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
+
+      const branchArrowImg = mainContainer.querySelector('#branchparent .arrowimage');
+      stateparent.addEventListener('click', function (event) {
+        branchcontainer.style.visibility = 'hidden';
+        branchArrowImg.classList.remove('inverted');
         isBranchContainerVisible = false;
-      }
-      if (
-        (event.target.closest('.cmp-form-text') && event.target.classList.contains('subpoints'))
-        || (isLoanContainerVisible && !multiSelect.contains(event.target) && !multiSelectDropdown.contains(event.target))
-      ) {
-        const optionFormParent = multiSelect.nextElementSibling;
+
+        toggleOptionSelect(statecontainer);
+        toggleArrowImage(this.querySelector('.arrowimage'));
+        isStateContainerVisible = !isStateContainerVisible;
+
+        event.stopPropagation();
+      });
+
+      const stateArrowImg = mainContainer.querySelector('#stateparent .arrowimage');
+      branchparent.addEventListener('click', function (event) {
+        statecontainer.style.visibility = 'hidden';
+        stateArrowImg.classList.remove('inverted');
+        isStateContainerVisible = false;
+
+        toggleOptionSelect(branchcontainer);
+        toggleArrowImage(this.querySelector('.arrowimage'));
+        isBranchContainerVisible = !isBranchContainerVisible;
+
+        event.stopPropagation();
+      });
+
+      multiSelect.addEventListener('click', function (event) {
+        branchcontainer.style.visibility = 'hidden';
+        branchArrowImg.classList.remove('inverted');
+        isBranchContainerVisible = false;
+
+        statecontainer.style.visibility = 'hidden';
+        stateArrowImg.classList.remove('inverted');
+        isStateContainerVisible = false;
+
+        const optionFormParent = this.nextElementSibling;
         toggleOptionForm(optionFormParent);
         toggleArrowImage(this.querySelector('.arrowimage'));
-        isLoanContainerVisible = false;
-      }
+        isLoanContainerVisible = !isLoanContainerVisible;
+        event.stopPropagation();
+      });
+    } else {
+      console.warn('applyLoanFormClick: dropdown elements missing in DOM, skipping dropdown listener binding');
     }
-
-    const branchArrowImg = mainContainer.querySelector('#branchparent .arrowimage');
-    stateparent.addEventListener('click', function (event) {
-      branchcontainer.style.visibility = 'hidden';
-      branchArrowImg.classList.remove('inverted');
-      isBranchContainerVisible = false;
-
-      toggleOptionSelect(statecontainer);
-      toggleArrowImage(this.querySelector('.arrowimage'));
-      isStateContainerVisible = !isStateContainerVisible;
-
-      event.stopPropagation();
-    });
-
-    const stateArrowImg = mainContainer.querySelector('#stateparent .arrowimage');
-    branchparent.addEventListener('click', function (event) {
-      statecontainer.style.visibility = 'hidden';
-      stateArrowImg.classList.remove('inverted');
-      isStateContainerVisible = false;
-
-      toggleOptionSelect(branchcontainer);
-      toggleArrowImage(this.querySelector('.arrowimage'));
-      isBranchContainerVisible = !isBranchContainerVisible;
-
-      event.stopPropagation();
-    });
-
-    multiSelect.addEventListener('click', function (event) {
-      branchcontainer.style.visibility = 'hidden';
-      branchArrowImg.classList.remove('inverted');
-      isBranchContainerVisible = false;
-
-      statecontainer.style.visibility = 'hidden';
-      stateArrowImg.classList.remove('inverted');
-      isStateContainerVisible = false;
-
-      const optionFormParent = this.nextElementSibling;
-      toggleOptionForm(optionFormParent);
-      toggleArrowImage(this.querySelector('.arrowimage'));
-      isLoanContainerVisible = !isLoanContainerVisible;
-      event.stopPropagation();
-    });
 
     const checkbox = mainContainer.querySelector('#loanformcheck');
     const circle = mainContainer.querySelector('.circle');

@@ -115,10 +115,57 @@ function isHashLink(value = '') {
 
   try {
     const parsed = new URL(text, window.location.href);
-    return parsed.hash === '#' && parsed.origin === window.location.origin && parsed.pathname === window.location.pathname;
+    // Keep behavior permissive for same-origin hash-only CTA links so local authored
+    // URL normalization differences (e.g. trailing slash) do not block form opening.
+    return parsed.origin === window.location.origin && (parsed.hash === '#' || parsed.href.endsWith('#'));
   } catch (error) {
     return false;
   }
+}
+
+function isInteractiveElementTarget(target) {
+  if (!(target instanceof Element)) {
+    return false;
+  }
+
+  return !!target.closest('a, button, input, select, textarea, label, [role="button"], .banner-slider-cta, .button-container');
+}
+
+function attachLoanFormCloseFallback(scope) {
+  const formNode = scope?.querySelector('.loan-form-sub-parent') || document.querySelector('.loan-form-sub-parent');
+  if (!formNode || formNode.dataset.bannerSliderCloseFallbackBound === 'true') {
+    return;
+  }
+
+  const forceCloseForm = () => {
+    const overlayNode = scope?.querySelector('.modal-overlay') || document.querySelector('.modal-overlay');
+    formNode.classList.remove('loan-form--open');
+    formNode.style.visibility = 'hidden';
+    if (overlayNode) {
+      overlayNode.classList.remove('overlay');
+      overlayNode.classList.add('dp-none');
+    }
+    document.body.style.overflowY = 'auto';
+  };
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+
+    if (!event.target.closest('.crossimage, .failformcross, .crossimage img, .failformcross img')) {
+      return;
+    }
+
+    // Let existing applyloanform close logic run first; fallback only if form is still open.
+    window.setTimeout(() => {
+      if (window.getComputedStyle(formNode).visibility !== 'hidden') {
+        forceCloseForm();
+      }
+    }, 0);
+  }, true);
+
+  formNode.dataset.bannerSliderCloseFallbackBound = 'true';
 }
 
 function isApplyLoanLabel(value = '') {
@@ -584,6 +631,8 @@ export default function decorate(block) {
   const ctaAnchors = [...block.querySelectorAll('.banner-slider-cta .button.primary')];
   ctaAnchors.forEach((anchor) => {
     anchor.addEventListener('click', async (event) => {
+      event.stopPropagation();
+
       const clickText = (anchor.textContent || '').trim();
       const href = (anchor.getAttribute('href') || '').trim();
       const ctaCategory = 'banner-slider';
@@ -607,18 +656,56 @@ export default function decorate(block) {
         try {
           const { applyLoanFormClick, onCLickApplyFormOpen, formOpen } = await import('../applyloanform/applyloanforms.js');
           const mainContainer = block.closest('main') || document.querySelector('main') || document.body;
+          const loanFormNode = mainContainer.querySelector('.loan-form-sub-parent') || document.querySelector('.loan-form-sub-parent');
+          const overlayNode = mainContainer.querySelector('.modal-overlay') || document.querySelector('.modal-overlay');
+          const isLoanFormVisible = () => {
+            if (!loanFormNode) {
+              return false;
+            }
+
+            return window.getComputedStyle(loanFormNode).visibility !== 'hidden';
+          };
 
           if (typeof applyLoanFormClick === 'function') {
-            applyLoanFormClick(mainContainer);
+            try {
+              applyLoanFormClick(mainContainer);
+            } catch (error) {
+              console.warn(error);
+            }
           }
 
+          let formOpened = false;
           if (typeof onCLickApplyFormOpen === 'function' && mainContainer.querySelector('.loan-form-sub-parent')) {
-            onCLickApplyFormOpen(event);
-            return;
+            try {
+              onCLickApplyFormOpen(event);
+              formOpened = isLoanFormVisible();
+            } catch (error) {
+              console.warn(error);
+            }
           }
-          if (typeof formOpen === 'function') {
+
+          if (!formOpened && typeof formOpen === 'function') {
             formOpen();
+            formOpened = isLoanFormVisible();
           }
+
+          // Local/test pages can miss .modal-overlay wiring, which causes formOpen() to no-op.
+          // Fallback mirrors minimal open-state classes/styles so CTA still opens the form.
+          if (!formOpened && loanFormNode) {
+            if (overlayNode) {
+              overlayNode.classList.add('overlay');
+              overlayNode.classList.remove('dp-none');
+            }
+
+            if (window.matchMedia('(max-width: 1024px)').matches) {
+              loanFormNode.classList.add('loan-form--open');
+            }
+
+            loanFormNode.style.visibility = 'visible';
+            document.body.style.overflowY = 'hidden';
+          }
+
+          attachLoanFormCloseFallback(mainContainer);
         } catch (error) {
           console.warn(error);
         }
@@ -722,14 +809,25 @@ export default function decorate(block) {
   let touchStartX = 0;
   let touchStartY = 0;
   let touchMoved = false;
+  let ignoreTouchSwipe = false;
 
   stage.addEventListener('touchstart', (e) => {
+    ignoreTouchSwipe = isInteractiveElementTarget(e.target);
+    if (ignoreTouchSwipe) {
+      touchMoved = false;
+      return;
+    }
+
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
     touchMoved = false;
   }, { passive: true });
 
   stage.addEventListener('touchmove', (e) => {
+    if (ignoreTouchSwipe) {
+      return;
+    }
+
     const dx = Math.abs(e.touches[0].clientX - touchStartX);
     const dy = Math.abs(e.touches[0].clientY - touchStartY);
     if (dx > dy && dx > 5) {
@@ -739,6 +837,11 @@ export default function decorate(block) {
   }, { passive: false });
 
   stage.addEventListener('touchend', (e) => {
+    if (ignoreTouchSwipe) {
+      ignoreTouchSwipe = false;
+      return;
+    }
+
     if (!touchMoved) return;
     const deltaX = e.changedTouches[0].clientX - touchStartX;
     if (Math.abs(deltaX) > 40) {
@@ -754,6 +857,10 @@ export default function decorate(block) {
   let didDrag = false;
 
   stage.addEventListener('mousedown', (e) => {
+    if (isInteractiveElementTarget(e.target)) {
+      return;
+    }
+
     dragStartX = e.clientX;
     isDragging = true;
     didDrag = false;
@@ -789,6 +896,10 @@ export default function decorate(block) {
 
   // Prevent accidental click at end of drag
   stage.addEventListener('click', (e) => {
+    if (isInteractiveElementTarget(e.target)) {
+      return;
+    }
+
     if (didDrag) {
       e.stopPropagation();
       e.preventDefault();

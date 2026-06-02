@@ -27,6 +27,8 @@ import { validationJSFunc } from './validation.js';
 export let overlay; export let emiOverlay; export let elgOverlay; export let loaninnerform; export let
   bodyElement;
 
+const APPLY_LOAN_INIT_FLAG = 'loanFormListenersInitialized';
+
   export function handleOpenFormOnClick(el) {
     const formButtons = el.querySelectorAll('.open-form-on-click .button-container');
     formButtons.forEach(button => {
@@ -104,6 +106,11 @@ export function applyLoanFormClick(mainContainer) {
     || mainContainer.ownerDocument.createElement('div');
   formOverlay = createOverlay(homeloancalcontainer);
   if (loaninnerform) {
+    if (loaninnerform.dataset[APPLY_LOAN_INIT_FLAG] === 'true') {
+      return;
+    }
+    loaninnerform.dataset[APPLY_LOAN_INIT_FLAG] = 'true';
+
     // checkbox logic
     const checkboxDiv = mainContainer.querySelectorAll('.cmp-form-option-parent');
 
@@ -265,7 +272,10 @@ export function applyLoanFormClick(mainContainer) {
             loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
 
             loaninnerform.style.visibility = 'hidden';
-            overlay.style.zIndex = '1111';
+            if (overlay) {
+              overlay.style.zIndex = '1111';
+            }
+            hideLeadFormOverlay();
 
             if (loaninnerform.classList.contains('loan-form-success')) {
               loaninnerform.classList.remove('loan-form-success');
@@ -274,9 +284,7 @@ export function applyLoanFormClick(mainContainer) {
           } else {
             loaninnerform.classList.remove('loan-form--open');
             // overlay.classList.remove("show");
-
-            overlay.classList.remove('overlay');
-            overlay.classList.add('dp-none');
+            hideLeadFormOverlay();
 
             loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
             loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
@@ -293,9 +301,7 @@ export function applyLoanFormClick(mainContainer) {
         } else {
           loaninnerform.classList.remove('loan-form--open');
           // overlay.classList.remove("show");
-
-          overlay.classList.remove('overlay');
-          overlay.classList.add('dp-none');
+          hideLeadFormOverlay();
 
 
           loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
@@ -319,6 +325,8 @@ export function applyLoanFormClick(mainContainer) {
         } */
 
         resetLoanForm();
+        hideLeadFormOverlay();
+        bodyElement.style.overflowY = 'auto';
         loaninnerform.classList.remove('loan-form-sub-otp', 'loan-form-success', 'loan-form-request-fail', 'loan-form-something-wrong');
       });
     });
@@ -388,11 +396,14 @@ export function applyLoanFormClick(mainContainer) {
             loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
             loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
             loaninnerform.style.visibility = 'hidden';
-            overlay.style.zIndex = '1000';
+            if (overlay) {
+              overlay.style.zIndex = '1000';
+            }
+            hideLeadFormOverlay();
+            resetLoanTypeDropdownState();
           } else {
             // overlay.classList.remove("show");
-            overlay.classList.remove('overlay');
-            overlay.classList.add('dp-none');
+            hideLeadFormOverlay();
             loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
             loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
             loaninnerform.style.visibility = 'hidden';
@@ -404,8 +415,7 @@ export function applyLoanFormClick(mainContainer) {
           }
         } else {
           // overlay.classList.remove("show");
-          overlay.classList.remove('overlay');
-          overlay.classList.add('dp-none');
+          hideLeadFormOverlay();
           loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
           loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
           loaninnerform.style.visibility = 'hidden';
@@ -430,12 +440,12 @@ export function applyLoanFormClick(mainContainer) {
       overlay.addEventListener('click', (event) => {
         if (window.matchMedia('(max-width: 1024px)').matches) {
           // overlay.classList.remove("show");
-          overlay.classList.remove('overlay');
-          overlay.classList.add('dp-none');
+          hideLeadFormOverlay();
           loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
           loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
           loaninnerform.style.visibility = 'hidden';
           bodyElement.style.overflowY = 'auto';
+          resetLoanTypeDropdownState();
 
           /* if(loaninnerform){
             let ulFormBranch = document.createElement('li');
@@ -447,6 +457,24 @@ export function applyLoanFormClick(mainContainer) {
       });
     } else {
       console.warn('applyLoanFormClick: .modal-overlay not found, skipping overlay click binding');
+      mainContainer.ownerDocument.addEventListener('click', (event) => {
+        if (!window.matchMedia('(max-width: 1024px)').matches) {
+          return;
+        }
+
+        if (!(event.target instanceof Element) || !event.target.classList.contains('modal-overlay')) {
+          return;
+        }
+
+        const dynamicOverlay = event.target;
+        dynamicOverlay.classList.remove('overlay');
+        dynamicOverlay.classList.add('dp-none');
+        loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
+        loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
+        loaninnerform.style.visibility = 'hidden';
+        bodyElement.style.overflowY = 'auto';
+        resetLoanTypeDropdownState();
+      });
     }
 
     // })
@@ -469,7 +497,49 @@ export function applyLoanFormClick(mainContainer) {
     }
 
     function toggleArrowImage(arrowImage) {
+      if (!arrowImage) {
+        return;
+      }
       arrowImage.classList.toggle('inverted');
+    }
+
+    function resetLoanTypeDropdownState() {
+      const loanTypeInput = loanProduct();
+      if (!loanTypeInput) {
+        return;
+      }
+
+      loanTypeInput.value = '';
+      loanTypeInput.classList.remove('place-selected');
+      loanTypeInput.dataset.loanType = '';
+      loanTypeInput.dataset.loanName = '';
+
+      const loanMultiSelect = mainContainer.querySelector('.multiselectoptions');
+      const optionFormParent = loanMultiSelect?.nextElementSibling;
+      const loanTypeArrow = loanMultiSelect?.querySelector('.arrowimage');
+
+      if (optionFormParent) {
+        optionFormParent.style.display = 'none';
+      }
+
+      if (loanTypeArrow) {
+        loanTypeArrow.classList.remove('inverted');
+      }
+    }
+
+    function hideLeadFormOverlay() {
+      const overlayNode = overlay
+        || mainContainer.querySelector('.modal-overlay.overlay')
+        || mainContainer.querySelector('.modal-overlay')
+        || mainContainer.ownerDocument.querySelector('.modal-overlay.overlay')
+        || mainContainer.ownerDocument.querySelector('.modal-overlay');
+
+      if (!overlayNode) {
+        return;
+      }
+
+      overlayNode.classList.remove('overlay');
+      overlayNode.classList.add('dp-none');
     }
 
     const statecontainer = mainContainer.querySelector('#statecontainer');
@@ -484,32 +554,36 @@ export function applyLoanFormClick(mainContainer) {
     let isBranchContainerVisible = false;
     let isLoanContainerVisible = false;
 
-    if (statecontainer && stateparent && branchcontainer && branchparent && multiSelect && multiSelectDropdown) {
+    const hasStateControls = !!(statecontainer && stateparent);
+    const hasBranchControls = !!(branchcontainer && branchparent);
+    const hasLoanControls = !!(multiSelect && multiSelectDropdown);
+
+    if (hasStateControls || hasBranchControls || hasLoanControls) {
       mainContainer.ownerDocument.addEventListener('click', handleClickOutside);
 
       function handleClickOutside(event) {
-        if (
+        if (hasStateControls && (
           (event.target.closest('#statecontainer') && event.target.classList.contains('subpoints'))
           || (isStateContainerVisible && !stateparent.contains(event.target) && !statecontainer.contains(event.target))
-        ) {
+        )) {
           toggleOptionSelect(statecontainer);
           toggleArrowImage(stateparent.querySelector('.arrowimage'));
           loaninnerform.querySelector('#statecontainer').style.visibility = 'hidden';
           isStateContainerVisible = false;
         }
-        if (
+        if (hasBranchControls && (
           (event.target.closest('#branchcontainer') && event.target.classList.contains('subpoints'))
           || (isBranchContainerVisible && !branchparent.contains(event.target) && !branchcontainer.contains(event.target))
-        ) {
+        )) {
           toggleOptionSelect(branchcontainer);
           toggleArrowImage(branchparent.querySelector('.arrowimage'));
           loaninnerform.querySelector('#branchcontainer').style.visibility = 'hidden';
           isBranchContainerVisible = false;
         }
-        if (
+        if (hasLoanControls && (
           (event.target.closest('.cmp-form-text') && event.target.classList.contains('subpoints'))
           || (isLoanContainerVisible && !multiSelect.contains(event.target) && !multiSelectDropdown.contains(event.target))
-        ) {
+        )) {
           const optionFormParent = multiSelect.nextElementSibling;
           toggleOptionForm(optionFormParent);
           toggleArrowImage(multiSelect.querySelector('.arrowimage'));
@@ -518,46 +592,60 @@ export function applyLoanFormClick(mainContainer) {
       }
 
       const branchArrowImg = mainContainer.querySelector('#branchparent .arrowimage');
-      stateparent.addEventListener('click', function (event) {
-        branchcontainer.style.visibility = 'hidden';
-        branchArrowImg.classList.remove('inverted');
-        isBranchContainerVisible = false;
+      if (hasStateControls) {
+        stateparent.addEventListener('click', function (event) {
+          if (hasBranchControls) {
+            branchcontainer.style.visibility = 'hidden';
+            toggleArrowImage(branchArrowImg);
+            isBranchContainerVisible = false;
+          }
 
-        toggleOptionSelect(statecontainer);
-        toggleArrowImage(this.querySelector('.arrowimage'));
-        isStateContainerVisible = !isStateContainerVisible;
+          toggleOptionSelect(statecontainer);
+          toggleArrowImage(this.querySelector('.arrowimage'));
+          isStateContainerVisible = !isStateContainerVisible;
 
-        event.stopPropagation();
-      });
+          event.stopPropagation();
+        });
+      }
 
       const stateArrowImg = mainContainer.querySelector('#stateparent .arrowimage');
-      branchparent.addEventListener('click', function (event) {
-        statecontainer.style.visibility = 'hidden';
-        stateArrowImg.classList.remove('inverted');
-        isStateContainerVisible = false;
+      if (hasBranchControls) {
+        branchparent.addEventListener('click', function (event) {
+          if (hasStateControls) {
+            statecontainer.style.visibility = 'hidden';
+            toggleArrowImage(stateArrowImg);
+            isStateContainerVisible = false;
+          }
 
-        toggleOptionSelect(branchcontainer);
-        toggleArrowImage(this.querySelector('.arrowimage'));
-        isBranchContainerVisible = !isBranchContainerVisible;
+          toggleOptionSelect(branchcontainer);
+          toggleArrowImage(this.querySelector('.arrowimage'));
+          isBranchContainerVisible = !isBranchContainerVisible;
 
-        event.stopPropagation();
-      });
+          event.stopPropagation();
+        });
+      }
 
-      multiSelect.addEventListener('click', function (event) {
-        branchcontainer.style.visibility = 'hidden';
-        branchArrowImg.classList.remove('inverted');
-        isBranchContainerVisible = false;
+      if (hasLoanControls) {
+        multiSelect.addEventListener('click', function (event) {
+          if (hasBranchControls) {
+            branchcontainer.style.visibility = 'hidden';
+            toggleArrowImage(branchArrowImg);
+            isBranchContainerVisible = false;
+          }
 
-        statecontainer.style.visibility = 'hidden';
-        stateArrowImg.classList.remove('inverted');
-        isStateContainerVisible = false;
+          if (hasStateControls) {
+            statecontainer.style.visibility = 'hidden';
+            toggleArrowImage(stateArrowImg);
+            isStateContainerVisible = false;
+          }
 
-        const optionFormParent = this.nextElementSibling;
-        toggleOptionForm(optionFormParent);
-        toggleArrowImage(this.querySelector('.arrowimage'));
-        isLoanContainerVisible = !isLoanContainerVisible;
-        event.stopPropagation();
-      });
+          const optionFormParent = this.nextElementSibling;
+          toggleOptionForm(optionFormParent);
+          toggleArrowImage(this.querySelector('.arrowimage'));
+          isLoanContainerVisible = !isLoanContainerVisible;
+          event.stopPropagation();
+        });
+      }
     } else {
       console.warn('applyLoanFormClick: dropdown elements missing in DOM, skipping dropdown listener binding');
     }
@@ -565,15 +653,17 @@ export function applyLoanFormClick(mainContainer) {
     const checkbox = mainContainer.querySelector('#loanformcheck');
     const circle = mainContainer.querySelector('.circle');
 
-    checkbox.addEventListener('change', function () {
-      if (this.checked) {
-        circle.classList.add('movecircle');
-        circle.classList.remove('animate');
-      } else {
-        circle.classList.remove('movecircle');
-        circle.classList.add('animate');
-      }
-    });
+    if (checkbox && circle) {
+      checkbox.addEventListener('change', function () {
+        if (this.checked) {
+          circle.classList.add('movecircle');
+          circle.classList.remove('animate');
+        } else {
+          circle.classList.remove('movecircle');
+          circle.classList.add('animate');
+        }
+      });
+    }
 
     function resetLoanForm() {
       const applyloanform = mainContainer.querySelector('.applyloanform');
@@ -586,6 +676,7 @@ export function applyLoanFormClick(mainContainer) {
       const inputs = [loanProduct(), formLoanAmt(), cutomerName(), cutomerIncome(), formDobInput(), stateInput(), branchInput(), cutomerNo()];
 
       inputs.forEach((i) => (i.value = ''));
+      resetLoanTypeDropdownState();
 
       formTc().checked = false;
       mainContainer.querySelector('#radio-salary').checked = true;

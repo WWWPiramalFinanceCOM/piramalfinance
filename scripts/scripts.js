@@ -751,18 +751,21 @@ function handleFormSubmit(buttonElement) {
 
 // Run logic
 
-function autoloadForm(doc) {
-  doc.querySelectorAll('a').forEach((anchor) => {
-    if (anchor.href && anchor.href.includes('/leadform/')) {
-      anchor.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const {onCLickApplyFormOpen} = await import('../blocks/applyloanform/applyloanforms.js');
-        onCLickApplyFormOpen(e);
-        // document.querySelector('.expert.orangeexpert').click();
-      })
+function autoloadForm(element) {
+  // Lazy-open form for /leadform/ links
+  element.addEventListener('click', async (e) => {
+    const anchor = e.target.closest('a');
+    if (anchor && anchor.href && anchor.href.includes('/leadform/')) {
+      e.preventDefault();
+      const { onCLickApplyFormOpen } = await import('../blocks/applyloanform/applyloanforms.js');
+      // debugger;
+      //  document.querySelector("div.homeloancalculator > div.calculator-parent > div > div > div.customerbuttons > a:nth-child(2) > button").click();
+      onCLickApplyFormOpen(e);
     }
   });
 }
+
+
 
 
 async function loadLazy(doc) {

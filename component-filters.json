@@ -114,8 +114,18 @@
       "banner-carousel",
       "banner-slider",
       "testimonies",
+      "calculator",
+      "calculator-radio",
       "searchunclaimeddividend"
     ]
+  },
+  {
+    "id": "calculator",
+    "components": ["calculator-item"]
+  },
+  {
+    "id": "calculator-radio",
+    "components": ["calculator-radio-item"]
   },
   {
     "id": "cards",

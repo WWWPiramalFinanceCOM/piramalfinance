@@ -1,5 +1,6 @@
 import { currenyCommaSeperation } from '../../scripts/common.js';
 import { resetCalculator } from './resetCalculator.js';
+import { workflowHomeLoanCalculation } from './calhelpers.js';
 
 /* document.addEventListener("DOMContentLoaded", function () {
   homeLoanCalcFunc();
@@ -198,6 +199,13 @@ export function homeLoanCalcFunc(currentSection) {
     myRangeSlider.addEventListener('input', () => {
       updateInputValue();
       sliderValue.value = formatIndianNumber(myRangeSlider.value);
+
+      // Trigger calculation on slider drag
+      const calcPanel = myRangeSlider.closest('.commoncalculator');
+      if (calcPanel) {
+        const calcType = calcPanel.classList.contains('eligibilitycalculator') ? 'eligibility' : 'emi';
+        workflowHomeLoanCalculation(calcPanel, calcType);
+      }
     });
 
     sliderValue.addEventListener('focusout', function () {

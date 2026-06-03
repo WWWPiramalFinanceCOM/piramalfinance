@@ -58,6 +58,7 @@
   max-width: 1240px;
   min-height: 500px;
   padding: 56px 24px 78px;
+  padding-top:unset;
 }
 
 /* Step 1 placement variants: content on left (default) or right */

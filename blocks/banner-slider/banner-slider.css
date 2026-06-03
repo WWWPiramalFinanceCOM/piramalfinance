@@ -444,22 +444,6 @@
   object-fit: contain;
 }
 
-.banner-slider-slide.media-pos-left .banner-slider-copy {
-  order: 2;
-}
-
-.banner-slider-slide.media-pos-left .banner-slider-media {
-  order: 1;
-}
-
-.banner-slider-slide.media-pos-right .banner-slider-copy {
-  order: 1;
-}
-
-.banner-slider-slide.media-pos-right .banner-slider-media {
-  order: 2;
-}
-
 .banner-slider-slide.media-pos-left .banner-slider-media picture,
 .banner-slider-slide.media-pos-left .banner-slider-media img {
   margin-left: 0;
@@ -476,6 +460,22 @@
   .banner-slider-content {
     min-height: 529px;
     padding-bottom: 0;
+  }
+
+  .banner-slider-slide.media-pos-left .banner-slider-copy {
+    order: 2;
+  }
+
+  .banner-slider-slide.media-pos-left .banner-slider-media {
+    order: 1;
+  }
+
+  .banner-slider-slide.media-pos-right .banner-slider-copy {
+    order: 1;
+  }
+
+  .banner-slider-slide.media-pos-right .banner-slider-media {
+    order: 2;
   }
 
   .banner-slider-media {
@@ -524,6 +524,14 @@
     min-height: 0;
     padding-bottom: 104px;
     padding-top: 40px;
+  }
+
+  .banner-slider-slide.media-pos-left .banner-slider-media {
+    justify-self: start;
+  }
+
+  .banner-slider-slide.media-pos-right .banner-slider-media {
+    justify-self: end;
   }
 
   .banner-slider-title :where(h1, h2, h3, h4, h5, h6) {
@@ -609,6 +617,28 @@
     position: absolute;
     right: 0;
     /* width: min(44vw, 172px); */
+  }
+
+  .banner-slider-stage .banner-slider-track .banner-slider-slide.media-pos-left .banner-slider-media,
+  .banner-slider-stage .banner-slider-track .banner-slider-slide.media-pos-right .banner-slider-media {
+    display: flex;
+    inset-inline: 0;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .banner-slider-stage .banner-slider-track .banner-slider-slide.media-pos-left .banner-slider-media {
+    justify-content: flex-start;
+  }
+
+  .banner-slider-stage .banner-slider-track .banner-slider-slide.media-pos-left .banner-slider-media {
+    left: 0;
+    right: auto;
+  }
+
+  .banner-slider-stage .banner-slider-track .banner-slider-slide.media-pos-right .banner-slider-media {
+    left: auto;
+    right: 0;
   }
 
   .banner-slider-stage .banner-slider-track .banner-slider-slide .banner-slider-media picture,

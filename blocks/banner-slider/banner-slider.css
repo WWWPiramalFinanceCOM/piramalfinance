@@ -15,6 +15,7 @@
 .banner-slider-slide {
   inset: 0;
   opacity: 0;
+  overflow: hidden;
   pointer-events: none;
   position: absolute;
   transition: opacity 0.45s ease;
@@ -35,11 +36,50 @@
   background-repeat: no-repeat;
   background-size: contain;
   min-height: 529px;
+  position: relative;
+  z-index: 1;
+}
+
+.banner-slider.block .banner-slider-bg {
+  background-color: var(--banner-slider-bg-color, #dff1fb);
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.banner-slider.block .banner-slider-bg picture,
+.banner-slider.block .banner-slider-bg-img {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.banner-slider.block .banner-slider-bg-img {
+  object-fit: contain;
+  object-position: center right;
+}
+
+.banner-slider.block .banner-slider-slide.has-bg-media .banner-slider-surface {
+  background-color: transparent;
+  background-image: none;
 }
 
 .banner-slider-slide--bg-cover .banner-slider-surface {
   background-position: center center;
   background-size: cover;
+}
+
+.banner-slider.block .banner-slider-slide--bg-cover .banner-slider-bg-img {
+  object-fit: cover;
+  object-position: center center;
+}
+
+@media (width >= 992px) {
+  .banner-slider.block .banner-slider-slide--bg-color-image .banner-slider-bg-img {
+    object-fit: cover;
+    object-position: center center;
+  }
 }
 
 @media (width >= 992px) {
@@ -513,6 +553,11 @@
     background-image: var(--banner-slider-mobile-bg-image, var(--banner-slider-bg-image));
     background-position: center;
     background-size: cover;
+  }
+
+  .banner-slider.block .banner-slider-bg-img {
+    object-fit: cover;
+    object-position: center;
   }
 
   .banner-slider-slide[style*='--banner-slider-bg-image'][style*='--banner-slider-bg-color'] .banner-slider-surface {

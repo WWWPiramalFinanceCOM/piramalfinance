@@ -13,18 +13,59 @@ function isImageLike(value = '') {
   return value.includes('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(value);
 }
 
-function createPicture(src, alt = '') {
+function createPicture(src, alt = '', options = {}) {
   if (!src) {
     return '';
   }
+
+  const {
+    className = '',
+    fetchPriority,
+    loading = 'lazy',
+  } = options;
 
   const picture = document.createElement('picture');
   const img = document.createElement('img');
   img.src = src;
   img.alt = alt;
-  img.loading = 'lazy';
+  img.loading = loading;
+  img.decoding = 'async';
+  if (className) {
+    img.className = className;
+  }
+  if (fetchPriority) {
+    img.setAttribute('fetchpriority', fetchPriority);
+  }
   picture.replaceChildren(img);
   return picture.outerHTML;
+}
+
+function escapeAttribute(value = '') {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function createBackgroundMedia(desktopSrc, mobileSrc, isInitiallyActive) {
+  const desktop = (desktopSrc || '').trim();
+  const mobile = (mobileSrc || '').trim();
+  if (!desktop && !mobile) {
+    return '';
+  }
+
+  const fallbackSrc = desktop || mobile;
+  const sourceMarkup = mobile ? `<source media="(max-width: 991px)" srcset="${escapeAttribute(mobile)}">` : '';
+  const loading = isInitiallyActive ? 'eager' : 'lazy';
+  const fetchPriority = isInitiallyActive ? 'high' : 'low';
+
+  return `
+    <picture>
+      ${sourceMarkup}
+      <img class="banner-slider-bg-img" src="${escapeAttribute(fallbackSrc)}" alt="" loading="${loading}" decoding="async" fetchpriority="${fetchPriority}">
+    </picture>
+  `;
 }
 
 function imageSources(cell) {
@@ -510,6 +551,7 @@ function createSlide(row, index) {
     mobileBackground,
     foreground,
   } = resolveImageAssets(rightSources);
+  const hasBackgroundMedia = !!(desktopBackground || mobileBackground);
 
   const titleCell = leftSlots[0] || null;
   const descriptionCell = leftSlots[1] || null;
@@ -597,6 +639,9 @@ function createSlide(row, index) {
   if (ctaOpensLoanForm) {
     slide.classList.add('open-form-on-click');
   }
+  if (hasBackgroundMedia) {
+    slide.classList.add('has-bg-media');
+  }
   placementClasses.forEach((name) => slide.classList.add(name));
   slide.dataset.slideIndex = `${index}`;
 
@@ -606,19 +651,19 @@ function createSlide(row, index) {
     : slotMeta.find((item) => item.isHex);
   const bgColor = bgColorSlot?.text.match(/#[0-9a-f]{3,8}/i)?.[0];
   if (bgColor) {
-    slide.style.setProperty('--banner-slider-bg-color', bgColor);
+    slide.dataset.bgColor = bgColor;
   }
-  if (desktopBackground) {
-    slide.style.setProperty('--banner-slider-bg-image', `url("${desktopBackground}")`);
-  }
-  if (mobileBackground) {
-    slide.style.setProperty('--banner-slider-mobile-bg-image', `url("${mobileBackground}")`);
+  if (bgColor && hasBackgroundMedia) {
+    slide.classList.add('banner-slider-slide--bg-color-image');
   }
   if (!bgColor && desktopBackground) {
     slide.classList.add('banner-slider-slide--bg-cover');
   }
 
   slide.innerHTML = `
+    <div class="banner-slider-bg">
+      ${createBackgroundMedia(desktopBackground, mobileBackground, index === 0)}
+    </div>
     <div class="banner-slider-surface">
       <div class="banner-slider-content">
         <div class="banner-slider-copy">
@@ -630,7 +675,7 @@ function createSlide(row, index) {
             ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
           </div>
         </div>
-        <div class="banner-slider-media">${foreground ? createPicture(foreground, '') : ''}</div>
+        <div class="banner-slider-media">${foreground ? createPicture(foreground, '', { loading: index === 0 ? 'eager' : 'lazy', fetchPriority: index === 0 ? 'high' : 'low' }) : ''}</div>
       </div>
     </div>
   `;
@@ -662,10 +707,29 @@ export default function decorate(block) {
     track.appendChild(slide);
   });
 
+  const bgColorRules = slides
+    .map((slide) => {
+      const slideIndex = slide.dataset.slideIndex;
+      const bgColor = slide.dataset.bgColor;
+      if (!slideIndex || !bgColor) {
+        return '';
+      }
+
+      return `.banner-slider.block .banner-slider-slide[data-slide-index="${slideIndex}"] .banner-slider-bg { background-color: ${bgColor}; }`;
+    })
+    .filter(Boolean)
+    .join('\n');
+
+  const bgColorStyle = document.createElement('style');
+  bgColorStyle.className = 'banner-slider-bg-colors';
+  if (bgColorRules) {
+    bgColorStyle.textContent = bgColorRules;
+  }
+
   block.textContent = '';
   block.classList.add('banner-slider', 'banner-slider--ready');
   stage.replaceChildren(track, dots);
-  block.replaceChildren(stage);
+  block.replaceChildren(stage, bgColorStyle);
 
   const ctaAnchors = [...block.querySelectorAll('.banner-slider-cta .button.primary')];
   ctaAnchors.forEach((anchor) => {

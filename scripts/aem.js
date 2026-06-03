@@ -343,7 +343,7 @@ function createOptimizedPicture(
     src,
     alt = '',
     eager = false,
-    breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
+    breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '800' }],
 ) {
     const url = new URL(src, window.location.href);
     const picture = document.createElement('picture');
@@ -384,10 +384,10 @@ function createOptimizedPicture(
 function decorateTemplateAndTheme() {
     const addClasses = (element, classes) => {
         classes.split(',').forEach((c) => {
-          const className = toClassName(c.trim());
-      if (className) {
-        element.classList.add(className);
-      }
+            const className = toClassName(c.trim());
+            if (className) {
+                element.classList.add(className);
+            }
         });
     };
     const template = getMetadata('template');
@@ -467,30 +467,30 @@ export function autoLinkLangPaths(anchors) {
 }
 export function autoLinkLangPath(anchor) {
     try {
-        if(anchor.href){
+        if (anchor.href) {
             addRefAttribute(anchor);
             const anchorUrl = new URL(anchor.href);
             const currentUrl = new URL(window.location.href);
             const langPath = getMetadata('lang-path');
-    
+
             const excludedPaths = [
                 '/hi/', '/mr/', '/gu/', '/te/', '/ta/',
                 '/ml/', '/kn/', '/content/', '/account/',
                 '/customer-service/', '/neeyat'
             ];
-    
+
             const excludedTexts = [
                 'english', 'हिन्दी', 'ગુજરાતી', 'मराठी',
                 'தமிழ்', 'മലയാളം', 'ಕನ್ನಡ', 'తెలుగు'
             ];
-    
+
             const anchorText = anchor.textContent.trim().toLowerCase();
-    
+
             const isSameOrigin = anchorUrl.origin === currentUrl.origin;
             const isLocalPath = anchorUrl.pathname.startsWith('/');
             const isExcludedPath = excludedPaths.some(path => anchorUrl.pathname.includes(path));
             const isExcludedText = excludedTexts.includes(anchorText);
-    
+
             let newHref = anchor.href;
             if (isSameOrigin && isLocalPath && !isExcludedPath && !isExcludedText) {
                 if (newHref.includes('#')) {
@@ -500,15 +500,15 @@ export function autoLinkLangPath(anchor) {
                     newHref = langPath + anchorUrl.pathname + anchorUrl.search;
                 }
             } else if (isExcludedText) {
-                const pathSegments = (langPath && currentUrl.pathname.startsWith(langPath)) ? currentUrl.pathname.split('/').slice(2) :  currentUrl.pathname.split('/').slice(1);
+                const pathSegments = (langPath && currentUrl.pathname.startsWith(langPath)) ? currentUrl.pathname.split('/').slice(2) : currentUrl.pathname.split('/').slice(1);
                 if (pathSegments.length > 1) {
-                    newHref = anchorUrl.pathname  + '/' + pathSegments.join('/') + anchorUrl.search;
+                    newHref = anchorUrl.pathname + '/' + pathSegments.join('/') + anchorUrl.search;
                 } else {
                     newHref = langPath
-                        ? anchorUrl.pathname.split('/').slice(0, -1).join('/') + '/'+ currentUrl.pathname.split('/').slice(2).join('/') + anchorUrl.search
+                        ? anchorUrl.pathname.split('/').slice(0, -1).join('/') + '/' + currentUrl.pathname.split('/').slice(2).join('/') + anchorUrl.search
                         : anchorUrl.pathname.split('/').slice(0, -1).join('/') + currentUrl.pathname + anchorUrl.search;
                 }
-                newHref = newHref.replaceAll('//' , '/');
+                newHref = newHref.replaceAll('//', '/');
             }
             anchor.href = newHref;
         }
@@ -526,7 +526,7 @@ function decorateButtons(element) {
         a.title = a.title || a.textContent;
 
         // Clean Rel from href
-        
+
         autoLinkLangPath(a);
 
         if (a.href !== a.textContent) {
@@ -591,9 +591,7 @@ function decorateIcon(span, prefix = '', alt = '') {
     img.dataset.iconName = iconName;
     img.src = `${window.hlx.codeBasePath}${prefix}/icons/${iconName}.svg`;
     // Fix WCAG 1.1.1: Generate alt text for logo icons only, empty for decorative
-    if (alt) {
-        img.alt = alt;
-    } else if (iconName.endsWith('-logo') || iconName.includes('logo-')) {
+    if (iconName.endsWith('-logo') || iconName.includes('logo-')) {
         // Only actual logo icons need meaningful alt text (e.g., footer-piramal-finance-logo, piramal-logo-02)
         const cleanName = iconName
             .replace(/^(footer|header|nav)-/, '') // Remove positional prefixes
@@ -602,8 +600,6 @@ function decorateIcon(span, prefix = '', alt = '') {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
         img.alt = cleanName;
-    } else {
-        img.alt = '';
     }
     img.loading = 'lazy';
     span.append(img);
@@ -643,7 +639,7 @@ function decorateSections(main) {
             section.classList.add('section');
             section.dataset.sectionStatus = 'initialized';
             section.style.display = 'none';
-    
+
             // Process section metadata
             const sectionMeta = section.querySelector('div.section-metadata');
             if (sectionMeta) {
@@ -655,7 +651,7 @@ function decorateSections(main) {
                             .filter((style) => style)
                             .map((style) => toClassName(style.trim()))
                             .filter((style) => style);
-                        styles.forEach((style) => {if (style) section.classList.add(style)});
+                        styles.forEach((style) => { if (style) section.classList.add(style) });
                     } else {
                         section.dataset[toCamelCase(key)] = meta[key];
                     }
@@ -664,7 +660,7 @@ function decorateSections(main) {
             }
         });
     } catch (error) {
-        console.log("block got::", error,"::::",main)
+        console.log("block got::", error, "::::", main)
     }
 }
 
@@ -765,14 +761,15 @@ function buildBlock(blockName, content) {
  * @param {Element} block The block element
  */
 export function getExtension(type) {
-    const isMinify = getMetadata('minify') === 'true'
-    // const isMinify = false
+    let isMinify = getMetadata('minify') === 'true'
+    // isMinify = false
     if (type === 'js') {
         return isMinify ? `.min.${extJs}` : `.${extJs}`;
     } else if (type === 'css') {
         return isMinify ? `.min.${extCss}` : `.${extCss}`;
     }
 }
+
 
 
 /**
@@ -785,7 +782,7 @@ async function loadBlock(block) {
         block.dataset.blockStatus = 'loading';
         const { blockName } = block.dataset;
         try {
-            if(!blockName) {throw Error(`Block Name is ${blockName}`)}
+            if (!blockName) { throw Error(`Block Name is ${blockName}`) }
             const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}${getExtension('css')}`);
             const decorationComplete = new Promise((resolve) => {
                 (async () => {
@@ -824,6 +821,37 @@ async function loadBlocks(main) {
         // eslint-disable-next-line no-await-in-loop
         await loadBlock(blocks[i]);
         updateSectionsStatus(main);
+    }
+}
+
+async function loadSection(section, loadCallback) {
+    const status = section.dataset.sectionStatus;
+    if (!status || status === 'initialized') {
+        section.dataset.sectionStatus = 'loading';
+        const blocks = [...section.querySelectorAll('div.block')];
+        for (let i = 0; i < blocks.length; i += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            await loadBlock(blocks[i]);
+        }
+        if (loadCallback) await loadCallback(section);
+        section.dataset.sectionStatus = 'loaded';
+        section.style.display = null;
+    }
+}
+
+/**
+ * Loads all sections.
+ * @param {Element} element The parent element of sections to load
+ */
+
+async function loadSections(element) {
+    const sections = [...element.querySelectorAll('div.section')];
+    for (let i = 0; i < sections.length; i += 1) {
+        // eslint-disable-next-line no-await-in-loop
+        await loadSection(sections[i]);
+        if (i === 0 && sampleRUM.enhance) {
+            sampleRUM.enhance();
+        }
     }
 }
 
@@ -879,6 +907,39 @@ async function loadFooter(footer) {
     return loadBlock(footerBlock);
 }
 
+async function waitForFirstImage(section) {
+    const lcpCandidate = section.querySelector('img');
+    if (lcpCandidate) {
+        // Check if image is in the first fold (viewport)
+        const rect = lcpCandidate.getBoundingClientRect();
+        const isInFirstFold = rect.top < window.innerHeight && rect.top >= 0;
+        if (isInFirstFold) {
+            // Add fetchpriority to the img tag
+            lcpCandidate.setAttribute('fetchpriority', 'high');
+            lcpCandidate.setAttribute('loading', 'eager');
+            // Get parent element to find sibling source tags
+            const parent = lcpCandidate.parentElement;
+            if (parent) {
+                // Find all sibling source tags
+                const sourceTags = parent.querySelectorAll('source');
+                // Add fetchpriority to all source siblings
+                sourceTags.forEach((source) => {
+                    source.setAttribute('fetchpriority', 'high');
+                });
+            }
+            // Wait for image to load
+            await new Promise((resolve) => {
+                if (!lcpCandidate.complete) {
+                    lcpCandidate.addEventListener('load', resolve);
+                    lcpCandidate.addEventListener('error', resolve);
+                } else {
+                    resolve();
+                }
+            });
+        }
+    }
+}
+
 /**
  * Load LCP block and/or wait for LCP in default content.
  * @param {Array} lcpBlocks Array of blocks
@@ -917,6 +978,8 @@ export {
     getMetadata,
     loadBlock,
     loadBlocks,
+    loadSection,
+    loadSections,
     loadCSS,
     loadFooter,
     loadHeader,
@@ -929,4 +992,5 @@ export {
     updateSectionsStatus,
     waitForLCP,
     wrapTextNodes,
+    waitForFirstImage
 };

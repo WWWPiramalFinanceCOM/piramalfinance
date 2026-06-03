@@ -27,7 +27,9 @@
       "rte",
       "imgwithlink",
       "carousel",
+      "banner-carousel",
       "teaser",
+      "banner-teaser",
       "tab-container",
       "tabs",
       "detailed-teaser",
@@ -65,7 +67,9 @@
       "schema-tag",
       "offer-documents",
       "carousel",
+      "banner-carousel",
       "teaser",
+      "banner-teaser",
       "tab-link",
       "tab-name",
       "tab-name-nested",
@@ -111,9 +115,12 @@
       "branchcarousel",
       "branchkeyfeatures",
       "branches",
+<<<<<<< HEAD
       "banner-carousel",
       "banner-slider",
       "testimonies",
+=======
+>>>>>>> a28057454d82505b84cf71da689fe15820d8fa46
       "searchunclaimeddividend"
     ]
   },
@@ -135,6 +142,27 @@
       "hero",
       "teaser",
       "detailed-teaser"
+    ]
+  },
+  {
+    "id": "banner-carousel",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title",
+      "hero",
+      "banner-teaser",
+      "detailed-teaser"
+    ]
+  },
+  {
+    "id": "banner-teaser",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title"
     ]
   },
   {

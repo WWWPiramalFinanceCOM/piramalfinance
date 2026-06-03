@@ -1,13 +1,13 @@
 import { targetObject } from '../../scripts/scripts.js';
 import { body, createCarousle } from '../../scripts/common.js';
-import { applyLoanFormClick, formOpen } from '../applyloanform/applyloanforms.js';
-import { buttonCLick } from '../applyloanform/loanformapi.js';
-import { loanutmForm } from '../applyloanform/loanutm.js';
-import { stateMasterApi, statemasterGetStatesApi } from '../applyloanform/statemasterapi.js';
-import { validationJSFunc } from '../applyloanform/validation.js';
+// import { applyLoanFormClick, formOpen } from '../applyloanform/applyloanforms.js';
+// import { buttonCLick } from '../applyloanform/loanformapi.js';
+// import { loanutmForm } from '../applyloanform/loanutm.js';
+// import { stateMasterApi, statemasterGetStatesApi } from '../applyloanform/statemasterapi.js';
+// import { validationJSFunc } from '../applyloanform/validation.js';
 import { generateDetailedTeaserDOM } from '../detailed-teaser/detailed-teaser.js';
 import { generateTeaserDOM } from '../teaser/teaser.js';
-import gliderMin from './glider.js';
+// import gliderMin from './glider.js';
 
 const carouselContainerMapping = {};
 carouselContainerMapping['detailed-teaser'] = generateDetailedTeaserDOM;

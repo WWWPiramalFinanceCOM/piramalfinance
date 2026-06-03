@@ -133,6 +133,11 @@
     height: max-content;
     object-fit: cover;
   }
+
+  .teaser.block > .background .front-picture img {
+    max-width: 100%;
+    height: auto;
+  }
   
   /* ----- TABLET ----- */
   @media (min-width: 600px) {

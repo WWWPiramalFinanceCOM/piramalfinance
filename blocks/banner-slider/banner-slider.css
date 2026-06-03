@@ -444,6 +444,34 @@
   object-fit: contain;
 }
 
+.banner-slider-slide.media-pos-left .banner-slider-copy {
+  order: 2;
+}
+
+.banner-slider-slide.media-pos-left .banner-slider-media {
+  order: 1;
+}
+
+.banner-slider-slide.media-pos-right .banner-slider-copy {
+  order: 1;
+}
+
+.banner-slider-slide.media-pos-right .banner-slider-media {
+  order: 2;
+}
+
+.banner-slider-slide.media-pos-left .banner-slider-media picture,
+.banner-slider-slide.media-pos-left .banner-slider-media img {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.banner-slider-slide.media-pos-right .banner-slider-media picture,
+.banner-slider-slide.media-pos-right .banner-slider-media img {
+  margin-left: auto;
+  margin-right: 0;
+}
+
 @media (width >= 992px) {
   .banner-slider-content {
     min-height: 529px;

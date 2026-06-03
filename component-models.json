@@ -3466,6 +3466,27 @@
         ]
       },
       {
+        "component": "select",
+        "name": "col1_imagePositionClass",
+        "value": "",
+        "label": "Col1 Image Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Left",
+            "value": "media-pos-left"
+          },
+          {
+            "name": "Right",
+            "value": "media-pos-right"
+          }
+        ]
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "col2_bgImage",

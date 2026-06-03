@@ -311,6 +311,8 @@ const SLIDE_PLACEMENT_CLASSES = new Set([
   'content-pos-left',
   'content-pos-right',
   'content-pos-top',
+  'media-pos-left',
+  'media-pos-right',
   'text-green',
   'green-text',
 ]);
@@ -340,6 +342,8 @@ const PLACEMENT_LABEL_TO_CLASS = {
   'content left': 'content-pos-left',
   'content right': 'content-pos-right',
   'content top': 'content-pos-top',
+  'media left': 'media-pos-left',
+  'media right': 'media-pos-right',
   'text green': 'text-green',
   'green text': 'green-text',
 };
@@ -368,9 +372,17 @@ function extractPlacementClassesFromSlot(slot) {
 }
 
 function reservedPlacementSlots(leftSlots) {
-  const trailingSlots = leftSlots.slice(-2);
-  const reservedSlots = trailingSlots.filter((slot) => extractPlacementClassesFromSlot(slot).length > 0);
-  if (reservedSlots.length === 2) {
+  const reservedSlots = [];
+  for (let index = leftSlots.length - 1; index >= 0; index -= 1) {
+    const slot = leftSlots[index];
+    if (extractPlacementClassesFromSlot(slot).length === 0) {
+      break;
+    }
+
+    reservedSlots.unshift(slot);
+  }
+
+  if (reservedSlots.length > 0) {
     return reservedSlots;
   }
 

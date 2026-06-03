@@ -1,4 +1,58 @@
-@import url(investor/investor.css);
+@font-face {
+    font-family: Nunito-Extralight;
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+    src: url(/fonts/Nunito-ExtraLight.woff2) format("woff2")
+}
+
+@font-face {
+    font-family: Nunito-Light;
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+    src: url(/fonts/Nunito-Light.woff2) format("woff2")
+}
+
+@font-face {
+    font-family: Nunito-Regular;
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url(/fonts/NunitoRegular.woff2) format("woff2")
+}
+
+@font-face {
+    font-family: Nunito-Medium;
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url(/fonts/Nunito-Medium.woff2) format("woff2")
+}
+
+@font-face {
+    font-family: Nunito-Semibold;
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+    src: url(/fonts/Nunito-Semibold.woff2) format("woff2")
+}
+
+@font-face {
+    font-family: Nunito-Bold;
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url(/fonts/NunitoBold.woff2) format("woff2")
+}
+
+@font-face {
+    font-family: Nunito-Extrabold;
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+    src: url(/fonts/NunitoExtraBold.woff2) format("woff2")
+}
 
 html {
     scroll-behavior: smooth

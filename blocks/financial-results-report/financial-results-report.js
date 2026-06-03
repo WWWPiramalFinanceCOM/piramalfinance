@@ -5,6 +5,10 @@ import { fetchAPI, getProps } from '../../scripts/common.js';
 /**
  * Resolve API/asset URL - on non-publish environments, prepend AEM publish domain
  */
+/**
+ * Resolve API/asset URL - on non-publish environments, prepend AEM publish domain
+ */
+
 function resolveUrl(url) {
   if (!url) return url;
   if (url.startsWith('http')) return url;

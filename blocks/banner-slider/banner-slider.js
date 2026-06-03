@@ -618,7 +618,11 @@ function createSlide(row, index) {
   placementClasses.forEach((name) => slide.classList.add(name));
   slide.dataset.slideIndex = `${index}`;
 
-  const bgColor = (leftSlots[13]?.textContent || leftParagraphs[13]?.textContent || textOf(leftCell)).match(/#[0-9a-f]{3,8}/i)?.[0];
+  // Keep background color resilient to authored field order changes.
+  const bgColorSlot = ctaTextSlot
+    ? slotMeta.slice(ctaTextSlot.slotIndex + 1).find((item) => item.isHex)
+    : slotMeta.find((item) => item.isHex);
+  const bgColor = bgColorSlot?.text.match(/#[0-9a-f]{3,8}/i)?.[0];
   if (bgColor) {
     slide.style.setProperty('--banner-slider-bg-color', bgColor);
   }

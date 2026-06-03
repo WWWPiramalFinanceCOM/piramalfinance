@@ -74,7 +74,7 @@ function hrefFromParagraph(paragraph) {
   }
 
   const raw = paragraph.textContent?.trim() || '';
-  if (isLikelyUrl(raw) || raw.startsWith('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(raw)) {
+  if (isLikelyUrl(raw) || isImageLike(raw)) {
     return raw;
   }
 
@@ -277,6 +277,10 @@ function isAuthorEnvironment() {
   return hostname.includes('author') || pathname.includes('/editor.html/');
 }
 
+const AUTOPLAY_INTERVAL_MS = 2800;
+const SWIPE_INTENT_PX = 5;
+const SWIPE_TRIGGER_PX = 40;
+
 const SLIDE_PLACEMENT_CLASSES = new Set([
   'btn-pos-top-far-left',
   'btn-pos-top-left',
@@ -309,40 +313,6 @@ const SLIDE_PLACEMENT_CLASSES = new Set([
   'content-pos-top',
   'text-green',
   'green-text',
-]);
-
-const BUTTON_POSITION_CLASSES = new Set([
-  'btn-pos-top-far-left',
-  'btn-pos-top-left',
-  'btn-pos-top-mid-left',
-  'btn-pos-top-center',
-  'btn-pos-top-mid-right',
-  'btn-pos-top-right',
-  'btn-pos-middle-far-left',
-  'btn-pos-middle-left',
-  'btn-pos-middle-mid-left',
-  'btn-pos-middle-center',
-  'btn-pos-middle-mid-right',
-  'btn-pos-middle-right',
-  'btn-pos-bottom-far-left',
-  'btn-pos-bottom-left',
-  'btn-pos-bottom-mid-left',
-  'btn-pos-bottom-center',
-  'btn-pos-bottom-mid-right',
-  'btn-pos-bottom-right',
-  'btn-pos-top',
-  'btn-pos-bottom',
-  'btn-pos-left',
-  'btn-pos-right',
-]);
-
-const CONTENT_POSITION_CLASSES = new Set([
-  'content-pos-top-left',
-  'content-pos-top-center',
-  'content-pos-top-right',
-  'content-pos-left',
-  'content-pos-right',
-  'content-pos-top',
 ]);
 
 const PLACEMENT_LABEL_TO_CLASS = {
@@ -828,7 +798,7 @@ export default function decorate(block) {
 
     timerId = window.setInterval(() => {
       setActiveSlide(activeIndex + 1);
-    }, 2800);
+    }, AUTOPLAY_INTERVAL_MS);
   }
 
   function restartAutoplay() {
@@ -880,7 +850,7 @@ export default function decorate(block) {
 
     const dx = Math.abs(e.touches[0].clientX - touchStartX);
     const dy = Math.abs(e.touches[0].clientY - touchStartY);
-    if (dx > dy && dx > 5) {
+    if (dx > dy && dx > SWIPE_INTENT_PX) {
       touchMoved = true;
       e.preventDefault();
     }
@@ -894,7 +864,7 @@ export default function decorate(block) {
 
     if (!touchMoved) return;
     const deltaX = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(deltaX) > 40) {
+    if (Math.abs(deltaX) > SWIPE_TRIGGER_PX) {
       setActiveSlide(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
       restartAutoplay();
     }
@@ -919,7 +889,7 @@ export default function decorate(block) {
 
   stage.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
-    if (Math.abs(e.clientX - dragStartX) > 5) didDrag = true;
+    if (Math.abs(e.clientX - dragStartX) > SWIPE_INTENT_PX) didDrag = true;
   });
 
   stage.addEventListener('mouseup', (e) => {
@@ -928,7 +898,7 @@ export default function decorate(block) {
     isDragging = false;
     if (didDrag) {
       const deltaX = e.clientX - dragStartX;
-      if (Math.abs(deltaX) > 40) {
+      if (Math.abs(deltaX) > SWIPE_TRIGGER_PX) {
         setActiveSlide(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
         restartAutoplay();
       }

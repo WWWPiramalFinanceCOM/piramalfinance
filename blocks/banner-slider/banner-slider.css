@@ -444,6 +444,17 @@
   object-fit: contain;
 }
 
+@media (width >= 992px) {
+  .banner-slider-content {
+    min-height: 529px;
+    padding-bottom: 0;
+  }
+
+  .banner-slider-media {
+    align-self: end;
+  }
+}
+
 .banner-slider-dots {
   bottom: 24px;
   display: flex;

@@ -43,9 +43,6 @@ function extractRadioItems(block) {
   const radioItems = [];
   const rows = [...block.children];
 
-  // eslint-disable-next-line no-console
-  console.log('[calculator-radio] Total rows:', rows.length);
-
   rows.forEach((row, rowIdx) => {
     const cells = [...row.children];
     if (!cells || cells.length < 1) return;
@@ -144,9 +141,6 @@ function extractRadioItems(block) {
     if (!iconAlt) {
       iconAlt = tabLabel || foirType;
     }
-
-    // eslint-disable-next-line no-console
-    console.log(`[calculator-radio] Row ${rowIdx}: label="${tabLabel}", foirType="${foirType}", foirValue="${foirValue}"`);
 
     if (tabLabel || iconSrc) {
       radioItems.push({
@@ -407,14 +401,10 @@ export default async function decorate(block) {
     const firstRadio = block.querySelector('input[type="radio"][data-cal-foir]');
     if (firstRadio) {
       firstRadio.checked = true;
-      // eslint-disable-next-line no-console
-      console.log('[calculator-radio] First radio data-cal-foir:', firstRadio.dataset.calFoir);
     }
 
     // Read foirType directly from the DOM to be 100% sure
     const firstFoirType = firstRadio?.dataset?.calFoir || radioItems[0]?.foirType || 'salaried';
-    // eslint-disable-next-line no-console
-    console.log('[calculator-radio] Using firstFoirType:', firstFoirType, 'from radioItems:', radioItems[0]?.foirType);
 
     const SALARIED_BG = 'rgb(255, 247, 244)';
     const BUSINESS_BG = 'rgb(238, 243, 255)';
@@ -476,23 +466,12 @@ export default async function decorate(block) {
       foirType = checkedRadio.dataset.calFoir;
     }
 
-    // eslint-disable-next-line no-console
-    console.log('[calculator-radio] triggerInitialCalculation:', {
-      attempt,
-      hasCalculatorParent: !!calculatorParent,
-      hasRangeInput: !!rangeInput,
-      checkedRadioFoir: checkedRadio?.dataset?.calFoir,
-      foirType,
-    });
-
     const SALARIED_BG = 'rgb(255, 247, 244)';
     const BUSINESS_BG = 'rgb(238, 243, 255)';
     const correctBg = foirType === 'salaried' ? SALARIED_BG : BUSINESS_BG;
 
     if (calculatorParent) {
       calculatorParent.style.background = correctBg;
-      // eslint-disable-next-line no-console
-      console.log('[calculator-radio] Set calculator-parent background to:', correctBg);
     }
 
     // Check if calculator is ready (has range inputs)

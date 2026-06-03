@@ -108,15 +108,11 @@ export function initCalculatorTabs(section = null) {
   const root = section || document;
   const calcParent = root.querySelector('.calculator-parent');
   if (!calcParent) {
-    // eslint-disable-next-line no-console
-    console.warn('[calculator] initCalculatorTabs: No calculator-parent found in root:', root);
     return;
   }
 
   const headingtabs = calcParent.querySelector('.headingtabs');
   if (!headingtabs) {
-    // eslint-disable-next-line no-console
-    console.warn('[calculator] initCalculatorTabs: No .headingtabs found');
     return;
   }
 
@@ -124,8 +120,6 @@ export function initCalculatorTabs(section = null) {
   const calcBlocks = [...calcParent.querySelectorAll('.calctabs .commoncalculator')];
 
   if (!tabs.length) {
-    // eslint-disable-next-line no-console
-    console.warn('[calculator] initCalculatorTabs: No tabs found');
     return;
   }
 

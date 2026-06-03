@@ -374,15 +374,11 @@ export function calculatePartPayment(annualRate, principalOutstanding, tenureYea
  */
 export function getCalculatorInput(calculator, calType) {
   if (!calculator) {
-    // eslint-disable-next-line no-console
-    console.warn('[cal-helpers] getCalculatorInput: No calculator element provided');
     return null;
   }
 
   const section = calculator.closest('.homeloancalculator');
   if (!section) {
-    // eslint-disable-next-line no-console
-    console.warn('[cal-helpers] getCalculatorInput: No .homeloancalculator section found');
     return null;
   }
 
@@ -404,8 +400,7 @@ export function getCalculatorInput(calculator, calType) {
     loanType = checkedRadio.dataset.calFoir || 'salaried';
     foir = parseFloat(checkedRadio.value) || 65;
   } else if (calType === 'eligibility') {
-    // eslint-disable-next-line no-console
-    console.warn('[cal-helpers] getCalculatorInput: No radio found for eligibility calc, using defaults');
+    // use defaults for eligibility
   }
 
   const isBusinessTabActive = section.querySelector('.tab-eligibility-calc.active');
@@ -433,17 +428,6 @@ export function getCalculatorInput(calculator, calType) {
     foir = 50;
   }
 
-  // eslint-disable-next-line no-console
-  console.log('[cal-helpers] getCalculatorInput:', {
-    calType,
-    loanAmt,
-    roi,
-    tenure,
-    income,
-    foir,
-    loanType,
-  });
-
   return {
     income,
     otherLoan,
@@ -464,15 +448,9 @@ export function getCalculatorInput(calculator, calType) {
  * @param {object} resultObj - Result object with result, principalAmt, interestAmt
  */
 export function renderData(parentElement, resultObj) {
-  // eslint-disable-next-line no-console
-  console.log('[cal-helpers] renderData called with:', resultObj);
-
   const resultAmt = parentElement.querySelector('[data-cal-result=resultAmt]');
   const principalAmt = parentElement.querySelector('[data-cal-result=principalAmt]');
   const interestAmt = parentElement.querySelector('[data-cal-result=interestAmt]');
-
-  // eslint-disable-next-line no-console
-  console.log('[cal-helpers] renderData: Found elements - resultAmt:', !!resultAmt, 'principalAmt:', !!principalAmt, 'interestAmt:', !!interestAmt);
 
   if (resultAmt) {
     resultAmt.textContent = `₹${formatIndianNumber(resultObj.result || 0)}/-`;
@@ -493,13 +471,8 @@ export function renderData(parentElement, resultObj) {
  * @param {string} calType - 'emi' or 'eligibility'
  */
 export function workflowHomeLoanCalculation(currentCalculator, calType) {
-  // eslint-disable-next-line no-console
-  console.log('[cal-helpers] workflowHomeLoanCalculation called, calType:', calType);
-  
   const inputs = getCalculatorInput(currentCalculator, calType);
   if (!inputs) {
-    // eslint-disable-next-line no-console
-    console.warn('[cal-helpers] workflowHomeLoanCalculation: No inputs found');
     return;
   }
 
@@ -507,8 +480,6 @@ export function workflowHomeLoanCalculation(currentCalculator, calType) {
 
   if (calType === 'emi') {
     result = calculateEMI(inputs.loanAmt, inputs.roi, inputs.tenure);
-    // eslint-disable-next-line no-console
-    console.log('[cal-helpers] EMI calculation result:', result);
   } else {
     // Get product type
     const productTypeEl = document.querySelector('#calculator-product-type');

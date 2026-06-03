@@ -130,7 +130,7 @@ function triggerPartPaymentCalculation(calcPanel) {
     updatePartPayment(rate, principal, tenure, partPayments);
     
   } catch (error) {
-    console.warn('[calculator] Part payment calculation error:', error);
+    // silently handle
   }
 }
 
@@ -166,7 +166,7 @@ function resetAllPartPayments(calcPanel) {
         try {
           datePickerInstances.get(selector).destroy();
         } catch (e) {
-          console.warn('[calculator] Error destroying datepicker:', e);
+          // silently handle
         }
         datePickerInstances.delete(selector);
       }
@@ -205,14 +205,14 @@ function resetAllPartPayments(calcPanel) {
     try {
       firstLoanDatePicker.clear();
     } catch (e) {
-      console.warn('[calculator] Error clearing first loan datepicker:', e);
+      // silently handle
     }
   }
   if (partPayment1DatePicker) {
     try {
       partPayment1DatePicker.clear();
     } catch (e) {
-      console.warn('[calculator] Error clearing partpayment1 datepicker:', e);
+      // silently handle
     }
   }
   
@@ -301,7 +301,6 @@ async function initPartPaymentDatePicker(calcPanel) {
     const Popper = window.Popper;
     
     if (!AirDatepicker) {
-      console.error('[calculator] AirDatepicker not available after import');
       return;
     }
     
@@ -312,7 +311,6 @@ async function initPartPaymentDatePicker(calcPanel) {
     const boxCont = calcPanel.querySelector('.boxCont');
     
     if (!firstLoanInput) {
-      console.error('[calculator] First loan input not found');
       return;
     }
     
@@ -548,7 +546,7 @@ async function initPartPaymentDatePicker(calcPanel) {
     partPaymentDatePickerInitialized = true;
     
   } catch (error) {
-    console.error('[calculator] Failed to initialize Part Payment:', error);
+    // silently handle
   }
 }
 
@@ -889,8 +887,6 @@ function initSection(section, retryCount = 0) {
     if (retryCount < 30) {
       setTimeout(() => initSection(section, retryCount + 1), 100);
     } else {
-      // eslint-disable-next-line no-console
-      console.warn('[calculator] initSection: Max retries reached, proceeding anyway');
       // Proceed anyway after max retries
     }
     // Don't return - proceed even if not fully ready after max retries
@@ -1560,7 +1556,7 @@ export default async function decorate(block) {
       try {
         await initPartPaymentDatePicker(block);
       } catch (err) {
-        console.error('[calculator] Part Payment init error:', err);
+        // silently handle
       }
     }, 200);
   }

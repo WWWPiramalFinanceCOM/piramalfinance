@@ -9,8 +9,6 @@ import { generateDetailedTeaserDOM } from '../detailed-teaser/detailed-teaser.js
 import { generateTeaserDOM } from '../teaser/teaser.js';
 // import gliderMin from './glider.js';
 
-const isDesktop = window.matchMedia('(min-width: 900px)').matches;
-
 const carouselContainerMapping = {};
 carouselContainerMapping['detailed-teaser'] = generateDetailedTeaserDOM;
 carouselContainerMapping['ss-teaser'] = generateDetailedTeaserDOM;
@@ -49,7 +47,7 @@ export default function decorate(block) {
   } catch (error) {
     console.warn(error);
   }
-
+  
   // the panels container
   const panelContainer = document.createElement('div');
   panelContainer.classList.add('panel-container', 'carousel-inner');
@@ -86,7 +84,7 @@ export default function decorate(block) {
   // loop through all children blocks
   [...panels].forEach((panel, i) => {
     // generate the  panel
-    const [bannerImagebg, bannerImagebgMob, imagebg, image, classList, ...rest] = panel.children;
+    const [imagebg, image, classList, ...rest] = panel.children;
     const bgColorCode = rest[rest.length - 2].textContent.trim();
     const bgLinearGradientColor = rest[rest.length - 1].textContent.trim();
     const classesText = classList.textContent.trim();
@@ -111,14 +109,6 @@ export default function decorate(block) {
     classes.forEach((c) => panel.classList.add(c.trim()));
     panel.dataset.panel = `panel_${i}`;
     panel.append(generateOtherComponent);
-    if (bannerImagebg && isDesktop) {
-      const bannerImagebgSrc = bannerImagebg.querySelector('img')?.src;
-      panel.style.backgroundImage = bannerImagebgSrc ? `url(${bannerImagebgSrc})` : ''; 
-    }
-    if (bannerImagebgMob && !isDesktop) {
-      const bannerImagebgMobSrc = bannerImagebgMob.querySelector('img')?.src;
-      panel.style.backgroundImage = bannerImagebgMobSrc ? `url(${bannerImagebgMobSrc})` : '';
-    }
     bgColorCode ? (panel.style.backgroundColor = bgColorCode) : "";
     bgLinearGradientColor ? (panel.style.backgroundImage = bgLinearGradientColor) : "";
     panelContainer.append(panel);

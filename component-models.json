@@ -878,11 +878,14 @@
         "component": "text",
         "valueType": "string",
         "name": "previconAlt",
+        "value": "",
         "label": "Previous Icon Alt"
       },
       {
         "component": "reference",
         "valueType": "string",
+        "name": "nexticon",
+        "value": "",
         "label": "Next Icon"
       },
       {
@@ -1348,30 +1351,6 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "bannerImage",
-        "label": "Banner Background Image"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bannerImageAlt",
-        "label": "Banner Background Image Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "bannerImageMobile",
-        "label": "Mobile Banner Background Image"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "bannerImageMobileAlt",
-        "label": "Mobile Banner Background Image Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
         "name": "fileReference",
         "label": "Background Image",
         "description": "The teaser image, Background",
@@ -1476,7 +1455,7 @@
                 "name": "Button Bottom",
                 "value": "btn-bottom"
               },
-              {
+               {
                 "name": "Two Button Bottom",
                 "value": "two-btn-bottom"
               }
@@ -1606,10 +1585,6 @@
               {
                 "name": "personal-loan-branch-carousel",
                 "value": "personal-loan-branch-carousel"
-              },
-              {
-                "name": "gold-loan-branch-carousel",
-                "value": "gold-loan-branch-carousel"
               },
               {
                 "name": "gold-loan-branch-carousel",

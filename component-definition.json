@@ -1094,16 +1094,7 @@
                   "filter": "banner-slide",
                   "banner-slide": {
                     "name": "Banner Slide",
-                    "model": "banner-slide",
-                    "col1_title": "Banner Slider Title",
-                    "col1_description": "<p>Banner slider description</p>",
-                    "col1_cta": "Apply Now",
-                    "col1_ctaLink": "#",
-                    "col1_bgcolourText": "#dff1fb",
-                    "col1_shortDescription": "<p>Already Applied? <a href=\"#\">Track Application</a></p>",
-                    "col1_buttonPositionClass": "",
-                    "col1_contentPositionClass": "",
-                    "col2_bgImage": "/content/dam/default-teaser-banner.png"
+                    "model": "banner-slide"
                   }
                 }
               }

@@ -179,14 +179,6 @@ function isHashLink(value = '') {
   }
 }
 
-function isInteractiveElementTarget(target) {
-  if (!(target instanceof Element)) {
-    return false;
-  }
-
-  return !!target.closest('a, button, input, select, textarea, label, [role="button"], .banner-slider-cta, .button-container');
-}
-
 function attachLoanFormCloseFallback(scope) {
   const formNode = scope?.querySelector('.loan-form-sub-parent') || document.querySelector('.loan-form-sub-parent');
   if (!formNode || formNode.dataset.bannerSliderCloseFallbackBound === 'true') {
@@ -328,9 +320,7 @@ function isAuthorEnvironment() {
   return hostname.includes('author') || pathname.includes('/editor.html/');
 }
 
-const AUTOPLAY_INTERVAL_MS = 2800;
-const SWIPE_INTENT_PX = 5;
-const SWIPE_TRIGGER_PX = 40;
+const AUTOPLAY_INTERVAL_MS = 7000;
 
 const SLIDE_PLACEMENT_CLASSES = new Set([
   'btn-pos-top-far-left',
@@ -368,6 +358,8 @@ const SLIDE_PLACEMENT_CLASSES = new Set([
   'fg-md',
   'fg-lg',
   'fg-full',
+  'copy-w-50',
+  'copy-w-70',
   'text-green',
   'green-text',
 ]);
@@ -403,6 +395,8 @@ const PLACEMENT_LABEL_TO_CLASS = {
   'fg medium': 'fg-md',
   'fg large': 'fg-lg',
   'fg full': 'fg-full',
+  'copy narrow': 'copy-w-50',
+  'copy wide': 'copy-w-70',
   'text green': 'text-green',
   'green text': 'green-text',
 };
@@ -906,50 +900,57 @@ export default function decorate(block) {
     button.className = 'banner-slider-dot';
     button.setAttribute('aria-label', `Go to slide ${index + 1}`);
     button.addEventListener('click', () => {
-      setActiveSlide(index);
+      scrollToSlide(index);
       restartAutoplay();
     });
     dots.appendChild(button);
     return button;
   });
 
-  function normalizeIndex(index) {
-    return (index + slides.length) % slides.length;
+  function scrollToSlide(index) {
+    const slide = slides[index];
+    if (!slide) return;
+    track.scrollTo({ top: 0, left: slide.offsetLeft - track.offsetLeft, behavior: 'smooth' });
   }
 
-  function setActiveSlide(index) {
-    activeIndex = normalizeIndex(index);
-
+  function updateActiveDot(index) {
+    activeIndex = index;
     slides.forEach((slide, i) => {
       slide.classList.toggle('is-active', i === activeIndex);
-      slide.setAttribute('aria-hidden', i === activeIndex ? 'false' : 'true');
     });
-
     dotButtons.forEach((button, i) => {
       const isActive = i === activeIndex;
       button.classList.toggle('is-active', isActive);
       button.setAttribute('aria-current', isActive ? 'true' : 'false');
     });
-
-    track.style.transform = `translateX(-${activeIndex * 100}%)`;
   }
 
-  function stopAutoplay() {
-    if (!timerId) {
-      return;
-    }
+  // IntersectionObserver to detect which slide is visible (same as old carousel)
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const idx = slides.indexOf(entry.target);
+        if (idx >= 0) {
+          updateActiveDot(idx);
+        }
+      }
+    });
+  }, { threshold: 0.6, root: track });
 
+  slides.forEach((slide) => slideObserver.observe(slide));
+
+  function stopAutoplay() {
+    if (!timerId) return;
     window.clearInterval(timerId);
     timerId = null;
   }
 
   function startAutoplay() {
-    if (slides.length <= 1 || timerId || isPaused) {
-      return;
-    }
-
+    if (slides.length <= 1 || timerId || isPaused) return;
     timerId = window.setInterval(() => {
-      setActiveSlide(activeIndex + 1);
+      if (document.body.style.overflowY === 'hidden') return;
+      const nextIndex = (activeIndex + 1) % slides.length;
+      scrollToSlide(nextIndex);
     }, AUTOPLAY_INTERVAL_MS);
   }
 
@@ -977,127 +978,7 @@ export default function decorate(block) {
     }
   });
 
-  // Touch swipe support (mobile)
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchMoved = false;
-  let ignoreTouchSwipe = false;
-
-  stage.addEventListener('touchstart', (e) => {
-    ignoreTouchSwipe = isInteractiveElementTarget(e.target);
-    if (ignoreTouchSwipe) {
-      touchMoved = false;
-      return;
-    }
-
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-    touchMoved = false;
-  }, { passive: true });
-
-  stage.addEventListener('touchmove', (e) => {
-    if (ignoreTouchSwipe) {
-      return;
-    }
-
-    const dx = Math.abs(e.touches[0].clientX - touchStartX);
-    const dy = Math.abs(e.touches[0].clientY - touchStartY);
-    if (dx > dy && dx > SWIPE_INTENT_PX) {
-      touchMoved = true;
-      e.preventDefault();
-    }
-  }, { passive: false });
-
-  stage.addEventListener('touchend', (e) => {
-    if (ignoreTouchSwipe) {
-      ignoreTouchSwipe = false;
-      return;
-    }
-
-    if (!touchMoved) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(deltaX) > SWIPE_TRIGGER_PX) {
-      setActiveSlide(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
-      restartAutoplay();
-    }
-    touchMoved = false;
-  });
-
-  // Mouse drag support (desktop horizontal swipe)
-  let dragStartX = 0;
-  let isDragging = false;
-  let didDrag = false;
-
-  stage.addEventListener('mousedown', (e) => {
-    if (isInteractiveElementTarget(e.target)) {
-      return;
-    }
-
-    dragStartX = e.clientX;
-    isDragging = true;
-    didDrag = false;
-    stage.classList.add('is-dragging');
-  });
-
-  stage.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    if (Math.abs(e.clientX - dragStartX) > SWIPE_INTENT_PX) didDrag = true;
-  });
-
-  stage.addEventListener('mouseup', (e) => {
-    if (!isDragging) return;
-    stage.classList.remove('is-dragging');
-    isDragging = false;
-    if (didDrag) {
-      const deltaX = e.clientX - dragStartX;
-      if (Math.abs(deltaX) > SWIPE_TRIGGER_PX) {
-        setActiveSlide(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
-        restartAutoplay();
-      }
-    }
-    didDrag = false;
-  });
-
-  stage.addEventListener('mouseleave', () => {
-    if (isDragging) {
-      stage.classList.remove('is-dragging');
-      isDragging = false;
-      didDrag = false;
-    }
-  });
-
-  // Trackpad / mouse-wheel horizontal scroll support
-  // let wheelTimeout = null;
-  // let wheelAccumulatedX = 0;
-  // stage.addEventListener('wheel', (e) => {
-  //   const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-  //   if (!isHorizontal) return;
-  //   e.preventDefault();
-  //   wheelAccumulatedX += e.deltaX;
-  //   if (wheelTimeout) clearTimeout(wheelTimeout);
-  //   wheelTimeout = setTimeout(() => {
-  //     if (Math.abs(wheelAccumulatedX) > SWIPE_TRIGGER_PX) {
-  //       setActiveSlide(wheelAccumulatedX > 0 ? activeIndex + 1 : activeIndex - 1);
-  //       restartAutoplay();
-  //     }
-  //     wheelAccumulatedX = 0;
-  //     wheelTimeout = null;
-  //   }, 100);
-  // }, { passive: false });
-
-  // Prevent accidental click at end of drag
-  stage.addEventListener('click', (e) => {
-    if (isInteractiveElementTarget(e.target)) {
-      return;
-    }
-
-    if (didDrag) {
-      e.stopPropagation();
-      e.preventDefault();
-      didDrag = false;
-    }
-  }, true);
-
-  setActiveSlide(0);
+  // Initialize
+  updateActiveDot(0);
   startAutoplay();
 }

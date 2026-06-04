@@ -3924,15 +3924,7 @@
       {
         "component": "tab",
         "label": "2. Result Area",
-        "name": "resultsTab",
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
+        "name": "resultsTab"
       },
       {
         "component": "container",
@@ -4013,15 +4005,7 @@
       {
         "component": "tab",
         "label": "2. Part Payment Setup",
-        "name": "partPaymentTab",
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
+        "name": "partPaymentTab"
       },
       {
         "component": "container",

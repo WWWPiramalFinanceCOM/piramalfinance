@@ -121,27 +121,19 @@
   },
   {
     "id": "calculator",
-    "components": [
-      "calculator-item"
-    ]
+    "components": ["calculator-item"]
   },
   {
     "id": "calculator-radio",
-    "components": [
-      "calculator-radio-item"
-    ]
+    "components": ["calculator-radio-item"]
   },
   {
     "id": "cards",
-    "components": [
-      "card"
-    ]
+    "components": ["card"]
   },
   {
     "id": "boards",
-    "components": [
-      "board-item"
-    ]
+    "components": ["board-item"]
   },
   {
     "id": "carousel",
@@ -169,9 +161,7 @@
   },
   {
     "id": "tab-name",
-    "components": [
-      "tab-container"
-    ]
+    "components": ["tab-container"]
   },
   {
     "id": "tab",
@@ -190,54 +180,24 @@
   },
   {
     "id": "tabs",
-    "components": [
-      "tabs",
-      "tab",
-      "container"
-    ]
+    "components": ["tabs", "tab", "container"]
   },
   {
     "id": "accordion",
-    "components": [
-      "accordion"
-    ]
+    "components": ["accordion"]
   },
   {
     "id": "text",
     "rte": {
-      "format": [
-        "bold",
-        "italic",
-        "underline",
-        "strikethrough",
-        "table"
-      ],
-      "alignment": [
-        "left",
-        "center",
-        "right"
-      ],
-      "indentation": [
-        "indent",
-        "outdent"
-      ],
-      "sr_script": [
-        "superscript",
-        "subscript"
-      ],
-      "list": [
-        "bullist",
-        "numlist"
-      ],
-      "insert": [
-        "link",
-        "image"
-      ],
+      "format": ["bold", "italic", "underline", "strikethrough", "table"],
+      "alignment": ["left", "center", "right"],
+      "indentation": ["indent", "outdent"],
+      "sr_script": ["superscript", "subscript"],
+      "list": ["bullist", "numlist"],
+      "insert": ["link", "image"],
       "advanced": [],
       "extensions": [],
-      "editor": [
-        "removeformat"
-      ]
+      "editor": ["removeformat"]
     }
   },
   {
@@ -248,11 +208,9 @@
     "id": "container",
     "components": []
   },
-  {
+   {
     "id": "banner-carousel",
-    "components": [
-      "banner-carousel-item"
-    ]
+    "components": ["banner-carousel-item"]
   },
   {
     "id": "testimonies",

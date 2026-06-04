@@ -892,7 +892,6 @@ export default function decorate(block) {
 
   let activeIndex = 0;
   let timerId = null;
-  let isPaused = false;
 
   const dotButtons = slides.map((_, index) => {
     const button = document.createElement('button');
@@ -946,7 +945,7 @@ export default function decorate(block) {
   }
 
   function startAutoplay() {
-    if (slides.length <= 1 || timerId || isPaused) return;
+    if (slides.length <= 1 || timerId) return;
     timerId = window.setInterval(() => {
       if (document.body.style.overflowY === 'hidden') return;
       const nextIndex = (activeIndex + 1) % slides.length;
@@ -959,19 +958,8 @@ export default function decorate(block) {
     startAutoplay();
   }
 
-  stage.addEventListener('mouseenter', () => {
-    isPaused = true;
-    stopAutoplay();
-  });
-
-  stage.addEventListener('mouseleave', () => {
-    isPaused = false;
-    startAutoplay();
-  });
-
   document.addEventListener('visibilitychange', () => {
-    isPaused = document.hidden;
-    if (isPaused) {
+    if (document.hidden) {
       stopAutoplay();
     } else {
       startAutoplay();

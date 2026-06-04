@@ -3904,7 +3904,15 @@
       {
         "component": "tab",
         "label": "2. Result Area",
-        "name": "resultsTab"
+        "name": "resultsTab",
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -3938,7 +3946,15 @@
             "label": "Image Caption",
             "description": "Small label displayed alongside the chart. Example: 'Your Monthly EMI'"
           }
-        ]
+        ],
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -3964,12 +3980,28 @@
             "description": "Label for the interest amount in results. Default: 'Interest Amount'",
             "valueType": "string"
           }
-        ]
+        ],
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "tab",
         "label": "2. Part Payment Setup",
-        "name": "partPaymentTab"
+        "name": "partPaymentTab",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -4048,7 +4080,15 @@
             "description": "Metric name shown on card. Default: 'Reduction in Tenure by'",
             "valueType": "string"
           }
-        ]
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -4074,7 +4114,15 @@
             "description": "Default: 'EMI'",
             "valueType": "string"
           }
-        ]
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -4115,7 +4163,15 @@
             "label": "Calendar Icon Alt",
             "valueType": "string"
           }
-        ]
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -4141,7 +4197,15 @@
             "description": "Default: 'Clear All'",
             "valueType": "string"
           }
-        ]
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -4191,7 +4255,15 @@
             "description": "Human-readable max shown on slider. Default: '20L'",
             "valueType": "string"
           }
-        ]
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "container",
@@ -4224,7 +4296,15 @@
             "description": "Default: 'Add More Part Payment'",
             "valueType": "string"
           }
-        ]
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
       },
       {
         "component": "tab",
@@ -4287,7 +4367,15 @@
             "description": "Default: 'Read less'",
             "valueType": "string"
           }
-        ]
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "col1_showDisclaimer"
+            },
+            true
+          ]
+        }
       }
     ]
   },

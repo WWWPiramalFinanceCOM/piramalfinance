@@ -3544,6 +3544,27 @@
         ]
       },
       {
+        "component": "select",
+        "name": "col1_copyWidthClass",
+        "value": "",
+        "label": "Content Width",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default (62.5%)",
+            "value": ""
+          },
+          {
+            "name": "Narrow (50%)",
+            "value": "copy-w-50"
+          },
+          {
+            "name": "Wide (70%)",
+            "value": "copy-w-70"
+          }
+        ]
+      },
+      {
         "component": "tab",
         "label": "Media",
         "name": "mediaTab"

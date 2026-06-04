@@ -3,35 +3,31 @@
 }
 
 .banner-slider-stage {
-  overflow: hidden;
   position: relative;
-  touch-action: pan-y;
-  /* cursor: grab; */
-}
-
-.banner-slider-stage.is-dragging {
-  /* cursor: grabbing; */
 }
 
 .banner-slider-track {
-  position: relative;
+  display: flex;
+  overflow: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.banner-slider-track::-webkit-scrollbar {
+  display: none;
 }
 
 .banner-slider-slide {
-  inset: 0;
-  opacity: 0;
+  flex-shrink: 0;
   overflow: hidden;
-  pointer-events: none;
-  position: absolute;
-  transition: opacity 0.45s ease;
-  visibility: hidden;
+  scroll-snap-align: start;
+  width: 100%;
 }
 
 .banner-slider-slide.is-active {
-  opacity: 1;
-  pointer-events: auto;
-  position: relative;
-  visibility: visible;
+  /* active state tracked for dots; no visual difference in scroll mode */
 }
 
 .banner-slider-surface {
@@ -102,8 +98,7 @@
   margin: 0 auto;
   max-width: 1240px;
   min-height: 500px;
-  padding: 56px 24px 78px;
-  padding-top: unset;
+  padding: 0;
   position: relative;
 }
 
@@ -531,12 +526,20 @@
 @media (width >= 992px) {
   .banner-slider-content {
     min-height: 529px;
-    padding-bottom: 0;
+    padding: 0;
     position: relative;
   }
 
   .banner-slider-slide .banner-slider-copy {
-    max-width: 62.5%;
+    width: 62.5%;
+  }
+
+  .banner-slider-slide.copy-w-50 .banner-slider-copy {
+    width: 50%;
+  }
+
+  .banner-slider-slide.copy-w-70 .banner-slider-copy {
+    width: 70%;
   }
 
   .banner-slider-media {

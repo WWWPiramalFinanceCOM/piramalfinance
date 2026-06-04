@@ -38,95 +38,95 @@
         "label": "Schema JSON"
       },
       {
-          "component": "text",
-          "valueType": "string",
-          "name": "canonical",
-          "label": "Canonical URL"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:title",
-          "label": "Twitter title (twitter:title)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:description",
-          "label": "Twitter description (twitter:description)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:url",
-          "label": "Twitter URL (twitter:url)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:image",
-          "label": "Twitter image URL (twitter:image) "
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:image:alt",
-          "label": "Twitter image alt text (twitter:image:alt)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:card",
-          "label": "Twitter card type (twitter:card)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:title",
-          "label": "Open Graph title (og:title)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:url",
-          "label": "Open Graph URL (og:url)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:type",
-          "label": "Open Graph type (og:type)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:description",
-          "label": "Open Graph description (og:description)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:image",
-          "label": "Open Graph image URL (og:image)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:image:alt",
-          "label": "Open Graph image alt text (og:image:alt)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:site_name",
-          "label": "Open Graph site name (og:site_name)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:locale",
-          "label": "Open Graph locale (og:locale)"
-        }
+        "component": "text",
+        "valueType": "string",
+        "name": "canonical",
+        "label": "Canonical URL"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:title",
+        "label": "Twitter title (twitter:title)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:description",
+        "label": "Twitter description (twitter:description)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:url",
+        "label": "Twitter URL (twitter:url)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:image",
+        "label": "Twitter image URL (twitter:image) "
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:image:alt",
+        "label": "Twitter image alt text (twitter:image:alt)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:card",
+        "label": "Twitter card type (twitter:card)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:title",
+        "label": "Open Graph title (og:title)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:url",
+        "label": "Open Graph URL (og:url)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:type",
+        "label": "Open Graph type (og:type)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:description",
+        "label": "Open Graph description (og:description)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:image",
+        "label": "Open Graph image URL (og:image)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:image:alt",
+        "label": "Open Graph image alt text (og:image:alt)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:site_name",
+        "label": "Open Graph site name (og:site_name)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:locale",
+        "label": "Open Graph locale (og:locale)"
+      }
     ]
   },
   {
@@ -3566,15 +3566,15 @@
         "label": "Col2 Foreground Mobile Image Alt"
       },
       {
-  "component": "text",
-  "valueType": "string",
-  "name": "col2_youtubeUrl",
-  "value": "",
-  "label": "Col2 YouTube Video URL"
-}
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_youtubeUrl",
+        "value": "",
+        "label": "Col2 YouTube Video URL"
+      }
     ]
   },
-   {
+  {
     "id": "banner-carousel-item",
     "fields": [
       {
@@ -3604,7 +3604,7 @@
       }
     ]
   },
-   {
+  {
     "id": "searchunclaimeddividend",
     "fields": [
       {
@@ -3697,17 +3697,72 @@
     "id": "calculator",
     "fields": [
       {
+        "component": "tab",
+        "label": "1. Choose Calculator",
+        "name": "setupTab"
+      },
+      {
         "component": "select",
-        "name": "col1_type",
+        "name": "col1_name",
         "value": "",
-        "label": "Loan Product Type",
-        "description": "Select the loan product this calculator is for (leave empty for GST/APR/Part Payment calculators)",
+        "label": "Calculator Type",
+        "description": "Pick the calculator first — everything else adapts to your choice",
         "valueType": "string",
         "options": [
           {
-            "name": "None (Not Applicable)",
-            "value": ""
+            "name": "EMI Calculator",
+            "value": "emicalculator"
           },
+          {
+            "name": "Eligibility Calculator",
+            "value": "eligibilitycalculator"
+          },
+          {
+            "name": "APR Calculator",
+            "value": "aprcalculator"
+          },
+          {
+            "name": "GST Calculator (Buyer)",
+            "value": "gstcalculatorbuyer"
+          },
+          {
+            "name": "GST Calculator (Seller)",
+            "value": "gstcalculatorseller"
+          },
+          {
+            "name": "Part Payment Calculator",
+            "value": "partpaymentcalculator"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "col1_type",
+        "value": "",
+        "label": "Loan Product",
+        "description": "Links this calculator to a specific loan product page for analytics and CTA routing",
+        "valueType": "string",
+        "condition": {
+          "or": [
+            {
+              "===": [
+                {
+                  "var": "col1_name"
+                },
+                "emicalculator"
+              ]
+            },
+            {
+              "===": [
+                {
+                  "var": "col1_name"
+                },
+                "eligibilitycalculator"
+              ]
+            }
+          ]
+        },
+        "options": [
           {
             "name": "Home Loan (HL)",
             "value": "hl"
@@ -3727,144 +3782,127 @@
         ]
       },
       {
-        "component": "select",
-        "valueType": "string",
-        "name": "col1_name",
-        "label": "Calculator Type",
-        "description": "Select which type of calculator to show",
-        "options": [
-          {
-            "name": "EMI Calculator - Calculate monthly EMI",
-            "value": "emicalculator"
-          },
-          {
-            "name": "Eligibility Calculator - Check loan eligibility",
-            "value": "eligibilitycalculator"
-          },
-          {
-            "name": "APR Calculator - Calculate Annual Percentage Rate",
-            "value": "aprcalculator"
-          },
-          {
-            "name": "GST Calculator (Buyer)",
-            "value": "gstcalculatorbuyer"
-          },
-          {
-            "name": "GST Calculator (Seller)",
-            "value": "gstcalculatorseller"
-          },
-          {
-            "name": "Part Payment Calculator",
-            "value": "partpaymentcalculator"
-          }
-        ]
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "value": "",
-        "label": "Calculator Options",
-        "description": "Select options to configure calculator behavior",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Modal Calculator (show this calculator in teaser modal)",
-            "value": "modal-calculator"
-          }
-        ]
-      },
-      {
         "component": "text",
         "valueType": "string",
         "name": "col1_label",
         "label": "Tab Label",
+        "description": "Text on the tab button when multiple calculators are grouped. Example: 'EMI Calculator' or 'Check Eligibility'",
         "multi": false
       },
       {
         "component": "text",
         "name": "col1_description",
         "value": "",
-        "label": "Description",
+        "label": "Subtitle",
+        "description": "One-line description shown below the calculator heading. Example: 'Calculate your monthly EMI for Home Loan'",
         "valueType": "string"
       },
       {
-        "component": "reference",
-        "name": "col1_image",
+        "component": "multiselect",
+        "name": "classes",
         "value": "",
-        "label": "Image",
+        "label": "Behaviour",
+        "description": "Optional flags that change how the calculator renders",
         "valueType": "string",
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_imageAlt",
-        "label": "Image Alt Text",
-        "multi": false,
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_imageLabel",
-        "label": "Image Label",
-        "multi": false,
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "name": "col1_resPAmount",
-        "value": "",
-        "label": "Principal Amount Text",
-        "valueType": "string",
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "name": "col1_resInterestAmount",
-        "value": "",
-        "label": "Interest Amount Text",
-        "valueType": "string",
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
+        "options": [
+          {
+            "name": "Open inside Teaser Modal popup",
+            "value": "modal-calculator"
+          }
+        ]
       },
       {
         "component": "tab",
-        "label": "Part Payment Settings",
+        "label": "2. Result Area",
+        "name": "resultsTab",
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        }
+      },
+      {
+        "component": "container",
+        "name": "resultsImageContainer",
+        "label": "Pie Chart / Result Image",
+        "description": "The illustration next to the calculated result (typically a donut chart)",
+        "collapsible": true,
+        "collapsed": false,
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
+        "fields": [
+          {
+            "component": "reference",
+            "name": "col1_image",
+            "value": "",
+            "label": "Result Image",
+            "description": "Pick the donut/pie chart image from DAM",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_imageAlt",
+            "value": "",
+            "label": "Image Alt Text",
+            "description": "Accessibility text. Example: 'EMI breakdown pie chart'"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_imageLabel",
+            "value": "",
+            "label": "Image Caption",
+            "description": "Small label displayed alongside the chart. Example: 'Your Monthly EMI'"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "resultsLabelsContainer",
+        "label": "Result Value Labels",
+        "description": "Labels next to the two calculated values shown in the result area",
+        "collapsible": true,
+        "collapsed": false,
+        "condition": {
+          "!==": [
+            {
+              "var": "col1_name"
+            },
+            "partpaymentcalculator"
+          ]
+        },
+        "fields": [
+          {
+            "component": "text",
+            "name": "col1_resPAmount",
+            "value": "Principal Amount",
+            "label": "Principal Label",
+            "description": "Label for the principal amount in results. Default: 'Principal Amount'",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_resInterestAmount",
+            "value": "Interest Amount",
+            "label": "Interest Label",
+            "description": "Label for the interest amount in results. Default: 'Interest Amount'",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "2. Part Payment Setup",
         "name": "partPaymentTab",
         "condition": {
           "===": [
@@ -3877,8 +3915,9 @@
       },
       {
         "component": "container",
-        "name": "col1_output1Container",
-        "label": "Output 1 - Net Effective ROI",
+        "name": "col1_outputMetricsContainer",
+        "label": "Output Metric Cards (3 cards shown after calculation)",
+        "description": "Three result cards displayed after calculation: ROI, Savings, and Tenure Reduction. Each needs an icon, alt text, and label.",
         "collapsible": true,
         "collapsed": false,
         "condition": {
@@ -3894,103 +3933,69 @@
             "component": "reference",
             "name": "col1_output1Image",
             "value": "",
-            "label": "Icon",
-            "description": "Icon for Net Effective ROI metric",
+            "label": "Card 1 Icon (ROI)",
+            "description": "Icon for the Net Effective ROI card",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_output1ImageAlt",
             "value": "ROI Icon",
-            "label": "Icon Alt Text",
+            "label": "Card 1 Icon Alt",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_output1Label",
             "value": "Net Effective ROI",
-            "label": "Label",
-            "description": "Label for first output metric",
+            "label": "Card 1 Label",
+            "description": "Metric name shown on card. Default: 'Net Effective ROI'",
             "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "col1_output2Container",
-        "label": "Output 2 - Interest Savings",
-        "collapsible": true,
-        "collapsed": true,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
-        "fields": [
+          },
           {
             "component": "reference",
             "name": "col1_output2Image",
             "value": "",
-            "label": "Icon",
-            "description": "Icon for Interest Savings metric",
+            "label": "Card 2 Icon (Savings)",
+            "description": "Icon for the Interest Savings card",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_output2ImageAlt",
             "value": "Savings Icon",
-            "label": "Icon Alt Text",
+            "label": "Card 2 Icon Alt",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_output2Label",
             "value": "You will save Interest of",
-            "label": "Label",
-            "description": "Label for second output metric",
+            "label": "Card 2 Label",
+            "description": "Metric name shown on card. Default: 'You will save Interest of'",
             "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "col1_output3Container",
-        "label": "Output 3 - Tenure Reduction",
-        "collapsible": true,
-        "collapsed": true,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
-        "fields": [
+          },
           {
             "component": "reference",
             "name": "col1_output3Image",
             "value": "",
-            "label": "Icon",
-            "description": "Icon for Tenure Reduction metric",
+            "label": "Card 3 Icon (Tenure)",
+            "description": "Icon for the Tenure Reduction card",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_output3ImageAlt",
             "value": "Calendar Icon",
-            "label": "Icon Alt Text",
+            "label": "Card 3 Icon Alt",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_output3Label",
             "value": "Reduction in Tenure by",
-            "label": "Label",
-            "description": "Label for third output metric",
+            "label": "Card 3 Label",
+            "description": "Metric name shown on card. Default: 'Reduction in Tenure by'",
             "valueType": "string"
           }
         ]
@@ -3998,9 +4003,10 @@
       {
         "component": "container",
         "name": "col1_summaryLabelsContainer",
-        "label": "Summary Labels (Total Payments & EMI)",
+        "label": "Summary Row Labels",
+        "description": "Labels for the summary row below the 3 metric cards",
         "collapsible": true,
-        "collapsed": true,
+        "collapsed": false,
         "condition": {
           "===": [
             {
@@ -4015,6 +4021,7 @@
             "name": "col1_totalPaymentsLabel",
             "value": "Total Payments",
             "label": "Total Payments Label",
+            "description": "Default: 'Total Payments'",
             "valueType": "string"
           },
           {
@@ -4022,6 +4029,7 @@
             "name": "col1_emiLabel",
             "value": "EMI",
             "label": "EMI Label",
+            "description": "Default: 'EMI'",
             "valueType": "string"
           }
         ]
@@ -4029,7 +4037,8 @@
       {
         "component": "container",
         "name": "col1_firstLoanDateContainer",
-        "label": "First Loan EMI Date Settings",
+        "label": "Loan Start Date Field",
+        "description": "Date picker where user enters their first loan EMI date",
         "collapsible": true,
         "collapsed": true,
         "condition": {
@@ -4045,14 +4054,16 @@
             "component": "text",
             "name": "col1_firstLoanDateLabel",
             "value": "First Loan EMI Date",
-            "label": "Label",
+            "label": "Field Label",
+            "description": "Label shown above the date picker. Default: 'First Loan EMI Date'",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_datePlaceholder",
             "value": "MM/DD/YYYY",
-            "label": "Date Placeholder",
+            "label": "Date Format Hint",
+            "description": "Placeholder inside the date field. Default: 'MM/DD/YYYY'",
             "valueType": "string"
           },
           {
@@ -4060,14 +4071,14 @@
             "name": "col1_datePickerIcon",
             "value": "",
             "label": "Calendar Icon",
-            "description": "Calendar icon shown in date picker fields",
+            "description": "Small calendar icon shown inside the date picker",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_datePickerIconAlt",
             "value": "Calendar",
-            "label": "Calendar Icon Alt Text",
+            "label": "Calendar Icon Alt",
             "valueType": "string"
           }
         ]
@@ -4075,7 +4086,8 @@
       {
         "component": "container",
         "name": "col1_repaymentScheduleContainer",
-        "label": "Repayment Schedule Settings",
+        "label": "Repayment Schedule Section",
+        "description": "Section header and clear button for the repayment schedule list",
         "collapsible": true,
         "collapsed": true,
         "condition": {
@@ -4091,7 +4103,8 @@
             "component": "text",
             "name": "col1_repaymentScheduleTitle",
             "value": "Repayment Schedule",
-            "label": "Section Title",
+            "label": "Section Heading",
+            "description": "Default: 'Repayment Schedule'",
             "valueType": "string"
           },
           {
@@ -4099,6 +4112,7 @@
             "name": "col1_clearAllText",
             "value": "Clear All",
             "label": "Clear All Button Text",
+            "description": "Default: 'Clear All'",
             "valueType": "string"
           }
         ]
@@ -4106,7 +4120,8 @@
       {
         "component": "container",
         "name": "col1_partPaymentCardContainer",
-        "label": "Part Payment Card (Date & Amount)",
+        "label": "Part Payment Entry Form",
+        "description": "The repeatable card where users enter a part payment date and amount",
         "collapsible": true,
         "collapsed": true,
         "condition": {
@@ -4122,35 +4137,40 @@
             "component": "text",
             "name": "col1_partPaymentDateLabel",
             "value": "Enter 1st part payment Date",
-            "label": "Part Payment Date Label",
+            "label": "Date Field Label",
+            "description": "Label above the date input. Default: 'Enter 1st part payment Date'",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_partPaymentAmountLabel",
             "value": "1st Part Payment amount (Rs.)",
-            "label": "Part Payment Amount Label",
+            "label": "Amount Field Label",
+            "description": "Label above the amount slider. Default: '1st Part Payment amount (Rs.)'",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_partPaymentMinValue",
             "value": "0",
-            "label": "Amount Slider Min Value",
+            "label": "Amount Slider Min",
+            "description": "Minimum value for the slider (number). Default: 0",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_partPaymentMaxValue",
             "value": "2000000",
-            "label": "Amount Slider Max Value",
+            "label": "Amount Slider Max",
+            "description": "Maximum value for the slider (number). Default: 2000000 (20 Lakhs)",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_partPaymentMaxLabel",
             "value": "20L",
-            "label": "Amount Slider Max Label",
+            "label": "Slider Max Display Label",
+            "description": "Human-readable max shown on slider. Default: '20L'",
             "valueType": "string"
           }
         ]
@@ -4159,6 +4179,7 @@
         "component": "container",
         "name": "col1_addMoreContainer",
         "label": "Add More Part Payment Button",
+        "description": "Button that lets users add additional part payment entries",
         "collapsible": true,
         "collapsed": true,
         "condition": {
@@ -4175,45 +4196,46 @@
             "name": "col1_addMoreIcon",
             "value": "",
             "label": "Plus Icon",
-            "description": "Plus icon for Add More button",
+            "description": "The + icon on the 'Add More' button",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_addMoreIconAlt",
             "value": "Add",
-            "label": "Plus Icon Alt Text",
+            "label": "Plus Icon Alt",
             "valueType": "string"
           },
           {
             "component": "text",
             "name": "col1_addMoreText",
             "value": "Add More Part Payment",
-            "label": "Button Text",
+            "label": "Button Label",
+            "description": "Default: 'Add More Part Payment'",
             "valueType": "string"
           }
         ]
       },
       {
         "component": "tab",
-        "label": "Disclaimer Settings",
+        "label": "3. Disclaimer",
         "name": "disclaimerTab"
       },
       {
         "component": "boolean",
         "name": "col1_showDisclaimer",
         "value": false,
-        "label": "Show Disclaimer",
-        "description": "Enable to display a disclaimer section below the calculator",
+        "label": "Show Disclaimer Section",
+        "description": "Turn ON to add a disclaimer below the calculator. Leave OFF to hide it completely.",
         "valueType": "boolean"
       },
       {
-        "component": "text",
-        "name": "col1_disclaimerTitle",
-        "value": "Disclaimer",
-        "label": "Disclaimer Title",
-        "description": "Title text for the disclaimer section",
-        "valueType": "string",
+        "component": "container",
+        "name": "disclaimerContentContainer",
+        "label": "Disclaimer Content",
+        "description": "All disclaimer text fields — visible only when Show Disclaimer is ON",
+        "collapsible": true,
+        "collapsed": false,
         "condition": {
           "===": [
             {
@@ -4221,69 +4243,49 @@
             },
             true
           ]
-        }
-      },
-      {
-        "component": "richtext",
-        "name": "col1_disclaimerPara1",
-        "value": "",
-        "label": "Disclaimer Text (Visible)",
-        "description": "First paragraph - always visible",
-        "valueType": "string",
-        "condition": {
-          "===": [
-            {
-              "var": "col1_showDisclaimer"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "richtext",
-        "name": "col1_disclaimerPara2",
-        "value": "",
-        "label": "Disclaimer Text (Expandable)",
-        "description": "Additional text shown when Read more is clicked",
-        "valueType": "string",
-        "condition": {
-          "===": [
-            {
-              "var": "col1_showDisclaimer"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "name": "col1_readMoreText",
-        "value": "Read more",
-        "label": "Read More Button Text",
-        "valueType": "string",
-        "condition": {
-          "===": [
-            {
-              "var": "col1_showDisclaimer"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "name": "col1_readLessText",
-        "value": "Read less",
-        "label": "Read Less Button Text",
-        "valueType": "string",
-        "condition": {
-          "===": [
-            {
-              "var": "col1_showDisclaimer"
-            },
-            true
-          ]
-        }
+        },
+        "fields": [
+          {
+            "component": "text",
+            "name": "col1_disclaimerTitle",
+            "value": "Disclaimer",
+            "label": "Disclaimer Heading",
+            "description": "Bold heading above the disclaimer text. Default: 'Disclaimer'",
+            "valueType": "string"
+          },
+          {
+            "component": "richtext",
+            "name": "col1_disclaimerPara1",
+            "value": "",
+            "label": "Always-Visible Text",
+            "description": "This paragraph is always shown — keep it short (1-2 sentences)",
+            "valueType": "string"
+          },
+          {
+            "component": "richtext",
+            "name": "col1_disclaimerPara2",
+            "value": "",
+            "label": "Read-More Text",
+            "description": "Hidden by default, revealed when user clicks 'Read more'. Add detailed disclaimers here.",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_readMoreText",
+            "value": "Read more",
+            "label": "Expand Button Text",
+            "description": "Default: 'Read more'",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "col1_readLessText",
+            "value": "Read less",
+            "label": "Collapse Button Text",
+            "description": "Default: 'Read less'",
+            "valueType": "string"
+          }
+        ]
       }
     ]
   },
@@ -4291,11 +4293,16 @@
     "id": "calculator-item",
     "fields": [
       {
+        "component": "tab",
+        "label": "1. Input Type",
+        "name": "sliderTab"
+      },
+      {
         "component": "select",
         "valueType": "string",
         "name": "col1_name",
-        "label": "Input Type",
-        "description": "Select the type of slider input for this calculator",
+        "label": "What does this slider control?",
+        "description": "Each slider row maps to one input. Pick the matching financial parameter.",
         "options": [
           {
             "name": "Loan Amount (₹)",
@@ -4314,31 +4321,27 @@
             "value": "income"
           },
           {
-            "name": "Gross Annual Income (₹)",
-            "value": "income"
-          },
-          {
             "name": "Existing EMI / Other Loan EMI (₹)",
             "value": "otherloan"
           },
           {
-            "name": "Net Price (₹) - For GST Calculator",
+            "name": "Net Price (₹) — GST",
             "value": "netprice"
           },
           {
-            "name": "Production Cost (₹) - For GST Calculator",
+            "name": "Production Cost (₹) — GST",
             "value": "productioncost"
           },
           {
-            "name": "GST Rate (%) - For GST Calculator",
+            "name": "GST Rate (%) — GST",
             "value": "gstrate"
           },
           {
-            "name": "Profit Ratio (%) - For GST Calculator",
+            "name": "Profit Ratio (%) — GST",
             "value": "profitratio"
           },
           {
-            "name": "Loan Origination Charges (₹) - For APR Calculator",
+            "name": "Loan Origination Charges (₹) — APR",
             "value": "origincharges"
           }
         ]
@@ -4347,64 +4350,69 @@
         "component": "text",
         "valueType": "string",
         "name": "col1_ALabel",
-        "label": "Label",
-        "description": "Display label shown above the slider (e.g., 'Loan Amount (Rs.)')",
+        "label": "Slider Label",
+        "description": "Text shown above the slider. Example: 'Loan Amount (Rs.)' or 'Interest Rate (%)'",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_ADefaultValue",
-        "label": "Default Value",
-        "description": "Initial value when calculator loads (e.g., 800000 for ₹8 Lakhs)",
+        "label": "Starting Value",
+        "description": "Number the slider starts at when page loads. Example: 800000 for ₹8 Lakhs, or 8.5 for 8.5%",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_ADefaultValueIcon",
-        "label": "Default Value Icon",
-        "description": "Symbol shown with value. Use ₹ for currency, % for percentage, Yrs for years",
+        "label": "Value Symbol",
+        "description": "Symbol shown with the value: ₹ (currency), % (percentage), Yrs (years)",
         "multi": false
+      },
+      {
+        "component": "tab",
+        "label": "2. Slider Range",
+        "name": "rangeTab"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_stepValue",
-        "label": "Step Value",
-        "description": "Increment amount when sliding (e.g., 25000 means slider moves by ₹25,000)",
+        "label": "Step Size",
+        "description": "How much the slider jumps per drag. Example: 25000 means ₹25K increments, 0.25 means 0.25% increments",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_BMinValue",
-        "label": "Min Value",
-        "description": "Minimum allowed value (e.g., 100000 for ₹1 Lakh minimum)",
+        "label": "Minimum Value",
+        "description": "Lowest allowed value. Example: 100000 (₹1 Lakh) or 5 (5%)",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_BMaxValue",
-        "label": "Max Value",
-        "description": "Maximum allowed value (e.g., 5000000 for ₹50 Lakhs maximum)",
+        "label": "Maximum Value",
+        "description": "Highest allowed value. Example: 5000000 (₹50 Lakhs) or 20 (20%)",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_CMinValue",
-        "label": "Min Value Label",
-        "description": "Text shown at left of slider (e.g., '1L' or '5%')",
+        "label": "Left Label (Min)",
+        "description": "Short text at slider left edge. Example: '1L', '5%', '1 Yr'",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_CMaxValue",
-        "label": "Max Value Label",
-        "description": "Text shown at right of slider (e.g., '50L' or '20%')",
+        "label": "Right Label (Max)",
+        "description": "Short text at slider right edge. Example: '50L', '20%', '30 Yrs'",
         "multi": false
       }
     ]
@@ -4416,12 +4424,12 @@
         "component": "select",
         "name": "col1_productType",
         "value": "",
-        "label": "Loan Product Type",
-        "description": "Select the loan product for hidden tracking (leave empty for GST/APR/Part Payment calculators)",
+        "label": "Loan Product",
+        "description": "Links these radio tabs to a loan product for analytics tracking. Leave empty for GST/APR calculators.",
         "valueType": "string",
         "options": [
           {
-            "name": "None (Not Applicable)",
+            "name": "None",
             "value": ""
           },
           {
@@ -4448,11 +4456,16 @@
     "id": "calculator-radio-item",
     "fields": [
       {
+        "component": "tab",
+        "label": "1. Appearance",
+        "name": "appearanceTab"
+      },
+      {
         "component": "text",
         "valueType": "string",
         "name": "col1_radioText",
         "label": "Tab Label",
-        "description": "Text shown on the radio tab (e.g., 'Salaried' or 'Self Employed')",
+        "description": "Text on the toggle button. Example: 'Salaried' or 'Self Employed'",
         "multi": false
       },
       {
@@ -4460,31 +4473,36 @@
         "valueType": "string",
         "name": "col1_radioImage",
         "label": "Tab Icon",
-        "description": "Small icon shown next to the tab label",
+        "description": "Small icon (24×24px recommended) shown next to the label",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_radioImageAlt",
-        "label": "Tab Icon Alt Text",
-        "description": "Alt text for the icon (for accessibility)",
+        "label": "Icon Alt Text",
+        "description": "Accessibility text for screen readers",
         "multi": false
+      },
+      {
+        "component": "tab",
+        "label": "2. Calculation Logic",
+        "name": "calcTab"
       },
       {
         "component": "select",
         "name": "col1_foirType",
         "value": "salaried",
         "label": "Customer Type",
-        "description": "Type of customer - affects eligibility calculation",
+        "description": "Determines the FOIR% used in eligibility calculation. Salaried = stricter, Self Employed = more flexible.",
         "valueType": "string",
         "options": [
           {
-            "name": "Salaried Employee - Uses 65% FOIR",
+            "name": "Salaried Employee (65% FOIR)",
             "value": "salaried"
           },
           {
-            "name": "Self Employed / Business Owner - Uses 80% FOIR",
+            "name": "Self Employed / Business Owner (80% FOIR)",
             "value": "biz"
           }
         ]
@@ -4494,7 +4512,7 @@
         "valueType": "string",
         "name": "col1_foirValue",
         "label": "FOIR Percentage",
-        "description": "Fixed Obligation to Income Ratio (e.g., 65 for salaried, 50 for business)",
+        "description": "Fixed Obligation to Income Ratio — enter just the number. Example: 65 for salaried, 50 for business",
         "multi": false
       }
     ]

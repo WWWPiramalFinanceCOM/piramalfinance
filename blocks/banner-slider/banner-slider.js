@@ -13,18 +13,32 @@ function isImageLike(value = '') {
   return value.includes('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(value);
 }
 
-function createPicture(src, alt = '') {
-  if (!src) {
+function escapeAttribute(value = '') {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function createBackgroundMedia(desktopSrc, mobileSrc, isInitiallyActive) {
+  const desktop = (desktopSrc || '').trim();
+  const mobile = (mobileSrc || '').trim();
+  if (!desktop && !mobile) {
     return '';
   }
 
-  const picture = document.createElement('picture');
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = alt;
-  img.loading = 'lazy';
-  picture.replaceChildren(img);
-  return picture.outerHTML;
+  const fallbackSrc = desktop || mobile;
+  const sourceMarkup = mobile ? `<source media="(max-width: 991px)" srcset="${escapeAttribute(mobile)}">` : '';
+  const loading = isInitiallyActive ? 'eager' : 'lazy';
+  const fetchPriority = isInitiallyActive ? 'high' : 'low';
+
+  return `
+    <picture>
+      ${sourceMarkup}
+      <img class="banner-slider-bg-img" src="${escapeAttribute(fallbackSrc)}" alt="" loading="${loading}" decoding="async" fetchpriority="${fetchPriority}">
+    </picture>
+  `;
 }
 
 function imageSources(cell) {
@@ -61,6 +75,48 @@ function imageSources(cell) {
   });
 
   return [...new Set(values)];
+}
+
+function pictureElements(cell) {
+  if (!cell) return [];
+  const candidates = [cell, firstContent(cell)].filter(Boolean);
+  const pictures = [];
+  const seen = new Set();
+  candidates.forEach((candidate) => {
+    const pics = candidate.tagName === 'PICTURE' ? [candidate] : [...candidate.querySelectorAll?.('picture') || []];
+    pics.forEach((picture) => {
+      if (!seen.has(picture)) {
+        seen.add(picture);
+        pictures.push(picture);
+      }
+    });
+  });
+  return pictures;
+}
+
+function imageMarkupFromCell(cell) {
+  // First try to find a <picture> element (preserves sources + alt)
+  const pics = pictureElements(cell);
+  if (pics.length) return pics[0].outerHTML;
+  // Fallback: standalone <img> not inside a <picture> (common for SVGs)
+  const candidates = [cell, firstContent(cell)].filter(Boolean);
+  for (let i = 0; i < candidates.length; i += 1) {
+    const candidate = candidates[i];
+    const img = candidate.tagName === 'IMG' ? candidate : candidate.querySelector?.('img');
+    if (img?.src) {
+      return `<picture>${img.outerHTML}</picture>`;
+    }
+  }
+  // Fallback: <a href="image-path">text</a> (EDS renders DAM icon references this way)
+  for (let i = 0; i < candidates.length; i += 1) {
+    const candidate = candidates[i];
+    const link = candidate.tagName === 'A' ? candidate : candidate.querySelector?.('a');
+    if (link?.href && isImageLike(link.href)) {
+      const alt = (link.textContent || '').trim();
+      return `<picture><img src="${link.href}" alt="${alt}" loading="lazy" decoding="async"></picture>`;
+    }
+  }
+  return '';
 }
 
 function hrefFromParagraph(paragraph) {
@@ -121,14 +177,6 @@ function isHashLink(value = '') {
   } catch (error) {
     return false;
   }
-}
-
-function isInteractiveElementTarget(target) {
-  if (!(target instanceof Element)) {
-    return false;
-  }
-
-  return !!target.closest('a, button, input, select, textarea, label, [role="button"], .banner-slider-cta, .button-container');
 }
 
 function attachLoanFormCloseFallback(scope) {
@@ -267,19 +315,12 @@ function imageHrefFromParagraph(paragraph) {
   return isImageLike(href) ? href : '';
 }
 
-function imageSourceFromCell(cell) {
-  const values = imageSources(cell);
-  return values.length ? values[0] : '';
-}
-
 function isAuthorEnvironment() {
   const { hostname, pathname } = window.location;
   return hostname.includes('author') || pathname.includes('/editor.html/');
 }
 
-const AUTOPLAY_INTERVAL_MS = 2800;
-const SWIPE_INTENT_PX = 5;
-const SWIPE_TRIGGER_PX = 40;
+const AUTOPLAY_INTERVAL_MS = 7000;
 
 const SLIDE_PLACEMENT_CLASSES = new Set([
   'btn-pos-top-far-left',
@@ -313,6 +354,12 @@ const SLIDE_PLACEMENT_CLASSES = new Set([
   'content-pos-top',
   'media-pos-left',
   'media-pos-right',
+  'fg-sm',
+  'fg-md',
+  'fg-lg',
+  'fg-full',
+  'copy-w-50',
+  'copy-w-70',
   'text-green',
   'green-text',
 ]);
@@ -344,6 +391,12 @@ const PLACEMENT_LABEL_TO_CLASS = {
   'content top': 'content-pos-top',
   'media left': 'media-pos-left',
   'media right': 'media-pos-right',
+  'fg small': 'fg-sm',
+  'fg medium': 'fg-md',
+  'fg large': 'fg-lg',
+  'fg full': 'fg-full',
+  'copy narrow': 'copy-w-50',
+  'copy wide': 'copy-w-70',
   'text green': 'text-green',
   'green text': 'green-text',
 };
@@ -416,8 +469,8 @@ function featureItems(leftSlots) {
     return '';
   }
 
-  const iconValues = leftSlots
-    .map((slot) => imageSourceFromCell(slot))
+  const iconMarkups = leftSlots
+    .map((slot) => imageMarkupFromCell(slot))
     .filter(Boolean)
     .slice(0, 3);
 
@@ -425,11 +478,11 @@ function featureItems(leftSlots) {
     .map((slot) => (slot.textContent || '').trim())
     .filter((text) => text && !isLikelyUrl(text) && !/^#[0-9a-f]{3,8}$/i.test(text));
 
-  const items = iconValues.map((icon, index) => {
+  const items = iconMarkups.map((markup, index) => {
     const text = textValues[index] || '';
     return {
       text,
-      icon: text ? createPicture(icon, text) : '',
+      icon: text ? markup : '',
     };
   }).filter((item) => item.text && item.icon);
 
@@ -482,6 +535,61 @@ function resolveImageAssets(rightSources) {
   };
 }
 
+function resolvePictureElements(rightCell) {
+  const pics = pictureElements(rightCell);
+  if (!pics.length) {
+    return { desktopBgPicture: null, mobileBgPicture: null, foregroundPicture: null };
+  }
+  if (pics.length === 1) {
+    return { desktopBgPicture: null, mobileBgPicture: null, foregroundPicture: pics[0] };
+  }
+  if (pics.length >= 3) {
+    return { desktopBgPicture: pics[0], mobileBgPicture: pics[1] || pics[0], foregroundPicture: pics[2] || null };
+  }
+  return { desktopBgPicture: pics[0], mobileBgPicture: pics[0], foregroundPicture: pics[1] || null };
+}
+
+function foregroundPictureHtml(picture, slideIndex) {
+  const clone = picture.cloneNode(true);
+  const img = clone.querySelector('img');
+  if (img) {
+    img.className = 'banner-slider-fg-img';
+    img.removeAttribute('width');
+    img.removeAttribute('height');
+    img.loading = slideIndex === 0 ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    if (slideIndex === 0) {
+      img.setAttribute('fetchpriority', 'high');
+    } else {
+      img.setAttribute('fetchpriority', 'low');
+    }
+  }
+  return clone.outerHTML;
+}
+
+function backgroundPictureHtml(desktopPic, mobilePic, slideIndex) {
+  if (!desktopPic && !mobilePic) return '';
+  const pic = (desktopPic || mobilePic).cloneNode(true);
+  const img = pic.querySelector('img');
+  if (img) {
+    img.className = 'banner-slider-bg-img';
+    img.loading = slideIndex === 0 ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    img.setAttribute('fetchpriority', slideIndex === 0 ? 'high' : 'low');
+  }
+  // If we have a separate mothenbile picture, add its source for mobile breakpoint
+  if (mobilePic && mobilePic !== desktopPic) {
+    const mobileImg = mobilePic.querySelector('img');
+    if (mobileImg?.src) {
+      const mobileSource = document.createElement('source');
+      mobileSource.setAttribute('media', '(max-width: 991px)');
+      mobileSource.setAttribute('srcset', mobileImg.src);
+      pic.insertBefore(mobileSource, pic.firstChild);
+    }
+  }
+  return pic.outerHTML;
+}
+
 function createSlide(row, index) {
   const [leftCell, rightCell] = [...row.children];
   const leftSlots = [...leftCell?.children || []];
@@ -508,8 +616,9 @@ function createSlide(row, index) {
   const {
     desktopBackground,
     mobileBackground,
-    foreground,
   } = resolveImageAssets(rightSources);
+  const { desktopBgPicture, mobileBgPicture, foregroundPicture } = resolvePictureElements(rightCell);
+  const hasBackgroundMedia = !!(desktopBgPicture || desktopBackground || mobileBackground);
 
   const titleCell = leftSlots[0] || null;
   const descriptionCell = leftSlots[1] || null;
@@ -597,6 +706,9 @@ function createSlide(row, index) {
   if (ctaOpensLoanForm) {
     slide.classList.add('open-form-on-click');
   }
+  if (hasBackgroundMedia) {
+    slide.classList.add('has-bg-media');
+  }
   placementClasses.forEach((name) => slide.classList.add(name));
   slide.dataset.slideIndex = `${index}`;
 
@@ -606,19 +718,19 @@ function createSlide(row, index) {
     : slotMeta.find((item) => item.isHex);
   const bgColor = bgColorSlot?.text.match(/#[0-9a-f]{3,8}/i)?.[0];
   if (bgColor) {
-    slide.style.setProperty('--banner-slider-bg-color', bgColor);
+    slide.dataset.bgColor = bgColor;
   }
-  if (desktopBackground) {
-    slide.style.setProperty('--banner-slider-bg-image', `url("${desktopBackground}")`);
+  if (bgColor && hasBackgroundMedia) {
+    slide.classList.add('banner-slider-slide--bg-color-image');
   }
-  if (mobileBackground) {
-    slide.style.setProperty('--banner-slider-mobile-bg-image', `url("${mobileBackground}")`);
-  }
-  if (!bgColor && desktopBackground) {
+  if (!bgColor && (desktopBgPicture || desktopBackground)) {
     slide.classList.add('banner-slider-slide--bg-cover');
   }
 
   slide.innerHTML = `
+    <div class="banner-slider-bg">
+      ${desktopBgPicture ? backgroundPictureHtml(desktopBgPicture, mobileBgPicture, index) : createBackgroundMedia(desktopBackground, mobileBackground, index === 0)}
+    </div>
     <div class="banner-slider-surface">
       <div class="banner-slider-content">
         <div class="banner-slider-copy">
@@ -630,7 +742,7 @@ function createSlide(row, index) {
             ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
           </div>
         </div>
-        <div class="banner-slider-media">${foreground ? createPicture(foreground, '') : ''}</div>
+        <div class="banner-slider-media">${foregroundPicture ? foregroundPictureHtml(foregroundPicture, index) : ''}</div>
       </div>
     </div>
   `;
@@ -658,14 +770,36 @@ export default function decorate(block) {
   dots.className = 'banner-slider-dots';
 
   const slides = rows.map((row, index) => createSlide(row, index));
+  if (slides.length <= 1) {
+    dots.style.display = 'none';
+  }
   slides.forEach((slide) => {
     track.appendChild(slide);
   });
 
+  const bgColorRules = slides
+    .map((slide) => {
+      const slideIndex = slide.dataset.slideIndex;
+      const bgColor = slide.dataset.bgColor;
+      if (!slideIndex || !bgColor) {
+        return '';
+      }
+
+      return `.banner-slider.block .banner-slider-slide[data-slide-index="${slideIndex}"] .banner-slider-bg { background-color: ${bgColor}; }`;
+    })
+    .filter(Boolean)
+    .join('\n');
+
+  const bgColorStyle = document.createElement('style');
+  bgColorStyle.className = 'banner-slider-bg-colors';
+  if (bgColorRules) {
+    bgColorStyle.textContent = bgColorRules;
+  }
+
   block.textContent = '';
   block.classList.add('banner-slider', 'banner-slider--ready');
   stage.replaceChildren(track, dots);
-  block.replaceChildren(stage);
+  block.replaceChildren(stage, bgColorStyle);
 
   const ctaAnchors = [...block.querySelectorAll('.banner-slider-cta .button.primary')];
   ctaAnchors.forEach((anchor) => {
@@ -758,7 +892,6 @@ export default function decorate(block) {
 
   let activeIndex = 0;
   let timerId = null;
-  let isPaused = false;
 
   const dotButtons = slides.map((_, index) => {
     const button = document.createElement('button');
@@ -766,50 +899,57 @@ export default function decorate(block) {
     button.className = 'banner-slider-dot';
     button.setAttribute('aria-label', `Go to slide ${index + 1}`);
     button.addEventListener('click', () => {
-      setActiveSlide(index);
+      scrollToSlide(index);
       restartAutoplay();
     });
     dots.appendChild(button);
     return button;
   });
 
-  function normalizeIndex(index) {
-    return (index + slides.length) % slides.length;
+  function scrollToSlide(index) {
+    const slide = slides[index];
+    if (!slide) return;
+    track.scrollTo({ top: 0, left: slide.offsetLeft - track.offsetLeft, behavior: 'smooth' });
   }
 
-  function setActiveSlide(index) {
-    activeIndex = normalizeIndex(index);
-
+  function updateActiveDot(index) {
+    activeIndex = index;
     slides.forEach((slide, i) => {
       slide.classList.toggle('is-active', i === activeIndex);
-      slide.setAttribute('aria-hidden', i === activeIndex ? 'false' : 'true');
     });
-
     dotButtons.forEach((button, i) => {
       const isActive = i === activeIndex;
       button.classList.toggle('is-active', isActive);
       button.setAttribute('aria-current', isActive ? 'true' : 'false');
     });
-
-    track.style.transform = `translateX(-${activeIndex * 100}%)`;
   }
 
-  function stopAutoplay() {
-    if (!timerId) {
-      return;
-    }
+  // IntersectionObserver to detect which slide is visible (same as old carousel)
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const idx = slides.indexOf(entry.target);
+        if (idx >= 0) {
+          updateActiveDot(idx);
+        }
+      }
+    });
+  }, { threshold: 0.6, root: track });
 
+  slides.forEach((slide) => slideObserver.observe(slide));
+
+  function stopAutoplay() {
+    if (!timerId) return;
     window.clearInterval(timerId);
     timerId = null;
   }
 
   function startAutoplay() {
-    if (slides.length <= 1 || timerId || isPaused) {
-      return;
-    }
-
+    if (slides.length <= 1 || timerId) return;
     timerId = window.setInterval(() => {
-      setActiveSlide(activeIndex + 1);
+      if (document.body.style.overflowY === 'hidden') return;
+      const nextIndex = (activeIndex + 1) % slides.length;
+      scrollToSlide(nextIndex);
     }, AUTOPLAY_INTERVAL_MS);
   }
 
@@ -818,127 +958,15 @@ export default function decorate(block) {
     startAutoplay();
   }
 
-  stage.addEventListener('mouseenter', () => {
-    isPaused = true;
-    stopAutoplay();
-  });
-
-  stage.addEventListener('mouseleave', () => {
-    isPaused = false;
-    startAutoplay();
-  });
-
   document.addEventListener('visibilitychange', () => {
-    isPaused = document.hidden;
-    if (isPaused) {
+    if (document.hidden) {
       stopAutoplay();
     } else {
       startAutoplay();
     }
   });
 
-  // Touch swipe support (mobile)
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchMoved = false;
-  let ignoreTouchSwipe = false;
-
-  stage.addEventListener('touchstart', (e) => {
-    ignoreTouchSwipe = isInteractiveElementTarget(e.target);
-    if (ignoreTouchSwipe) {
-      touchMoved = false;
-      return;
-    }
-
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-    touchMoved = false;
-  }, { passive: true });
-
-  stage.addEventListener('touchmove', (e) => {
-    if (ignoreTouchSwipe) {
-      return;
-    }
-
-    const dx = Math.abs(e.touches[0].clientX - touchStartX);
-    const dy = Math.abs(e.touches[0].clientY - touchStartY);
-    if (dx > dy && dx > SWIPE_INTENT_PX) {
-      touchMoved = true;
-      e.preventDefault();
-    }
-  }, { passive: false });
-
-  stage.addEventListener('touchend', (e) => {
-    if (ignoreTouchSwipe) {
-      ignoreTouchSwipe = false;
-      return;
-    }
-
-    if (!touchMoved) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(deltaX) > SWIPE_TRIGGER_PX) {
-      setActiveSlide(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
-      restartAutoplay();
-    }
-    touchMoved = false;
-  });
-
-  // Mouse drag support (desktop horizontal swipe)
-  let dragStartX = 0;
-  let isDragging = false;
-  let didDrag = false;
-
-  stage.addEventListener('mousedown', (e) => {
-    if (isInteractiveElementTarget(e.target)) {
-      return;
-    }
-
-    dragStartX = e.clientX;
-    isDragging = true;
-    didDrag = false;
-    stage.classList.add('is-dragging');
-  });
-
-  stage.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    if (Math.abs(e.clientX - dragStartX) > SWIPE_INTENT_PX) didDrag = true;
-  });
-
-  stage.addEventListener('mouseup', (e) => {
-    if (!isDragging) return;
-    stage.classList.remove('is-dragging');
-    isDragging = false;
-    if (didDrag) {
-      const deltaX = e.clientX - dragStartX;
-      if (Math.abs(deltaX) > SWIPE_TRIGGER_PX) {
-        setActiveSlide(deltaX < 0 ? activeIndex + 1 : activeIndex - 1);
-        restartAutoplay();
-      }
-    }
-    didDrag = false;
-  });
-
-  stage.addEventListener('mouseleave', () => {
-    if (isDragging) {
-      stage.classList.remove('is-dragging');
-      isDragging = false;
-      didDrag = false;
-    }
-  });
-
-  // Prevent accidental click at end of drag
-  stage.addEventListener('click', (e) => {
-    if (isInteractiveElementTarget(e.target)) {
-      return;
-    }
-
-    if (didDrag) {
-      e.stopPropagation();
-      e.preventDefault();
-      didDrag = false;
-    }
-  }, true);
-
-  setActiveSlide(0);
+  // Initialize
+  updateActiveDot(0);
   startAutoplay();
 }

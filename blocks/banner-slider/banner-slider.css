@@ -683,6 +683,7 @@
     align-items: start;
     box-sizing: border-box;
     gap: 16px;
+    min-height: 440px;
     position: relative;
   }
 

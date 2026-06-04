@@ -3239,115 +3239,275 @@
     "id": "banner-slide",
     "fields": [
       {
+        "component": "tab",
+        "label": "Content",
+        "name": "contentTab"
+      },
+      {
         "component": "text",
         "valueType": "string",
         "name": "col1_title",
         "value": "",
-        "label": "Col1 Title"
+        "label": "Title"
       },
       {
         "component": "richtext",
         "valueType": "string",
         "name": "col1_description",
         "value": "",
-        "label": "Col1 Description"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "col1_Icon",
-        "label": "Col1 Icon",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_IconText",
-        "value": "",
-        "label": "Col1 Icon Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_IconAlt",
-        "value": "",
-        "label": "Col1 Icon Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "col1_Icon2",
-        "label": "Col1 Icon 2",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_Icon2Text",
-        "value": "",
-        "label": "Col1 Icon 2 Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_Icon2Alt",
-        "value": "",
-        "label": "Col1 Icon 2 Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "col1_Icon3",
-        "label": "Col1 Icon 3",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_Icon3Text",
-        "value": "",
-        "label": "Col1 Icon 3 Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_Icon3Alt",
-        "value": "",
-        "label": "Col1 Icon 3 Alt"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_ctaLink",
-        "value": "",
-        "label": "Col1 CTA Link"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_cta",
-        "value": "",
-        "label": "Col1 CTA Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_bgcolourText",
-        "value": "",
-        "label": "Col1 Background Colour Text"
+        "label": "Description"
       },
       {
         "component": "richtext",
         "valueType": "string",
         "name": "col1_shortDescription",
         "value": "",
-        "label": "Col1 Short Description"
+        "label": "Short Description"
+      },
+      {
+        "component": "container",
+        "name": "ctaContainer",
+        "label": "CTA (Call to Action)",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_cta",
+            "value": "",
+            "label": "CTA Text"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_ctaLink",
+            "value": "",
+            "label": "CTA Link"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "iconsContainer",
+        "label": "Icons / USPs",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col1_Icon",
+            "label": "Icon 1",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_IconText",
+            "value": "",
+            "label": "Icon 1 Text"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_IconAlt",
+            "value": "",
+            "label": "Icon 1 Alt"
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col1_Icon2",
+            "label": "Icon 2",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_Icon2Text",
+            "value": "",
+            "label": "Icon 2 Text"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_Icon2Alt",
+            "value": "",
+            "label": "Icon 2 Alt"
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col1_Icon3",
+            "label": "Icon 3",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_Icon3Text",
+            "value": "",
+            "label": "Icon 3 Text"
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_Icon3Alt",
+            "value": "",
+            "label": "Icon 3 Alt"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Media",
+        "name": "mediaTab"
+      },
+      {
+        "component": "container",
+        "name": "bgImageContainer",
+        "label": "Background Images",
+        "collapsible": true,
+        "collapsed": false,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_bgImage",
+            "label": "Desktop Background Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_bgImageAlt",
+            "value": "",
+            "label": "Desktop Background Image Alt"
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_mobbgImg",
+            "label": "Mobile Background Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_mobbgImgAlt",
+            "value": "",
+            "label": "Mobile Background Image Alt"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "fgImageContainer",
+        "label": "Foreground Images",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_ForegroundImg",
+            "label": "Desktop Foreground Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_foregroundImgAlt",
+            "value": "",
+            "label": "Desktop Foreground Image Alt"
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_ForegroundmobImg",
+            "label": "Mobile Foreground Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_ForegroundmobImgAlt",
+            "value": "",
+            "label": "Mobile Foreground Image Alt"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "videoContainer",
+        "label": "Video",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_youtubeUrl",
+            "value": "",
+            "label": "YouTube Video URL"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Layout",
+        "name": "layoutTab"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_bgcolourText",
+        "value": "",
+        "label": "Background Colour"
+      },
+      {
+        "component": "select",
+        "name": "col1_contentPositionClass",
+        "value": "",
+        "label": "Content Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Top Left",
+            "value": "content-pos-top-left"
+          },
+          {
+            "name": "Top Center",
+            "value": "content-pos-top-center"
+          },
+          {
+            "name": "Top Right",
+            "value": "content-pos-top-right"
+          },
+          {
+            "name": "Left",
+            "value": "content-pos-left"
+          },
+          {
+            "name": "Right",
+            "value": "content-pos-right"
+          },
+          {
+            "name": "Top",
+            "value": "content-pos-top"
+          }
+        ]
       },
       {
         "component": "select",
         "name": "col1_buttonPositionClass",
         "value": "",
-        "label": "Col1 Button Position",
+        "label": "Button Position",
         "valueType": "string",
         "options": [
           {
@@ -3430,46 +3590,9 @@
       },
       {
         "component": "select",
-        "name": "col1_contentPositionClass",
-        "value": "",
-        "label": "Col1 Content Position",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Default",
-            "value": ""
-          },
-          {
-            "name": "Top Left",
-            "value": "content-pos-top-left"
-          },
-          {
-            "name": "Top Center",
-            "value": "content-pos-top-center"
-          },
-          {
-            "name": "Top Right",
-            "value": "content-pos-top-right"
-          },
-          {
-            "name": "Left",
-            "value": "content-pos-left"
-          },
-          {
-            "name": "Right",
-            "value": "content-pos-right"
-          },
-          {
-            "name": "Top",
-            "value": "content-pos-top"
-          }
-        ]
-      },
-      {
-        "component": "select",
         "name": "col1_imagePositionClass",
         "value": "",
-        "label": "Col1 Image Position",
+        "label": "Image Position",
         "valueType": "string",
         "options": [
           {
@@ -3485,70 +3608,7 @@
             "value": "media-pos-right"
           }
         ]
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "col2_bgImage",
-        "label": "Col2 Background Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col2_bgImageAlt",
-        "value": "",
-        "label": "Col2 Background Image Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "col2_mobbgImg",
-        "label": "Col2 Mobile Background Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col2_mobbgImgAlt",
-        "value": "",
-        "label": "Col2 Mobile Background Image Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "col2_ForegroundImg",
-        "label": "Col2 Foreground Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col2_foregroundImgAlt",
-        "value": "",
-        "label": "Col2 Foreground Image Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "col2_ForegroundmobImg",
-        "label": "Col2 Foreground Mobile Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col2_ForegroundmobImgAlt",
-        "value": "",
-        "label": "Col2 Foreground Mobile Image Alt"
-      },
-      {
-  "component": "text",
-  "valueType": "string",
-  "name": "col2_youtubeUrl",
-  "value": "",
-  "label": "Col2 YouTube Video URL"
-}
+      }
     ]
   },
    {

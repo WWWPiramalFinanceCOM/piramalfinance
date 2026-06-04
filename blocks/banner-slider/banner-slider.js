@@ -364,6 +364,10 @@ const SLIDE_PLACEMENT_CLASSES = new Set([
   'content-pos-top',
   'media-pos-left',
   'media-pos-right',
+  'fg-sm',
+  'fg-md',
+  'fg-lg',
+  'fg-full',
   'text-green',
   'green-text',
 ]);
@@ -395,6 +399,10 @@ const PLACEMENT_LABEL_TO_CLASS = {
   'content top': 'content-pos-top',
   'media left': 'media-pos-left',
   'media right': 'media-pos-right',
+  'fg small': 'fg-sm',
+  'fg medium': 'fg-md',
+  'fg large': 'fg-lg',
+  'fg full': 'fg-full',
   'text green': 'text-green',
   'green text': 'green-text',
 };
@@ -551,6 +559,9 @@ function foregroundPictureHtml(picture, slideIndex) {
   const clone = picture.cloneNode(true);
   const img = clone.querySelector('img');
   if (img) {
+    img.className = 'banner-slider-fg-img';
+    img.removeAttribute('width');
+    img.removeAttribute('height');
     img.loading = slideIndex === 0 ? 'eager' : 'lazy';
     img.decoding = 'async';
     if (slideIndex === 0) {
@@ -1054,6 +1065,25 @@ export default function decorate(block) {
       didDrag = false;
     }
   });
+
+  // Trackpad / mouse-wheel horizontal scroll support
+  // let wheelTimeout = null;
+  // let wheelAccumulatedX = 0;
+  // stage.addEventListener('wheel', (e) => {
+  //   const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+  //   if (!isHorizontal) return;
+  //   e.preventDefault();
+  //   wheelAccumulatedX += e.deltaX;
+  //   if (wheelTimeout) clearTimeout(wheelTimeout);
+  //   wheelTimeout = setTimeout(() => {
+  //     if (Math.abs(wheelAccumulatedX) > SWIPE_TRIGGER_PX) {
+  //       setActiveSlide(wheelAccumulatedX > 0 ? activeIndex + 1 : activeIndex - 1);
+  //       restartAutoplay();
+  //     }
+  //     wheelAccumulatedX = 0;
+  //     wheelTimeout = null;
+  //   }, 100);
+  // }, { passive: false });
 
   // Prevent accidental click at end of drag
   stage.addEventListener('click', (e) => {

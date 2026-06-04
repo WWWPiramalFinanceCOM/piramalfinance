@@ -3515,6 +3515,35 @@
         ]
       },
       {
+        "component": "select",
+        "name": "col1_foregroundSizeClass",
+        "value": "",
+        "label": "Foreground Image Size",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default (394×334)",
+            "value": ""
+          },
+          {
+            "name": "Small (240×200)",
+            "value": "fg-sm"
+          },
+          {
+            "name": "Medium (394×334)",
+            "value": "fg-md"
+          },
+          {
+            "name": "Large (500×420)",
+            "value": "fg-lg"
+          },
+          {
+            "name": "Full Width",
+            "value": "fg-full"
+          }
+        ]
+      },
+      {
         "component": "tab",
         "label": "Media",
         "name": "mediaTab"

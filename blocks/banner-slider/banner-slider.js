@@ -104,6 +104,53 @@ function imageSources(cell) {
   return [...new Set(values)];
 }
 
+function pictureElements(cell) {
+  if (!cell) return [];
+  const candidates = [cell, firstContent(cell)].filter(Boolean);
+  const pictures = [];
+  const seen = new Set();
+  candidates.forEach((candidate) => {
+    const pics = candidate.tagName === 'PICTURE' ? [candidate] : [...candidate.querySelectorAll?.('picture') || []];
+    pics.forEach((picture) => {
+      if (!seen.has(picture)) {
+        seen.add(picture);
+        pictures.push(picture);
+      }
+    });
+  });
+  return pictures;
+}
+
+function imageMarkupFromCell(cell) {
+  // First try to find a <picture> element (preserves sources + alt)
+  const pics = pictureElements(cell);
+  if (pics.length) return pics[0].outerHTML;
+  // Fallback: standalone <img> not inside a <picture> (common for SVGs)
+  const candidates = [cell, firstContent(cell)].filter(Boolean);
+  for (let i = 0; i < candidates.length; i += 1) {
+    const candidate = candidates[i];
+    const img = candidate.tagName === 'IMG' ? candidate : candidate.querySelector?.('img');
+    if (img?.src) {
+      return `<picture>${img.outerHTML}</picture>`;
+    }
+  }
+  // Fallback: <a href="image-path">text</a> (EDS renders DAM icon references this way)
+  for (let i = 0; i < candidates.length; i += 1) {
+    const candidate = candidates[i];
+    const link = candidate.tagName === 'A' ? candidate : candidate.querySelector?.('a');
+    if (link?.href && isImageLike(link.href)) {
+      const alt = (link.textContent || '').trim();
+      return `<picture><img src="${link.href}" alt="${alt}" loading="lazy" decoding="async"></picture>`;
+    }
+  }
+  return '';
+}
+
+function pictureElementFromCell(cell) {
+  const pics = pictureElements(cell);
+  return pics.length ? pics[0] : null;
+}
+
 function hrefFromParagraph(paragraph) {
   if (!paragraph) {
     return '';
@@ -457,8 +504,8 @@ function featureItems(leftSlots) {
     return '';
   }
 
-  const iconValues = leftSlots
-    .map((slot) => imageSourceFromCell(slot))
+  const iconMarkups = leftSlots
+    .map((slot) => imageMarkupFromCell(slot))
     .filter(Boolean)
     .slice(0, 3);
 
@@ -466,11 +513,11 @@ function featureItems(leftSlots) {
     .map((slot) => (slot.textContent || '').trim())
     .filter((text) => text && !isLikelyUrl(text) && !/^#[0-9a-f]{3,8}$/i.test(text));
 
-  const items = iconValues.map((icon, index) => {
+  const items = iconMarkups.map((markup, index) => {
     const text = textValues[index] || '';
     return {
       text,
-      icon: text ? createPicture(icon, text) : '',
+      icon: text ? markup : '',
     };
   }).filter((item) => item.text && item.icon);
 
@@ -523,6 +570,35 @@ function resolveImageAssets(rightSources) {
   };
 }
 
+function resolvePictureElements(rightCell) {
+  const pics = pictureElements(rightCell);
+  if (!pics.length) {
+    return { foregroundPicture: null };
+  }
+  if (pics.length === 1) {
+    return { foregroundPicture: pics[0] };
+  }
+  if (pics.length >= 3) {
+    return { foregroundPicture: pics[2] || null };
+  }
+  return { foregroundPicture: pics[1] || null };
+}
+
+function foregroundPictureHtml(picture, slideIndex) {
+  const clone = picture.cloneNode(true);
+  const img = clone.querySelector('img');
+  if (img) {
+    img.loading = slideIndex === 0 ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    if (slideIndex === 0) {
+      img.setAttribute('fetchpriority', 'high');
+    } else {
+      img.setAttribute('fetchpriority', 'low');
+    }
+  }
+  return clone.outerHTML;
+}
+
 function createSlide(row, index) {
   const [leftCell, rightCell] = [...row.children];
   const leftSlots = [...leftCell?.children || []];
@@ -551,6 +627,7 @@ function createSlide(row, index) {
     mobileBackground,
     foreground,
   } = resolveImageAssets(rightSources);
+  const { foregroundPicture } = resolvePictureElements(rightCell);
   const hasBackgroundMedia = !!(desktopBackground || mobileBackground);
 
   const titleCell = leftSlots[0] || null;
@@ -675,7 +752,7 @@ function createSlide(row, index) {
             ${shortDescriptionHtml ? `<div class="banner-slider-short-description">${shortDescriptionHtml}</div>` : ''}
           </div>
         </div>
-        <div class="banner-slider-media">${foreground ? createPicture(foreground, '', { loading: index === 0 ? 'eager' : 'lazy', fetchPriority: index === 0 ? 'high' : 'low' }) : ''}</div>
+        <div class="banner-slider-media">${foregroundPicture ? foregroundPictureHtml(foregroundPicture, index) : ''}</div>
       </div>
     </div>
   `;
@@ -703,6 +780,9 @@ export default function decorate(block) {
   dots.className = 'banner-slider-dots';
 
   const slides = rows.map((row, index) => createSlide(row, index));
+  if (slides.length <= 1) {
+    dots.style.display = 'none';
+  }
   slides.forEach((slide) => {
     track.appendChild(slide);
   });

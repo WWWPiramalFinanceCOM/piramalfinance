@@ -3808,7 +3808,7 @@
     "fields": [
       {
         "component": "tab",
-        "label": "1. Choose Calculator",
+        "label": "Setup",
         "name": "setupTab"
       },
       {
@@ -3903,16 +3903,8 @@
       },
       {
         "component": "tab",
-        "label": "2. Result Area",
-        "name": "resultsTab",
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
+        "label": "Results",
+        "name": "resultsTab"
       },
       {
         "component": "container",
@@ -3983,19 +3975,6 @@
         ],
         "condition": {
           "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        }
-      },
-      {
-        "component": "tab",
-        "label": "2. Part Payment Setup",
-        "name": "partPaymentTab",
-        "condition": {
-          "===": [
             {
               "var": "col1_name"
             },
@@ -4308,7 +4287,7 @@
       },
       {
         "component": "tab",
-        "label": "3. Disclaimer",
+        "label": "Disclaimer",
         "name": "disclaimerTab"
       },
       {

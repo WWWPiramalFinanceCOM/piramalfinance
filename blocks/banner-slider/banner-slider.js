@@ -13,33 +13,6 @@ function isImageLike(value = '') {
   return value.includes('/content/dam/') || /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(value);
 }
 
-function createPicture(src, alt = '', options = {}) {
-  if (!src) {
-    return '';
-  }
-
-  const {
-    className = '',
-    fetchPriority,
-    loading = 'lazy',
-  } = options;
-
-  const picture = document.createElement('picture');
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = alt;
-  img.loading = loading;
-  img.decoding = 'async';
-  if (className) {
-    img.className = className;
-  }
-  if (fetchPriority) {
-    img.setAttribute('fetchpriority', fetchPriority);
-  }
-  picture.replaceChildren(img);
-  return picture.outerHTML;
-}
-
 function escapeAttribute(value = '') {
   return value
     .replace(/&/g, '&amp;')
@@ -144,11 +117,6 @@ function imageMarkupFromCell(cell) {
     }
   }
   return '';
-}
-
-function pictureElementFromCell(cell) {
-  const pics = pictureElements(cell);
-  return pics.length ? pics[0] : null;
 }
 
 function hrefFromParagraph(paragraph) {
@@ -353,11 +321,6 @@ function contentHtml(cell) {
 function imageHrefFromParagraph(paragraph) {
   const href = hrefFromParagraph(paragraph);
   return isImageLike(href) ? href : '';
-}
-
-function imageSourceFromCell(cell) {
-  const values = imageSources(cell);
-  return values.length ? values[0] : '';
 }
 
 function isAuthorEnvironment() {
@@ -573,15 +536,15 @@ function resolveImageAssets(rightSources) {
 function resolvePictureElements(rightCell) {
   const pics = pictureElements(rightCell);
   if (!pics.length) {
-    return { foregroundPicture: null };
+    return { desktopBgPicture: null, mobileBgPicture: null, foregroundPicture: null };
   }
   if (pics.length === 1) {
-    return { foregroundPicture: pics[0] };
+    return { desktopBgPicture: null, mobileBgPicture: null, foregroundPicture: pics[0] };
   }
   if (pics.length >= 3) {
-    return { foregroundPicture: pics[2] || null };
+    return { desktopBgPicture: pics[0], mobileBgPicture: pics[1] || pics[0], foregroundPicture: pics[2] || null };
   }
-  return { foregroundPicture: pics[1] || null };
+  return { desktopBgPicture: pics[0], mobileBgPicture: pics[0], foregroundPicture: pics[1] || null };
 }
 
 function foregroundPictureHtml(picture, slideIndex) {
@@ -597,6 +560,29 @@ function foregroundPictureHtml(picture, slideIndex) {
     }
   }
   return clone.outerHTML;
+}
+
+function backgroundPictureHtml(desktopPic, mobilePic, slideIndex) {
+  if (!desktopPic && !mobilePic) return '';
+  const pic = (desktopPic || mobilePic).cloneNode(true);
+  const img = pic.querySelector('img');
+  if (img) {
+    img.className = 'banner-slider-bg-img';
+    img.loading = slideIndex === 0 ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    img.setAttribute('fetchpriority', slideIndex === 0 ? 'high' : 'low');
+  }
+  // If we have a separate mothenbile picture, add its source for mobile breakpoint
+  if (mobilePic && mobilePic !== desktopPic) {
+    const mobileImg = mobilePic.querySelector('img');
+    if (mobileImg?.src) {
+      const mobileSource = document.createElement('source');
+      mobileSource.setAttribute('media', '(max-width: 991px)');
+      mobileSource.setAttribute('srcset', mobileImg.src);
+      pic.insertBefore(mobileSource, pic.firstChild);
+    }
+  }
+  return pic.outerHTML;
 }
 
 function createSlide(row, index) {
@@ -625,10 +611,9 @@ function createSlide(row, index) {
   const {
     desktopBackground,
     mobileBackground,
-    foreground,
   } = resolveImageAssets(rightSources);
-  const { foregroundPicture } = resolvePictureElements(rightCell);
-  const hasBackgroundMedia = !!(desktopBackground || mobileBackground);
+  const { desktopBgPicture, mobileBgPicture, foregroundPicture } = resolvePictureElements(rightCell);
+  const hasBackgroundMedia = !!(desktopBgPicture || desktopBackground || mobileBackground);
 
   const titleCell = leftSlots[0] || null;
   const descriptionCell = leftSlots[1] || null;
@@ -733,13 +718,13 @@ function createSlide(row, index) {
   if (bgColor && hasBackgroundMedia) {
     slide.classList.add('banner-slider-slide--bg-color-image');
   }
-  if (!bgColor && desktopBackground) {
+  if (!bgColor && (desktopBgPicture || desktopBackground)) {
     slide.classList.add('banner-slider-slide--bg-cover');
   }
 
   slide.innerHTML = `
     <div class="banner-slider-bg">
-      ${createBackgroundMedia(desktopBackground, mobileBackground, index === 0)}
+      ${desktopBgPicture ? backgroundPictureHtml(desktopBgPicture, mobileBgPicture, index) : createBackgroundMedia(desktopBackground, mobileBackground, index === 0)}
     </div>
     <div class="banner-slider-surface">
       <div class="banner-slider-content">

@@ -3852,26 +3852,6 @@
         "label": "Loan Product",
         "description": "Links this calculator to a specific loan product page for analytics and CTA routing",
         "valueType": "string",
-        "condition": {
-          "or": [
-            {
-              "===": [
-                {
-                  "var": "col1_name"
-                },
-                "emicalculator"
-              ]
-            },
-            {
-              "===": [
-                {
-                  "var": "col1_name"
-                },
-                "eligibilitycalculator"
-              ]
-            }
-          ]
-        },
         "options": [
           {
             "name": "Home Loan (HL)",
@@ -3933,14 +3913,6 @@
         "description": "The illustration next to the calculated result (typically a donut chart)",
         "collapsible": true,
         "collapsed": false,
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
         "fields": [
           {
             "component": "reference",
@@ -3975,14 +3947,6 @@
         "description": "Labels next to the two calculated values shown in the result area",
         "collapsible": true,
         "collapsed": false,
-        "condition": {
-          "!==": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
         "fields": [
           {
             "component": "text",
@@ -4014,14 +3978,6 @@
         "description": "Three result cards displayed after calculation: ROI, Savings, and Tenure Reduction. Each needs an icon, alt text, and label.",
         "collapsible": true,
         "collapsed": false,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
         "fields": [
           {
             "component": "reference",
@@ -4101,14 +4057,6 @@
         "description": "Labels for the summary row below the 3 metric cards",
         "collapsible": true,
         "collapsed": false,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
         "fields": [
           {
             "component": "text",
@@ -4135,14 +4083,6 @@
         "description": "Date picker where user enters their first loan EMI date",
         "collapsible": true,
         "collapsed": true,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
         "fields": [
           {
             "component": "text",
@@ -4184,14 +4124,6 @@
         "description": "Section header and clear button for the repayment schedule list",
         "collapsible": true,
         "collapsed": true,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
         "fields": [
           {
             "component": "text",
@@ -4218,14 +4150,6 @@
         "description": "The repeatable card where users enter a part payment date and amount",
         "collapsible": true,
         "collapsed": true,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
         "fields": [
           {
             "component": "text",
@@ -4276,14 +4200,6 @@
         "description": "Button that lets users add additional part payment entries",
         "collapsible": true,
         "collapsed": true,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_name"
-            },
-            "partpaymentcalculator"
-          ]
-        },
         "fields": [
           {
             "component": "reference",
@@ -4330,14 +4246,6 @@
         "description": "All disclaimer text fields — visible only when Show Disclaimer is ON",
         "collapsible": true,
         "collapsed": false,
-        "condition": {
-          "===": [
-            {
-              "var": "col1_showDisclaimer"
-            },
-            true
-          ]
-        },
         "fields": [
           {
             "component": "text",

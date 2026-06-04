@@ -1099,36 +1099,6 @@
           }
         },
         {
-          "id": "banner-carousel-item",
-          "fields": [
-            {
-              "component": "reference",
-              "name": "image",
-              "label": "Image",
-              "valueType": "string"
-            },
-            {
-              "component": "text",
-              "name": "Image Alt",
-              "value": "",
-              "label": "Desktop Image Alt",
-              "valueType": "string"
-            },
-            {
-              "component": "reference",
-              "name": "Mobile Image",
-              "label": "Mobile Image",
-              "valueType": "string"
-            },
-            {
-              "component": "text",
-              "name": "Mobile Image Alt",
-              "label": "Mobile Image Alt",
-              "valueType": "string"
-            }
-          ]
-        },
-        {
           "title": "Banner Slider",
           "id": "banner-slider",
           "plugins": {
@@ -1162,36 +1132,6 @@
               }
             }
           }
-        },
-        {
-          "id": "banner-carousel-item",
-          "fields": [
-            {
-              "component": "reference",
-              "name": "image",
-              "label": "Image",
-              "valueType": "string"
-            },
-            {
-              "component": "text",
-              "name": "Image Alt",
-              "value": "",
-              "label": "Desktop Image Alt",
-              "valueType": "string"
-            },
-            {
-              "component": "reference",
-              "name": "Mobile Image",
-              "label": "Mobile Image",
-              "valueType": "string"
-            },
-            {
-              "component": "text",
-              "name": "Mobile Image Alt",
-              "label": "Mobile Image Alt",
-              "valueType": "string"
-            }
-          ]
         },
         {
           "title": "Testimonies",

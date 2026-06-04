@@ -3274,16 +3274,16 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_IconText",
+            "name": "col1_IconAlt",
             "value": "",
-            "label": "Icon 1 Text"
+            "label": "Icon 1 Alt"
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_IconAlt",
+            "name": "col1_IconText",
             "value": "",
-            "label": "Icon 1 Alt"
+            "label": "Icon 1 Text"
           },
           {
             "component": "reference",
@@ -3295,16 +3295,16 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_Icon2Text",
+            "name": "col1_Icon2Alt",
             "value": "",
-            "label": "Icon 2 Text"
+            "label": "Icon 2 Alt"
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_Icon2Alt",
+            "name": "col1_Icon2Text",
             "value": "",
-            "label": "Icon 2 Alt"
+            "label": "Icon 2 Text"
           },
           {
             "component": "reference",
@@ -3316,16 +3316,16 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_Icon3Text",
+            "name": "col1_Icon3Alt",
             "value": "",
-            "label": "Icon 3 Text"
+            "label": "Icon 3 Alt"
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_Icon3Alt",
+            "name": "col1_Icon3Text",
             "value": "",
-            "label": "Icon 3 Alt"
+            "label": "Icon 3 Text"
           }
         ]
       },
@@ -3573,7 +3573,7 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "col2_foregroundImgAlt",
+            "name": "col2_ForegroundImgAlt",
             "value": "",
             "label": "Desktop Foreground Image Alt"
           },

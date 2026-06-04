@@ -1148,9 +1148,9 @@ export default async function decorate(block) {
 
   const blockIndex = block.dataset.resetId?.replace('calid-', '') || '0';
 
-  // Read product type from <p>[0], calculator name from <p>[1] of first row
+  // Read calculator name from <p>[0], product type from <p>[1] of first row
   const firstRowChildren = block.children[0]?.children[0]?.children;
-  const calcName = (firstRowChildren?.[1]?.textContent?.trim() || '').toLowerCase();
+  const calcName = (firstRowChildren?.[0]?.textContent?.trim() || '').toLowerCase();
   const isEligibility = calcName.includes('eligibility');
   const isPartPayment = calcName.includes('partpayment');
   const sliderPrefix = `c${blockIndex}s`;
@@ -1171,7 +1171,7 @@ export default async function decorate(block) {
   const firstRowArray = Array.from(firstRow || []);
   
   // For Part Payment Calculator, find multiple images and their labels
-  // Structure: productType, calcName, tabLabel, description, output1Image, output1Label, output2Image, output2Label, output3Image, output3Label, ...
+  // Structure: calcName, productType, tabLabel, description, output1Image, output1Label, output2Image, output2Label, output3Image, output3Label, ...
   let partPaymentImages = [];
   let partPaymentLabels = [];
   
@@ -1182,7 +1182,7 @@ export default async function decorate(block) {
     let foundDisclaimer = false;
     
     firstRowArray.forEach((el, idx) => {
-      // Skip first 2 elements (productType, calcName)
+      // Skip first 2 elements (calcName, productType)
       if (idx < 2) return;
       
       // Stop collecting when we hit disclaimer content
@@ -1223,7 +1223,7 @@ export default async function decorate(block) {
   // imageAlt comes from the actual img tag's alt attribute
   let allTextAfterImage = imageIndex >= 0 
     ? firstRowArray.slice(imageIndex + 1).filter(el => el.textContent?.trim())
-    : firstRowArray.slice(2).filter(el => el.textContent?.trim() && !el.querySelector('img')); // Skip productType[0], calcName[1]
+    : firstRowArray.slice(2).filter(el => el.textContent?.trim() && !el.querySelector('img')); // Skip calcName[0], productType[1]
   
   // Filter out disclaimer-related text that may leak into labels
   // These are never valid calculator output labels

@@ -11,8 +11,8 @@
 export function prepareBlocks(blocks) {
   const firstMeta = blocks[0].children[0]?.children[0]?.children;
   const firstMetaArray = Array.from(firstMeta || []);
-  // [0] and [1] are always productType and calcName (dropdowns with defaults)
-  const productType = (firstMetaArray[0]?.textContent?.trim() || 'hl').toLowerCase();
+  // [0] = calcName, [1] = productType (dropdowns with defaults)
+  const productType = (firstMetaArray[1]?.textContent?.trim() || 'hl').toLowerCase();
 
   const tabNames = [];
   const calcNames = [];
@@ -21,7 +21,7 @@ export function prepareBlocks(blocks) {
   blocks.forEach((blk, idx) => {
     const meta = blk.children[0]?.children[0]?.children;
     const metaArray = Array.from(meta || []);
-    const calcName = (metaArray[1]?.textContent?.trim() || '').toLowerCase();
+    const calcName = (metaArray[0]?.textContent?.trim() || '').toLowerCase();
 
     // Get tab name for this block - check if [2] is text (not image)
     let tabName = '';

@@ -577,18 +577,30 @@
 }
 
 .banner-slider-dot {
-  background: rgb(17 24 39 / 25%);
+  appearance: none;
+  background-color: #858585;
   border: 0;
   border-radius: 999px;
   cursor: pointer;
   height: 8px;
+  opacity: 0.3;
+  outline: none;
   padding: 0;
   transition: all 0.2s ease;
   width: 8px;
 }
 
+.banner-slider-dot:focus,
+.banner-slider-dot:hover,
+.banner-slider-dot:active {
+  outline: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .banner-slider-dot.is-active {
-  background: var(--black);
+  background-color: var(--black);
+  opacity: 1;
   width: 24px;
 }
 
@@ -673,6 +685,15 @@
   .banner-slider-dots {
     bottom: 16px;
     left: 16px;
+  }
+
+  .banner-slider-dot {
+    height: 5px;
+    width: 5px;
+  }
+
+  .banner-slider-dot.is-active {
+    width: 13px;
   }
 }
 

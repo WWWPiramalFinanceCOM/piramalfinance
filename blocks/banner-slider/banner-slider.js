@@ -1,6 +1,3 @@
-import { applyLoanNow, bannerClick, ctaClick } from '../../dl.js';
-import { targetObject } from '../../scripts/scripts.js';
-
 function firstContent(cell) {
   return cell?.firstElementChild || cell;
 }
@@ -812,6 +809,8 @@ export default function decorate(block) {
     anchor.addEventListener('click', async (event) => {
       event.stopPropagation();
 
+      const { applyLoanNow, bannerClick, ctaClick } = await import('../../dl.js');
+      const { targetObject } = await import('../../scripts/scripts.js');
       const clickText = (anchor.textContent || '').trim();
       const href = (anchor.getAttribute('href') || '').trim();
       const ctaCategory = 'banner-slider';
@@ -945,36 +944,13 @@ export default function decorate(block) {
   // Initialize
   updateActiveDot(0);
 
-  // Autoplay — only runs when banner is visible in viewport
+  // Autoplay — same as old carousel: plain setInterval
   if (slides.length > 1) {
-    let autoplayTimer = null;
-
-    const startAutoplay = () => {
-      if (autoplayTimer) return;
-      autoplayTimer = setInterval(() => {
-        if (document.body.style.overflowY !== 'hidden') {
-          const nextIndex = (activeIndex + 1) % slides.length;
-          scrollToSlide(nextIndex);
-        }
-      }, AUTOPLAY_INTERVAL_MS);
-    };
-
-    const stopAutoplay = () => {
-      if (!autoplayTimer) return;
-      clearInterval(autoplayTimer);
-      autoplayTimer = null;
-    };
-
-    const blockObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          startAutoplay();
-        } else {
-          stopAutoplay();
-        }
-      });
-    }, { threshold: 0 });
-
-    blockObserver.observe(block);
+    setInterval(() => {
+      if (document.body.style.overflowY !== 'hidden') {
+        const nextIndex = (activeIndex + 1) % slides.length;
+        scrollToSlide(nextIndex);
+      }
+    }, AUTOPLAY_INTERVAL_MS);
   }
 }

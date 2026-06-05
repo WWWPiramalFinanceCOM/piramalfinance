@@ -253,7 +253,7 @@
 
   @media only screen and (max-width: 1024px) {
     gap: unset;
-    margin-top: unset;
+    margin-top: 24px;
   }
 
 }
@@ -649,7 +649,6 @@
     gap: 24px;
     min-height: 0;
     padding-bottom: 56px;
-    padding-top: 40px;
   }
 
   .banner-slider-slide.media-pos-left .banner-slider-media {
@@ -715,7 +714,7 @@
   }
 
   .banner-slider-stage .banner-slider-track .banner-slider-slide .banner-slider-content {
-    align-items: start;
+    align-items: center;
     box-sizing: border-box;
     gap: 16px;
     max-width: 100%;
@@ -725,7 +724,9 @@
   }
 
   .banner-slider-stage .banner-slider-track .banner-slider-slide .banner-slider-copy {
-    /* max-width: 68%; */
+    width: 100%;
+    min-height: 440px;
+    padding-top: 40px;
     position: relative;
     z-index: 1;
   }

@@ -751,10 +751,6 @@ function createSlide(row, index) {
 }
 
 export default function decorate(block) {
-  if (isAuthorEnvironment()) {
-    return;
-  }
-
   const rows = [...block.children].filter((row) => row.children.length >= 2);
   if (!rows.length) {
     return;
@@ -796,10 +792,13 @@ export default function decorate(block) {
     bgColorStyle.textContent = bgColorRules;
   }
 
-  block.textContent = '';
+  // Hide original authored rows (keep in DOM for Universal Editor)
+  [...block.children].forEach((child) => {
+    child.style.display = 'none';
+  });
   block.classList.add('banner-slider', 'banner-slider--ready');
   stage.replaceChildren(track, dots);
-  block.replaceChildren(stage, bgColorStyle);
+  block.append(stage, bgColorStyle);
 
   const ctaAnchors = [...block.querySelectorAll('.banner-slider-cta .button.primary')];
   ctaAnchors.forEach((anchor) => {

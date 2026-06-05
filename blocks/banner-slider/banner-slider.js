@@ -897,7 +897,6 @@ export default function decorate(block) {
   });
 
   let activeIndex = 0;
-  let timerId = null;
 
   const dotButtons = slides.map((_, index) => {
     const button = document.createElement('button');
@@ -939,34 +938,43 @@ export default function decorate(block) {
         }
       }
     });
-  }, { threshold: 0.6, root: track });
+  }, { threshold: 0.6, rootMargin: '500px 0px' });
 
   slides.forEach((slide) => slideObserver.observe(slide));
 
-  function stopAutoplay() {
-    if (!timerId) return;
-    window.clearInterval(timerId);
-    timerId = null;
-  }
-
-  function startAutoplay() {
-    if (slides.length <= 1 || timerId) return;
-    timerId = window.setInterval(() => {
-      if (document.body.style.overflowY === 'hidden') return;
-      const nextIndex = (activeIndex + 1) % slides.length;
-      scrollToSlide(nextIndex);
-    }, AUTOPLAY_INTERVAL_MS);
-  }
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      stopAutoplay();
-    } else {
-      startAutoplay();
-    }
-  });
-
   // Initialize
   updateActiveDot(0);
-  startAutoplay();
+
+  // Autoplay — only runs when banner is visible in viewport
+  if (slides.length > 1) {
+    let autoplayTimer = null;
+
+    const startAutoplay = () => {
+      if (autoplayTimer) return;
+      autoplayTimer = setInterval(() => {
+        if (document.body.style.overflowY !== 'hidden') {
+          const nextIndex = (activeIndex + 1) % slides.length;
+          scrollToSlide(nextIndex);
+        }
+      }, AUTOPLAY_INTERVAL_MS);
+    };
+
+    const stopAutoplay = () => {
+      if (!autoplayTimer) return;
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    };
+
+    const blockObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startAutoplay();
+        } else {
+          stopAutoplay();
+        }
+      });
+    }, { threshold: 0 });
+
+    blockObserver.observe(block);
+  }
 }

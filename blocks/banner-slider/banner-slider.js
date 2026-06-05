@@ -900,7 +900,6 @@ export default function decorate(block) {
     button.setAttribute('aria-label', `Go to slide ${index + 1}`);
     button.addEventListener('click', () => {
       scrollToSlide(index);
-      restartAutoplay();
     });
     dots.appendChild(button);
     return button;
@@ -951,11 +950,6 @@ export default function decorate(block) {
       const nextIndex = (activeIndex + 1) % slides.length;
       scrollToSlide(nextIndex);
     }, AUTOPLAY_INTERVAL_MS);
-  }
-
-  function restartAutoplay() {
-    stopAutoplay();
-    startAutoplay();
   }
 
   document.addEventListener('visibilitychange', () => {

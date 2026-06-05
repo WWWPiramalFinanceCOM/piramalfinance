@@ -244,10 +244,9 @@ function renderTablePage(data, page) {
   const endIndex = startIndex + PAGINATION_CONFIG.itemsPerPage;
   const pageData = data.slice(startIndex, endIndex);
 
-  pageData.forEach((row, index) => {
+  pageData.forEach((row) => {
     const tr = createTag('tr');
-    // Serial number based on overall position (startIndex + index + 1)
-    tr.appendChild(createTag('td', {}, (startIndex + index + 1).toString()));
+    tr.appendChild(createTag('td', {}, row.srNo?.toString() || '-'));
     tr.appendChild(createTag('td', {}, row.folioNo || '-'));
     tr.appendChild(createTag('td', {}, row.warrantNo || '-'));
     tr.appendChild(createTag('td', {}, row.name || '-'));

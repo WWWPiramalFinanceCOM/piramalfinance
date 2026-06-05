@@ -792,10 +792,17 @@ export default function decorate(block) {
     bgColorStyle.textContent = bgColorRules;
   }
 
-  // Hide original authored rows (keep in DOM for Universal Editor)
+  // In author env: hide original rows visually but keep them in DOM for Universal Editor overlays.
+  // In publish env: remove original content entirely for clean DOM.
+  const isAuthor = isAuthorEnvironment();
   [...block.children].forEach((child) => {
-    child.style.display = 'none';
+    if (isAuthor) {
+      child.style.display = 'none';
+    }
   });
+  if (!isAuthor) {
+    block.textContent = '';
+  }
   block.classList.add('banner-slider', 'banner-slider--ready');
   stage.replaceChildren(track, dots);
   block.append(stage, bgColorStyle);

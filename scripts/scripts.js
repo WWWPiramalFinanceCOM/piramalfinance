@@ -291,9 +291,9 @@ async function loadEager(doc) {
     decorateMain(main);
     document.body.classList.add('appear');
     loadCSS(`${window.hlx.codeBasePath}/styles/styles.css`);
+    await loadResetCss();
     await loadSection(main.querySelector('.section'), waitForFirstImage);
     await loadHeader(doc.querySelector('header'));
-    await loadResetCss();
   }
 
   try {
@@ -870,7 +870,7 @@ async function loadPage() {
   } else {
     await loadingCustomCss();
   }
-  await loadResetCss();
+  // await loadResetCss();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();

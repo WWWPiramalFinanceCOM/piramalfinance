@@ -3,7 +3,7 @@
 // import { validationJSFunc } from '../blocks/applyloanform/validation.js';
 import { ctaClick } from '../dl.js';
 import {
-  sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks, loadCSS, fetchPlaceholders,
+  sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, loadCSS, fetchPlaceholders, loadSection, loadSections, waitForFirstImage,
   getMetadata,
   getExtension,
 } from './aem.js';
@@ -19,14 +19,42 @@ import {
   span,
 } from './dom-helper.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
-
 // console.log('Main Branch 1.3');
 /**
- * Moves all the attributes from a given elmenet to another given element.
+ * Moves all the attributes from a given element to another given element.
+ * @param {Element} from the element to copy attributes from
+ * @param {Element} to the element to copy attributes to
+ * @param {Array} attributes list of attributes to move (optional, moves all if not provided)
+ */
+export function moveAttributes(from, to, attributes) {
+  if (!attributes) {
+    // eslint-disable-next-line no-param-reassign
+    attributes = [...from.attributes].map(({ nodeName }) => nodeName);
+  }
+  attributes.forEach((attr) => {
+    const value = from.getAttribute(attr);
+    if (value) {
+      to?.setAttribute(attr, value);
+      from.removeAttribute(attr);
+    }
+  });
+}
+
+/**
+ * Move instrumentation attributes from a given element to another given element.
  * @param {Element} from the element to copy attributes from
  * @param {Element} to the element to copy attributes to
  */
+export function moveInstrumentation(from, to) {
+  moveAttributes(
+    from,
+    to,
+    [...from.attributes]
+      .map(({ nodeName }) => nodeName)
+      .filter((attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-')),
+  );
+}
+
 /**
  * create an element.
  * @param {string} tagName the tag for the element
@@ -261,9 +289,11 @@ async function loadEager(doc) {
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
-    await waitForLCP(LCP_BLOCKS);
-    await loadHeader(doc.querySelector('header'));
     document.body.classList.add('appear');
+    loadCSS(`${window.hlx.codeBasePath}/styles/styles.css`);
+    await loadSection(main.querySelector('.section'), waitForFirstImage);
+    await loadHeader(doc.querySelector('header'));
+    await loadResetCss();
   }
 
   try {
@@ -756,7 +786,7 @@ function autoloadForm(doc) {
     if (anchor.href && anchor.href.includes('/leadform/')) {
       anchor.addEventListener('click', async (e) => {
         e.preventDefault();
-        const {onCLickApplyFormOpen} = await import('../blocks/applyloanform/applyloanforms.js');
+        const { onCLickApplyFormOpen } = await import('../blocks/applyloanform/applyloanforms.js');
         onCLickApplyFormOpen(e);
         // document.querySelector('.expert.orangeexpert').click();
       })
@@ -768,10 +798,11 @@ function autoloadForm(doc) {
 async function loadLazy(doc) {
   autolinkModals(doc);
   autoloadForm(doc);
-  const main = doc.querySelector('main');
-  await loadBlocks(main);
 
-  // Move cards tozz tab panels
+  const main = doc.querySelector('main');
+  await loadSections(main);
+
+  // Move cards to tab panels
   moveCardsToTabPanels();
   initPiramalCards();
   moveDirectorsToTabPanel();
@@ -782,7 +813,6 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  // loadHeader(doc.querySelector("header"));
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);

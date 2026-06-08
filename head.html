@@ -18,21 +18,32 @@
       return isMinify ? `.min.${extCss}` : `.${extCss}`;
     }
   }
-</script>
+  </script>
+
+<style>
+  body{
+    display:none;
+  }
+
+  body.appear{
+    display:block;
+  }
+</style>
+
 <script type="module">
   import(`/scripts/aem${window.getExtension("js")}`);
   import(`/scripts/scripts${window.getExtension("js")}`);
 </script>
-<link as="font" crossorigin="" href="/fonts/Nunito-Light.woff2" rel="preconnect" type="font/woff2" />
+<!-- <link as="font" crossorigin="" href="/fonts/Nunito-Light.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoRegular.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/Nunito-Medium.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/Nunito-Semibold.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoBold.woff2" rel="preconnect" type="font/woff2" />
 <link as="font" crossorigin="" href="/fonts/NunitoExtraBold.woff2" rel="preconnect" type="font/woff2" />
-<link as="font" crossorigin="" href="/fonts/NunitoExtraLight.woff2" rel="preconnect" type="font/woff2" />
+<link as="font" crossorigin="" href="/fonts/NunitoExtraLight.woff2" rel="preconnect" type="font/woff2" /> -->
 
 <script>
-  document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
+  // document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
 </script>
 
 <link rel="apple-touch-icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" />

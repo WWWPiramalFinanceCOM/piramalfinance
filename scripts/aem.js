@@ -384,10 +384,10 @@ function createOptimizedPicture(
 function decorateTemplateAndTheme() {
     const addClasses = (element, classes) => {
         classes.split(',').forEach((c) => {
-          const className = toClassName(c.trim());
-      if (className) {
-        element.classList.add(className);
-      }
+            const className = toClassName(c.trim());
+            if (className) {
+                element.classList.add(className);
+            }
         });
     };
     const template = getMetadata('template');
@@ -467,30 +467,30 @@ export function autoLinkLangPaths(anchors) {
 }
 export function autoLinkLangPath(anchor) {
     try {
-        if(anchor.href){
+        if (anchor.href) {
             addRefAttribute(anchor);
             const anchorUrl = new URL(anchor.href);
             const currentUrl = new URL(window.location.href);
             const langPath = getMetadata('lang-path');
-    
+
             const excludedPaths = [
                 '/hi/', '/mr/', '/gu/', '/te/', '/ta/',
                 '/ml/', '/kn/', '/content/', '/account/',
                 '/customer-service/', '/neeyat'
             ];
-    
+
             const excludedTexts = [
                 'english', 'हिन्दी', 'ગુજરાતી', 'मराठी',
                 'தமிழ்', 'മലയാളം', 'ಕನ್ನಡ', 'తెలుగు'
             ];
-    
+
             const anchorText = anchor.textContent.trim().toLowerCase();
-    
+
             const isSameOrigin = anchorUrl.origin === currentUrl.origin;
             const isLocalPath = anchorUrl.pathname.startsWith('/');
             const isExcludedPath = excludedPaths.some(path => anchorUrl.pathname.includes(path));
             const isExcludedText = excludedTexts.includes(anchorText);
-    
+
             let newHref = anchor.href;
             if (isSameOrigin && isLocalPath && !isExcludedPath && !isExcludedText) {
                 if (newHref.includes('#')) {
@@ -500,15 +500,15 @@ export function autoLinkLangPath(anchor) {
                     newHref = langPath + anchorUrl.pathname + anchorUrl.search;
                 }
             } else if (isExcludedText) {
-                const pathSegments = (langPath && currentUrl.pathname.startsWith(langPath)) ? currentUrl.pathname.split('/').slice(2) :  currentUrl.pathname.split('/').slice(1);
+                const pathSegments = (langPath && currentUrl.pathname.startsWith(langPath)) ? currentUrl.pathname.split('/').slice(2) : currentUrl.pathname.split('/').slice(1);
                 if (pathSegments.length > 1) {
-                    newHref = anchorUrl.pathname  + '/' + pathSegments.join('/') + anchorUrl.search;
+                    newHref = anchorUrl.pathname + '/' + pathSegments.join('/') + anchorUrl.search;
                 } else {
                     newHref = langPath
-                        ? anchorUrl.pathname.split('/').slice(0, -1).join('/') + '/'+ currentUrl.pathname.split('/').slice(2).join('/') + anchorUrl.search
+                        ? anchorUrl.pathname.split('/').slice(0, -1).join('/') + '/' + currentUrl.pathname.split('/').slice(2).join('/') + anchorUrl.search
                         : anchorUrl.pathname.split('/').slice(0, -1).join('/') + currentUrl.pathname + anchorUrl.search;
                 }
-                newHref = newHref.replaceAll('//' , '/');
+                newHref = newHref.replaceAll('//', '/');
             }
             anchor.href = newHref;
         }
@@ -526,7 +526,7 @@ function decorateButtons(element) {
         a.title = a.title || a.textContent;
 
         // Clean Rel from href
-        
+
         autoLinkLangPath(a);
 
         if (a.href !== a.textContent) {
@@ -642,8 +642,11 @@ function decorateSections(main) {
             wrappers.forEach((wrapper) => section.append(wrapper));
             section.classList.add('section');
             section.dataset.sectionStatus = 'initialized';
-            section.style.display = 'none';
-    
+            // section.style.display = 'none';
+            section.style.opacity = 0;
+            section.style.visibility = 'hidden';
+
+
             // Process section metadata
             const sectionMeta = section.querySelector('div.section-metadata');
             if (sectionMeta) {
@@ -655,7 +658,7 @@ function decorateSections(main) {
                             .filter((style) => style)
                             .map((style) => toClassName(style.trim()))
                             .filter((style) => style);
-                        styles.forEach((style) => {if (style) section.classList.add(style)});
+                        styles.forEach((style) => { if (style) section.classList.add(style) });
                     } else {
                         section.dataset[toCamelCase(key)] = meta[key];
                     }
@@ -664,7 +667,7 @@ function decorateSections(main) {
             }
         });
     } catch (error) {
-        console.log("block got::", error,"::::",main)
+        console.log("block got::", error, "::::", main)
     }
 }
 
@@ -723,7 +726,10 @@ function updateSectionsStatus(main) {
                 break;
             } else {
                 section.dataset.sectionStatus = 'loaded';
-                section.style.display = null;
+                // section.style.display = null;
+                section.style.opacity = 1;
+                section.style.visibility = 'visible';
+
             }
         }
     }
@@ -785,7 +791,7 @@ async function loadBlock(block) {
         block.dataset.blockStatus = 'loading';
         const { blockName } = block.dataset;
         try {
-            if(!blockName) {throw Error(`Block Name is ${blockName}`)}
+            if (!blockName) { throw Error(`Block Name is ${blockName}`) }
             const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}${getExtension('css')}`);
             const decorationComplete = new Promise((resolve) => {
                 (async () => {

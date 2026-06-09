@@ -159,11 +159,15 @@ body {
     line-height: 1;
     color: var(--text-color);
     background-color: var(--background-color);
-    display: none
+    /* display: none */
+    opacity: 0;
+    visibility: hidden;
 }
 
 body.appear {
-    display: block
+    display: block;
+    opacity: 1;
+    visibility: visible;
 }
 
 h1,

@@ -96,9 +96,12 @@ export async function innerBranchFunc(branchhList) {
     const directionsBtn = hasCoords
       ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${eachBranch.Latitude},${eachBranch.Longitude}" target="_blank" rel="noopener noreferrer" class='directions-btn'>${placeholders.directionstext || 'Directions'}</a>`
       : '';
-    const branchType = eachBranch['Branch Type'] ? `<p class='card-branch-type'>${eachBranch['Branch Type']}</p>` : '';
+    const colorsVar = { 'retail': '#FFF3E8', 'gold-loan': '#c165d0', 'mfi': '#6580d0', 'rural-loan': '#4ae27e', 'gold-loan': '#e2c34a' };
+    debugger
+    const branchTypes = eachBranch['Branch Type'].trim().toLocaleLowerCase().replace(" ","-");
+    const branchType = eachBranch['Branch Type'] ? `<p class='card-branch-type'style=background:${colorsVar[branchTypes]} >${eachBranch['Branch Type']}</p>` : '';
     innerBranch
-                += `<div class='card-box'>
+      += `<div class='card-box'>
               <h3 class='card-title'> ${eachBranch.Location} </h3>
               ${branchType}
               <p class='card-address'>${eachBranch.Address}</p>
@@ -185,7 +188,7 @@ function BLNavUpdate(block) {
 
   let existedBreadCrumb = block.closest('body').querySelectorAll('.breadcrumb nav a');
   const existedBreadCrumbSchema = [];
-   existedBreadCrumb.forEach(((a,index)=>{
+  existedBreadCrumb.forEach(((a, index) => {
     existedBreadCrumbSchema.push({
       "@type": "ListItem",
       "position": index + 1,

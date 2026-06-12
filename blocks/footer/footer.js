@@ -20,6 +20,7 @@ export default async function decorate(block) {
     while (footerElement.firstElementChild && footerElement.firstElementChild !== block) {
       fragment.appendChild(footerElement.firstElementChild);
     }
+    
     decorateMain(fragment);
     await loadBlocks(fragment);
   } else {

@@ -317,6 +317,7 @@ footer:has(.footer.block) {
     visibility: visible;
 }
 
+
 /* Fix WCAG 2.4.7: Focus Visible - Ensure focus indicator is visible */
 a:focus-visible,
 button:focus-visible,

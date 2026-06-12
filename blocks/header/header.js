@@ -224,6 +224,7 @@ export default async function decorate(block) {
   } else {
     fragment = await loadFragment(path);
   }
+  
   block.classList.add('dp-none');
   // decorate nav DOM
   const nav = document.createElement('nav');

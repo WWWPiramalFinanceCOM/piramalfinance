@@ -2,8 +2,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
 import { headerInteraction, navlogin } from '../../dl.js';
-import { autoLinkLangPath, fetchPlaceholders, getMetadata } from '../../scripts/aem.js';
-import { targetObject } from '../../scripts/scripts.js';
+import { autoLinkLangPath, fetchPlaceholders, getMetadata, loadBlocks } from '../../scripts/aem.js';
+import { decorateMain, targetObject } from '../../scripts/scripts.js';
 import { body } from '../../scripts/common.js';
 import { loadFragment } from '../fragment/fragment.js';
 
@@ -210,7 +210,21 @@ export default async function decorate(block) {
   if (path.endsWith('/nav')) {
     document.querySelector('header').classList.add('primary');
   }
-  const fragment = await loadFragment(path);
+  const headerEl = block.parentElement;
+  const inlined = headerEl.firstElementChild !== block;
+  let fragment;
+
+  if (inlined) {
+    fragment = document.createElement('main');
+    while (headerEl.firstElementChild && headerEl.firstElementChild !== block) {
+      fragment.appendChild(headerEl.firstElementChild);
+    }
+    decorateMain(fragment);
+    await loadBlocks(fragment);
+  } else {
+    fragment = await loadFragment(path);
+  }
+  
   block.classList.add('dp-none');
   // decorate nav DOM
   const nav = document.createElement('nav');

@@ -309,6 +309,19 @@ main img {
     width: 100%
 }
 
+header,
+footer {
+   opacity: 0;
+   visibility: hidden;
+}
+
+header:has(.header.block),
+footer:has(.footer.block) {
+    opacity: 1;
+    visibility: visible;
+}
+
+
 /* Fix WCAG 2.4.7: Focus Visible - Ensure focus indicator is visible */
 a:focus-visible,
 button:focus-visible,

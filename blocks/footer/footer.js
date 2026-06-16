@@ -1,6 +1,6 @@
 import { footerInteraction } from '../../dl.js';
-import { getMetadata } from '../../scripts/aem.js';
-import { targetObject } from '../../scripts/scripts.js';
+import { getMetadata, loadBlocks } from '../../scripts/aem.js';
+import { decorateMain, targetObject } from '../../scripts/scripts.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 /**
@@ -11,7 +11,21 @@ export default async function decorate(block) {
   // load footer as fragment
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
+  const footerElement = block.parentElement;
+  const inlined = footerElement.firstElementChild !== block;
+  let fragment;
+
+  if (inlined) {
+    fragment = document.createElement('main');
+    while (footerElement.firstElementChild && footerElement.firstElementChild !== block) {
+      fragment.appendChild(footerElement.firstElementChild);
+    }
+    
+    decorateMain(fragment);
+    await loadBlocks(fragment);
+  } else {
+    fragment = await loadFragment(footerPath);
+  }
 
   // decorate footer DOM
   block.textContent = '';
@@ -46,7 +60,7 @@ export default async function decorate(block) {
       p.parentNode.replaceChild(h2, p);
     }
   });
-  
+
   // Fix WCAG 1.3.1: Remove unnecessary list semantics from footer section headings
   // The outer <ul> in footer-section-second wraps columns, not actual list content
   block.querySelectorAll('.footer-section-second .columns > div > div > ul').forEach((ul) => {

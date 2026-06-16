@@ -73,10 +73,10 @@ export default async function decorate(block) {
     'aria-label': 'Breadcrumb',
   });
 
-  if (multiText.innerText?.trim() && multiUrl.innerText?.trim()) {
+  if (multiText.textContent?.trim() && multiUrl.textContent?.trim()) {
     const breadcrumbsText = [];
-    const multiUrls = multiUrl.innerText.trim().replace(/~/g, '/').split(',');
-    multiText.innerText.trim().split(',').forEach((text, index) => {
+    const multiUrls = multiUrl.textContent.trim().replace(/~/g, '/').split(',');
+    multiText.textContent.trim().split(',').forEach((text, index) => {
       breadcrumbsText.push(`<a href="${getMetadata('lang-path') + multiUrls[index]}">${text}</a>`);
     });
 

@@ -384,10 +384,10 @@ function createOptimizedPicture(
 function decorateTemplateAndTheme() {
     const addClasses = (element, classes) => {
         classes.split(',').forEach((c) => {
-          const className = toClassName(c.trim());
-      if (className) {
-        element.classList.add(className);
-      }
+            const className = toClassName(c.trim());
+            if (className) {
+                element.classList.add(className);
+            }
         });
     };
     const template = getMetadata('template');
@@ -472,25 +472,25 @@ export function autoLinkLangPath(anchor) {
             const anchorUrl = new URL(anchor.href);
             const currentUrl = new URL(window.location.href);
             const langPath = getMetadata('lang-path');
-    
+
             const excludedPaths = [
                 '/hi/', '/mr/', '/gu/', '/te/', '/ta/',
                 '/ml/', '/kn/', '/content/', '/account/',
                 '/customer-service/', '/neeyat'
             ];
-    
+
             const excludedTexts = [
                 'english', 'हिन्दी', 'ગુજરાતી', 'मराठी',
                 'தமிழ்', 'മലയാളം', 'ಕನ್ನಡ', 'తెలుగు'
             ];
-    
+
             const anchorText = anchor.textContent.trim().toLowerCase();
-    
+
             const isSameOrigin = anchorUrl.origin === currentUrl.origin;
             const isLocalPath = anchorUrl.pathname.startsWith('/');
             const isExcludedPath = excludedPaths.some(path => anchorUrl.pathname.includes(path));
             const isExcludedText = excludedTexts.includes(anchorText);
-    
+
             let newHref = anchor.href;
             if (isSameOrigin && isLocalPath && !isExcludedPath && !isExcludedText) {
                 if (newHref.includes('#')) {
@@ -526,7 +526,7 @@ function decorateButtons(element) {
         a.title = a.title || a.textContent;
 
         // Clean Rel from href
-        
+
         autoLinkLangPath(a);
 
         if (a.href !== a.textContent) {
@@ -642,8 +642,10 @@ function decorateSections(main) {
             wrappers.forEach((wrapper) => section.append(wrapper));
             section.classList.add('section');
             section.dataset.sectionStatus = 'initialized';
-            section.style.display = 'none';
-    
+            // section.style.display = 'none';
+            section.style.opacity = 0;
+            section.style.visibility = 'hidden';
+
             // Process section metadata
             const sectionMeta = section.querySelector('div.section-metadata');
             if (sectionMeta) {
@@ -723,7 +725,9 @@ function updateSectionsStatus(main) {
                 break;
             } else {
                 section.dataset.sectionStatus = 'loaded';
-                section.style.display = null;
+                // section.style.display = null;
+                section.style.opacity = 1;
+                section.style.visibility = 'visible';
             }
         }
     }

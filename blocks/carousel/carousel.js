@@ -67,10 +67,10 @@ export default function decorate(block) {
   `;
   // block.appendChild(slideNavButtons);
 
-  const carouselshowtype = block.children[2].innerText.trim() || 'primary';
-  const rotatetype = block.children[3].innerText.trim() || 'rotate-off';
-  const version = block.children[4].innerText.trim() || 'One';
-  const configData = block.children[5].innerText.trim() || '';
+  const carouselshowtype = block.children[2].textContent.trim() || 'primary';
+  const rotatetype = block.children[3].textContent.trim() || 'rotate-off';
+  const version = block.children[4].textContent.trim() || 'One';
+  const configData = block.children[5].textContent.trim() || '';
 
   const isOldversion = targetObject.isMobile || version === 'One';
   // const isOldversion = false;

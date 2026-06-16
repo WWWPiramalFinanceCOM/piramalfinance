@@ -31,7 +31,7 @@ export function generateAccordionDOM(block) {
         summary.append(h3);
       }
     } else {
-      const url = element.innerText.trim();
+      const url = element.textContent.trim();
       const isurl = url.includes('.json');
       const elementText = element.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
       const elementDiv = document.createElement('div');

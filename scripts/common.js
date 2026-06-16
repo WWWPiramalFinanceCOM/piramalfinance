@@ -150,11 +150,11 @@ export function fetchAPI(method, url, data) {
   export function getProps(block, config) {
     return Array.from(block.children).map((el, index) => {
       if (config?.picture) {
-        return el.innerHTML.includes('picture') ? el.querySelector('picture') : el.innerText.trim();
+        return el.innerHTML.includes('picture') ? el.querySelector('picture') : el.textContent.trim();
       } if (config?.index && config?.index.includes(index)) {
         return el;
       }
-      return el.innerHTML.includes('picture') ? el.querySelector('img').src.trim() : el.innerText.trim();
+      return el.innerHTML.includes('picture') ? el.querySelector('img').src.trim() : el.textContent.trim();
     });
   }
 

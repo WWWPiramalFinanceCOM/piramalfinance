@@ -644,7 +644,6 @@ function decorateSections(main) {
             section.dataset.sectionStatus = 'initialized';
             // section.style.display = 'none';
             section.style.opacity = 0;
-            section.style.visibility = 'hidden';
 
             // Process section metadata
             const sectionMeta = section.querySelector('div.section-metadata');
@@ -727,7 +726,6 @@ function updateSectionsStatus(main) {
                 section.dataset.sectionStatus = 'loaded';
                 // section.style.display = null;
                 section.style.opacity = 1;
-                section.style.visibility = 'visible';
             }
         }
     }

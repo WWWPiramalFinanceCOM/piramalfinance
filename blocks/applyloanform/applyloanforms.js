@@ -675,6 +675,6 @@ window.addEventListener('pageshow', (event) => {
     window.location.reload();
   }
 });
-
+handleOpenFormOnClick(document);
 // Note: handleOpenFormOnClick should be called by blocks with scoped element
 // e.g., handleOpenFormOnClick(block.closest('main'))

@@ -177,7 +177,7 @@ body.modal-open {
   aspect-ratio: unset;
 }
 
-.loan-product-blue  .cards-wrapper .cards ul li:first-child .cards-card-image img,
+.loan-product-blue .cards-wrapper .cards ul li:first-child .cards-card-image img,
 .loan-product-orange .cards-wrapper .cards ul li:first-child .cards-card-image img {
   filter: brightness(0) saturate(100%);
 }
@@ -192,8 +192,7 @@ body.modal-open {
 }
 
 .loan-product-orange .cards-wrapper .cards ul li:hover .cards-card-image img {
-  filter: invert(64%) sepia(100%) saturate(600%) hue-rotate(344deg)
-    brightness(96%) contrast(101%);
+  filter: invert(64%) sepia(100%) saturate(600%) hue-rotate(344deg) brightness(96%) contrast(101%);
 }
 
 .loan-product-blue .cards-wrapper .cards ul li .cards-card-body,
@@ -214,7 +213,7 @@ body.modal-open {
 }
 
 .loan-product-blue .cards-wrapper .cards ul li .cards-card-body p:nth-child(2),
-.loan-product-orange .cards-wrapper .cards ul li .cards-card-body p:nth-child(2)  {
+.loan-product-orange .cards-wrapper .cards ul li .cards-card-body p:nth-child(2) {
   font-size: 14px;
   font-weight: 500;
   line-height: 100%;
@@ -246,6 +245,7 @@ body.modal-open {
 
 /* Tablet and smaller: let dialog be fluid but limited */
 @media screen and (max-width: 1024px) {
+
   .modal dialog[open]:has(.modal-content .loan-product-blue),
   .modal dialog[open]:has(.modal-content .loan-product-orange) {
     width: calc(100% - 50px);
@@ -269,26 +269,15 @@ body.modal-open {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .loan-product-blue
-    .cards-wrapper
-    .cards
-    ul
-    li
-    .cards-card-body
-    p:nth-child(1),
-  .loan-product-orange
-    .cards-wrapper
-    .cards
-    ul
-    li
-    .cards-card-body
-    p:nth-child(1) {
+  .loan-product-blue .cards-wrapper .cards ul li .cards-card-body p:nth-child(1),
+  .loan-product-orange .cards-wrapper .cards ul li .cards-card-body p:nth-child(1) {
     font-size: 16px;
   }
 }
 
 /* Mobile: fixed narrow width and hug height per Figma */
 @media screen and (max-width: 769px) {
+
   .modal dialog[open]:has(.modal-content .loan-product-blue),
   .modal dialog[open]:has(.modal-content .loan-product-orange) {
     width: 340px;
@@ -391,7 +380,10 @@ dialog[open]:has(.modal-content .section.support-contact-us-popup) {
   padding: 16px;
   border-radius: 4px;
   box-shadow: #0000004d 0 -2px 16px;
-  border: unset
+  border: unset;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 dialog[open]:has(.modal-content .section.support-contact-us-popup) .modal-content {
@@ -501,7 +493,7 @@ dialog[open]:has(.modal-content .section.e-nach-reg-modal-wrapper) {
   max-height: 496px;
   border-radius: 12px;
   overflow: auto;
-   /* position: absolute;
+  /* position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%; */
@@ -839,4 +831,3 @@ dialog[open]:has(.modal-content .section.one-lakh-modal) {
   width: 80vw;
   max-width: 700px
 }
-

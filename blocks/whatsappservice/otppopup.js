@@ -32,7 +32,7 @@ export function otpPopupCall(block) {
     afterGenerateOtp();
     getAccessToken().then((accesstoken) => {
       generateOTPAPI(accesstoken, mobileNumber, 'Whatsapp', 'Whatsapp').then((response) => {
-        if (response.returnResponse.statusCode == 100) {
+        if (response.returnResponse.StatusCode == 100) {
           removeLoader();
         }
       });
@@ -48,7 +48,7 @@ export function otpPopupCall(block) {
       afterGenerateOtp();
       getAccessToken().then((accesstoken) => {
         generateOTPAPI(accesstoken, mobileNumber, 'Whatsapp', 'Whatsapp').then((response) => {
-          if (response.returnResponse.statusCode == 100) {
+          if (response.returnResponse.StatusCode == 100) {
             removeLoader();
             document.querySelector('.failedContainer').style.display = 'none';
             sessionStorage.removeItem('count');
@@ -343,7 +343,7 @@ function verfiyOtp(otpValue) {
   if (otpValue) {
     verfyOtpAPI(otpValue)
       .then((response) => {
-        if (response.returnResponse.statusCode == 100) {
+        if (response.returnResponse.StatusCode == 100) {
           document.querySelector('.wrongotpmessage').style.display = 'none';
           document.querySelector('.wrongotpmessage').textContent = '';
           getWhatAPIAuth().then(({ status, auth_token }) => {

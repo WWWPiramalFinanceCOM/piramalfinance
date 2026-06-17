@@ -21,14 +21,14 @@ export default async function decorate(block) {
   }
 }
 
+
 function generateFeatureHTML(props) {
-  let [
-    containerLink,
+  let containerLink,
     cardDescription,
     leftSideImage,
-    leftSideImageAlt,
+    leftSideImageAlt = '',
     rightSideImage,
-    rightSideImageAlt,
+    rightSideImageAlt = '',
     rightSideImageLink,
     keyFeatureTitle,
     keyFeatureImagePlus,
@@ -38,13 +38,52 @@ function generateFeatureHTML(props) {
     keyFeatureInnerImage2,
     keyFeatureInnerText2,
     keyFeatureInnerImage3,
-    keyFeatureInnerText3,
-  ] = props;
+    keyFeatureInnerText3;
+
+  if (props.length <= 14) {
+    [
+      containerLink,
+      cardDescription,
+      leftSideImage,
+      rightSideImage,
+      rightSideImageLink,
+      keyFeatureTitle,
+      keyFeatureImagePlus,
+      keyFeatureImageMinus,
+      keyFeatureInnerImage1,
+      keyFeatureInnerText1,
+      keyFeatureInnerImage2,
+      keyFeatureInnerText2,
+      keyFeatureInnerImage3,
+      keyFeatureInnerText3,
+    ] = props;
+     leftSideImageAlt = '';
+      rightSideImageAlt = '';
+  } else {
+    [
+      containerLink,
+      cardDescription,
+      leftSideImage,
+      leftSideImageAlt,
+      rightSideImage,
+      rightSideImageAlt,
+      rightSideImageLink,
+      keyFeatureTitle,
+      keyFeatureImagePlus,
+      keyFeatureImageMinus,
+      keyFeatureInnerImage1,
+      keyFeatureInnerText1,
+      keyFeatureInnerImage2,
+      keyFeatureInnerText2,
+      keyFeatureInnerImage3,
+      keyFeatureInnerText3,
+    ] = props;
+  }
 
   containerLink = containerLink?.textContent?.trim() || '';
   cardDescription = cardDescription?.querySelector('div > div') || '';
   leftSideImage = leftSideImage?.querySelector('div > picture > img')?.src || '';
-  leftSideImageAlt = leftSideImageAlt?.textContent.trim() || '';
+  leftSideImageAlt = leftSideImageAlt?.textContent?.trim() || '';
   rightSideImage = rightSideImage?.querySelector('div > picture > img')?.src || '';
   rightSideImageAlt = rightSideImageAlt?.textContent?.trim() || '';
   rightSideImageLink = rightSideImageLink?.textContent?.trim() || '';
@@ -237,7 +276,7 @@ function viewLogic(block) {
   });
 
   const buttonContainer = wrapper.querySelector('.button-container');
-  if (buttonContainer) {
+  if (buttonContainer && buttonContainer.textContent.trim() === 'View More') {
     const buttonText = buttonContainer?.textContent.trim();
     buttonContainer.innerHTML = buttonText;
     viewMoreLogic(viewMoreSection);
@@ -318,7 +357,7 @@ function keyFeaturesAnalytics(block) {
         const cta_category = data.cta_position;
         ctaClick(data.click_text, cta_category, cta_position, targetObject.pageName);
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
     });
   });

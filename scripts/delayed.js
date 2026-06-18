@@ -57,10 +57,15 @@ async function loadMoengage() {
   const scriptTag = document.createElement('script');
   scriptTag.type = 'text/javascript';
 
-  var moeDataCenter = placeholders.monenageDc; // Replace "DC" with the actual Data center value from the above table
-  var moeAppID = placeholders.monenageAppid; // Replace "WorkspaceID" available in the settings page of MoEngage Dashboard.
-  var debug_logs = placeholders.monegageDebuglog;  // MoEngage Web SDK uses a parameter debug_logs: 1 to detect that you are integrating in TEST environment. When you decide to take your website LIVE, just pass the parameter debug_logs: 0 and all data about your actual users would start appearing in LIVE environment
-  var sdkVersion = placeholders.monegageSdkversion; // Replace this value with the version of Web SDK that you intend to use. It is recommended to use the format x (major);
+  var moeDataCenter = placeholders.monenageDc;
+  var moeAppID = placeholders.monenageAppid;
+  var debug_logs = placeholders.monegageDebuglog;
+  var sdkVersion = placeholders.monegageSdkversion;
+
+  if (!moeDataCenter || !/^dc_[0-9]+$/.test(moeDataCenter)) {
+    console.warn('MoEngage: invalid or missing data center value in placeholders.');
+    return;
+  }
 
   scriptTag.innerHTML = `
   console.log('MoEngage Web SDK');
@@ -79,14 +84,16 @@ async function loadMoengage() {
     if (!moengageContainer) return false;
     let navWrapper = document.querySelector(".nav-wrapper");
     let heightMoengage = moengageContainer.clientHeight;
-    window.addEventListener('scroll', function (event) {
-      navWrapper.style.marginTop = `${heightMoengage}px`;
-      if (window.scrollY > 50) {
-        navWrapper.style.marginTop = "0px"
-      } else {
-        navWrapper.style.marginTop = `${heightMoengage}px`;
+    let scrollTicking = false;
+    window.addEventListener('scroll', function () {
+      if (!scrollTicking) {
+        requestAnimationFrame(() => {
+          navWrapper.style.marginTop = window.scrollY > 50 ? '0px' : `${heightMoengage}px`;
+          scrollTicking = false;
+        });
+        scrollTicking = true;
       }
-    })
+    });
   } catch (error) {
     console.warn("Moengage Error :: ", error);
   }

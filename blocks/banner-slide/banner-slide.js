@@ -142,7 +142,7 @@ function parseSlide(block) {
       const opensForm = (!anchor && sup) || (anchor && isHashLink(anchor.getAttribute('href'))) || isApplyLoanLabel(text);
       const href = anchor ? anchor.getAttribute('href') : '#';
       const btnClass = index === 0 ? 'button primary' : 'button secondary';
-      const containerClass = index === 0 ? 'banner-slider-cta button-container' : 'banner-slider-cta banner-slider-cta2 button-container';
+      const containerClass = index === 0 ? 'banner-slide-cta button-container' : 'banner-slide-cta banner-slide-cta2 button-container';
 
       if (opensForm) {
         ctaHtmlCombined += `<div class="${containerClass}"><button type="button" class="${btnClass}" data-cta-open-form="true">${text}</button></div>`;
@@ -208,7 +208,7 @@ function createBackgroundMedia(desktopSrc, mobileSrc, isFirst) {
   if (!desktop && !mobile) return '';
   const src = desktop || mobile;
   const sourceMarkup = mobile && mobile !== desktop ? `<source media="(max-width: 991px)" srcset="${escapeAttr(mobile)}">` : '';
-  return `<picture>${sourceMarkup}<img class="banner-slider-bg-img" src="${escapeAttr(src)}" alt="" loading="${isFirst ? 'eager' : 'lazy'}" decoding="async" fetchpriority="${isFirst ? 'high' : 'low'}"></picture>`;
+  return `<picture>${sourceMarkup}<img class="banner-slide-bg-img" src="${escapeAttr(src)}" alt="" loading="${isFirst ? 'eager' : 'lazy'}" decoding="async" fetchpriority="${isFirst ? 'high' : 'low'}"></picture>`;
 }
 
 function cloneAndFormatPicture(desktopPic, mobilePic, imgClass, isFirst) {
@@ -220,7 +220,7 @@ function cloneAndFormatPicture(desktopPic, mobilePic, imgClass, isFirst) {
     img.loading = isFirst ? 'eager' : 'lazy';
     img.decoding = 'async';
     img.setAttribute('fetchpriority', isFirst ? 'high' : 'low');
-    if (imgClass === 'banner-slider-fg-img') {
+    if (imgClass === 'banner-slide-fg-img') {
       img.removeAttribute('width');
       img.removeAttribute('height');
     }
@@ -245,31 +245,31 @@ function buildSlide(data, index, extraClasses = []) {
   } = data;
 
   const slide = document.createElement('div');
-  slide.className = `banner-slider-slide ${index === 0 ? 'is-active' : ''}`;
+  slide.className = `banner-slide-slide ${index === 0 ? 'is-active' : ''}`;
   if (desktopBgPicture || desktopBackground || mobileBackground) slide.classList.add('has-bg-media');
   extraClasses.forEach(cls => { if (cls) slide.classList.add(cls); });
   slide.dataset.slideIndex = `${index}`;
 
-  const bgHtml = desktopBgPicture ? cloneAndFormatPicture(desktopBgPicture, mobileBgPicture, 'banner-slider-bg-img', index === 0) : createBackgroundMedia(desktopBackground, mobileBackground, index === 0);
+  const bgHtml = desktopBgPicture ? cloneAndFormatPicture(desktopBgPicture, mobileBgPicture, 'banner-slide-bg-img', index === 0) : createBackgroundMedia(desktopBackground, mobileBackground, index === 0);
 
-  let fgHtml = desktopFgPicture ? cloneAndFormatPicture(desktopFgPicture, mobileFgPicture, 'banner-slider-fg-img', index === 0) : '';
+  let fgHtml = desktopFgPicture ? cloneAndFormatPicture(desktopFgPicture, mobileFgPicture, 'banner-slide-fg-img', index === 0) : '';
   if (videoUrl && !fgHtml) {
     fgHtml = `<div class="banner-video-wrapper"><a href="${escapeAttr(videoUrl)}" class="banner-video-link button primary" target="_blank" rel="noopener">Watch Video</a></div>`;
   }
 
-  const featuresHtml = features.length ? `<div class="banner-slider-features" role="list" aria-label="Slide highlights">${features.map(f => `<div class="banner-slider-feature" role="listitem">${f.icon ? `<div class="banner-slider-feature-icon">${f.icon}</div>` : ''}${f.text ? `<span class="banner-slider-feature-text">${f.text}</span>` : ''}</div>`).join('')}</div>` : '';
+  const featuresHtml = features.length ? `<div class="banner-slide-features" role="list" aria-label="Slide highlights">${features.map(f => `<div class="banner-slide-feature" role="listitem">${f.icon ? `<div class="banner-slide-feature-icon">${f.icon}</div>` : ''}${f.text ? `<span class="banner-slide-feature-text">${f.text}</span>` : ''}</div>`).join('')}</div>` : '';
 
   slide.innerHTML = `
-    <div class="banner-slider-bg">${bgHtml}</div>
-    <div class="banner-slider-surface">
-      <div class="banner-slider-content">
-        <div class="banner-slider-copy">
-          ${title ? `<div class="banner-slider-title">${title}</div>` : ''}
-          ${description ? `<div class="banner-slider-description">${description}</div>` : ''}
+    <div class="banner-slide-bg">${bgHtml}</div>
+    <div class="banner-slide-surface">
+      <div class="banner-slide-content">
+        <div class="banner-slide-copy">
+          ${title ? `<div class="banner-slide-title">${title}</div>` : ''}
+          ${description ? `<div class="banner-slide-description">${description}</div>` : ''}
           ${featuresHtml}
-          ${(ctaHtmlCombined || shortDescription) ? `<div class="banner-slider-actions">${ctaHtmlCombined}${shortDescription ? `<div class="banner-slider-short-description">${shortDescription}</div>` : ''}</div>` : ''}
+          ${(ctaHtmlCombined || shortDescription) ? `<div class="banner-slide-actions">${ctaHtmlCombined}${shortDescription ? `<div class="banner-slide-short-description">${shortDescription}</div>` : ''}</div>` : ''}
         </div>
-        <div class="banner-slider-media">${fgHtml}</div>
+        <div class="banner-slide-media">${fgHtml}</div>
       </div>
     </div>
   `;
@@ -290,16 +290,16 @@ function initSectionSlider(section) {
   const hasAutoRotate = section.classList.contains('auto-rotate');
 
   const container = document.createElement('div');
-  container.className = 'banner-slider banner-slider--ready block';
+  container.className = 'banner-slide banner-slide--ready block';
 
   const stage = document.createElement('div');
-  stage.className = 'banner-slider-stage';
+  stage.className = 'banner-slide-stage';
 
   const track = document.createElement('div');
-  track.className = 'banner-slider-track';
+  track.className = 'banner-slide-track';
 
   const dots = document.createElement('div');
-  dots.className = 'banner-slider-dots';
+  dots.className = 'banner-slide-dots';
 
   const slides = slideBlocks.map((block, idx) => {
     const data = parseSlide(block);
@@ -328,7 +328,7 @@ function initSectionSlider(section) {
   const dotButtons = slides.map((_, index) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'banner-slider-dot';
+    button.className = 'banner-slide-dot';
     button.setAttribute('aria-label', `Go to slide ${index + 1}`);
     button.addEventListener('click', () => {
       scrollToSlide(index);
@@ -406,7 +406,7 @@ function initSectionSlider(section) {
     track.addEventListener('mouseleave', startAutoplay);
   }
 
-  [...container.querySelectorAll('.banner-slider-cta .button.primary, .banner-slider-cta2 .button.secondary')].forEach((btn) => {
+  [...container.querySelectorAll('.banner-slide-cta .button.primary, .banner-slide-cta2 .button.secondary')].forEach((btn) => {
     btn.addEventListener('click', async (event) => {
       event.stopPropagation();
       const clickText = (btn.textContent || '').trim();

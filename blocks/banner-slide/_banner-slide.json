@@ -1,0 +1,546 @@
+{
+  "definitions": [
+    {
+      "title": "Banner Slide",
+      "id": "banner-slide-block",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Banner Slide",
+              "model": "banner-slide-block"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "banner-slide-block",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Layout",
+          "name": "layoutTab"
+        },
+        {
+          "component": "select",
+          "name": "classes_contentPositionClass",
+          "value": "",
+          "label": "Content Position",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Top Left",
+              "value": "content-pos-top-left"
+            },
+            {
+              "name": "Top Center",
+              "value": "content-pos-top-center"
+            },
+            {
+              "name": "Top Right",
+              "value": "content-pos-top-right"
+            },
+            {
+              "name": "Left",
+              "value": "content-pos-left"
+            },
+            {
+              "name": "Right",
+              "value": "content-pos-right"
+            },
+            {
+              "name": "Top",
+              "value": "content-pos-top"
+            },
+            {
+              "name": "Center",
+              "value": "content-pos-center"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "classes_buttonPositionClass",
+          "value": "",
+          "label": "Button Position",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Top Far Left",
+              "value": "btn-pos-top-far-left"
+            },
+            {
+              "name": "Top Left",
+              "value": "btn-pos-top-left"
+            },
+            {
+              "name": "Top Mid Left",
+              "value": "btn-pos-top-mid-left"
+            },
+            {
+              "name": "Top Center",
+              "value": "btn-pos-top-center"
+            },
+            {
+              "name": "Top Mid Right",
+              "value": "btn-pos-top-mid-right"
+            },
+            {
+              "name": "Top Right",
+              "value": "btn-pos-top-right"
+            },
+            {
+              "name": "Middle Far Left",
+              "value": "btn-pos-middle-far-left"
+            },
+            {
+              "name": "Middle Left",
+              "value": "btn-pos-middle-left"
+            },
+            {
+              "name": "Middle Mid Left",
+              "value": "btn-pos-middle-mid-left"
+            },
+            {
+              "name": "Middle Center",
+              "value": "btn-pos-middle-center"
+            },
+            {
+              "name": "Middle Mid Right",
+              "value": "btn-pos-middle-mid-right"
+            },
+            {
+              "name": "Middle Right",
+              "value": "btn-pos-middle-right"
+            },
+            {
+              "name": "Bottom Far Left",
+              "value": "btn-pos-bottom-far-left"
+            },
+            {
+              "name": "Bottom Left",
+              "value": "btn-pos-bottom-left"
+            },
+            {
+              "name": "Bottom Mid Left",
+              "value": "btn-pos-bottom-mid-left"
+            },
+            {
+              "name": "Bottom Center",
+              "value": "btn-pos-bottom-center"
+            },
+            {
+              "name": "Bottom Mid Right",
+              "value": "btn-pos-bottom-mid-right"
+            },
+            {
+              "name": "Bottom Right",
+              "value": "btn-pos-bottom-right"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "classes_imagePositionClass",
+          "value": "",
+          "label": "Image Position",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Left",
+              "value": "media-pos-left"
+            },
+            {
+              "name": "Right",
+              "value": "media-pos-right"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "classes_foregroundSizeClass",
+          "value": "",
+          "label": "Foreground Image Size",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default (394x334)",
+              "value": ""
+            },
+            {
+              "name": "Small (240x200)",
+              "value": "fg-sm"
+            },
+            {
+              "name": "Medium (394x334)",
+              "value": "fg-md"
+            },
+            {
+              "name": "Large (517x432)",
+              "value": "fg-lg"
+            },
+            {
+              "name": "Full Width",
+              "value": "fg-full"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "classes_copyWidthClass",
+          "value": "",
+          "label": "Content Width",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default (62.5%)",
+              "value": ""
+            },
+            {
+              "name": "Narrow (50%)",
+              "value": "copy-w-50"
+            },
+            {
+              "name": "Wide (70%)",
+              "value": "copy-w-70"
+            }
+          ]
+        },
+        {
+          "component": "multiselect",
+          "name": "classes_textStyleClass",
+          "value": "",
+          "label": "Text Style",
+          "description": "Select text style variants (applied as CSS classes)",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Green Text",
+              "value": "green-text"
+            },
+            {
+              "name": "Dark Text",
+              "value": "dark-text"
+            },
+            {
+              "name": "Light Text",
+              "value": "light-text"
+            }
+          ]
+        },
+        {
+          "component": "multiselect",
+          "name": "classes_backgroundStyleClass",
+          "value": "",
+          "label": "Background Style",
+          "description": "Select background style variants (applied as CSS classes)",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Lavender Blush Background",
+              "value": "lavender-blush-bg"
+            },
+            {
+              "name": "Light Cyan Background",
+              "value": "light-cyan-bg"
+            },
+            {
+              "name": "Tan Background",
+              "value": "tan-bg"
+            },
+            {
+              "name": "Mint Green Background",
+              "value": "mint-green-bg"
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Content",
+          "name": "contentTab"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "col1_title",
+          "value": "",
+          "label": "Title"
+        },
+        {
+          "component": "select",
+          "name": "col1_titleType",
+          "value": "h2",
+          "label": "Title Tag Type",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "H1",
+              "value": "h1"
+            },
+            {
+              "name": "H2",
+              "value": "h2"
+            },
+            {
+              "name": "H3",
+              "value": "h3"
+            },
+            {
+              "name": "H4",
+              "value": "h4"
+            },
+            {
+              "name": "H5",
+              "value": "h5"
+            },
+            {
+              "name": "H6",
+              "value": "h6"
+            }
+          ]
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "col1_description",
+          "value": "",
+          "label": "Description"
+        },
+        {
+          "component": "container",
+          "name": "ctaContainer",
+          "label": "CTA (Call to Action)",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "richtext",
+              "valueType": "string",
+              "name": "col1_cta",
+              "value": "",
+              "label": "CTA Button (Type text and add hyperlink)"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "ctaContainer2",
+          "label": "CTA 2 (Call to Action)",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "richtext",
+              "valueType": "string",
+              "name": "col1_cta2",
+              "value": "",
+              "label": "CTA 2 Button (Type text and add hyperlink)"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "shortDescContainer",
+          "label": "Short Description (UL/LI with text + link)",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "richtext",
+              "valueType": "string",
+              "name": "col1_shortDescription",
+              "value": "",
+              "label": "Short Description (author as list: first item text, second item link)"
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Features",
+          "name": "featuresTab"
+        },
+        {
+          "component": "container",
+          "name": "feature1Container",
+          "label": "Feature 1",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col2_feature1Icon",
+              "label": "Feature 1 Icon",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col2_feature1Text",
+              "value": "",
+              "label": "Feature 1 Text"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "feature2Container",
+          "label": "Feature 2",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col2_feature2Icon",
+              "label": "Feature 2 Icon",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col2_feature2Text",
+              "value": "",
+              "label": "Feature 2 Text"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "feature3Container",
+          "label": "Feature 3",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col2_feature3Icon",
+              "label": "Feature 3 Icon",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col2_feature3Text",
+              "value": "",
+              "label": "Feature 3 Text"
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Media",
+          "name": "mediaTab"
+        },
+        {
+          "component": "container",
+          "name": "bgImageContainer",
+          "label": "Background Images",
+          "collapsible": true,
+          "collapsed": false,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col3_bgImage",
+              "label": "Desktop Background Image",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col3_bgImageAlt",
+              "value": "",
+              "label": "Desktop Background Image Alt"
+            },
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col3_mobbgImg",
+              "label": "Mobile Background Image",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col3_mobbgImgAlt",
+              "value": "",
+              "label": "Mobile Background Image Alt"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "fgImageContainer",
+          "label": "Foreground Images",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col4_ForegroundImg",
+              "label": "Desktop Foreground Image",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col4_ForegroundImgAlt",
+              "value": "",
+              "label": "Desktop Foreground Image Alt"
+            },
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col4_ForegroundmobImg",
+              "label": "Mobile Foreground Image",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col4_ForegroundmobImgAlt",
+              "value": "",
+              "label": "Mobile Foreground Image Alt"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "videoContainer",
+          "label": "Video",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col4_youtubeUrl",
+              "value": "",
+              "label": "YouTube Video URL"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

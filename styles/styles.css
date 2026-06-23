@@ -266,7 +266,7 @@ button {
     background-color: var(--link-color);
     margin: 16px 0;
     white-space: nowrap;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-overflow: ellipsis;
     border-radius: 30px
 }

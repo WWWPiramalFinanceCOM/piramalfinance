@@ -3952,13 +3952,6 @@
           }
         ]
       },
-       {
-        "component": "text",
-        "name": "classes_imagePositionClass",
-        "value": "",
-        "label": "Image Position",
-        "valueType": "string"
-      },
       {
         "component": "tab",
         "label": "Content",
@@ -3970,6 +3963,39 @@
         "name": "col1_title",
         "value": "",
         "label": "Title"
+      },
+      {
+        "component": "select",
+        "name": "col1_titleType",
+        "value": "h2",
+        "label": "Title Tag Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "H1",
+            "value": "h1"
+          },
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          },
+          {
+            "name": "H4",
+            "value": "h4"
+          },
+          {
+            "name": "H5",
+            "value": "h5"
+          },
+          {
+            "name": "H6",
+            "value": "h6"
+          }
+        ]
       },
       {
         "component": "richtext",
@@ -4027,13 +4053,6 @@
         ]
       },
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "col1_bgcolourText",
-        "value": "",
-        "label": "Background Colour (Hex e.g. #FF6600)"
-      },
-      {
         "component": "tab",
         "label": "Features",
         "name": "featuresTab"
@@ -4048,14 +4067,14 @@
           {
             "component": "reference",
             "valueType": "string",
-            "name": "col1_feature1Icon",
+            "name": "col2_feature1Icon",
             "label": "Feature 1 Icon",
             "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_feature1Text",
+            "name": "col2_feature1Text",
             "value": "",
             "label": "Feature 1 Text"
           }
@@ -4071,14 +4090,14 @@
           {
             "component": "reference",
             "valueType": "string",
-            "name": "col1_feature2Icon",
+            "name": "col2_feature2Icon",
             "label": "Feature 2 Icon",
             "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_feature2Text",
+            "name": "col2_feature2Text",
             "value": "",
             "label": "Feature 2 Text"
           }
@@ -4094,14 +4113,14 @@
           {
             "component": "reference",
             "valueType": "string",
-            "name": "col1_feature3Icon",
+            "name": "col2_feature3Icon",
             "label": "Feature 3 Icon",
             "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col1_feature3Text",
+            "name": "col2_feature3Text",
             "value": "",
             "label": "Feature 3 Text"
           }
@@ -4122,28 +4141,28 @@
           {
             "component": "reference",
             "valueType": "string",
-            "name": "col2_bgImage",
+            "name": "col3_bgImage",
             "label": "Desktop Background Image",
             "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col2_bgImageAlt",
+            "name": "col3_bgImageAlt",
             "value": "",
             "label": "Desktop Background Image Alt"
           },
           {
             "component": "reference",
             "valueType": "string",
-            "name": "col2_mobbgImg",
+            "name": "col3_mobbgImg",
             "label": "Mobile Background Image",
             "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col2_mobbgImgAlt",
+            "name": "col3_mobbgImgAlt",
             "value": "",
             "label": "Mobile Background Image Alt"
           }
@@ -4159,28 +4178,28 @@
           {
             "component": "reference",
             "valueType": "string",
-            "name": "col3_ForegroundImg",
+            "name": "col4_ForegroundImg",
             "label": "Desktop Foreground Image",
             "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col3_ForegroundImgAlt",
+            "name": "col4_ForegroundImgAlt",
             "value": "",
             "label": "Desktop Foreground Image Alt"
           },
           {
             "component": "reference",
             "valueType": "string",
-            "name": "col3_ForegroundmobImg",
+            "name": "col4_ForegroundmobImg",
             "label": "Mobile Foreground Image",
             "multi": false
           },
           {
             "component": "text",
             "valueType": "string",
-            "name": "col3_ForegroundmobImgAlt",
+            "name": "col4_ForegroundmobImgAlt",
             "value": "",
             "label": "Mobile Foreground Image Alt"
           }
@@ -4196,7 +4215,7 @@
           {
             "component": "text",
             "valueType": "string",
-            "name": "col2_youtubeUrl",
+            "name": "col4_youtubeUrl",
             "value": "",
             "label": "YouTube Video URL"
           }

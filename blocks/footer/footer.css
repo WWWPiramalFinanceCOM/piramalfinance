@@ -857,8 +857,9 @@ footer.footer-wrapper .footer {
   }
 
   .section.footer-follow-us-wrapper.card-follow-us .cards-wrapper .cards ul li img {
-    width: 22px;
+    width: 30px;
     height: 24px;
+    object-fit: fill;
   }
 }
 

@@ -548,6 +548,7 @@ button:focus-visible,
 header .schema-tag {
     opacity: 0;
     visibility: hidden;
+    display: none;
 }
 
 @media screen and (width <=768px) {

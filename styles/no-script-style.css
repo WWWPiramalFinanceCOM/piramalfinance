@@ -865,12 +865,12 @@ header>div:nth-child(2)>ul>li>p>a:hover {
 /* "Free" badge on Credit Report */
 header>div:nth-child(2)>ul>li>p>sup {
     position: absolute;
-    top: 8px;
+    top: -8px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #1B8040;
     color: #fff;
-    font-size: 0.625rem;
+    font-size: 0.925rem;
     font-weight: 700;
     font-family: Nunito-Bold, sans-serif;
     border-radius: 4px;

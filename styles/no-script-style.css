@@ -817,7 +817,8 @@ header>div:nth-child(2) {
     flex: 1;
     display: flex;
     justify-content: flex-end;
-    align-items: center
+    align-items: center;
+    margin-right: 72px;
 }
 
 header>div:nth-child(2)>ul {
@@ -920,7 +921,9 @@ header>div:nth-child(2)>ul>li:last-child>p>a {
 header>div:nth-child(2)>ul>li:last-child>p>.icon {
     display: inline-block;
     width: 18px;
-    height: 18px
+    height: 18px;
+    display: none;
+
 }
 
 header>div:nth-child(2)>ul>li:last-child>p>.icon img {
@@ -1012,6 +1015,321 @@ footer:has(.neeyat-footer) {
 .section.btn-orange .default-content-wrapper {
     display: flex;
     justify-content: center;
+}
+
+/* Footer css  */
+
+/* =========================================================
+   BASE FOOTER & WRAPPER SETTINGS
+   ========================================================= */
+footer {
+    background-color: #385265;
+    /* Fallback for var(--greyishblue) */
+    background: var(--greyishblue, #385265);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    padding: 0;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Constrain the width of the main sections just like the .footer wrapper */
+footer>div:not(:nth-child(6)):not(:nth-child(7)) {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+/* Reset basic elements */
+footer p,
+footer h2 {
+    margin: 0;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Hide metadata blocks intended for JS parsing */
+footer .section-metadata {
+    display: none !important;
+}
+
+/* Hide Risk Gradation (Section 6) and Modal (Section 7) by default */
+footer>div:nth-child(6),
+footer>div:nth-child(7) {
+    display: none;
+}
+
+
+/* =========================================================
+   SECTION 1: LOGO & CREDIT REPORT
+   ========================================================= */
+footer>div:nth-child(1) {
+    border-bottom: 1px solid rgb(94, 115, 119);
+    padding: 48px 0 24px 0;
+}
+
+footer>div:nth-child(1) .columns>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Because JS isn't injecting the img tag, we apply the logo via background */
+footer>div:nth-child(1) .icon-pride-logo-piramal {
+    display: block;
+    width: 158px;
+    height: 67px;
+    background: url('/icons/pride-logo-piramal.svg') no-repeat center left / contain;
+}
+
+footer>div:nth-child(1) .columns>div>div:nth-child(2) {
+    font-size: 1rem;
+    font-weight: 700;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+footer>div:nth-child(1) sup {
+    background-color: #1B8040;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-right: 8px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   SECTION 2: LINKS GRID (HOUSING, BUSINESS, ETC.)
+   ========================================================= */
+footer>div:nth-child(2) {
+    border-bottom: 1px solid rgb(94, 115, 119);
+    padding: 40px 0;
+}
+
+/* Create the 4-column layout for the two column blocks */
+footer>div:nth-child(2) .columns>div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+/* Add spacing between the top row of links and bottom row */
+footer>div:nth-child(2) .columns:nth-child(2) {
+    margin-top: 40px;
+}
+
+/* Heading Styling */
+footer>div:nth-child(2) ul>li>p {
+    font-size: 1.125rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+/* List Items Styling */
+footer>div:nth-child(2) ul>li>ul>li {
+    margin-top: 0.5rem;
+}
+
+footer>div:nth-child(2) ul>li>ul>li>a {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   SECTION 3: APP DOWNLOAD & CONTACT
+   ========================================================= */
+footer>div:nth-child(3) {
+    border-bottom: 1px solid rgb(94, 115, 119);
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer>div:nth-child(3) .cards {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* App Download text */
+footer>div:nth-child(3) .cards>div:nth-child(1) {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-right: 8px;
+}
+
+/* Make image cards clickable without JS */
+footer>div:nth-child(3) .cards>div:nth-child(2),
+footer>div:nth-child(3) .cards>div:nth-child(3) {
+    position: relative;
+    cursor: pointer;
+}
+
+/* Hide text link visually but stretch it to cover the image */
+footer>div:nth-child(3) .cards>div>div:nth-child(2) a {
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    font-size: 0;
+}
+
+footer>div:nth-child(3) .cards picture img {
+    width: 128px;
+    height: 38px;
+    object-fit: fill;
+    display: block;
+}
+
+footer>div:nth-child(3)>p {
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+footer>div:nth-child(3)>p a {
+    margin-left: 12px;
+    font-size: 1rem;
+    font-weight: 400;
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   SECTION 4: SOCIAL LINKS
+   ========================================================= */
+footer>div:nth-child(4) {
+    padding: 48px 0 24px 0;
+    text-align: center;
+}
+
+footer>div:nth-child(4)>p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #EDEDED;
+    margin-bottom: 24px;
+}
+
+footer>div:nth-child(4) .cards {
+    display: flex;
+    justify-content: center;
+    gap: 96px;
+    /* Spacing matching the 6pc from original css */
+}
+
+footer>div:nth-child(4) .cards>div {
+    position: relative;
+}
+
+footer>div:nth-child(4) .cards picture img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Stretch link over the social icon */
+footer>div:nth-child(4) .cards>div>div:nth-child(2) a {
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    font-size: 0;
+}
+
+
+/* =========================================================
+   SECTION 5: CORPORATE INFORMATION
+   ========================================================= */
+footer>div:nth-child(5) {
+    text-align: center;
+    padding-bottom: 48px;
+}
+
+footer>div:nth-child(5) p {
+    color: #EDEDED;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-top: 6px;
+}
+
+footer>div:nth-child(5) p>strong {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+footer>div:nth-child(5) p:nth-child(3) {
+    margin-top: 26px;
+}
+
+
+/* =========================================================
+   RESPONSIVE (TABLETS & MOBILE)
+   ========================================================= */
+@media screen and (max-width: 1024px) {
+    footer>div:nth-child(3) {
+        flex-direction: column;
+        padding: 32px 0;
+        gap: 24px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    footer>div:nth-child(1) {
+        padding-top: 24px;
+    }
+
+    footer>div:nth-child(1) .columns>div {
+        align-items: flex-start;
+    }
+
+    footer>div:nth-child(1) .icon-pride-logo-piramal {
+        width: 100px;
+        height: 39px;
+    }
+
+    footer>div:nth-child(2) .columns>div {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    footer>div:nth-child(3) .cards {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    footer>div:nth-child(3) .cards>div:nth-child(1) {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    footer>div:nth-child(4) .cards {
+        gap: 32px;
+        flex-wrap: wrap;
+    }
+
+    footer>div:nth-child(4) .cards picture img {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 /* banner css */

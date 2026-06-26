@@ -933,7 +933,10 @@ header>div:nth-child(2)>ul>li:last-child>p>.icon img {
 
 /* Hide second level ul (dropdowns) */
 header>div:nth-child(2)>ul>li>ul {
-    display: none
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    width: 0;
 }
 
 /* Hide the third empty div */

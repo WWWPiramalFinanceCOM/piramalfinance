@@ -9,7 +9,7 @@
   background-color: var(--rosewhite, #fef0ec);
 }
 
-.section.financial-reports-carousel .default-content-wrapper > :where(h1, h2, h3, h4, h5, h6) {
+.section.financial-reports-carousel .default-content-wrapper> :where(h1, h2, h3, h4, h5, h6) {
   margin: 0;
   color: var(--darkcharcoal, #333);
   font-family: 'Nunito-Extrabold', sans-serif;
@@ -19,7 +19,7 @@
   padding-top: 69px;
 }
 
-.section.financial-reports-carousel .default-content-wrapper > p {
+.section.financial-reports-carousel .default-content-wrapper>p {
   margin: 0;
   color: var(--darkcharcoal, #333);
   font-family: 'Nunito-Extrabold', sans-serif;
@@ -47,12 +47,12 @@
   padding-left: 5px;
 }
 
-.section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb > nav {
+.section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb>nav {
   display: flex;
   align-items: center;
 }
 
-.section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb > nav > a {
+.section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb>nav>a {
   color: var(--gradient-gray, #747272);
   font-family: 'Nunito-Regular', sans-serif;
   font-size: 0.875rem;
@@ -61,11 +61,11 @@
   text-decoration: none;
 }
 
-.section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb > nav > a:hover {
+.section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb>nav>a:hover {
   color: var(--orange, #f26841);
 }
 
-.section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb > nav > a:last-child {
+.section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb>nav>a:last-child {
   color: var(--orange, #f26841);
 }
 
@@ -85,8 +85,9 @@
 
 /* ---- Section Header Responsive - Tablet ---- */
 @media screen and (max-width: 1024px) {
-  .section.financial-reports-carousel .default-content-wrapper > :where(h1, h2, h3, h4, h5, h6),
-  .section.financial-reports-carousel .default-content-wrapper > p {
+
+  .section.financial-reports-carousel .default-content-wrapper> :where(h1, h2, h3, h4, h5, h6),
+  .section.financial-reports-carousel .default-content-wrapper>p {
     padding-top: 54px;
     font-size: 1.375rem;
     line-height: 34px;
@@ -102,8 +103,8 @@
     padding-left: 0;
   }
 
-  .section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb > nav > a,
-  .section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb > nav > a:last-child {
+  .section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb>nav>a,
+  .section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb>nav>a:last-child {
     font-size: 0.75rem;
     line-height: 16px;
   }
@@ -115,19 +116,20 @@
 
 /* ---- Section Header Responsive - Mobile ---- */
 @media screen and (max-width: 767px) {
-  .section.financial-reports-carousel .default-content-wrapper > :where(h1, h2, h3, h4, h5, h6),
-  .section.financial-reports-carousel .default-content-wrapper > p {
+
+  .section.financial-reports-carousel .default-content-wrapper> :where(h1, h2, h3, h4, h5, h6),
+  .section.financial-reports-carousel .default-content-wrapper>p {
     padding-top: 40px;
     font-size: 1.25rem;
     line-height: 30px;
   }
 
-  .section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb > nav {
+  .section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb>nav {
     overflow-x: auto;
     padding-bottom: 4px;
   }
 
-  .section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb > nav > a {
+  .section.financial-reports-carousel .breadcrumb-wrapper .breadcrumb>nav>a {
     white-space: nowrap;
   }
 }
@@ -251,7 +253,7 @@
   font-weight: 500;
   line-height: 1;
   color: #0d0d0d;
-      /* margin: 0px 20px; */
+  /* margin: 0px 20px; */
 }
 
 .financial-results-report .fr-dropdown-trigger:hover {
@@ -269,9 +271,10 @@
 .financial-results-report .fr-dropdown--open .fr-dropdown-trigger {
   border-radius: 12px 12px 0 0;
 }
+
 .financial-results-report .fr-dropdown--open .fr-dropdown-trigger .fr-dropdown-value {
-    /* margin: 0px 16px; */
-    margin: 0xp 8px;
+  /* margin: 0px 16px; */
+  margin: 0xp 8px;
 }
 
 .financial-results-report .fr-dropdown--open .fr-dropdown-trigger svg {
@@ -301,12 +304,15 @@
 
 /* Custom scrollbar for dropdown – match mobile style */
 .financial-results-report .fr-dropdown-menu {
-  scrollbar-width: none; /* Firefox: hide default */
-  -ms-overflow-style: none; /* IE/Edge: hide default */
+  scrollbar-width: none;
+  /* Firefox: hide default */
+  -ms-overflow-style: none;
+  /* IE/Edge: hide default */
 }
 
 .financial-results-report .fr-dropdown-menu::-webkit-scrollbar {
-  display: none; /* Chrome/Safari: hide default */
+  display: none;
+  /* Chrome/Safari: hide default */
 }
 
 .financial-results-report .fr-dropdown--open .fr-dropdown-menu {
@@ -323,7 +329,7 @@
   color: #0d0d0d;
   transition: background 0.15s ease;
   border-radius: 6px;
-      margin: 0px 8px;
+  margin: 0px 8px;
   /* border-bottom: 1px solid #f0f0f0; */
 }
 
@@ -340,7 +346,7 @@
   /* color: #fff; */
   font-family: 'Nunito-Bold', sans-serif;
   font-weight: 700;
-      margin: 0px 8px;
+  margin: 0px 8px;
 }
 
 .financial-results-report .fr-dropdown-item--active:hover {
@@ -465,18 +471,53 @@
 }
 
 /* File type colors from Figma */
-.financial-results-report .fr-file--pdf a { color: #d04423; }
-.financial-results-report .fr-file--pdf a:hover { color: #b03a1e; }
-.financial-results-report .fr-file--ppt a { color: #d04423; }
-.financial-results-report .fr-file--ppt a:hover { color: #b03a1e; }
-.financial-results-report .fr-file--excel a { color: #1d6f42; }
-.financial-results-report .fr-file--excel a:hover { color: #175c37; }
-.financial-results-report .fr-file--word a { color: #2b579a; }
-.financial-results-report .fr-file--word a:hover { color: #1e3f6f; }
-.financial-results-report .fr-file--audio a { color: #7f4ca8; }
-.financial-results-report .fr-file--audio a:hover { color: #6a3f8d; }
-.financial-results-report .fr-file--video a { color: #7f4ca8; }
-.financial-results-report .fr-file--video a:hover { color: #6a3f8d; }
+.financial-results-report .fr-file--pdf a {
+  color: #d04423;
+}
+
+.financial-results-report .fr-file--pdf a:hover {
+  color: #b03a1e;
+}
+
+.financial-results-report .fr-file--ppt a {
+  color: #d04423;
+}
+
+.financial-results-report .fr-file--ppt a:hover {
+  color: #b03a1e;
+}
+
+.financial-results-report .fr-file--excel a {
+  color: #1d6f42;
+}
+
+.financial-results-report .fr-file--excel a:hover {
+  color: #175c37;
+}
+
+.financial-results-report .fr-file--word a {
+  color: #2b579a;
+}
+
+.financial-results-report .fr-file--word a:hover {
+  color: #1e3f6f;
+}
+
+.financial-results-report .fr-file--audio a {
+  color: #7f4ca8;
+}
+
+.financial-results-report .fr-file--audio a:hover {
+  color: #6a3f8d;
+}
+
+.financial-results-report .fr-file--video a {
+  color: #7f4ca8;
+}
+
+.financial-results-report .fr-file--video a:hover {
+  color: #6a3f8d;
+}
 
 /* Dash for empty cells */
 .financial-results-report .fr-dash {
@@ -624,12 +665,12 @@
   }
 }
 
-.section.financial-results-report-container{
+.section.financial-results-report-container {
   margin-top: 60px;
 }
 
 @media screen and (max-width: 767px) {
-  .section.financial-results-report-container{
+  .section.financial-results-report-container {
     margin-top: 32px;
   }
 
@@ -637,6 +678,26 @@
     margin: 0px 8px;
   }
 }
+
+.fr-file-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.fr-external-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.fr-external-link svg {
+  width: 22px;
+  height: 22px;
+}
+
 /* 
 .fr-table-th.fr-table-th--download{
   visibility: collapse;

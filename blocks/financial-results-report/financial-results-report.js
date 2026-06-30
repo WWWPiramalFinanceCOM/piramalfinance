@@ -5,6 +5,22 @@ import { fetchAPI, getProps } from '../../scripts/common.js';
 /**
  * Resolve API/asset URL - on non-publish environments, prepend AEM publish domain
  */
+
+const EXTERNAL_LINK_ICON = `
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="22"
+     height="22"
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="#1E5AA8"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+  <path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/>
+  <polyline points="15 3 21 3 21 9"/>
+  <line x1="10" y1="14" x2="21" y2="3"/>
+</svg>`;
+
 function resolveUrl(url) {
   if (!url) return url;
   if (url.startsWith('http')) return url;
@@ -283,11 +299,33 @@ function buildSimpleTable(yearData) {
       const resolvedPath = resolveUrl(file.path);
       rows += `<tr class="fr-table-row">
         <td class="fr-table-cell fr-table-cell--name">${title}</td>
-        <td class="fr-table-cell fr-table-cell--has-file ${fileType.cssClass}">
-          <a href="${resolvedPath}" target="_blank" rel="noopener noreferrer" title="${title} (${fileType.label})" aria-label="Open ${title} ${fileType.label}">
-            ${fileType.icon}
-          </a>
-        </td>
+       <td class="fr-table-cell fr-table-cell--has-file ${fileType.cssClass}">
+  <div class="fr-file-actions">
+
+    ${file['external-link']
+          ? `
+      <a
+        href="${file['external-link']}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="fr-external-link"
+        aria-label="Open External Link">
+        ${EXTERNAL_LINK_ICON}
+      </a>`
+          : ''
+        }
+
+    <a
+      href="${resolvedPath}"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="${title} (${fileType.label})"
+      aria-label="Open ${title} ${fileType.label}">
+      ${fileType.icon}
+    </a>
+
+  </div>
+</td>
       </tr>`;
     });
   });
@@ -338,10 +376,32 @@ function buildTable(yearData, categorySlug) {
         const fileType = getFileType(file);
         const resolvedPath = resolveUrl(file.path);
         return `<td class="fr-table-cell fr-table-cell--has-file ${fileType.cssClass}">
-          <a href="${resolvedPath}" target="_blank" rel="noopener noreferrer" title="${title} (${fileType.label})" aria-label="Open ${reportType.name} ${q} ${fileType.label}">
-            ${fileType.icon}
-          </a>
-        </td>`;
+  <div class="fr-file-actions">
+
+    ${file['external-link']
+            ? `
+      <a
+        href="${file['external-link']}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="fr-external-link"
+        aria-label="Open External Link">
+        ${EXTERNAL_LINK_ICON}
+      </a>`
+            : ''
+          }
+
+    <a
+      href="${resolvedPath}"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="${title} (${fileType.label})"
+      aria-label="Open ${reportType.name} ${q} ${fileType.label}">
+      ${fileType.icon}
+    </a>
+
+  </div>
+</td>`;
       }
       return '<td class="fr-table-cell fr-table-cell--empty"><span class="fr-dash">&ndash;</span></td>';
     }).join('');

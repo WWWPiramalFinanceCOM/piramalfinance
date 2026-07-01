@@ -46,10 +46,16 @@
 /* --- Slide --- */
 .banner-slide-slide {
   background-color: #dff1fb;
+  contain: layout style paint;
   flex-shrink: 0;
   overflow: hidden;
   scroll-snap-align: start;
   width: 100%;
+}
+
+.banner-slide--ready .banner-slide-slide:not(.is-active) {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 529px;
 }
 
 .banner-slide-surface {
@@ -136,6 +142,11 @@
   margin: 0 0 16px;
 }
 
+/* When JS sets inline color on title, children inherit it */
+.banner-slide-title[style*="color"] :where(h1, h2, h3, h4, h5, h6) {
+  color: inherit !important;
+}
+
 .banner-slide-description :is(p, h1, h2, h3, h4, h5, h6) {
   color: var(--gradient-gray);
   font-family: Nunito-Regular, sans-serif;
@@ -143,6 +154,11 @@
   font-weight: 400;
   line-height: 32px;
   margin: 16px 0 0;
+}
+
+/* When JS sets inline color on description, children inherit it */
+.banner-slide-description[style*="color"] :is(p, h1, h2, h3, h4, h5, h6) {
+  color: inherit !important;
 }
 
 /* --- Features --- */

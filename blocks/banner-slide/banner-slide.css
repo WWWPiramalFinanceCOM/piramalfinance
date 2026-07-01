@@ -109,15 +109,11 @@
 /* --- Content grid --- */
 .banner-slide-content {
   align-items: center;
-  display: grid;
-  gap: 24px;
-  grid-template-columns: minmax(0, 62.5%) minmax(0, 37.5%);
+  display: flex;
   margin: 0 auto;
   max-width: 1240px;
-  min-height: 500px;
-  /* padding: 56px 24px 78px; */
-  padding: unset;
-  padding-top: unset;
+  min-height: 529px;
+  padding: 0;
   position: relative;
 }
 
@@ -249,48 +245,92 @@
 }
 
 /* --- Foreground media --- */
-.banner-slide-media picture,
-.banner-slide-media img {
+.banner-slide-media picture {
   display: block;
   margin-left: auto;
-  max-height: 360px;
-  max-width: 100%;
+}
+
+.banner-slide-media img {
+  display: block;
+  width: 394px;
+  height: 334px;
   object-fit: contain;
 }
 
 /* Foreground image size variants */
 .banner-slide-slide.fg-sm .banner-slide-media img {
-  max-height: 200px;
-  max-width: 240px;
+  width: 240px;
+  height: 200px;
 }
 
 .banner-slide-slide.fg-md .banner-slide-media img {
-  max-height: 334px;
-  max-width: 394px;
+  width: 394px;
+  height: 334px;
 }
 
 .banner-slide-slide.fg-lg .banner-slide-media img {
-  max-height: 432px;
-  max-width: 517px;
+  width: 517px;
+  height: 432px;
 }
 
 .banner-slide-slide.fg-full .banner-slide-media img {
-  max-height: none;
-  max-width: 100%;
+  width: 100%;
+  height: auto;
+  max-height: 500px;
 }
 
-/* Media position variants (desktop) */
+/* Media position variants */
+.banner-slide-slide.media-pos-left .banner-slide-media picture,
+.banner-slide-slide.media-pos-left .banner-slide-media img {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.banner-slide-slide.media-pos-right .banner-slide-media picture,
+.banner-slide-slide.media-pos-right .banner-slide-media img {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* Desktop layout */
 @media (width >=992px) {
+  .banner-slide-content {
+    min-height: 529px;
+    padding: 0;
+    position: relative;
+  }
+
+  .banner-slide-slide .banner-slide-copy {
+    width: 62.5%;
+  }
+
+  .banner-slide-slide.copy-w-50 .banner-slide-copy {
+    width: 50%;
+  }
+
+  .banner-slide-slide.copy-w-70 .banner-slide-copy {
+    width: 70%;
+  }
+
+  .banner-slide-media {
+    align-self: end;
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+  }
+
   .banner-slide-slide.media-pos-left .banner-slide-media {
-    order: 1;
+    left: 0;
+    right: auto;
   }
 
   .banner-slide-slide.media-pos-left .banner-slide-copy {
-    order: 2;
+    margin-left: auto;
   }
 
   .banner-slide-slide.media-pos-right .banner-slide-media {
-    order: 2;
+    left: auto;
+    right: 0;
   }
 
   .banner-slide-slide.media-pos-right .banner-slide-copy {
@@ -298,40 +338,53 @@
   }
 }
 
-/* Content width variants */
-@media (width >=992px) {
-  .banner-slide-slide.copy-w-50 .banner-slide-content {
-    grid-template-columns: minmax(0, 50%) minmax(0, 50%);
-  }
-
-  .banner-slide-slide.copy-w-70 .banner-slide-content {
-    grid-template-columns: minmax(0, 70%) minmax(0, 30%);
+@media (min-width: 1025px) and (max-width: 1300px) {
+  .banner-slide-content {
+    max-width: 81.25%;
   }
 }
 
 /* --- Dots --- */
 .banner-slide-dots {
-  bottom: 24px;
+  bottom: 40px;
   display: flex;
   gap: 8px;
-  /* left: max(24px, calc((100% - 1240px) / 2 + 24px)); */
-  left: max(24px, calc((100% - 1240px) / 2));
+  left: calc((100% - 1240px) / 2);
   position: absolute;
 }
 
+@media (min-width: 1025px) and (max-width: 1300px) {
+  .banner-slide-dots {
+    left: calc((100% - 1025px) / 2);
+    bottom: 60px;
+  }
+}
+
 .banner-slide-dot {
-  background: rgb(17 24 39 / 25%);
+  appearance: none;
+  background-color: #858585;
   border: 0;
   border-radius: 999px;
   cursor: pointer;
   height: 8px;
+  opacity: 0.3;
+  outline: none;
   padding: 0;
   transition: all 0.2s ease;
   width: 8px;
 }
 
+.banner-slide-dot:focus,
+.banner-slide-dot:hover,
+.banner-slide-dot:active {
+  outline: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .banner-slide-dot.is-active {
-  background: var(--black);
+  background-color: var(--black);
+  opacity: 1;
   width: 24px;
 }
 
@@ -358,20 +411,10 @@
 
 /* --- Content position variants --- */
 @media (width >=992px) {
-  .banner-slide-content {
-    min-height: 529px;
-    padding-bottom: 0;
-  }
-
-  .banner-slide-media {
-    align-self: end;
-  }
-
   /* Default: content left, vertically centered */
   .banner-slide-copy {
     align-self: center;
     justify-self: start;
-    margin-bottom: 2rem;
   }
 
   .banner-slide-slide.content-pos-top-left .banner-slide-copy {
@@ -605,16 +648,34 @@
   }
 
   .banner-slide-stage .banner-slide-track .banner-slide-slide .banner-slide-content {
-    align-items: start;
+    align-items: center;
     box-sizing: border-box;
     gap: 16px;
+    max-width: 100%;
     min-height: 440px;
+    padding: 0 16px;
     position: relative;
   }
 
   .banner-slide-stage .banner-slide-track .banner-slide-slide .banner-slide-copy {
+    width: 100%;
+    min-height: 440px;
+    padding-top: 40px;
     position: relative;
     z-index: 1;
+  }
+
+  .banner-slide-dots {
+    left: 16px;
+  }
+
+  .banner-slide-dot {
+    height: 5px;
+    width: 5px;
+  }
+
+  .banner-slide-dot.is-active {
+    width: 13px;
   }
 
   /* Keep btn-pos-* anchored to slide content on mobile */
@@ -647,11 +708,34 @@
     right: 0;
   }
 
-  .banner-slide-stage .banner-slide-track .banner-slide-slide .banner-slide-media picture,
-  .banner-slide-stage .banner-slide-track .banner-slide-slide .banner-slide-media img {
+  .banner-slide-stage .banner-slide-track .banner-slide-slide .banner-slide-media picture {
     margin-left: 0;
+  }
+
+  .banner-slide-stage .banner-slide-track .banner-slide-slide .banner-slide-media img {
+    width: 200px;
+    height: 170px;
+  }
+
+  .banner-slide-stage .banner-slide-track .banner-slide-slide.fg-sm .banner-slide-media img {
+    width: 160px;
+    height: 134px;
+  }
+
+  .banner-slide-stage .banner-slide-track .banner-slide-slide.fg-md .banner-slide-media img {
+    width: 200px;
+    height: 170px;
+  }
+
+  .banner-slide-stage .banner-slide-track .banner-slide-slide.fg-lg .banner-slide-media img {
     width: 240px;
     height: 200px;
+  }
+
+  .banner-slide-stage .banner-slide-track .banner-slide-slide.fg-full .banner-slide-media img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
   }
 
   .banner-slide-stage .banner-slide-track .banner-slide-description p {

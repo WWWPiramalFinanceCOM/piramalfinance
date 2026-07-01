@@ -56,7 +56,6 @@ function imageSources(cell) {
 /* --- Parse a single banner-slide block into slide data --- */
 
 function parseSlide(block) {
-  // 1. Bulletproof Cell Flattening
   // AEM can output 1x4 or 4x1 grids. This forces all data cells into a flat array.
   let cells = [...block.querySelectorAll(':scope > div > div')];
   if (cells.length === 0) {
@@ -86,14 +85,14 @@ function parseSlide(block) {
     const children = [...contentCell.children];
 
     // Extract Title (Native AEM <h> tag generation)
-    const titleNodeIndex = children.findIndex(el => /^h[1-6]$/i.test(el.tagName));
+    const titleNodeIndex = children.findIndex((el) => /^h[1-6]$/i.test(el.tagName));
     if (titleNodeIndex !== -1) {
       title = children[titleNodeIndex].outerHTML;
       children.splice(titleNodeIndex, 1);
     }
 
     // Extract Short Description
-    const ulIndex = children.findIndex(el => el.tagName.toLowerCase() === 'ul');
+    const ulIndex = children.findIndex((el) => el.tagName.toLowerCase() === 'ul');
     if (ulIndex !== -1) {
       shortDescription = children[ulIndex].outerHTML;
       children.splice(ulIndex, 1);
@@ -136,9 +135,7 @@ function parseSlide(block) {
       const anchor = ctaEl.querySelector('a');
       const sup = ctaEl.querySelector('sup');
       const text = (ctaEl.textContent || '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
-
       if (!text) return;
-
       const opensForm = (!anchor && sup) || (anchor && isHashLink(anchor.getAttribute('href'))) || isApplyLoanLabel(text);
       const href = anchor ? anchor.getAttribute('href') : '#';
       const btnClass = index === 0 ? 'button primary' : 'button secondary';
@@ -152,7 +149,7 @@ function parseSlide(block) {
     });
 
     // Remaining Description
-    children.forEach(el => description += el.outerHTML);
+    children.forEach((el) => description += el.outerHTML);
   }
 
   // Parse Features
@@ -194,9 +191,18 @@ function parseSlide(block) {
   }
 
   return {
-    title, description, shortDescription, ctaHtmlCombined, features,
-    desktopBgPicture, mobileBgPicture, desktopBackground, mobileBackground,
-    desktopFgPicture, mobileFgPicture, videoUrl
+    title,
+    description,
+    shortDescription,
+    ctaHtmlCombined,
+    features,
+    desktopBgPicture,
+    mobileBgPicture,
+    desktopBackground,
+    mobileBackground,
+    desktopFgPicture,
+    mobileFgPicture,
+    videoUrl,
   };
 }
 
@@ -238,16 +244,37 @@ function cloneAndFormatPicture(desktopPic, mobilePic, imgClass, isFirst) {
 }
 
 function buildSlide(data, index, extraClasses = []) {
+  const predefinedClasses = ['bg', 'eyebrow', 'description', 'cta1', 'cta2', 'ctabg1', 'ctabg2'];
+  const slideStyles = {};
+
+  function processNumber(inputStr) {
+    let originalLength = inputStr.length;
+    let num = parseInt(inputStr, 10);
+    let paddedString = String(num).padStart(originalLength, '0');
+    return "#" + paddedString;
+  }
+
+  // Build the local styles map securely without leaking to other slides
+  extraClasses.forEach((ele) => {
+    const parts = ele.split('-');
+    if (parts.length >= 2 && predefinedClasses.includes(parts[0])) {
+      const key = parts[0];
+      const val = parts.slice(1).join('-'); // Handles dashes safely
+      const isNumeric = /^\d+$/.test(val);
+      slideStyles[key] = isNumeric ? processNumber(val) : val;
+    }
+  });
+
   const {
     title, description, shortDescription, ctaHtmlCombined, features,
     desktopBgPicture, mobileBgPicture, desktopBackground, mobileBackground,
-    desktopFgPicture, mobileFgPicture, videoUrl
+    desktopFgPicture, mobileFgPicture, videoUrl,
   } = data;
 
   const slide = document.createElement('div');
   slide.className = `banner-slide-slide ${index === 0 ? 'is-active' : ''}`;
   if (desktopBgPicture || desktopBackground || mobileBackground) slide.classList.add('has-bg-media');
-  extraClasses.forEach(cls => { if (cls) slide.classList.add(cls); });
+  extraClasses.forEach((cls) => { if (cls) slide.classList.add(cls); });
   slide.dataset.slideIndex = `${index}`;
 
   const bgHtml = desktopBgPicture ? cloneAndFormatPicture(desktopBgPicture, mobileBgPicture, 'banner-slide-bg-img', index === 0) : createBackgroundMedia(desktopBackground, mobileBackground, index === 0);
@@ -257,8 +284,9 @@ function buildSlide(data, index, extraClasses = []) {
     fgHtml = `<div class="banner-video-wrapper"><a href="${escapeAttr(videoUrl)}" class="banner-video-link button primary" target="_blank" rel="noopener">Watch Video</a></div>`;
   }
 
-  const featuresHtml = features.length ? `<div class="banner-slide-features" role="list" aria-label="Slide highlights">${features.map(f => `<div class="banner-slide-feature" role="listitem">${f.icon ? `<div class="banner-slide-feature-icon">${f.icon}</div>` : ''}${f.text ? `<span class="banner-slide-feature-text">${f.text}</span>` : ''}</div>`).join('')}</div>` : '';
+  const featuresHtml = features.length ? `<div class="banner-slide-features" role="list" aria-label="Slide highlights">${features.map((f) => `<div class="banner-slide-feature" role="listitem">${f.icon ? `<div class="banner-slide-feature-icon">${f.icon}</div>` : ''}${f.text ? `<span class="banner-slide-feature-text">${f.text}</span>` : ''}</div>`).join('')}</div>` : '';
 
+  // Inject HTML structure FIRST
   slide.innerHTML = `
     <div class="banner-slide-bg">${bgHtml}</div>
     <div class="banner-slide-surface">
@@ -273,6 +301,51 @@ function buildSlide(data, index, extraClasses = []) {
       </div>
     </div>
   `;
+
+  // Safely apply JS colors to DOM elements AFTER they exist
+  const titleNode = slide.querySelector('.banner-slide-title h2');
+  const descriptionNode = slide.querySelector('.banner-slide-description');
+  const ctas = slide.querySelectorAll('.banner-slide-actions');
+  const cta1Node = ctas[0].querySelector('.button');
+  const cta2Node = ctas[1]?.querySelector('.button');
+  // Background color mapping
+  if (slideStyles.bg) {
+    slide.style.backgroundColor = slideStyles.bg || '';
+    slide.style.opacity = 1;
+  }
+
+  // Handling your specific background override logic for the title
+  if (titleNode && slideStyles.eyebrow) {
+    titleNode.style.color = slideStyles.eyebrow || '';
+  } else {
+    descriptionNode.style.color = slideStyles.eyebrow || '';
+  }
+
+  // Adding sensible defaults in case you wanted text colors mapped
+  // if (slideStyles && titleNode) {
+  //   titleNode.style.color = slideStyles.eyebrow;
+  // }
+  if (slideStyles.description && descriptionNode) {
+    descriptionNode.style.color = slideStyles.description;
+  }
+
+  // Apply CTA 1 Colors
+  if (cta1Node) {
+    if (slideStyles.cta1) cta1Node.style.color = slideStyles.cta1;
+    if (slideStyles.ctabg1) {
+      cta1Node.style.backgroundColor = slideStyles.ctabg1;
+      cta1Node.style.borderColor = slideStyles.ctabg1; // Prevents default CSS borders from clashing
+    }
+  }
+
+  // Apply CTA 2 Colors
+  if (cta2Node) {
+    if (slideStyles.cta2) cta2Node.style.color = slideStyles.cta2;
+    if (slideStyles.ctabg2) {
+      cta2Node.style.backgroundColor = slideStyles.ctabg2;
+      cta2Node.style.borderColor = slideStyles.ctabg2;
+    }
+  }
 
   return slide;
 }

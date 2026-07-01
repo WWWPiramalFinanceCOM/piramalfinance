@@ -1,0 +1,128 @@
+{
+  "definitions": [
+    {
+      "title": "Calculator Teaser",
+      "id": "calculator-teaser",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Calculator Teaser",
+              "model": "calculator-teaser",
+              "filter": "calculator-teaser"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Calculator Teaser Card",
+      "id": "calculator-teaser-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Calculator Teaser Card",
+              "model": "calculator-teaser-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "calculator-teaser",
+      "fields": [
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "value": "",
+          "label": "Variant",
+          "description": "Select a style variant for the calculator teaser",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Calculator (opens calculator modal on click)",
+              "value": "calculator"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "col1_heading",
+          "label": "Section Heading",
+          "description": "Main heading above the teaser cards (e.g. 'Calculator')"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "col1_description",
+          "label": "Section Description",
+          "description": "Subtext below the heading (e.g. 'Plan your loan EMI and check loan amount eligibility.')"
+        }
+      ]
+    },
+    {
+      "id": "calculator-teaser-card",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Card Content",
+          "name": "cardContentTab"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "col1_image",
+          "label": "Background Image",
+          "description": "Background image for the teaser card"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "col1_imageAlt",
+          "label": "Image Alt Text",
+          "description": "Accessible alt text for the background image"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "col1_heading",
+          "label": "Card Heading",
+          "description": "Title displayed on the card (e.g. 'EMI Calculator')"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "col1_description",
+          "label": "Card Description",
+          "description": "Optional short description below the heading"
+        },
+        {
+          "component": "tab",
+          "label": "CTA Settings",
+          "name": "ctaTab"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "col1_ctaText",
+          "label": "CTA Button Text",
+          "description": "Button label (e.g. 'Try Now'). Click opens the calculator modal."
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "calculator-teaser",
+      "components": [
+        "calculator-teaser-card"
+      ]
+    }
+  ]
+}

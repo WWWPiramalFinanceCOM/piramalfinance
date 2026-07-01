@@ -891,6 +891,7 @@ async function waitForLCP(lcpBlocks) {
     if (hasLCPBlock) await loadBlock(block);
 
     document.body.style.display = null;
+    document.body.style.opacity = 1;
     const lcpCandidate = document.querySelector('main img');
 
     await new Promise((resolve) => {

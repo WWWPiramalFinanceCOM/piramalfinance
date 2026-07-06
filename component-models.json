@@ -3953,6 +3953,13 @@
         ]
       },
       {
+        "component": "text",
+        "name": "classes_coloroptions",
+        "value": "",
+        "label": "Color Options",
+        "valueType": "string"
+      },
+      {
         "component": "tab",
         "label": "Content",
         "name": "contentTab"

@@ -46,16 +46,10 @@
 /* --- Slide --- */
 .banner-slide-slide {
   background-color: #dff1fb;
-  contain: layout style paint;
   flex-shrink: 0;
   overflow: hidden;
   scroll-snap-align: start;
   width: 100%;
-}
-
-.banner-slide--ready .banner-slide-slide:not(.is-active) {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 529px;
 }
 
 .banner-slide-surface {
@@ -142,11 +136,6 @@
   margin: 0 0 16px;
 }
 
-/* When JS sets inline color on title, children inherit it */
-.banner-slide-title[style*="color"] :where(h1, h2, h3, h4, h5, h6) {
-  color: inherit !important;
-}
-
 .banner-slide-description :is(p, h1, h2, h3, h4, h5, h6) {
   color: var(--gradient-gray);
   font-family: Nunito-Regular, sans-serif;
@@ -154,11 +143,6 @@
   font-weight: 400;
   line-height: 32px;
   margin: 16px 0 0;
-}
-
-/* When JS sets inline color on description, children inherit it */
-.banner-slide-description[style*="color"] :is(p, h1, h2, h3, h4, h5, h6) {
-  color: inherit !important;
 }
 
 /* --- Features --- */
@@ -512,7 +496,7 @@
   .banner-slide-slide.btn-pos-middle-far-left .banner-slide-actions,
   .banner-slide-slide.btn-pos-bottom-far-left .banner-slide-actions {
     position: absolute;
-    /* left: 16px; */
+    left: 16px;
   }
 
   /* Horizontal: left */
@@ -613,8 +597,7 @@
     position: absolute;
 
     /* bottom: 24px; */
-    /* bottom: 36px; */
-    bottom: 64px;
+    bottom: 36px;
 
   }
 }
@@ -1105,7 +1088,6 @@
   .banner-slide-content {
     min-height: 70vh;
     max-width: 1440px;
-    padding: 0 24px;
     padding-bottom: 0;
   }
 
@@ -1167,8 +1149,7 @@
 
   .banner-slide-dots {
     bottom: 48px;
-    /* left: calc((100% - 1440px) / 2); */
-    left: calc((100% - 1390px) / 2);
+    left: calc((100% - 1440px) / 2);
   }
 
   .banner-slide-dot {
@@ -1191,6 +1172,9 @@
   .banner-slide-slide.btn-pos-bottom-mid-right .banner-slide-actions,
   .banner-slide-slide.btn-pos-bottom-right .banner-slide-actions,
   .banner-slide-slide.btn-pos-bottom .banner-slide-actions {
+    position: absolute;
+    /* bottom: 24px; */ 
     bottom: 70px;
+    left: 0;
   }
 }

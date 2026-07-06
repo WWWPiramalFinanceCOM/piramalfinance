@@ -71,7 +71,8 @@ function parseSlide(block) {
       if (el.tagName !== 'P') break;
       const txt = (el.textContent || '').replace(ZW_RE, '').trim();
       if (!txt && !el.querySelector('img,picture')) { children.pop(); continue; }
-      if (el.querySelector('u,a,sup') || isFormLabel(txt) || CTA_RE.test(txt)) { ctas.unshift(el); children.pop(); } else break;
+      // if (el.querySelector('u,a,sup') || isFormLabel(txt) || CTA_RE.test(txt)) { ctas.unshift(el); children.pop(); } else break;
+      if (el.querySelector('u,a,sup')) { ctas.unshift(el); children.pop(); } else break;
     }
 
     // Build CTA HTML

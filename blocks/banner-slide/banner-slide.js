@@ -2,7 +2,7 @@ import { targetObject } from '../../scripts/scripts.js';
 
 const AUTOPLAY_MS = 7000;
 const initiated = new WeakSet();
-const CTA_RE = /^(open|apply|click|track|submit|learn|read|view|get|start|continue|download|link|go|explore|see|find|check|know|register|sign)/i;
+// const CTA_RE = /^(open|apply|click|track|submit|learn|read|view|get|start|continue|download|link|go|explore|see|find|check|know|register|sign)/i;
 const HEADING_RE = /^H[1-6]$/;
 const ZW_RE = /[\u200B-\u200D\uFEFF]/g;
 
@@ -28,6 +28,10 @@ function isHashLink(v) {
 function isFormLabel(v) {
   const n = (v || '').trim().toLowerCase();
   return n === 'apply loan now' || n === 'apply now' || n === 'open form';
+}
+
+function hasNestedTagsEitherOrder(el, t1, t2) {
+  return !!(el?.querySelector(`${t1} ${t2}`) || el?.querySelector(`${t2} ${t1}`));
 }
 
 /* --- Parse --- */
@@ -71,8 +75,14 @@ function parseSlide(block) {
       if (el.tagName !== 'P') break;
       const txt = (el.textContent || '').replace(ZW_RE, '').trim();
       if (!txt && !el.querySelector('img,picture')) { children.pop(); continue; }
-      // if (el.querySelector('u,a,sup') || isFormLabel(txt) || CTA_RE.test(txt)) { ctas.unshift(el); children.pop(); } else break;
-      if (el.querySelector('u,a,sup')) { ctas.unshift(el); children.pop(); } else break;
+
+      const hasLinkMarkup = hasNestedTagsEitherOrder(el, 'a', 'u');
+      const hasFormMarkup = hasNestedTagsEitherOrder(el, 'u', 'sup');
+
+      if (hasLinkMarkup || hasFormMarkup) {
+        ctas.unshift(el);
+        children.pop();
+      } else break;
     }
 
     // Build CTA HTML
@@ -81,7 +91,7 @@ function parseSlide(block) {
       const a = el.querySelector('a');
       const txt = (el.textContent || '').replace(ZW_RE, '').trim();
       if (!txt) continue;
-      const form = (!a && el.querySelector('sup')) || (a && isHashLink(a.getAttribute('href'))) || isFormLabel(txt);
+      const form = hasNestedTagsEitherOrder(el, 'u', 'sup');
       const href = a ? a.getAttribute('href') : '#';
       const cls = i === 0 ? 'button primary' : 'button secondary';
       const wrap = i === 0 ? 'banner-slide-cta button-container' : 'banner-slide-cta banner-slide-cta2 button-container';
@@ -177,7 +187,7 @@ function buildSlideHtml(data, index, extraClasses) {
     const key = cls.substring(0, dash);
     if (!COLOR_KEYS.includes(key)) continue;
     const val = cls.substring(dash + 1);
-    styles[key] = /^\d+$/.test(val) ? '#' + String(parseInt(val, 10)).padStart(val.length, '0') : val;
+    styles[key] = '#' + val;
   }
 
   const { title, description, shortDescription, ctaHtml, features, bgPics, bgSrcs, fgPics, videoUrl } = data;
@@ -368,7 +378,7 @@ function initSlider(section) {
       const text = btn.textContent.trim();
       const href = (btn.getAttribute('href') || '#').trim();
       const page = targetObject?.pageName || '';
-      const openForm = btn.getAttribute('data-cta-open-form') === 'true' || isHashLink(href);
+      const openForm = btn.getAttribute('data-cta-open-form') === 'true';
 
       // Lazy analytics
       let dl;

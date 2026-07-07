@@ -364,10 +364,7 @@ function initSlider(section) {
     // Autoplay
     if (autoRotate) {
       start();
-      track.addEventListener('mouseenter', stop);
-      track.addEventListener('mouseleave', start);
     }
-    document.addEventListener('visibilitychange', () => { if (autoRotate) { document.hidden ? stop() : start(); } });
 
     // CTA — event delegation (single listener on container)
     container.addEventListener('click', async (e) => {

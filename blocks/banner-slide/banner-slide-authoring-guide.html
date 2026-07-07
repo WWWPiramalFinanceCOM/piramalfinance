@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Banner Slide — Authoring Guide</title>
+<style>
+  @page { margin: 1.5cm; size: A4; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a1a; line-height: 1.7; padding: 40px; max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 28px; border-bottom: 3px solid #e03e2d; padding-bottom: 8px; margin-bottom: 24px; color: #e03e2d; }
+  h2 { font-size: 20px; margin: 36px 0 12px; color: #333; border-left: 4px solid #e03e2d; padding-left: 12px; }
+  h3 { font-size: 16px; margin: 22px 0 8px; color: #555; }
+  p, li { font-size: 14px; margin-bottom: 8px; }
+  ul, ol { padding-left: 24px; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
+  th, td { border: 1px solid #ccc; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f5f5f5; font-weight: 600; }
+  .tag { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 13px; font-family: 'Consolas', monospace; color: #c7254e; }
+  .note { background: #fff8e1; border-left: 4px solid #ffc107; padding: 10px 14px; margin: 12px 0; font-size: 13px; }
+  .important { background: #fde8e8; border-left: 4px solid #e03e2d; padding: 10px 14px; margin: 12px 0; font-size: 13px; }
+  .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px 14px; margin: 12px 0; font-size: 13px; }
+  .step-box { background: #f0f4ff; border: 1px solid #c5d4f7; border-radius: 6px; padding: 14px 18px; margin: 10px 0 16px; }
+  .step-box ol { margin-bottom: 0; }
+  .divider { border: none; border-top: 1px dashed #ccc; margin: 32px 0; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 2px solid #eee; font-size: 12px; color: #999; text-align: center; }
+  .visual { text-align: center; margin: 16px 0; }
+  .visual img { max-width: 100%; border: 1px solid #ddd; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<h1>Banner Slide — Authoring Guide</h1>
+<p><strong>Block name:</strong> banner-slide<br>
+<strong>What it does:</strong> Creates a full-width hero banner carousel on the page. Supports multiple slides, call-to-action buttons, feature highlights, background images, foreground images, video, and custom colors.</p>
+
+<!-- ============================================================ -->
+<h2>1. Block Structure</h2>
+<p>Each banner-slide row in your spreadsheet has <strong>4 columns</strong> (cells):</p>
+
+<table>
+  <tr><th>#</th><th>Column</th><th>What to Put Here</th><th>Required?</th></tr>
+  <tr><td>1</td><td><strong>Content</strong></td><td>Title (heading), description text, and up to 2 CTA buttons</td><td>Yes</td></tr>
+  <tr><td>2</td><td><strong>Features</strong></td><td>Small icons with text labels (e.g., "Quick Approval", "Minimal Docs")</td><td>No</td></tr>
+  <tr><td>3</td><td><strong>Background</strong></td><td>Background image — add 2 images for separate desktop &amp; mobile versions</td><td>No</td></tr>
+  <tr><td>4</td><td><strong>Foreground</strong></td><td>Product image or character image that appears on top of the background</td><td>No</td></tr>
+</table>
+
+<div class="note"><strong>Multiple slides:</strong> To create a carousel with multiple slides, add multiple banner-slide rows inside the same section. They are automatically combined.</div>
+
+<!-- ============================================================ -->
+<h2>2. Content Column</h2>
+
+<h3>2.1 Title</h3>
+<p>Type your slide heading. Use any heading level (Heading 1 through Heading 6) in the Word document or Google Doc.</p>
+<p><strong>Example:</strong> Type <em>"Get a Loan Against Car in Just a Few Easy Steps"</em> and format it as <strong>Heading 2</strong>.</p>
+
+<h3>2.2 Description</h3>
+<p>Type your description as a normal paragraph below the title.</p>
+<p><strong>Example:</strong> <em>"Quick Approval | Minimal Documentation | Flexible Tenure"</em></p>
+
+<h3>2.3 Short Description (Bullet List)</h3>
+<p>If you add a <strong>bulleted list</strong>, it will appear below the CTA buttons as a short description area.</p>
+<p><strong>Example:</strong></p>
+<ul>
+  <li>Interest rates starting 10.99%</li>
+  <li>Check eligibility</li>
+</ul>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>3. How to Create CTA Buttons</h2>
+<p>You can add up to <strong>2 buttons</strong> at the bottom of the content column. There are two types:</p>
+
+<table>
+  <tr><th>Button Type</th><th>What It Does</th><th>How to Author It</th></tr>
+  <tr>
+    <td><strong>Link Button</strong></td>
+    <td>Clicking it opens a URL (navigates to another page)</td>
+    <td>Type the button text → <strong>Underline</strong> it → <strong>Add a hyperlink</strong> to it</td>
+  </tr>
+  <tr>
+    <td><strong>Form Open Button</strong></td>
+    <td>Clicking it opens the loan application form</td>
+    <td>Type the button text → <strong>Underline</strong> it → Make it <strong>Superscript</strong></td>
+  </tr>
+</table>
+
+<h3>3.1 Creating a Link Button (opens a URL)</h3>
+<div class="step-box">
+<ol>
+  <li>Type the button text on a new line, e.g., <strong>Apply Now</strong></li>
+  <li>Select the text and apply <strong>Underline</strong> (Ctrl + U)</li>
+  <li>While still selected, add a <strong>Hyperlink</strong> (Ctrl + K) and paste the destination URL</li>
+</ol>
+</div>
+<p>The order does not matter — you can underline first then add the link, or add the link first then underline. Both work the same.</p>
+
+<div class="tip"><strong>Result:</strong> The button will appear on the page as a styled button. When the user clicks it, they will be taken to the URL you entered.</div>
+
+<h3>3.2 Creating a Form Open Button (opens the loan form)</h3>
+<div class="step-box">
+<ol>
+  <li>Type the button text on a new line, e.g., <strong>Apply Now</strong></li>
+  <li>Select the text and apply <strong>Underline</strong> (Ctrl + U)</li>
+  <li>While still selected, apply <strong>Superscript</strong> (Ctrl + Shift + =)</li>
+</ol>
+</div>
+<p>The order does not matter — you can underline first then superscript, or superscript first then underline. Both work the same.</p>
+
+<div class="tip"><strong>Result:</strong> The button will appear on the page as a styled button. When the user clicks it, the loan application form will open.</div>
+
+<h3>3.3 Adding Two Buttons</h3>
+<p>If you add two buttons, the <strong>first one</strong> (top) will be styled as the <strong>Primary button</strong> (filled/solid) and the <strong>second one</strong> (bottom) will be styled as the <strong>Secondary button</strong> (outline).</p>
+
+<div class="step-box">
+<strong>Example with two buttons:</strong>
+<ol>
+  <li>Line 1: <em>Apply Now</em> — underlined + hyperlinked → becomes a <strong>Link button (Primary)</strong></li>
+  <li>Line 2: <em>Check Eligibility</em> — underlined + superscript → becomes a <strong>Form Open button (Secondary)</strong></li>
+</ol>
+</div>
+
+<div class="important"><strong>Important:</strong> Only text at the <strong>bottom</strong> of the content column is checked for buttons. Normal paragraphs above them stay as description text. If text is not underlined+linked or underlined+superscript, it will be treated as regular description text.</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>4. Features Column</h2>
+<p>Use this column to show small icon + text highlights (e.g., "Quick Approval", "Minimal Docs").</p>
+
+<div class="step-box">
+<strong>How to add a feature:</strong>
+<ol>
+  <li>Insert an <strong>icon image</strong> (e.g., a small SVG or PNG)</li>
+  <li>On the next line, type the <strong>label text</strong> (e.g., "Quick Approval")</li>
+  <li>Repeat for more features</li>
+</ol>
+</div>
+
+<p>You can also add text-only features (without an icon) — just type the text as a paragraph.</p>
+
+<!-- ============================================================ -->
+<h2>5. Background Images</h2>
+<p>Add images to the Background column for the slide's full-width background.</p>
+
+<table>
+  <tr><th>Image</th><th>Purpose</th></tr>
+  <tr><td>1st image</td><td>Desktop background (shown on large screens)</td></tr>
+  <tr><td>2nd image (optional)</td><td>Mobile background (shown on screens smaller than 992px)</td></tr>
+</table>
+
+<p>You can add images by:</p>
+<ul>
+  <li>Inserting an image directly</li>
+  <li>Adding a link to the image from the DAM</li>
+  <li>Pasting the image path as plain text</li>
+</ul>
+
+<div class="note"><strong>Performance note:</strong> The first slide's images load immediately for fast display. Other slides' images load only when the user scrolls to them.</div>
+
+<!-- ============================================================ -->
+<h2>6. Foreground Image</h2>
+<p>Add a product image, character, or illustration that appears <strong>on top</strong> of the background. This is typically placed on the right side of the slide.</p>
+
+<ul>
+  <li>Add 1 image for desktop, optionally a 2nd image for mobile</li>
+  <li>If you add a <strong>link to a video</strong> (not an image), it will show a "Watch Video" button instead</li>
+</ul>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>7. Custom Colors</h2>
+<p>You can customize the colors of different parts of the slide by adding special keywords in the <strong>block class field</strong> (the block name row in the spreadsheet).</p>
+
+<h3>7.1 Available Color Options</h3>
+<table>
+  <tr><th>Keyword</th><th>What It Changes</th><th>How to Write It</th><th>Visual Result</th></tr>
+  <tr><td><strong>bg</strong></td><td>Slide background color</td><td>bg(FEEBFF)</td><td>Light pink background</td></tr>
+  <tr><td><strong>eyebrow</strong></td><td>Title / heading text color</td><td>eyebrow(FFFFFF)</td><td>White title text</td></tr>
+  <tr><td><strong>description</strong></td><td>Description text color</td><td>description(333333)</td><td>Dark grey description</td></tr>
+  <tr><td><strong>cta1</strong></td><td>Primary button text color</td><td>cta1(FFFFFF)</td><td>White text on primary button</td></tr>
+  <tr><td><strong>ctabg1</strong></td><td>Primary button background &amp; border</td><td>ctabg1(E03E2D)</td><td>Red primary button</td></tr>
+  <tr><td><strong>cta2</strong></td><td>Secondary button text color</td><td>cta2(333333)</td><td>Dark text on secondary button</td></tr>
+  <tr><td><strong>ctabg2</strong></td><td>Secondary button background &amp; border</td><td>ctabg2(FFFFFF)</td><td>White secondary button</td></tr>
+</table>
+
+<h3>7.2 How to Apply Colors</h3>
+<div class="step-box">
+<p>In the block name row of your spreadsheet, type the block name followed by the color keywords separated by commas:</p>
+<p><strong>Example:</strong></p>
+<p>banner-slide (bg(FEEBFF), eyebrow(FFFFFF), cta1(FFFFFF), ctabg1(E03E2D))</p>
+<p>This gives you: pink background, white title, white text on a red primary button.</p>
+</div>
+
+<div class="important">
+<strong>Rules for colors:</strong>
+<ul>
+  <li>Use <strong>6-character hex color codes</strong> — for example, FF0000 for red, FFFFFF for white, 000000 for black</li>
+  <li>Do <strong>NOT</strong> include the # symbol — write <strong>bg(FF0000)</strong>, not bg(#FF0000)</li>
+  <li>The system automatically adds the # for you</li>
+</ul>
+</div>
+
+<h3>7.3 Color Fallback</h3>
+<ul>
+  <li>If you set an <strong>eyebrow</strong> color but not a <strong>description</strong> color, and the slide has no title, the eyebrow color will automatically apply to the description text as well.</li>
+  <li>Any other class you add (e.g., <strong>green-text</strong>) that is not a color keyword will be applied as a regular CSS class on the slide.</li>
+</ul>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>8. Auto-Rotate (Carousel)</h2>
+<p>To make slides rotate automatically, add the class <strong>auto-rotate</strong> to the <strong>section</strong> (not the individual block).</p>
+
+<table>
+  <tr><th>Feature</th><th>Detail</th></tr>
+  <tr><td>Rotation speed</td><td>Every 7 seconds</td></tr>
+  <tr><td>Pause on hover</td><td>Yes — stops when the user hovers their mouse over the banner</td></tr>
+  <tr><td>Pause when tab hidden</td><td>Yes — stops when the user switches to another browser tab</td></tr>
+  <tr><td>Pause when form open</td><td>Yes — stops when the loan form is open</td></tr>
+  <tr><td>Navigation dots</td><td>Shown automatically when there are 2 or more slides</td></tr>
+  <tr><td>Mobile swipe</td><td>Users can swipe left/right on mobile to change slides</td></tr>
+</table>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>9. Complete Example</h2>
+
+<h3>What you type in the spreadsheet:</h3>
+<table>
+  <tr>
+    <th colspan="4">banner-slide (bg(FEEBFF), eyebrow(FFFFFF), ctabg1(E03E2D))</th>
+  </tr>
+  <tr>
+    <th>Content (Column 1)</th>
+    <th>Features (Column 2)</th>
+    <th>Background (Column 3)</th>
+    <th>Foreground (Column 4)</th>
+  </tr>
+  <tr>
+    <td>
+      <strong>Heading 2:</strong> Loan Against Car<br><br>
+      Quick Approval | Minimal Docs<br><br>
+      <u>Apply Now</u> ← underlined + hyperlinked to URL<br><br>
+      <u><sup>Check Eligibility</sup></u> ← underlined + superscript
+    </td>
+    <td>
+      [icon image]<br>
+      Fast Disbursal<br><br>
+      [icon image]<br>
+      Low Interest
+    </td>
+    <td>
+      [Desktop background image]<br>
+      [Mobile background image]
+    </td>
+    <td>
+      [Car product image]
+    </td>
+  </tr>
+</table>
+
+<h3>What the user sees on the website:</h3>
+<ul>
+  <li>Pink background slide</li>
+  <li>White heading: "Loan Against Car"</li>
+  <li>Description: "Quick Approval | Minimal Docs"</li>
+  <li>Red "Apply Now" button → opens a link when clicked</li>
+  <li>"Check Eligibility" secondary button → opens the loan form when clicked</li>
+  <li>Feature icons with labels below the description</li>
+  <li>Car image on the right side</li>
+</ul>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>10. Quick Reference</h2>
+
+<table>
+  <tr><th>What You Want</th><th>What to Do</th></tr>
+  <tr><td>Add a title</td><td>Type text and format as a <strong>Heading</strong> (H1–H6)</td></tr>
+  <tr><td>Add a description</td><td>Type text as a normal paragraph</td></tr>
+  <tr><td>Add a short description</td><td>Create a <strong>bulleted list</strong></td></tr>
+  <tr><td>Add a Link button</td><td><strong>Underline</strong> the text + <strong>add a hyperlink</strong></td></tr>
+  <tr><td>Add a Form Open button</td><td><strong>Underline</strong> the text + make it <strong>Superscript</strong></td></tr>
+  <tr><td>Add feature highlights</td><td>Insert icon image, then type the label on the next line</td></tr>
+  <tr><td>Set background image</td><td>Add image(s) in the Background column (1st = desktop, 2nd = mobile)</td></tr>
+  <tr><td>Set foreground image</td><td>Add image in the Foreground column</td></tr>
+  <tr><td>Change background color</td><td>Add <strong>bg(hex code)</strong> in block class — e.g., bg(FEEBFF)</td></tr>
+  <tr><td>Change title color</td><td>Add <strong>eyebrow(hex code)</strong> — e.g., eyebrow(FFFFFF)</td></tr>
+  <tr><td>Change description color</td><td>Add <strong>description(hex code)</strong> — e.g., description(333333)</td></tr>
+  <tr><td>Change primary button color</td><td>Add <strong>cta1(hex)</strong> for text, <strong>ctabg1(hex)</strong> for background</td></tr>
+  <tr><td>Change secondary button color</td><td>Add <strong>cta2(hex)</strong> for text, <strong>ctabg2(hex)</strong> for background</td></tr>
+  <tr><td>Enable auto-rotation</td><td>Add <strong>auto-rotate</strong> class to the section</td></tr>
+  <tr><td>Add multiple slides</td><td>Add multiple banner-slide rows in the same section</td></tr>
+</table>
+
+<div class="footer">
+  Banner Slide Authoring Guide — Piramal Finance<br>
+  Open this file in a browser → <strong>Ctrl + P</strong> → Save as PDF
+</div>
+
+</body>
+</html>

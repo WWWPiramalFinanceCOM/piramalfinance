@@ -927,6 +927,17 @@
   }
 }
 
+/* light-text: all text white */
+.banner-slide-slide.light-text .banner-slide-title,
+.banner-slide-slide.light-text .banner-slide-title :is(h1, h2, h3, h4, h5, h6),
+.banner-slide-slide.light-text .banner-slide-description,
+.banner-slide-slide.light-text .banner-slide-description :is(p, h1, h2, h3, h4, h5, h6, strong, b, em, span),
+.banner-slide-slide.light-text .banner-slide-feature-text,
+.banner-slide-slide.light-text .banner-slide-short-description,
+.banner-slide-slide.light-text .banner-slide-short-description :is(li, a) {
+  color: #fff;
+}
+
 .section.banner-slide-wrap.text-green .banner-slide-container .banner-slide .banner-slide-description :is(strong, b),
 .section.banner-slide-wrap.green-text .banner-slide-container .banner-slide .banner-slide-description :is(strong, b),
 .section.text-green .banner-slide .banner-slide-description :is(strong, b),

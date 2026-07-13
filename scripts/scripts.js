@@ -19,7 +19,7 @@ import {
   span,
 } from './dom-helper.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
+const LCP_BLOCKS = ['.carousel', '.teaser']; // add your LCP blocks to the list
 
 // console.log('Main Branch 1.3');
 /**

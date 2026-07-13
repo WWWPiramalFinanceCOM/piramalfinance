@@ -776,7 +776,9 @@ async function loadLazy(doc) {
   initPiramalCards();
   moveDirectorsToTabPanel();
   // initLeadershipCards();
-  initConnectUsSection();
+  if (document.querySelector('.section.connect-us')) {
+    initConnectUsSection();
+  }
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
@@ -1201,12 +1203,13 @@ const processAnchor = (anchor, body) => {
 };
 
 const handleModalPopup = (anchor, body) => {
-  const dataid = anchor.href.split('/').pop();
+  const rawId = anchor.href.split('/').pop();
+  const dataid = /^[a-zA-Z0-9_-]+$/.test(rawId) ? rawId : '';
+  if (!dataid) return;
   // Set attributes
   anchor.dataset.modelId = dataid;
   targetObject.modelId = dataid;
   anchor.dataset.href = anchor.href;
-  anchor.href = 'javascript:void(0)';
   anchor.addEventListener('click', (e) => {
     e.preventDefault();
     const models = document.querySelectorAll(`.${dataid}`);

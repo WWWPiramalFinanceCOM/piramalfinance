@@ -2,7 +2,7 @@ import { ctaClickInteraction } from '../../dl.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { decoratePlaceholder } from '../../scripts/scripts.js';
 import { moveInstrumentation } from '../../scripts/common.js';
-import {onCLickApplyFormOpen} from '../applyloanform/applyloanforms.js'
+import { onCLickApplyFormOpen } from '../applyloanform/applyloanforms.js'
 // import { applyLoanFormClick } from '../applyloanform/applyloanforms.js';
 // import { applyLoanPopper } from '../applyloanform/applyloanpopper.js';
 // import { loanutmForm } from '../applyloanform/loanutm.js';
@@ -17,7 +17,12 @@ export default async function decorate(block) {
     while (row.firstElementChild) li.append(row.firstElementChild);
     [...li.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
-      else div.className = 'cards-card-body';
+      else {
+        div.className = 'cards-card-body';
+        if (block.closest('.section.chatbot')) {
+          div.querySelector('a').setAttribute("target", '_blank')
+        }
+      }
     });
     li.addEventListener('click', function (e) {
       if (!e.target.href.includes('/leadform/')) return;

@@ -4229,5 +4229,255 @@
         ]
       }
     ]
+  },
+  {
+    "id": "download-app",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Background Images",
+        "name": "backgroundTab"
+      },
+      {
+        "component": "container",
+        "name": "desktopBgContainer",
+        "label": "Desktop Background",
+        "collapsible": true,
+        "collapsed": false,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_desktopBg",
+            "label": "Desktop Background Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_desktopBgAlt",
+            "label": "Desktop Background Image Alt",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "mobileBgContainer",
+        "label": "Mobile Background",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_mobileBg",
+            "label": "Mobile Background Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_mobileBgAlt",
+            "label": "Mobile Background Image Alt",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "contentTab"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col1_heading",
+        "label": "Desktop Rich Text",
+        "description": "Heading and subtitle visible only on desktop",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col3_heading",
+        "label": "Mobile Rich Text",
+        "description": "Heading and subtitle visible only on mobile",
+        "value": ""
+      },
+      {
+        "component": "container",
+        "name": "ctaContainer",
+        "label": "Mobile CTA",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col3_cta",
+            "label": "Mobile CTA Link",
+            "description": "URL for the mobile Download button",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col3_ctaText",
+            "label": "Mobile CTA Text",
+            "description": "Button text (e.g. Download Now)",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Badges & Links",
+        "name": "badgesTab"
+      },
+      {
+        "component": "container",
+        "name": "badge1Container",
+        "label": "Badge 1 (e.g. Google Play)",
+        "collapsible": true,
+        "collapsed": false,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col1_badge1",
+            "label": "Badge Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_badge1Alt",
+            "label": "Badge Image Alt",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_badge1Href",
+            "label": "Badge Link URL",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "badge2Container",
+        "label": "Badge 2 (e.g. App Store)",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col1_badge2",
+            "label": "Badge Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_badge2Alt",
+            "label": "Badge Image Alt",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_badge2Href",
+            "label": "Badge Link URL",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "calculator-teaser",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Variant",
+        "description": "Select a style variant for the calculator teaser",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Calculator (opens calculator modal on click)",
+            "value": "calculator"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_heading",
+        "label": "Section Heading",
+        "description": "Main heading above the teaser cards (e.g. 'Calculator')"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_description",
+        "label": "Section Description",
+        "description": "Subtext below the heading (e.g. 'Plan your loan EMI and check loan amount eligibility.')"
+      }
+    ]
+  },
+  {
+    "id": "calculator-teaser-card",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Card Content",
+        "name": "cardContentTab"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_image",
+        "label": "Background Image",
+        "description": "Background image for the teaser card"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_imageAlt",
+        "label": "Image Alt Text",
+        "description": "Accessible alt text for the background image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_heading",
+        "label": "Card Heading",
+        "description": "Title displayed on the card (e.g. 'EMI Calculator')"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_description",
+        "label": "Card Description",
+        "description": "Optional short description below the heading"
+      },
+      {
+        "component": "tab",
+        "label": "CTA Settings",
+        "name": "ctaTab"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_ctaText",
+        "label": "CTA Button Text",
+        "description": "Button label (e.g. 'Try Now'). Click opens the calculator modal."
+      }
+    ]
   }
 ]

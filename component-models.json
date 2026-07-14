@@ -38,95 +38,95 @@
         "label": "Schema JSON"
       },
       {
-          "component": "text",
-          "valueType": "string",
-          "name": "canonical",
-          "label": "Canonical URL"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:title",
-          "label": "Twitter title (twitter:title)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:description",
-          "label": "Twitter description (twitter:description)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:url",
-          "label": "Twitter URL (twitter:url)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:image",
-          "label": "Twitter image URL (twitter:image) "
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:image:alt",
-          "label": "Twitter image alt text (twitter:image:alt)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "twitter:card",
-          "label": "Twitter card type (twitter:card)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:title",
-          "label": "Open Graph title (og:title)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:url",
-          "label": "Open Graph URL (og:url)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:type",
-          "label": "Open Graph type (og:type)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:description",
-          "label": "Open Graph description (og:description)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:image",
-          "label": "Open Graph image URL (og:image)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:image:alt",
-          "label": "Open Graph image alt text (og:image:alt)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:site_name",
-          "label": "Open Graph site name (og:site_name)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "og:locale",
-          "label": "Open Graph locale (og:locale)"
-        }
+        "component": "text",
+        "valueType": "string",
+        "name": "canonical",
+        "label": "Canonical URL"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:title",
+        "label": "Twitter title (twitter:title)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:description",
+        "label": "Twitter description (twitter:description)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:url",
+        "label": "Twitter URL (twitter:url)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:image",
+        "label": "Twitter image URL (twitter:image) "
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:image:alt",
+        "label": "Twitter image alt text (twitter:image:alt)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "twitter:card",
+        "label": "Twitter card type (twitter:card)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:title",
+        "label": "Open Graph title (og:title)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:url",
+        "label": "Open Graph URL (og:url)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:type",
+        "label": "Open Graph type (og:type)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:description",
+        "label": "Open Graph description (og:description)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:image",
+        "label": "Open Graph image URL (og:image)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:image:alt",
+        "label": "Open Graph image alt text (og:image:alt)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:site_name",
+        "label": "Open Graph site name (og:site_name)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "og:locale",
+        "label": "Open Graph locale (og:locale)"
+      }
     ]
   },
   {
@@ -514,100 +514,49 @@
     ]
   },
   {
-    "id": "testimonial",
+    "id": "testimonies",
     "fields": [
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "testimonial",
-        "value": "",
-        "label": "Testimonial Path",
-        "description": "Sets the path of the testimonial."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "rotation-time",
-        "value": "",
-        "label": "Rotation Time",
-        "description": "Sets the rotation time of the testimonial."
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "fileReference1",
-        "label": "Ribbon Image 1",
-        "description": "Sets the ribbon image of the testimonial.",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "fileReference1Alt",
-        "value": "",
-        "label": "Ribbon Image 1 Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "fileReference2",
-        "label": "Ribbon Image 2",
-        "description": "Sets the ribbon image of the testimonial.",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "fileReference2Alt",
-        "value": "",
-        "label": "Ribbon Image 2 Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "fileReference3",
-        "label": "Ribbon Image 3",
-        "description": "Sets the ribbon image of the testimonial.",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "fileReference3Alt",
-        "value": "",
-        "label": "Ribbon Image 3 Alt"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "fileReference4",
-        "label": "Ribbon Image 4",
-        "description": "Sets the ribbon image of the testimonial.",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "fileReference4Alt",
-        "value": "",
-        "label": "Ribbon Image 4 Alt"
-      },
-      {
         "component": "select",
-        "name": "carouselshowtype",
-        "value": "primary",
-        "label": "Type",
         "valueType": "string",
+        "name": "classes",
+        "value": "",
+        "label": "Style",
         "options": [
           {
-            "name": "primary",
-            "value": "primary"
+            "name": "With floating Heads",
+            "value": ""
           },
           {
-            "name": "secondary",
-            "value": "secondary"
+            "name": "Without floating Heads",
+            "value": "no-float"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "testimony",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "media_image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "media_imageAlt",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "descr_text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
       }
     ]
   },
@@ -1455,7 +1404,7 @@
                 "name": "Button Bottom",
                 "value": "btn-bottom"
               },
-               {
+              {
                 "name": "Two Button Bottom",
                 "value": "two-btn-bottom"
               }
@@ -3661,7 +3610,7 @@
       }
     ]
   },
-   {
+  {
     "id": "searchunclaimeddividend",
     "fields": [
       {
@@ -3747,6 +3696,787 @@
         "name": "colMicrNo",
         "label": "Column: MICR No.",
         "description": "Table column heading for MICR number"
+      }
+    ]
+  },
+  {
+    "id": "banner-slide-block",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Layout",
+        "name": "layoutTab"
+      },
+      {
+        "component": "select",
+        "name": "classes_contentPositionClass",
+        "value": "",
+        "label": "Content Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Top Left",
+            "value": "content-pos-top-left"
+          },
+          {
+            "name": "Top Center",
+            "value": "content-pos-top-center"
+          },
+          {
+            "name": "Top Right",
+            "value": "content-pos-top-right"
+          },
+          {
+            "name": "Left",
+            "value": "content-pos-left"
+          },
+          {
+            "name": "Right",
+            "value": "content-pos-right"
+          },
+          {
+            "name": "Top",
+            "value": "content-pos-top"
+          },
+          {
+            "name": "Center",
+            "value": "content-pos-center"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_buttonPositionClass",
+        "value": "",
+        "label": "Button Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Top Far Left",
+            "value": "btn-pos-top-far-left"
+          },
+          {
+            "name": "Top Left",
+            "value": "btn-pos-top-left"
+          },
+          {
+            "name": "Top Mid Left",
+            "value": "btn-pos-top-mid-left"
+          },
+          {
+            "name": "Top Center",
+            "value": "btn-pos-top-center"
+          },
+          {
+            "name": "Top Mid Right",
+            "value": "btn-pos-top-mid-right"
+          },
+          {
+            "name": "Top Right",
+            "value": "btn-pos-top-right"
+          },
+          {
+            "name": "Middle Far Left",
+            "value": "btn-pos-middle-far-left"
+          },
+          {
+            "name": "Middle Left",
+            "value": "btn-pos-middle-left"
+          },
+          {
+            "name": "Middle Mid Left",
+            "value": "btn-pos-middle-mid-left"
+          },
+          {
+            "name": "Middle Center",
+            "value": "btn-pos-middle-center"
+          },
+          {
+            "name": "Middle Mid Right",
+            "value": "btn-pos-middle-mid-right"
+          },
+          {
+            "name": "Middle Right",
+            "value": "btn-pos-middle-right"
+          },
+          {
+            "name": "Bottom Far Left",
+            "value": "btn-pos-bottom-far-left"
+          },
+          {
+            "name": "Bottom Left",
+            "value": "btn-pos-bottom-left"
+          },
+          {
+            "name": "Bottom Mid Left",
+            "value": "btn-pos-bottom-mid-left"
+          },
+          {
+            "name": "Bottom Center",
+            "value": "btn-pos-bottom-center"
+          },
+          {
+            "name": "Bottom Mid Right",
+            "value": "btn-pos-bottom-mid-right"
+          },
+          {
+            "name": "Bottom Right",
+            "value": "btn-pos-bottom-right"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_imagePositionClass",
+        "value": "",
+        "label": "Image Position",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Left",
+            "value": "media-pos-left"
+          },
+          {
+            "name": "Right",
+            "value": "media-pos-right"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_foregroundSizeClass",
+        "value": "",
+        "label": "Foreground Image Size",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default (394x334)",
+            "value": ""
+          },
+          {
+            "name": "Small (240x200)",
+            "value": "fg-sm"
+          },
+          {
+            "name": "Medium (394x334)",
+            "value": "fg-md"
+          },
+          {
+            "name": "Large (517x432)",
+            "value": "fg-lg"
+          },
+          {
+            "name": "Full Width",
+            "value": "fg-full"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_copyWidthClass",
+        "value": "",
+        "label": "Content Width",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default (62.5%)",
+            "value": ""
+          },
+          {
+            "name": "Narrow (50%)",
+            "value": "copy-w-50"
+          },
+          {
+            "name": "Wide (70%)",
+            "value": "copy-w-70"
+          }
+        ]
+      },
+      {
+        "component": "multiselect",
+        "name": "classes_textStyleClass",
+        "value": "",
+        "label": "Text Style",
+        "description": "Select text style variants (applied as CSS classes)",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Green Text",
+            "value": "green-text"
+          },
+          {
+            "name": "Dark Text",
+            "value": "dark-text"
+          },
+          {
+            "name": "Light Text",
+            "value": "light-text"
+          }
+        ]
+      },
+      {
+        "component": "multiselect",
+        "name": "classes_backgroundStyleClass",
+        "value": "",
+        "label": "Background Style",
+        "description": "Select background style variants (applied as CSS classes)",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Lavender Blush Background",
+            "value": "lavender-blush-bg"
+          },
+          {
+            "name": "Light Cyan Background",
+            "value": "light-cyan-bg"
+          },
+          {
+            "name": "Tan Background",
+            "value": "tan-bg"
+          },
+          {
+            "name": "Mint Green Background",
+            "value": "mint-green-bg"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "classes_coloroptions",
+        "value": "",
+        "label": "Color Options",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "contentTab"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_title",
+        "value": "",
+        "label": "Title"
+      },
+      {
+        "component": "select",
+        "name": "col1_titleType",
+        "value": "h2",
+        "label": "Title Tag Type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "H1",
+            "value": "h1"
+          },
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          },
+          {
+            "name": "H4",
+            "value": "h4"
+          },
+          {
+            "name": "H5",
+            "value": "h5"
+          },
+          {
+            "name": "H6",
+            "value": "h6"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col1_description",
+        "value": "",
+        "label": "Description"
+      },
+      {
+        "component": "container",
+        "name": "ctaContainer",
+        "label": "CTA (Call to Action)",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "richtext",
+            "valueType": "string",
+            "name": "col1_cta",
+            "value": "",
+            "label": "CTA Button (Type text and add hyperlink)"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "ctaContainer2",
+        "label": "CTA 2 (Call to Action)",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "richtext",
+            "valueType": "string",
+            "name": "col1_cta2",
+            "value": "",
+            "label": "CTA 2 Button (Type text and add hyperlink)"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "shortDescContainer",
+        "label": "Short Description (UL/LI with text + link)",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "richtext",
+            "valueType": "string",
+            "name": "col1_shortDescription",
+            "value": "",
+            "label": "Short Description (author as list: first item text, second item link)"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Features",
+        "name": "featuresTab"
+      },
+      {
+        "component": "container",
+        "name": "feature1Container",
+        "label": "Feature 1",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_feature1Icon",
+            "label": "Feature 1 Icon",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_feature1Text",
+            "value": "",
+            "label": "Feature 1 Text"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "feature2Container",
+        "label": "Feature 2",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_feature2Icon",
+            "label": "Feature 2 Icon",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_feature2Text",
+            "value": "",
+            "label": "Feature 2 Text"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "feature3Container",
+        "label": "Feature 3",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_feature3Icon",
+            "label": "Feature 3 Icon",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_feature3Text",
+            "value": "",
+            "label": "Feature 3 Text"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Media",
+        "name": "mediaTab"
+      },
+      {
+        "component": "container",
+        "name": "bgImageContainer",
+        "label": "Background Images",
+        "collapsible": true,
+        "collapsed": false,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col3_bgImage",
+            "label": "Desktop Background Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col3_bgImageAlt",
+            "value": "",
+            "label": "Desktop Background Image Alt"
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col3_mobbgImg",
+            "label": "Mobile Background Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col3_mobbgImgAlt",
+            "value": "",
+            "label": "Mobile Background Image Alt"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "fgImageContainer",
+        "label": "Foreground Images",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col4_ForegroundImg",
+            "label": "Desktop Foreground Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col4_ForegroundImgAlt",
+            "value": "",
+            "label": "Desktop Foreground Image Alt"
+          },
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col4_ForegroundmobImg",
+            "label": "Mobile Foreground Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col4_ForegroundmobImgAlt",
+            "value": "",
+            "label": "Mobile Foreground Image Alt"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "videoContainer",
+        "label": "Video",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col4_youtubeUrl",
+            "value": "",
+            "label": "YouTube Video URL"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "download-app",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Background Images",
+        "name": "backgroundTab"
+      },
+      {
+        "component": "container",
+        "name": "desktopBgContainer",
+        "label": "Desktop Background",
+        "collapsible": true,
+        "collapsed": false,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_desktopBg",
+            "label": "Desktop Background Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_desktopBgAlt",
+            "label": "Desktop Background Image Alt",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "mobileBgContainer",
+        "label": "Mobile Background",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col2_mobileBg",
+            "label": "Mobile Background Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col2_mobileBgAlt",
+            "label": "Mobile Background Image Alt",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "contentTab"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col1_heading",
+        "label": "Desktop Rich Text",
+        "description": "Heading and subtitle visible only on desktop",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col3_heading",
+        "label": "Mobile Rich Text",
+        "description": "Heading and subtitle visible only on mobile",
+        "value": ""
+      },
+      {
+        "component": "container",
+        "name": "ctaContainer",
+        "label": "Mobile CTA",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col3_cta",
+            "label": "Mobile CTA Link",
+            "description": "URL for the mobile Download button",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col3_ctaText",
+            "label": "Mobile CTA Text",
+            "description": "Button text (e.g. Download Now)",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Badges & Links",
+        "name": "badgesTab"
+      },
+      {
+        "component": "container",
+        "name": "badge1Container",
+        "label": "Badge 1 (e.g. Google Play)",
+        "collapsible": true,
+        "collapsed": false,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col1_badge1",
+            "label": "Badge Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_badge1Alt",
+            "label": "Badge Image Alt",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_badge1Href",
+            "label": "Badge Link URL",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "badge2Container",
+        "label": "Badge 2 (e.g. App Store)",
+        "collapsible": true,
+        "collapsed": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "col1_badge2",
+            "label": "Badge Image",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_badge2Alt",
+            "label": "Badge Image Alt",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "valueType": "string",
+            "name": "col1_badge2Href",
+            "label": "Badge Link URL",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "calculator-teaser",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Variant",
+        "description": "Select a style variant for the calculator teaser",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Calculator (opens calculator modal on click)",
+            "value": "calculator"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_heading",
+        "label": "Section Heading",
+        "description": "Main heading above the teaser cards (e.g. 'Calculator')"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_description",
+        "label": "Section Description",
+        "description": "Subtext below the heading (e.g. 'Plan your loan EMI and check loan amount eligibility.')"
+      }
+    ]
+  },
+  {
+    "id": "calculator-teaser-card",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Card Content",
+        "name": "cardContentTab"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_image",
+        "label": "Background Image",
+        "description": "Background image for the teaser card"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_imageAlt",
+        "label": "Image Alt Text",
+        "description": "Accessible alt text for the background image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_heading",
+        "label": "Card Heading",
+        "description": "Title displayed on the card (e.g. 'EMI Calculator')"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_description",
+        "label": "Card Description",
+        "description": "Optional short description below the heading"
+      },
+      {
+        "component": "tab",
+        "label": "CTA Settings",
+        "name": "ctaTab"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_ctaText",
+        "label": "CTA Button Text",
+        "description": "Button label (e.g. 'Try Now'). Click opens the calculator modal."
       }
     ]
   },

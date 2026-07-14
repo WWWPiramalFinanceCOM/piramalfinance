@@ -1,0 +1,190 @@
+{
+  "definitions": [
+    {
+      "title": "Download App",
+      "id": "download-app",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Download App",
+              "model": "download-app",
+              "columns": 3
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "download-app",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Background Images",
+          "name": "backgroundTab"
+        },
+        {
+          "component": "container",
+          "name": "desktopBgContainer",
+          "label": "Desktop Background",
+          "collapsible": true,
+          "collapsed": false,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col2_desktopBg",
+              "label": "Desktop Background Image",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col2_desktopBgAlt",
+              "label": "Desktop Background Image Alt",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "mobileBgContainer",
+          "label": "Mobile Background",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col2_mobileBg",
+              "label": "Mobile Background Image",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col2_mobileBgAlt",
+              "label": "Mobile Background Image Alt",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Content",
+          "name": "contentTab"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "col1_heading",
+          "label": "Desktop Rich Text",
+          "description": "Heading and subtitle visible only on desktop",
+          "value": ""
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "col3_heading",
+          "label": "Mobile Rich Text",
+          "description": "Heading and subtitle visible only on mobile",
+          "value": ""
+        },
+        {
+          "component": "container",
+          "name": "ctaContainer",
+          "label": "Mobile CTA",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col3_cta",
+              "label": "Mobile CTA Link",
+              "description": "URL for the mobile Download button",
+              "value": ""
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col3_ctaText",
+              "label": "Mobile CTA Text",
+              "description": "Button text (e.g. Download Now)",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Badges & Links",
+          "name": "badgesTab"
+        },
+        {
+          "component": "container",
+          "name": "badge1Container",
+          "label": "Badge 1 (e.g. Google Play)",
+          "collapsible": true,
+          "collapsed": false,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col1_badge1",
+              "label": "Badge Image",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col1_badge1Alt",
+              "label": "Badge Image Alt",
+              "value": ""
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col1_badge1Href",
+              "label": "Badge Link URL",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "badge2Container",
+          "label": "Badge 2 (e.g. App Store)",
+          "collapsible": true,
+          "collapsed": true,
+          "fields": [
+            {
+              "component": "reference",
+              "valueType": "string",
+              "name": "col1_badge2",
+              "label": "Badge Image",
+              "multi": false
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col1_badge2Alt",
+              "label": "Badge Image Alt",
+              "value": ""
+            },
+            {
+              "component": "text",
+              "valueType": "string",
+              "name": "col1_badge2Href",
+              "label": "Badge Link URL",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

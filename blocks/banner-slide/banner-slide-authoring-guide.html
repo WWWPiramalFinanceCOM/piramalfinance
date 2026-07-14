@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Banner Slide — Authoring Guide</title>
+<style>
+  @page { margin: 1.5cm; size: A4; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a1a; line-height: 1.7; padding: 40px; max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 28px; border-bottom: 3px solid #e03e2d; padding-bottom: 8px; margin-bottom: 24px; color: #e03e2d; }
+  h2 { font-size: 20px; margin: 36px 0 12px; color: #333; border-left: 4px solid #e03e2d; padding-left: 12px; }
+  h3 { font-size: 16px; margin: 22px 0 8px; color: #555; }
+  p, li { font-size: 14px; margin-bottom: 8px; }
+  ul, ol { padding-left: 24px; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
+  th, td { border: 1px solid #ccc; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f5f5f5; font-weight: 600; }
+  .note { background: #fff8e1; border-left: 4px solid #ffc107; padding: 10px 14px; margin: 12px 0; font-size: 13px; }
+  .important { background: #fde8e8; border-left: 4px solid #e03e2d; padding: 10px 14px; margin: 12px 0; font-size: 13px; }
+  .step-box { background: #f0f4ff; border: 1px solid #c5d4f7; border-radius: 6px; padding: 14px 18px; margin: 10px 0 16px; }
+  .step-box ol { margin-bottom: 0; }
+  .divider { border: none; border-top: 1px dashed #ccc; margin: 32px 0; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 2px solid #eee; font-size: 12px; color: #999; text-align: center; }
+</style>
+</head>
+<body>
+
+<h1>Banner Slide — Authoring Guide</h1>
+<p><strong>Block name:</strong> banner-slide<br>
+Creates a full-width hero banner carousel with buttons, images, and custom colors.</p>
+
+<!-- ============================================================ -->
+<h2>1. Block Structure</h2>
+<p>Each banner-slide row has <strong>4 columns</strong>:</p>
+
+<table>
+  <tr><th>#</th><th>Column</th><th>What to Put Here</th><th>Required?</th></tr>
+  <tr><td>1</td><td><strong>Content</strong></td><td>Title, description, and up to 2 buttons</td><td>Yes</td></tr>
+  <tr><td>2</td><td><strong>Features</strong></td><td>Icon + text highlights</td><td>No</td></tr>
+  <tr><td>3</td><td><strong>Background</strong></td><td>Background image (1st = desktop, 2nd = mobile)</td><td>No</td></tr>
+  <tr><td>4</td><td><strong>Foreground</strong></td><td>Product / character image on top of background</td><td>No</td></tr>
+</table>
+
+<div class="note"><strong>Multiple slides:</strong> Add multiple banner-slide rows in the same section to create a carousel.</div>
+
+<!-- ============================================================ -->
+<h2>2. Content Column</h2>
+<ul>
+  <li><strong>Title:</strong> Format text as a Heading (H1–H6)</li>
+  <li><strong>Description:</strong> Type as a normal paragraph</li>
+  <li><strong>Short description:</strong> Create a bulleted list — appears below the buttons</li>
+</ul>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>3. How to Create Buttons</h2>
+<p>Add up to <strong>2 buttons</strong> at the bottom of the content column:</p>
+
+<table>
+  <tr><th>Button Type</th><th>What It Does</th><th>How to Author</th></tr>
+  <tr>
+    <td><strong>Link Button</strong></td>
+    <td>Opens a URL</td>
+    <td>Type text → <strong>Underline</strong> it → <strong>Add a hyperlink</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Form Open Button</strong></td>
+    <td>Opens the loan form</td>
+    <td>Type text → <strong>Underline</strong> it → Make it <strong>Superscript</strong></td>
+  </tr>
+</table>
+
+<h3>Link Button</h3>
+<div class="step-box">
+<ol>
+  <li>Type the button text, e.g., <strong>Apply Now</strong></li>
+  <li>Select it and <strong>Underline</strong> (Ctrl + U)</li>
+  <li>Add a <strong>Hyperlink</strong> (Ctrl + K) with the destination URL</li>
+</ol>
+</div>
+
+<h3>Form Open Button</h3>
+<div class="step-box">
+<ol>
+  <li>Type the button text, e.g., <strong>Apply Now</strong></li>
+  <li>Select it and <strong>Underline</strong> (Ctrl + U)</li>
+  <li>Apply <strong>Superscript</strong> (Ctrl + Shift + =)</li>
+</ol>
+</div>
+
+<p>Order does not matter — underline first or link/superscript first, both work.</p>
+
+<h3>Two Buttons</h3>
+<p>First button = <strong>Primary</strong> (filled). Second button = <strong>Secondary</strong> (outline).</p>
+
+<div class="important"><strong>Important:</strong> Only text at the <strong>bottom</strong> of the content column is checked for buttons. If text is not underlined + linked or underlined + superscript, it stays as description.</div>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>4. Features Column</h2>
+<p>Insert an <strong>icon image</strong>, then type the <strong>label</strong> on the next line. Repeat for each feature.</p>
+
+<!-- ============================================================ -->
+<h2>5. Images</h2>
+<table>
+  <tr><th>Column</th><th>1st Image</th><th>2nd Image (optional)</th></tr>
+  <tr><td><strong>Background</strong></td><td>Desktop background</td><td>Mobile background</td></tr>
+  <tr><td><strong>Foreground</strong></td><td>Desktop product image</td><td>Mobile product image</td></tr>
+</table>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>6. Custom Colors</h2>
+<p>Add color keywords in the block class field using round braces with a 6-digit hex code (no #).</p>
+
+<table>
+  <tr><th>Keyword</th><th>What It Changes</th><th>Example</th></tr>
+  <tr><td><strong>bg</strong></td><td>Slide background</td><td>bg(FEEBFF)</td></tr>
+  <tr><td><strong>eyebrow</strong></td><td>Title text color</td><td>eyebrow(FFFFFF)</td></tr>
+  <tr><td><strong>description</strong></td><td>Description text color</td><td>description(333333)</td></tr>
+  <tr><td><strong>cta1</strong></td><td>Primary button text</td><td>cta1(FFFFFF)</td></tr>
+  <tr><td><strong>ctabg1</strong></td><td>Primary button background</td><td>ctabg1(E03E2D)</td></tr>
+  <tr><td><strong>cta2</strong></td><td>Secondary button text</td><td>cta2(333333)</td></tr>
+  <tr><td><strong>ctabg2</strong></td><td>Secondary button background</td><td>ctabg2(FFFFFF)</td></tr>
+</table>
+
+<div class="step-box">
+<strong>Example:</strong><br>
+banner-slide (bg(FEEBFF), eyebrow(FFFFFF), ctabg1(E03E2D))<br>
+→ Pink background, white title, red primary button.
+</div>
+
+<div class="important">Use 6-digit hex codes <strong>without #</strong> — e.g., bg(FF0000), not bg(#FF0000).</div>
+
+<!-- ============================================================ -->
+<h2>7. Special Classes</h2>
+<table>
+  <tr><th>Class</th><th>Effect</th></tr>
+  <tr><td><strong>light-text</strong></td><td>All text on the slide becomes <strong>white</strong></td></tr>
+  <tr><td><strong>green-text</strong></td><td>Bold text in description becomes <strong>green</strong></td></tr>
+  <tr><td><strong>auto-rotate</strong></td><td>Slides rotate automatically every 7 seconds (add to <strong>section</strong>)</td></tr>
+</table>
+
+<hr class="divider">
+
+<!-- ============================================================ -->
+<h2>8. Quick Reference</h2>
+
+<table>
+  <tr><th>What You Want</th><th>What to Do</th></tr>
+  <tr><td>Add a title</td><td>Format as Heading (H1–H6)</td></tr>
+  <tr><td>Add description</td><td>Normal paragraph</td></tr>
+  <tr><td>Link button</td><td><strong>Underline</strong> + <strong>Hyperlink</strong></td></tr>
+  <tr><td>Form Open button</td><td><strong>Underline</strong> + <strong>Superscript</strong></td></tr>
+  <tr><td>White text slide</td><td>Add <strong>light-text</strong> class</td></tr>
+  <tr><td>Green bold text</td><td>Add <strong>green-text</strong> class</td></tr>
+  <tr><td>Background color</td><td>bg(hex) — e.g., bg(FEEBFF)</td></tr>
+  <tr><td>Auto-rotate slides</td><td>Add <strong>auto-rotate</strong> to the section</td></tr>
+  <tr><td>Multiple slides</td><td>Multiple banner-slide rows in same section</td></tr>
+</table>
+
+<div class="footer">
+  Banner Slide Authoring Guide — Piramal Finance<br>
+  Open in browser → <strong>Ctrl + P</strong> → Save as PDF
+</div>
+
+</body>
+</html>

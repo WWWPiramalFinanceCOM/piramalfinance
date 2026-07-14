@@ -10,7 +10,8 @@ import { buttonCLick } from './loanformapi.js';
 import { CFApiCall, fetchAPI } from '../../scripts/common.js';
 
 export default async function decorate(block) {
-  const cfURL = block.textContent.trim();
+  const anchor = block.querySelector('a[href]');
+  const cfURL = anchor ? anchor.getAttribute('href') : '/api/apply-form-loan.json';
 
   const cfRepsonse = await CFApiCall(cfURL);
   const repsonseData = cfRepsonse.data;
@@ -20,10 +21,10 @@ export default async function decorate(block) {
 
 
   block.innerHTML = appplyLoanTemplate(jsonResponseData);
-  
+
   // Get main container for scoped queries (avoids document.querySelector in functions)
   const mainContainer = block.closest('main') || block.closest('body');
-  
+
   try {
     // Robust deferred execution - works in both parallel and sequential loading
     // Uses RAF + retry mechanism to ensure sibling blocks are ready
@@ -39,7 +40,7 @@ export default async function decorate(block) {
       });
     };
     initFormClick();
-    
+
     applyLoanPopper();
     loanutmForm();
     stateMasterApi();
@@ -59,7 +60,7 @@ function applyLoanFormJson(data) {
     // Initialize an array for loan categories when fieldset is "array" and view is "options"
     if (eachEle.fieldset === "array" && eachEle.view === "options") {
       loanCategories[eachEle.name] = [];
-    }else if (eachEle.fieldset === "array") {
+    } else if (eachEle.fieldset === "array") {
       mainObj[eachEle.name] = [];
     } else {
       mainObj[eachEle.name] = eachEle.value;
@@ -90,6 +91,6 @@ function applyLoanFormJson(data) {
     obj[category] = loanCategories[category]; // Assign the category's loan items
     mainObj.options.push(obj);
   }
-  
+
   return mainObj; // Return the structured object
 }

@@ -1,4 +1,5 @@
 export default function decorate(block) {
+    const flipHost = block.closest('.section.chatbot-container') || block;
     const [img, gif, link] = block.children;
     if (!img || !gif || !link) return;
 
@@ -8,36 +9,23 @@ export default function decorate(block) {
 
     link.querySelector('a')?.setAttribute('target', '_blank');
 
-    const gifMarkup = gif.innerHTML;
+    const flipper = document.createElement('span');
+    flipper.className = 'chatbot-flipper';
 
-    function setState(showGif) {
-        img.style.visibility = showGif ? 'hidden' : 'visible';
-        gif.style.visibility = showGif ? 'visible' : 'hidden';
-    }
+    const frontFace = img;
+    const backFace = gif;
+    frontFace.classList.add('chatbot-face', 'chatbot-face-front');
+    backFace.classList.add('chatbot-face', 'chatbot-face-back');
 
-    function showGif() {
-        setState(true);
+    flipper.append(frontFace, backFace);
+    block.insertBefore(flipper, link);
 
-        if (!gif.innerHTML) {
-            gif.innerHTML = gifMarkup;
-        }
-    }
+    flipHost.classList.remove('is-flipped');
 
-    function showImage() {
-        setState(false);
+    let isFlipped = false;
 
-        if (gif.innerHTML) {
-            gif.innerHTML = '';
-        }
-    }
-
-    showImage();
-
-    setTimeout(() => {
-        showGif();
+    setInterval(() => {
+        isFlipped = !isFlipped;
+        flipHost.classList.toggle('is-flipped', isFlipped);
     }, 4000);
-
-    setTimeout(() => {
-        showImage();
-    }, 8000);
 }

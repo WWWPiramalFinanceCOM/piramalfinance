@@ -25,15 +25,14 @@ function createAnchor(element) {
   const link = element.innerText.trim();
   a.setAttribute('aria-label', 'teaser link');
   a.setAttribute('tabindex', '0');
-  link ? a.href=link : a.setAttribute('role', 'button');
+  link ? a.href = link : a.setAttribute('role', 'button');
   return a;
 }
 export function generateTeaserDOM(props, classes) {
   // Extract properties, always same order as in model, empty string if not set
   const nullDom = document.createElement('a');
   nullDom.classList.add('null-dom');
-  const [
-    pictureBgContainer,
+  let pictureBgContainer,
     pictureContainer,
     eyebrow,
     title,
@@ -42,19 +41,68 @@ export function generateTeaserDOM(props, classes) {
     firstCta,
     secondCta,
     ctaImage,
-    ctaImageAlt,
+    ctaImageAlt = '',
     ctaImageUrl,
     imageText,
     ctaImage2,
-    ctaImageAlt2,
+    ctaImageAlt2='',
     ctaImageUrl2,
     imageText2,
     ctaImage3,
-    ctaImageAlt3,
+    ctaImageAlt3='',
     ctaImageUrl3,
     imageText3,
-    mobileImage,
-  ] = props;
+    mobileImage;
+  if (props.length <= 20) {
+    [
+      pictureBgContainer,
+      pictureContainer,
+      eyebrow,
+      title,
+      longDescr,
+      shortDescr,
+      firstCta,
+      secondCta,
+      ctaImage,
+      // ctaImageAlt,
+      ctaImageUrl,
+      imageText,
+      ctaImage2,
+      // ctaImageAlt2,
+      ctaImageUrl2,
+      imageText2,
+      ctaImage3,
+      // ctaImageAlt3,
+      ctaImageUrl3,
+      imageText3,
+      mobileImage,
+    ] = props;
+  }
+  else {
+    [pictureBgContainer,
+      pictureContainer,
+      eyebrow,
+      title,
+      longDescr,
+      shortDescr,
+      firstCta,
+      secondCta,
+      ctaImage,
+      ctaImageAlt,
+      ctaImageUrl,
+      imageText,
+      ctaImage2,
+      ctaImageAlt2,
+      ctaImageUrl2,
+      imageText2,
+      ctaImage3,
+      ctaImageAlt3,
+      ctaImageUrl3,
+      imageText3,
+      mobileImage,
+    ] = props;
+
+  }
 
   const bgPicture = pictureBgContainer.querySelector('picture');
   const picture = pictureContainer.querySelector('picture');

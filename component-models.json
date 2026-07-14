@@ -4479,5 +4479,41 @@
         "description": "Button label (e.g. 'Try Now'). Click opens the calculator modal."
       }
     ]
+  },
+  {
+    "id": "chatbot",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "PIA Image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "PIA Image ALT"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "gif",
+        "label": "GIF"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "gifAlt",
+        "label": "GIF ALT"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "link",
+        "value": "",
+        "label": "Link"
+      }
+    ]
   }
 ]

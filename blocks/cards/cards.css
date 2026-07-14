@@ -1,5 +1,6 @@
 @import url('./support-contact-us-page.css');
-.cards > ul {
+
+.cards>ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -8,7 +9,7 @@
   grid-gap: 16px;
 }
 
-.cards > ul > li {
+.cards>ul>li {
   border: 1px solid var(--dark-color);
   background-color: var(--background-color);
 }
@@ -21,11 +22,11 @@
   line-height: 0;
 }
 
-.cards .cards-card-body > *:first-child {
+.cards .cards-card-body>*:first-child {
   margin-top: 0;
 }
 
-.cards > ul > li img {
+.cards>ul>li img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
@@ -33,8 +34,9 @@
 
 /* Desktop View - Grid Layout (768px and above) - Only for stay-informed and leadership-wrapper tab-panel cards */
 @media (min-width: 768px) {
-  .section.stay-informed .cards.block > ul,
-  .section.leadership-wrapper .tab-panel .cards.block > ul {
+
+  .section.stay-informed .cards.block>ul,
+  .section.leadership-wrapper .tab-panel .cards.block>ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
@@ -187,6 +189,7 @@
 
 /* Mobile View - Swiper (max-width: 767px) - Only for stay-informed and leadership-wrapper tab-panel cards */
 @media (max-width: 767px) {
+
   .section.stay-informed .cards.block.swiper,
   .section.leadership-wrapper .tab-panel .cards.block.swiper {
     padding-bottom: 80px;
@@ -214,8 +217,8 @@
   }
 
   /* Ensure list items inside slides take full width */
-  .section.stay-informed .cards.block.swiper .swiper-slide > li,
-  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-slide > li {
+  .section.stay-informed .cards.block.swiper .swiper-slide>li,
+  .section.leadership-wrapper .tab-panel .cards.block.swiper .swiper-slide>li {
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
@@ -317,101 +320,5 @@
     opacity: 0.35;
     cursor: not-allowed;
     pointer-events: none;
-  }
-}
-
-/* loan Products css */
-
-.section:has(.cards.loan-product-card.block) {
-  background-color: rgb(235 238 240 / 31%);
-  padding: 72px 0 4pc;
-}
-
-.section .default-content-wrapper h2 {
-  color: #000;
-  display: block;
-  font-family: Nunito-Extrabold, sans-serif;
-  font-size: 2rem;
-  font-weight: 800;
-  line-height: 2.5rem;
-  padding-bottom: 8px;
-  margin: 0;
-}
-
-.section .cards.loan-product-card.block>ul {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
-  margin-top: 24px;
-}
-
-.section .cards.loan-product-card.block>ul>li {
-  background-color: rgb(255 255 255 / 100%);
-  border-radius: 16px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgb(51 51 51 / 8%);
-  padding: 12px;
-  max-height: 128px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-}
-
-.section .cards.loan-product-card.block>ul>li:hover {
-  box-shadow: 0 32px 32px rgb(0 0 0 / 8%), 0 0 32px rgb(0 0 0 / 12%), 0 0 1px rgb(0 0 0 / 20%);
-}
-
-.section .cards.loan-product-card.block>ul>li img {
-  display: block;
-  width: 42px;
-  height: 42px;
-}
-
-.section .cards.loan-product-card.block>ul>li .cards-card-body {
-  margin: unset;
-}
-
-.section .cards.loan-product-card.block>ul>li h2 {
-  color: var(--black);
-  font-family: Nunito-Bold, sans-serif;
-  font-weight: 700;
-  font-size: 0.625rem;
-  line-height: 0.938rem;
-  margin-left: unset;
-}
-
-.section .cards.loan-product-card.block>ul>li .cards-card-body p a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-@media (width >767px) {
-  .section .cards.loan-product-card.block>ul {
-    gap: 24px;
-  }
-
-  .section .cards.loan-product-card.block>ul>li {
-    flex-direction: row;
-    padding: 24px;
-    justify-content: start;
-  }
-
-  .section .cards.loan-product-card.block>ul>li img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .section .cards.loan-product-card.block>ul>li h2 {
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.75rem;
-    margin-left: 16px;
   }
 }

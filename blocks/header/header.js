@@ -224,7 +224,7 @@ export default async function decorate(block) {
   } else {
     fragment = await loadFragment(path);
   }
-  
+
   block.classList.add('dp-none');
   // decorate nav DOM
   const nav = document.createElement('nav');
@@ -476,9 +476,9 @@ export default async function decorate(block) {
             clickableEl = newClickableEl;
 
             clickableEl.addEventListener('click', (evt) => {
-              evt.preventDefault();
-              evt.stopPropagation();
-
+              // evt.preventDefault();
+              // evt.stopPropagation();
+              if (evt.target.tagName === 'A') return;
               const expanded = nestedUl.getAttribute('aria-expanded') === 'true';
 
               // Calculate proper height including nested content

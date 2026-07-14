@@ -290,7 +290,7 @@ async function loadEager(doc) {
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
-    await waitForLCP(LCP_BLOCKS);
+    // await waitForLCP(LCP_BLOCKS);
     await loadHeader(doc.querySelector('header'));
     document.body.classList.add('appear');
   }

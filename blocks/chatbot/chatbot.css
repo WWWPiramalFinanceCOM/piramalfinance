@@ -11,8 +11,28 @@
     border: none;
     background: transparent;
     cursor: pointer;
+    perspective: 900px;
     transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
     filter: drop-shadow(0 8px 18px rgba(3, 34, 70, 0.32));
+}
+
+.section.chatbot-container .chatbot.block {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.section.chatbot-container .chatbot-flipper {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.65s ease;
+}
+
+.section.chatbot-container.is-flipped .chatbot-flipper {
+    transform: rotateY(180deg);
 }
 
 .section.chatbot-container  .link a{
@@ -29,16 +49,21 @@
     border: none;
 }
 
-.section.chatbot-container .img,
-.section.chatbot-container .gif,
+.section.chatbot-container .chatbot-face,
 .section.chatbot-container .link p a {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    backface-visibility: hidden;
+    transform: translateZ(0);
     /* opacity: 0; */
 
+}
+
+.section.chatbot-container .chatbot-face-back {
+    transform: rotateY(180deg);
 }
 
 .section.chatbot-container .link p a {
@@ -57,8 +82,8 @@
 }
 
 .section.chatbot.cards-container .cards.block ul>li .cards-card-image img {
-    width: 130px;
-    height: 130px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 

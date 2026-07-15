@@ -64,8 +64,8 @@ body.modal-open {
   margin-top: 24px;
 }
 
-.loan-product-blue .default-content-wrapper h1,
-.loan-product-orange .default-content-wrapper h1 {
+.loan-product-blue .default-content-wrapper :is(h1, h2, h3, h4, h5, h6),
+.loan-product-orange .default-content-wrapper :is(h1, h2, h3, h4, h5, h6) {
   color: #184e7d;
   font-weight: 600;
   font-size: 32px;
@@ -86,6 +86,11 @@ body.modal-open {
   gap: 12px;
 }
 
+.exsiting-customer .cards-wrapper .cards ul {
+  grid-template-columns: repeat(2, auto);
+  justify-content: space-between;
+}
+
 .loan-product-blue .cards-wrapper .cards ul li,
 .loan-product-orange .cards-wrapper .cards ul li {
   width: 100%;
@@ -102,6 +107,20 @@ body.modal-open {
   position: relative;
 }
 
+.exsiting-customer .cards-wrapper .cards ul li {
+  padding: unset;
+  align-items: center;
+  justify-content: center;
+  gap: unset;
+  height: unset;
+}
+
+.exsiting-customer .cards-wrapper .cards ul li .cards-card-body a {
+  all: unset;
+  padding: 11px 36px;
+  display: block;
+}
+
 /* Arrow */
 .loan-product-blue .cards-wrapper .cards ul li::after,
 .loan-product-orange .cards-wrapper .cards ul li::after {
@@ -115,6 +134,10 @@ body.modal-open {
   right: 16px;
   top: 44%;
   opacity: 0;
+}
+
+.exsiting-customer .cards-wrapper .cards ul li::after {
+  display: none;
 }
 
 .loan-product-blue .cards-wrapper .cards ul li:hover::after,
@@ -154,6 +177,10 @@ body.modal-open {
   margin: 0;
   padding: 40px;
   border-color: #ffffff;
+}
+
+.modal dialog[open]:has(.modal-content .section.exsiting-customer) {
+  max-width: max-content;
 }
 
 .modal dialog[open]:has(.loan-product-blue) .close-button,
@@ -258,8 +285,8 @@ body.modal-open {
     border-color: #ffffff;
   }
 
-  .loan-product-blue .default-content-wrapper h1,
-  .loan-product-orange .default-content-wrapper h1 {
+  .loan-product-blue .default-content-wrapper :is(h1, h2, h3, h4, h5, h6),
+  .loan-product-orange .default-content-wrapper :is(h1, h2, h3, h4, h5, h6) {
     font-size: 24px;
     line-height: 28px;
   }
@@ -302,10 +329,14 @@ body.modal-open {
     padding: 24px;
   }
 
-  .loan-product-blue .default-content-wrapper h1,
-  .loan-product-orange .default-content-wrapper h1 {
+  .loan-product-blue .default-content-wrapper :is(h1, h2, h3, h4, h5, h6),
+  .loan-product-orange .default-content-wrapper :is(h1, h2, h3, h4, h5, h6) {
     max-width: 195px;
     margin: auto;
+  }
+
+  .exsiting-customer .default-content-wrapper :is(h1, h2, h3, h4, h5, h6) {
+    max-width: 500px;
   }
 
   .loan-product-blue .cards-wrapper .cards ul,
@@ -313,11 +344,23 @@ body.modal-open {
     grid-template-columns: repeat(1, 1fr);
   }
 
+  .exsiting-customer .cards-wrapper .cards ul {
+    grid-template-columns: repeat(2, auto);
+  }
+
   .loan-product-blue .cards-wrapper .cards ul li,
   .loan-product-orange .cards-wrapper .cards ul li {
     height: auto;
     padding: 12px;
     align-items: flex-start;
+  }
+
+  .exsiting-customer .cards-wrapper .cards ul li {
+    padding: unset;
+    align-items: center;
+    justify-content: center;
+    gap: unset;
+    width: max-content;
   }
 
   .loan-product-blue .cards-wrapper .cards ul li .cards-card-image,

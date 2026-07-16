@@ -86,10 +86,17 @@ body.modal-open {
   gap: 12px;
 }
 
+.exsiting-customer .cards-wrapper .cards.block{
+  display: flex;
+  justify-content: center;
+}
+
 .exsiting-customer .cards-wrapper .cards ul {
   grid-template-columns: repeat(2, auto);
   justify-content: space-between;
+  max-width: 205px;
 }
+
 
 .loan-product-blue .cards-wrapper .cards ul li,
 .loan-product-orange .cards-wrapper .cards ul li {
@@ -181,6 +188,7 @@ body.modal-open {
 
 .modal dialog[open]:has(.modal-content .section.exsiting-customer) {
   max-width: max-content;
+  max-width: 405px;
 }
 
 .modal dialog[open]:has(.loan-product-blue) .close-button,

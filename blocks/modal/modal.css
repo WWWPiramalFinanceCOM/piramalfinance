@@ -86,7 +86,7 @@ body.modal-open {
   gap: 12px;
 }
 
-.exsiting-customer .cards-wrapper .cards.block{
+.exsiting-customer .cards-wrapper .cards.block {
   display: flex;
   justify-content: center;
 }
@@ -152,7 +152,8 @@ body.modal-open {
   opacity: 1;
 }
 
-.loan-product-blue .cards-wrapper .cards ul li:hover {
+.loan-product-blue .cards-wrapper .cards ul li:hover,
+.exsiting-customer .cards-wrapper .cards ul li {
   background-color: #184e7d;
 }
 
@@ -274,7 +275,8 @@ body.modal-open {
 }
 
 .loan-product-blue .cards-wrapper .cards ul li:hover .cards-card-body p,
-.loan-product-orange .cards-wrapper .cards ul li:hover .cards-card-body p {
+.loan-product-orange .cards-wrapper .cards ul li:hover .cards-card-body p,
+.exsiting-customer .cards-wrapper .cards ul li .cards-card-body p {
   color: #ffffff;
 }
 

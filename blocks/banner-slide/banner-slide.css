@@ -496,7 +496,8 @@
   .banner-slide-slide.btn-pos-middle-far-left .banner-slide-actions,
   .banner-slide-slide.btn-pos-bottom-far-left .banner-slide-actions {
     position: absolute;
-    left: 16px;
+    /* left: 16px; */
+    left: 0;
   }
 
   /* Horizontal: left */
@@ -597,8 +598,9 @@
     position: absolute;
 
     /* bottom: 24px; */
-    bottom: 36px;
 
+    /* bottom: 36px; */
+    bottom: 62px;
   }
 }
 
@@ -1184,7 +1186,7 @@
   .banner-slide-slide.btn-pos-bottom-right .banner-slide-actions,
   .banner-slide-slide.btn-pos-bottom .banner-slide-actions {
     position: absolute;
-    /* bottom: 24px; */ 
+    /* bottom: 24px; */
     bottom: 70px;
     left: 0;
   }

@@ -1,4 +1,5 @@
 export default function decorate(block) {
+    if(window.location.href.includes('author')) return
     // 1. Set default button texts (in case the author leaves them blank)
     let submitText = 'Submit';
     let clearText = 'Clear';

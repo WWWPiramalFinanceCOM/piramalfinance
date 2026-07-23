@@ -4515,5 +4515,82 @@
         "label": "Link"
       }
     ]
+  },
+  {
+    "id": "private-investor-fields",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "col1_select",
+        "label": "Element Type",
+        "description": "Choose the type of form element.",
+        "options": [
+          {
+            "name": "Text Input",
+            "value": "text_input"
+          },
+          {
+            "name": "Static Text",
+            "value": "static_text"
+          },
+          {
+            "name": "Submit Button",
+            "value": "submit"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_name",
+        "label": "Field Name Attribute",
+        "description": "Dynamic variable name for form submission (e.g., 'first_name').",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_select"
+            },
+            "text_input"
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_label",
+        "label": "Label / Content / Button Text",
+        "description": "Acts as the label for inputs, paragraph text for Static Text, or the label for the Submit button."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_placeholder",
+        "label": "Input Placeholder",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_select"
+            },
+            "text_input"
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_api_path",
+        "label": "Target API Path",
+        "description": "The endpoint where the form data should be sent.",
+        "condition": {
+          "===": [
+            {
+              "var": "col1_select"
+            },
+            "submit"
+          ]
+        }
+      }
+    ]
   }
 ]

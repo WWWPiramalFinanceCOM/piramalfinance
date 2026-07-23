@@ -1,5 +1,6 @@
 export default function decorate(block) {
-    if(window.location.href.includes("author")) return
+  if(window.location.href.includes("author")) return;
+
   const form = document.createElement('form');
   form.className = 'private-investor-form';
 
@@ -106,10 +107,10 @@ export default function decorate(block) {
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
 
-    // Validation Logic
+    // Validation Logic (Checks for dematId or dp-id to be safe)
     const panVal = payload['pan'] ? payload['pan'].trim() : '';
     const nameVal = payload['name'] ? payload['name'].trim() : '';
-    const dpIdVal = payload['dematId'] ? payload['dematId'].trim() : '';
+    const dpIdVal = (payload['dematId'] || payload['dp-id'] || '').trim();
 
     if (!panVal) {
       showError('PAN is mandatory. Please enter your PAN number.');
@@ -129,20 +130,26 @@ export default function decorate(block) {
         submitBtn.disabled = true;
       }
 
+      // Convert formData to URL-encoded string (matches x-www-form-urlencoded)
+      const urlEncodedData = new URLSearchParams(formData).toString();
+
       // API Call
       const response = await fetch(apiPath, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded' 
+        },
+        body: urlEncodedData,
       });
 
       if (response.ok) {
         const responseData = await response.json();
         
+        // Render table if data exists, otherwise show error message from API (or default)
         if (responseData.status === true && responseData.data && responseData.data.length > 0) {
           renderTable(responseData.data, resultsContainer);
         } else {
-          showError('No records found for the provided details.');
+          showError(responseData.message || 'No records found for the provided details.');
         }
       } else {
         showError('Failed to fetch data. Please try again later.');

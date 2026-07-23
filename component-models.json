@@ -4536,14 +4536,16 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "col1_heading",
-        "label": "Heading"
+        "name": "submit_button_text",
+        "label": "Submit Button Text",
+        "description": "Text for the submit button. Defaults to 'Submit' if left empty."
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "col1_description",
-        "label": "Description"
+        "name": "clear_button_text",
+        "label": "Clear Button Text",
+        "description": "Text for the clear button. Defaults to 'Clear' if left empty."
       }
     ]
   },
@@ -4554,37 +4556,41 @@
         "component": "select",
         "valueType": "string",
         "name": "col1_select",
-        "label": "Input Type",
-        "description": "Background image for the teaser card",
+        "label": "Element Type",
+        "description": "Choose whether to render an input field or static text.",
         "options": [
           {
             "name": "Text Input",
-            "value": "text"
+            "value": "text_input"
           },
           {
-            "name": "Label",
-            "value": "label"
+            "name": "Static Text",
+            "value": "static_text"
           }
         ]
       },
       {
         "component": "text",
         "valueType": "string",
+        "name": "col1_name",
+        "label": "Field Name (HTML Name Attribute)",
+        "description": "REQUIRED for inputs. Defines the dynamic variable name for form submission (e.g., 'first_name', 'email'). No spaces.",
+        "visible": "col1_select == 'text_input'"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
         "name": "col1_label",
-        "label": "Input Label"
+        "label": "Label / Text Content",
+        "description": "The text to display. Acts as the field label for inputs, or the paragraph text for Static Text."
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "col1_placeholder",
-        "label": "Input Placeholder"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "col_description",
-        "label": "Card Description",
-        "description": "Optional short description below the heading"
+        "label": "Input Placeholder",
+        "description": "Optional placeholder text inside the input field.",
+        "visible": "col1_select == 'text_input'"
       }
     ]
   }

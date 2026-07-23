@@ -1,88 +1,203 @@
 export default function decorate(block) {
-    if(window.location.href.includes('author')) return
-    // 1. Set default button texts (in case the author leaves them blank)
-    let submitText = 'Submit';
-    let clearText = 'Clear';
+    if(window.location.href.includes("author")) return
+  const form = document.createElement('form');
+  form.className = 'private-investor-form';
 
-    // 2. Create the form wrapper
-    const form = document.createElement('form');
-    form.className = 'private-investor-form';
+  let itemIndex = 1; // Counter to generate exact structural classes for CSS
 
-    // 3. Iterate through all the rows rendered by AEM
-    [...block.children].forEach((row) => {
-        const columns = row.children;
+  // --- 1. Generate Form Elements ---
+  [...block.children].forEach((row) => {
+    const container = row.firstElementChild;
+    if (!container || container.children.length === 0) return; 
 
-        // --- HANDLE PARENT FIELDS (Button Texts) ---
-        // In AEM EDS, parent configurations often render as 2-column key/value rows
-        if (columns.length === 2) {
-            const key = columns[0].textContent.trim().toLowerCase();
-            const value = columns[1].textContent.trim();
+    const paragraphs = container.children;
+    const elementType = paragraphs[0]?.textContent.trim();
 
-            if (key === 'submit button text' && value !== '') submitText = value;
-            if (key === 'clear button text' && value !== '') clearText = value;
-            return; // Move to the next row
+    const fieldWrapper = document.createElement('div');
+    // Inject structural class (e.g., layout-item-1, layout-item-2)
+    fieldWrapper.className = `form-field-wrapper type-${elementType} layout-item-${itemIndex}`;
+    itemIndex++; 
+
+    // Handle Text Inputs
+    if (elementType === 'text_input') {
+      const fieldName = paragraphs[1]?.textContent.trim();
+      const labelText = paragraphs[2]?.textContent.trim();
+      const placeholder = paragraphs[3]?.textContent.trim();
+
+      if (labelText) {
+        const labelEl = document.createElement('label');
+        labelEl.textContent = labelText;
+        if (fieldName) labelEl.setAttribute('for', fieldName);
+        fieldWrapper.append(labelEl);
+      }
+
+      const inputEl = document.createElement('input');
+      inputEl.type = 'text';
+      inputEl.className = 'form-input';
+      if (fieldName) {
+        inputEl.id = fieldName;
+        inputEl.name = fieldName; 
+      }
+      if (placeholder) inputEl.placeholder = placeholder;
+      
+      fieldWrapper.append(inputEl);
+      form.append(fieldWrapper);
+    } 
+    // Handle Static Text (AND / OR)
+    else if (elementType === 'static_text') {
+      const labelText = paragraphs[1]?.textContent.trim();
+      if (labelText.toUpperCase().includes('OR')) {
+        fieldWrapper.classList.add('field-static-or');
+      } else {
+        fieldWrapper.classList.add('field-static-and');
+      }
+
+      const textEl = document.createElement('p');
+      textEl.className = 'form-static-text';
+      textEl.textContent = labelText; 
+      
+      fieldWrapper.append(textEl);
+      form.append(fieldWrapper);
+    }
+    // Handle Submit Button
+    else if (elementType === 'submit') {
+      fieldWrapper.classList.add('field-submit');
+      const labelText = paragraphs[1]?.textContent.trim() || 'Search';
+      const linkEl = paragraphs[2]?.querySelector('a');
+      const apiPath = linkEl ? linkEl.href : paragraphs[2]?.textContent.trim();
+
+      if (apiPath) form.action = apiPath; 
+
+      const submitBtn = document.createElement('button');
+      submitBtn.type = 'submit';
+      submitBtn.className = 'btn-submit';
+      submitBtn.innerHTML = `${labelText} <span class="arrow-icon">↗</span>`; 
+
+      fieldWrapper.append(submitBtn);
+      form.append(fieldWrapper);
+    }
+  });
+
+  // --- 2. Add Error & Results Containers ---
+  const errorBox = document.createElement('div');
+  errorBox.className = 'form-error-box';
+  errorBox.style.display = 'none'; // Hidden by default
+  form.prepend(errorBox);
+
+  const resultsContainer = document.createElement('div');
+  resultsContainer.className = 'results-container';
+
+  block.textContent = '';
+  block.append(form);
+  block.append(resultsContainer);
+
+  // --- 3. Form Submission & Validation ---
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); 
+    errorBox.style.display = 'none';
+    resultsContainer.innerHTML = ''; 
+
+    const apiPath = form.action;
+    if (!apiPath) {
+      console.error('No API path configured in AEM.');
+      return;
+    }
+
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    // Validation Logic
+    const panVal = payload['pan'] ? payload['pan'].trim() : '';
+    const nameVal = payload['name'] ? payload['name'].trim() : '';
+    const dpIdVal = payload['dematId'] ? payload['dematId'].trim() : '';
+
+    if (!panVal) {
+      showError('PAN is mandatory. Please enter your PAN number.');
+      return;
+    }
+    if (!nameVal && !dpIdVal) {
+      showError('Please provide either the Holder Name OR the DP ID.');
+      return;
+    }
+
+    const submitBtn = form.querySelector('.btn-submit');
+    const originalBtnHTML = submitBtn.innerHTML;
+
+    try {
+      if (submitBtn) {
+        submitBtn.innerHTML = 'Searching...';
+        submitBtn.disabled = true;
+      }
+
+      // API Call
+      const response = await fetch(apiPath, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        
+        if (responseData.status === true && responseData.data && responseData.data.length > 0) {
+          renderTable(responseData.data, resultsContainer);
+        } else {
+          showError('No records found for the provided details.');
         }
+      } else {
+        showError('Failed to fetch data. Please try again later.');
+      }
+    } catch (error) {
+      console.error('API Error:', error);
+      showError('A network error occurred. Please check your connection.');
+    } finally {
+      if (submitBtn) {
+        submitBtn.innerHTML = originalBtnHTML;
+        submitBtn.disabled = false;
+      }
+    }
+  });
 
-        // --- HANDLE CHILD FIELDS (Form Inputs/Text) ---
-        // Your child model has 4 fields, so it will render with at least 3-4 columns
-        if (columns.length >= 3) {
-            const elementType = columns[0].textContent.trim();
-            const fieldName = columns[1].textContent.trim();
-            const labelText = columns[2].textContent.trim();
-            const placeholder = columns[3] ? columns[3].textContent.trim() : '';
+  // --- 4. Helper Functions ---
+  function showError(message) {
+    errorBox.textContent = message;
+    errorBox.style.display = 'block';
+  }
 
-            const fieldWrapper = document.createElement('div');
-            fieldWrapper.className = 'form-field-wrapper';
+  function renderTable(dataArray, container) {
+    const tableWrapper = document.createElement('div');
+    tableWrapper.className = 'table-responsive-wrapper';
 
-            if (elementType === 'text_input') {
-                // Create Label
-                if (labelText) {
-                    const labelEl = document.createElement('label');
-                    labelEl.textContent = labelText;
-                    labelEl.setAttribute('for', fieldName);
-                    fieldWrapper.append(labelEl);
-                }
+    const table = document.createElement('table');
+    table.className = 'dividend-results-table';
 
-                // Create Input
-                const inputEl = document.createElement('input');
-                inputEl.type = 'text';
-                inputEl.id = fieldName;
-                inputEl.name = fieldName; // Dynamically assigns the authored name attribute
-                if (placeholder) inputEl.placeholder = placeholder;
+    const headers = Object.keys(dataArray[0]);
 
-                fieldWrapper.append(inputEl);
-                form.append(fieldWrapper);
-            }
-            else if (elementType === 'static_text') {
-                // Create Static Text
-                const textEl = document.createElement('p');
-                textEl.className = 'form-static-text';
-                textEl.textContent = labelText;
-
-                fieldWrapper.append(textEl);
-                form.append(fieldWrapper);
-            }
-        }
+    // Build Header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    headers.forEach(headerText => {
+      const th = document.createElement('th');
+      th.textContent = headerText.toUpperCase();
+      headerRow.append(th);
     });
+    thead.append(headerRow);
+    table.append(thead);
 
-    // 4. Create and append the dynamic Submit and Clear buttons
-    const buttonGroup = document.createElement('div');
-    buttonGroup.className = 'form-button-group';
+    // Build Body
+    const tbody = document.createElement('tbody');
+    dataArray.forEach(row => {
+      const tr = document.createElement('tr');
+      headers.forEach(key => {
+        const td = document.createElement('td');
+        td.textContent = row[key] !== null && row[key] !== '' ? row[key] : '-'; 
+        tr.append(td);
+      });
+      tbody.append(tr);
+    });
+    table.append(tbody);
 
-    const submitBtn = document.createElement('button');
-    submitBtn.type = 'submit';
-    submitBtn.className = 'btn-submit';
-    submitBtn.textContent = submitText;
-
-    const clearBtn = document.createElement('button');
-    clearBtn.type = 'reset';
-    clearBtn.className = 'btn-clear';
-    clearBtn.textContent = clearText;
-
-    buttonGroup.append(submitBtn, clearBtn);
-    form.append(buttonGroup);
-
-    // 5. Clear the raw authored block and append the constructed form
-    block.textContent = '';
-    block.append(form);
+    tableWrapper.append(table);
+    container.append(tableWrapper);
+  }
 }

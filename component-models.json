@@ -4515,5 +4515,77 @@
         "label": "Link"
       }
     ]
+  },
+  {
+    "id": "private-investor",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Variant",
+        "description": "Select a style variant for the calculator teaser",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Calculator (opens calculator modal on click)",
+            "value": "calculator"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_heading",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_description",
+        "label": "Description"
+      }
+    ]
+  },
+  {
+    "id": "private-investor-fields",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "col1_select",
+        "label": "Input Type",
+        "description": "Background image for the teaser card",
+        "options": [
+          {
+            "name": "Text Input",
+            "value": "text"
+          },
+          {
+            "name": "Label",
+            "value": "label"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_label",
+        "label": "Input Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_placeholder",
+        "label": "Input Placeholder"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col_description",
+        "label": "Card Description",
+        "description": "Optional short description below the heading"
+      }
+    ]
   }
 ]

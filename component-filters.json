@@ -118,7 +118,8 @@
       "banner-slide-block",
       "calculator-teaser",
       "download-app",
-      "chatbot"
+      "chatbot",
+      "private-investor"
     ]
   },
   {
@@ -260,6 +261,12 @@
     "id": "calculator-teaser",
     "components": [
       "calculator-teaser-card"
+    ]
+  },
+  {
+    "id": "private-investor",
+    "components": [
+      "private-investor-fields"
     ]
   }
 ]

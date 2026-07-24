@@ -112,6 +112,7 @@ export default function decorate(block) {
       return;
     }
 
+    // Capture form data directly
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
 
@@ -121,7 +122,7 @@ export default function decorate(block) {
 
     let hasValidationErrors = false;
 
-    // 1. PAN Validation (Appears inside PAN wrapper)
+    // PAN Validation
     if (!panVal) {
       const panWrapper = form.querySelector('.layout-item-1');
       const err = document.createElement('div');
@@ -131,18 +132,16 @@ export default function decorate(block) {
       hasValidationErrors = true;
     }
 
-    // 2. Name / DP ID Validation (Appears across the whole row below them)
+    // Name / DP ID Validation
     if (!nameVal && !dpIdVal) {
       const dpIdWrapper = form.querySelector('.layout-item-5');
       const err = document.createElement('div');
       err.className = 'inline-error-msg full-width-row';
       err.textContent = 'Please provide either the Holder Name OR the DP ID.';
-      // Insert after layout-item-5 so it breaks to the next line in the flex container
       dpIdWrapper.insertAdjacentElement('afterend', err);
       hasValidationErrors = true;
     }
 
-    // Stop submission if validation failed
     if (hasValidationErrors) return;
 
     const submitBtn = form.querySelector('.btn-submit');
@@ -154,19 +153,20 @@ export default function decorate(block) {
         submitBtn.disabled = true;
       }
 
+      // Send raw formData object without Content-Type header (for multipart/form-data)
       const response = await fetch(apiPath, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: formData, 
       });
 
       if (response.ok) {
         const responseData = await response.json();
         
         if (responseData.status === true && responseData.data && responseData.data.length > 0) {
-          renderTable(responseData.data, resultsContainer);
+          renderDivTable(responseData.data, resultsContainer);
         } else {
-          showGeneralError(responseData.message || 'No records found for the provided details.');
+          // Renders the grey box below the button for "Data Not Found"
+          renderEmptyState(responseData.message || 'Data Not Found', resultsContainer);
         }
       } else {
         showGeneralError('Failed to fetch data. Please try again later.');
@@ -188,38 +188,48 @@ export default function decorate(block) {
     generalErrorBox.style.display = 'block';
   }
 
-  function renderTable(dataArray, container) {
+  function renderEmptyState(message, container) {
+    const emptyBox = document.createElement('div');
+    emptyBox.className = 'empty-data-box';
+    emptyBox.textContent = message;
+    container.append(emptyBox);
+  }
+
+  // --- DIV-BASED TABLE LAYOUT ---
+  function renderDivTable(dataArray, container) {
     const tableWrapper = document.createElement('div');
     tableWrapper.className = 'table-responsive-wrapper';
 
-    const table = document.createElement('table');
-    table.className = 'dividend-results-table';
+    const divTable = document.createElement('div');
+    divTable.className = 'div-table';
 
     const headers = Object.keys(dataArray[0]);
 
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
+    // Build Header Row
+    const headerRow = document.createElement('div');
+    headerRow.className = 'div-table-row div-table-header';
     headers.forEach(headerText => {
-      const th = document.createElement('th');
-      th.textContent = headerText.toUpperCase();
-      headerRow.append(th);
+      const cell = document.createElement('div');
+      cell.className = 'div-table-cell header-cell';
+      cell.textContent = headerText.toUpperCase();
+      headerRow.append(cell);
     });
-    thead.append(headerRow);
-    table.append(thead);
+    divTable.append(headerRow);
 
-    const tbody = document.createElement('tbody');
+    // Build Data Rows
     dataArray.forEach(row => {
-      const tr = document.createElement('tr');
+      const dataRow = document.createElement('div');
+      dataRow.className = 'div-table-row';
       headers.forEach(key => {
-        const td = document.createElement('td');
-        td.textContent = row[key] !== null && row[key] !== '' ? row[key] : '-'; 
-        tr.append(td);
+        const cell = document.createElement('div');
+        cell.className = 'div-table-cell';
+        cell.textContent = row[key] !== null && row[key] !== '' ? row[key] : '-'; 
+        dataRow.append(cell);
       });
-      tbody.append(tr);
+      divTable.append(dataRow);
     });
-    table.append(tbody);
 
-    tableWrapper.append(table);
+    tableWrapper.append(divTable);
     container.append(tableWrapper);
   }
 }

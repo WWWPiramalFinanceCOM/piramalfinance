@@ -5,10 +5,8 @@
     border-radius: 12px;
     padding: 30px 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    /* max-width: 700px;  */
     margin: 0 auto;
     box-sizing: border-box;
-    /* max-width: 70%; */
 }
 
 .private-investor-form {
@@ -19,6 +17,17 @@
     gap: 20px 0;
 }
 
+.section.private-investor-container .default-content-wrapper h2 {
+    color: var(--black, #333333);
+    font-family: Nunito-Bold, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 24px;
+    margin-top: 24px;
+    text-align: center;
+}
+
 .form-field-wrapper {
     width: 72%;
     display: flex;
@@ -27,14 +36,10 @@
 }
 
 /* --- BULLETPROOF INLINE LAYOUT OVERRIDES --- */
-/* Target the explicit layout classes injected by JS */
-
-/* Name Input (Authored Item 3) */
 .private-investor-form .layout-item-3 {
     width: 43%;
 }
 
-/* "OR" Text (Authored Item 4) */
 .private-investor-form .layout-item-4 {
     width: 10%;
     align-items: center;
@@ -45,10 +50,8 @@
     margin: 0;
     font-size: 16px;
     font-weight: 700;
-    /* color: #aa26a7; */
 }
 
-/* DP ID Input (Authored Item 5) */
 .private-investor-form .layout-item-5 {
     width: 43%;
 }
@@ -62,13 +65,11 @@
 }
 
 .form-field-wrapper.type-text_input {
-    max-width: 40%;
+    max-width: 100%;
     max-width: 30%;
 }
 
 .form-input {
-    /* background-color: #eff3fe; */
-    border: 1px solid transparent;
     border-radius: 8px;
     padding: 14px 16px;
     font-size: 16px;
@@ -127,91 +128,6 @@
     cursor: not-allowed;
 }
 
-/* --- ERROR MESSAGE BOX --- */
-.form-error-box {
-    background-color: #fee2e2;
-    border: 1px solid #ef4444;
-    color: #b91c1c;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 16px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* --- RESULTS TABLE STYLING --- */
-.results-container {
-    margin-top: 40px;
-    width: 100%;
-    max-width: 100%;
-}
-
-.table-responsive-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    /* Creates the horizontal scrollbar */
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.dividend-results-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: auto;
-    /* Allows table to stretch based on content */
-    text-align: left;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-}
-
-.dividend-results-table th {
-    background-color: #ffffff;
-    color: #000000;
-    font-weight: 700;
-    font-size: 13px;
-    padding: 16px;
-    border-bottom: 2px solid #e5e7eb;
-    /* Allows long header text to wrap, but prevents them from getting too squished */
-    min-width: 140px;
-    white-space: normal;
-    vertical-align: top;
-}
-
-.dividend-results-table td {
-    padding: 16px;
-    border-bottom: 1px solid #f3f4f6;
-    color: #374151;
-    vertical-align: middle;
-    /* CRITICAL FIX: Forces PAN, DEMAT ID, and Names to stay strictly on one line */
-    white-space: nowrap;
-}
-
-.dividend-results-table tr:hover {
-    background-color: #f9fafb;
-}
-
-/* Mobile Responsiveness for side-by-side inputs */
-@media (max-width: 767px) {
-
-    .private-investor-form .layout-item-3,
-    .private-investor-form .layout-item-4,
-    .private-investor-form .layout-item-5 {
-        width: 72%;
-        margin-bottom: 0;
-    }
-
-    .private-investor-form .layout-item-4 .form-static-text {
-        margin: 10px 0;
-    }
-
-    .form-field-wrapper.type-text_input {
-        max-width: 100%;
-    }
-}
-
 /* --- INLINE VALIDATION ERROR MESSAGES --- */
 .inline-error-msg {
     background-color: #fee2e2;
@@ -225,16 +141,13 @@
     box-sizing: border-box;
 }
 
-/* Specific styling for the error below Name & DP ID to make it span the row */
 .inline-error-msg.full-width-row {
     flex-basis: 96%;
-    /* Matches the 43% + 10% + 43% width of the row above it */
     margin-top: -8px;
-    /* Pulls it closer to the input boxes */
     margin-bottom: 12px;
 }
 
-/* --- GENERAL ERROR MESSAGE BOX (For API Errors) --- */
+/* --- GENERAL ERROR MESSAGE BOX (For network/server API errors) --- */
 .form-error-box.general-error {
     background-color: #fee2e2;
     border: 1px solid #ef4444;
@@ -246,4 +159,160 @@
     margin-bottom: 16px;
     width: 100%;
     box-sizing: border-box;
+}
+
+/* --- EMPTY STATE BOX (Data Not Found) --- */
+.empty-data-box {
+    background-color: #f1f1f1;
+    color: #000000;
+    text-align: center;
+    padding: 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    border: 1px solid #e5e7eb;
+}
+
+/* --- DIV-BASED TABLE STYLING --- */
+.results-container {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    -webkit-overflow-scrolling: touch;
+}
+
+.div-table {
+    display: flex;
+    flex-direction: column;
+    min-width: max-content;
+    /* Forces horizontal scroll instead of squishing */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.div-table-row {
+    display: flex;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.div-table-row:last-child {
+    border-bottom: none;
+}
+
+.div-table-row:not(.div-table-header):hover {
+    background-color: #f9fafb;
+}
+
+.div-table-header {
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.div-table-cell {
+    padding: 16px 20px;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    /* Forces data to stay on a single line */
+    min-width: 140px;
+}
+
+.header-cell {
+    font-weight: 700;
+    font-size: 12px;
+    color: #000000;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 767px) {
+
+    .private-investor-form {
+        justify-content: center;
+    }
+
+    .private-investor-form .layout-item-3,
+    .private-investor-form .layout-item-4,
+    .private-investor-form .layout-item-5 {
+        width: 72%;
+        margin-bottom: 0;
+    }
+
+    .private-investor-form .layout-item-4 .form-static-text {
+        margin: 10px 0;
+    }
+
+    .inline-error-msg.full-width-row {
+        flex-basis: 100%;
+        margin-top: 0;
+    }
+
+    .form-field-wrapper.type-text_input {
+        max-width: 100%;
+    }
+
+    .section.private-investor-container .default-content-wrapper h2 {
+        font-size: 1.25rem;
+        margin-bottom: 16px;
+    }
+}
+
+/* --- DIV-BASED TABLE STYLING --- */
+.results-container {
+    margin-top: 40px;
+    width: 100%;
+}
+
+/* This is the ONE wrapper that will hold the scrollbar at the very bottom */
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    -webkit-overflow-scrolling: touch;
+}
+
+.div-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    min-width: max-content;
+    /* Forces the whole block to widen and scroll */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.div-table-row {
+    display: table-row;
+}
+
+.div-table-row:not(.div-table-header):hover {
+    background-color: #f9fafb;
+}
+
+.div-table-cell {
+    display: table-cell;
+    padding: 16px 20px;
+    color: #374151;
+    vertical-align: middle;
+    white-space: nowrap;
+    /* Forces PAN, Name, etc. to stay on a single line */
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.header-cell {
+    font-weight: 700;
+    font-size: 12px;
+    color: #000000;
+    border-bottom: 2px solid #e5e7eb;
 }

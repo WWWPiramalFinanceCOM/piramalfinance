@@ -3,10 +3,13 @@
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     border-radius: 12px;
-    padding: 30px 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     margin: 0 auto;
     box-sizing: border-box;
+    padding: 32px 40px;
+    background-color: var(--white, #ffffff);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(51, 51, 51, 0.08);
 }
 
 .private-investor-form {
@@ -58,15 +61,15 @@
 
 /* --- INPUT & LABEL STYLING --- */
 .form-field-wrapper label {
-    font-size: 14px;
+    font-size: 18px;
     color: #1a1a1a;
-    font-weight: 400;
+    font-weight: 700;
     margin-bottom: 2px;
+    font-family: 'Nunito-Extrabold';
 }
 
 .form-field-wrapper.type-text_input {
-    max-width: 100%;
-    max-width: 30%;
+    max-width: 35%;
 }
 
 .form-input {
@@ -95,7 +98,7 @@
     font-size: 15px;
     font-weight: 700;
     color: #000000;
-    text-align: center;
+    /* text-align: center; */
     margin: 10px 0 0 0;
 }
 
@@ -130,8 +133,8 @@
 
 /* --- INLINE VALIDATION ERROR MESSAGES --- */
 .inline-error-msg {
-    background-color: #fee2e2;
-    border: 1px solid #ef4444;
+    /* background-color: #fee2e2;
+    border: 1px solid #ef4444; */
     color: #b91c1c;
     padding: 8px 12px;
     border-radius: 6px;
@@ -149,15 +152,15 @@
 
 /* --- GENERAL ERROR MESSAGE BOX (For network/server API errors) --- */
 .form-error-box.general-error {
-    background-color: #fee2e2;
-    border: 1px solid #ef4444;
+    /* background-color: #fee2e2;
+    border: 1px solid #ef4444; */
     color: #b91c1c;
     padding: 12px 16px;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 16px;
-    width: 100%;
+    width: 35%;
     box-sizing: border-box;
 }
 
@@ -236,14 +239,25 @@
 /* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 767px) {
 
+    .private-investor.block {
+        padding: 28px 0px;
+
+    }
+
     .private-investor-form {
-        justify-content: center;
+        justify-content: start;
+        gap: 12px 0;
+    }
+
+    .form-field-wrapper label {
+        font-size: 16px;
     }
 
     .private-investor-form .layout-item-3,
     .private-investor-form .layout-item-4,
     .private-investor-form .layout-item-5 {
         width: 72%;
+        width: 100%;
         margin-bottom: 0;
     }
 
@@ -258,6 +272,7 @@
 
     .form-field-wrapper.type-text_input {
         max-width: 100%;
+        width: 97%;
     }
 
     .section.private-investor-container .default-content-wrapper h2 {

@@ -325,7 +325,6 @@ function verifyOtpBtnClick() {
     return;
   }
   verifyOtpBtn.addEventListener('click', (e) => {
-    debugger;
     updateFormValuve();
     const otpValue = document.querySelector('#loan-form-otp-input').value;
     verifyOtpBtn.closest('.loan-form-button-container').classList.add('loader-initialized');

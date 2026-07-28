@@ -115,7 +115,7 @@ export function generateOTPAPI(access_token, mobileno, productName, source) {
     fetchAPI('POST', generateOTPURL, requesObj)
       .then((generateOTPRsp, reject) => {
         const generateOTPRspObj = getJsonObj(generateOTPRsp);
-       const otpAuthId = generateOTPRspObj.responseJson.authUniqueId || generateOTPRspObj.responseJson.AuthUniqueId;
+        const otpAuthId = generateOTPRspObj.responseJson.authUniqueId || generateOTPRspObj.responseJson.AuthUniqueId;
         sessionStorage.setItem('otpAuthId', otpAuthId);
         resolve(generateOTPRspObj.responseJson);
       })
@@ -287,6 +287,11 @@ function updateFormValuve() {
 }
 function getLeadFormData(loanStatus, authUniqueId) {
   updateFormValuve();
+  const trackingParams = [
+    "utm_source", "utm_campaign", "utm_adgroup", "utm_content",
+    "utm_device", "utm_medium", "utm_keyword", "utm_location",
+    "utm_term", "utm_cohort", "gclid", "fclid"
+  ];
   const leadDataObj = {
     Name: formCustomerName,
     MobileNumber: formCustomerNo,
@@ -300,6 +305,12 @@ function getLeadFormData(loanStatus, authUniqueId) {
     RejectStatus: loanStatus,
     AuthUniqueId: authUniqueId,
   };
+  const urlParams = new URLSearchParams(window.location.search);
+  trackingParams.forEach(param => {
+    if (urlParams.has(param)) {
+      leadDataObj[param] = urlParams.get(param);
+    }
+  });
 
   return { LeadData: leadDataObj };
 }
@@ -314,21 +325,22 @@ function verifyOtpBtnClick() {
     return;
   }
   verifyOtpBtn.addEventListener('click', (e) => {
+    debugger;
     updateFormValuve();
     const otpValue = document.querySelector('#loan-form-otp-input').value;
-    verifyOtpBtn.closest('.loan-form-button-container').classList.add('loader-initialized'); 
+    verifyOtpBtn.closest('.loan-form-button-container').classList.add('loader-initialized');
     formInteraction(formLoanType, 'verify', targetObject.pageName);
     try {
       const click_text = e.target.textContent.trim() || "";
-      lpOtpValidate(click_text,formLoanType,targetObject.pageName)
+      lpOtpValidate(click_text, formLoanType, targetObject.pageName)
     } catch (error) {
-        console.warn(error)
+      console.warn(error)
     }
     if (otpValue) {
       verfyOtpAPI(otpValue)
         .then(({ returnResponse, authUniqueId }) => {
           // const { statusCode } = returnResponse;
-          const  statusCode  = returnResponse.StatusCode;
+          const statusCode = returnResponse.StatusCode;
           verifyOtp(e.target.innerText, targetObject.pageName, '');
           const otpMsgElement = document.querySelector('.wrongotpmessage');
           if (statusCode != 100) {
@@ -362,7 +374,7 @@ function verifyOtpBtnClick() {
             }
           }
 
-          
+
           //   leadAPI(sessionStorage.getItem('accesstoken'), sessionStorage.getItem('otpAuthId'))
           leadAPI(sessionStorage.getItem('accesstoken'), authUniqueId)
             .catch((error) => {
@@ -396,7 +408,7 @@ function resendOtpBtnClick() {
     }
     resendOtpAPI('Leadform')
       .then(({ responseJson }) => {
-         const otpAuthId = responseJson.authUniqueId || responseJson.AuthUniqueId;
+        const otpAuthId = responseJson.authUniqueId || responseJson.AuthUniqueId;
         sessionStorage.setItem('otpAuthId', otpAuthId);
       })
       .catch((error) => {
@@ -436,7 +448,7 @@ function getProductMap(product, occupation) {
 
   if (product == 'ucl') return occupation == 'salaried' ? 'preOwnedCarLoanSAL' : 'preOwnedCarLoanSE';
 
-  if(product == 'las' || product == 'lamf') return 'loanAgainstSecurity' ;
+  if (product == 'las' || product == 'lamf') return 'loanAgainstSecurity';
 
   return false;
 }

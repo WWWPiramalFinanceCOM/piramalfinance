@@ -1,5 +1,5 @@
 /* .header and nav layout */
-@import url("../modal/modal.css");
+/* @import url("../modal/modal.css"); */
 /* @import url('./header-neeyat.css'); */
 /* .header .nav-wrapper {
   background-color: var(--background-color);
@@ -10,6 +10,12 @@
 
 header {
   display: block;
+}
+
+header,
+footer {
+    opacity: 0;
+    visibility: hidden;
 }
 
 .header nav#nav {
@@ -1711,10 +1717,10 @@ body.modal-open footer {
 
 }
 
-.header-wrapper.primary nav#nav a:any-link {
-  /* color: white; */
+/* color: white; */
 
-  @media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1200px) {
+  .header-wrapper.primary nav#nav a:any-link {
     color: black;
     text-align: unset;
     background-color: unset;

@@ -4,12 +4,12 @@
 import { headerInteraction, navlogin } from '../../dl.js';
 import { autoLinkLangPath, fetchPlaceholders, getMetadata, loadBlocks } from '../../scripts/aem.js';
 import { decorateMain, targetObject } from '../../scripts/scripts.js';
-import { body } from '../../scripts/common.js';
-import { loadFragment } from '../fragment/fragment.js';
+// import { body } from '../../scripts/common.js';
+// import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 1201px)');
-
+const body = document.querySelector('body');
 /**
  *
  * @param {Element} navSection
@@ -222,6 +222,7 @@ export default async function decorate(block) {
     decorateMain(fragment);
     await loadBlocks(fragment);
   } else {
+    const { loadFragment } = await import('../fragment/fragment.js');
     fragment = await loadFragment(path);
   }
 
@@ -439,6 +440,7 @@ export default async function decorate(block) {
   let mobFragment = null;
   hamburger.addEventListener('click', async (e) => {
     if (!mobFragment) {
+      const {loadFragment} = await import('../fragment/fragment.js');
       mobFragment = await loadFragment(getMetadata('mobilenav'));
       const mobNav = mobFragment.querySelector('.default-content-wrapper');
       mobNav.classList.add('desk-dp-none');

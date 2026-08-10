@@ -390,8 +390,8 @@ function decorateTemplateAndTheme() {
             }
         });
     };
-    const template = getMetadata('template');
-    if (template) addClasses(document.body, template);
+    // const template = getMetadata('template');
+    // if (template) addClasses(document.body, template);
     const theme = getMetadata('theme');
     if (theme) addClasses(document.body, theme);
 }

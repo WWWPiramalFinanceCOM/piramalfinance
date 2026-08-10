@@ -19,6 +19,17 @@
     }
   }
 </script>
+
+<style>
+  body {
+    opacity: 0;
+  }
+
+  body.appear {
+    opacity: 1;
+  }
+</style>
+
 <script type="module">
   import(`/scripts/aem${window.getExtension("js")}`);
   import(`/scripts/scripts${window.getExtension("js")}`);
@@ -35,7 +46,8 @@
 <link as="font" crossorigin="" href="/fonts/NunitoExtraLight.woff2" rel="preconnect" type="font/woff2" />
 
 <script>
-  document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
+  setTimeout(() => document.body.classList.add('appear'), 3000);
+  // document.write(`<link rel="stylesheet" href="/styles/styles${window.getExtension('css')}" />`);
 </script>
 
 <link rel="apple-touch-icon" href="/content/dam/piramalfinance/icons/piramalfinance-fav-icon.ico" />

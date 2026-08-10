@@ -6,6 +6,7 @@ import {
   sampleRUM, loadHeader, loadFooter, decorateButtons, decorateIcons, decorateSections, decorateBlocks, decorateTemplateAndTheme, waitForLCP, loadBlocks, loadCSS, fetchPlaceholders,
   getMetadata,
   getExtension,
+  loadBlock,
 } from './aem.js';
 import {
   div,
@@ -204,6 +205,19 @@ export async function decoratePlaceholder(block, path) {
   }
 } */
 
+  // Main function
+const processAnchor = (anchor, body) => {
+  // Handle target attribute
+  if (anchor.innerHTML.includes('<sub>')) {
+    anchor.target = '_blank';
+  }
+
+  // Handle modal popup
+  if (anchor.href.includes('/modal-popup/')) {
+    handleModalPopup(anchor, body);
+  }
+}
+
 export async function decorateAnchorTag(main) {
   try {
     main.querySelectorAll('a').forEach((anchor) => {
@@ -293,6 +307,7 @@ async function loadEager(doc) {
     // await waitForLCP(LCP_BLOCKS);
     await loadHeader(doc.querySelector('header'));
     document.body.classList.add('appear');
+    await loadBlock(main.querySelector(".section"));
   }
 
   try {
@@ -863,13 +878,16 @@ async function loadTemplate(doc, templateName) {
 
 async function loadPage() {
   // loadHeader(document.querySelector('header'));
-  const templateName = getMetadata('template');
-  if (templateName) {
-    await loadTemplate(document, templateName);
+  // const templateName = getMetadata('template');
+  if (false) {
+    // await loadTemplate(document, templateName);
   } else {
-    await loadingCustomCss();
+    loadingCustomCss();
   }
-  await loadResetCss();
+
+  loadCSS(`${window.hlx.codeBasePath}/styles/styles${getExtension('css')}`);
+
+  //  loadResetCss();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
@@ -1216,18 +1234,7 @@ function getNeeyatButtonIndex(element) {
 
 // Create a function to group all loans
 
-// Main function
-const processAnchor = (anchor, body) => {
-  // Handle target attribute
-  if (anchor.innerHTML.includes('<sub>')) {
-    anchor.target = '_blank';
-  }
-
-  // Handle modal popup
-  if (anchor.href.includes('/modal-popup/')) {
-    handleModalPopup(anchor, body);
-  }
-};
+;
 
 const handleModalPopup = (anchor, body) => {
   const dataid = anchor.href.split('/').pop();

@@ -250,9 +250,14 @@ function buildSlideHtml(data, index, extraClasses) {
   // Title/desc wrappers with parent color
   const titleWrap = tHtml ? `<div class="banner-slide-title"${titleColor ? ` style="color:${escapeAttr(titleColor)}"` : ''}>${tHtml}</div>` : '';
   const descWrap = dHtml ? `<div class="banner-slide-description"${descColor ? ` style="color:${escapeAttr(descColor)}"` : ''}>${dHtml}</div>` : '';
-  const actionsWrap = (cHtml || shortDescription) ? `<div class="banner-slide-actions">${cHtml}${shortDescription ? `<div class="banner-slide-short-description">${shortDescription}</div>` : ''}</div>` : '';
+  const shortDescHtml = shortDescription ? `<div class="banner-slide-short-description">${shortDescription}</div>` : '';
+  const actionsWrap = (cHtml || shortDescription) ? `<div class="banner-slide-actions">${cHtml}${shortDescHtml}</div>` : '';
+  // btn-pos-* takes the real actions out of flow (position:absolute); an invisible
+  // clone reserves that same space so title/description never reposition.
+  const hasBtnPos = cls.some((c) => c.startsWith('btn-pos-'));
+  const actionsSpacer = (hasBtnPos && actionsWrap) ? `<div class="banner-slide-actions banner-slide-actions-spacer" aria-hidden="true">${cHtml}${shortDescHtml}</div>` : '';
 
-  return `<div class="${cls.join(' ')}" data-slide-index="${index}"${slideStyle}><div class="banner-slide-bg">${bgHtml}</div><div class="banner-slide-surface"><div class="banner-slide-content"><div class="banner-slide-copy">${titleWrap}${descWrap}${fHtml}${actionsWrap}</div><div class="banner-slide-media">${fgHtml}</div></div></div></div>`;
+  return `<div class="${cls.join(' ')}" data-slide-index="${index}"${slideStyle}><div class="banner-slide-bg">${bgHtml}</div><div class="banner-slide-surface"><div class="banner-slide-content"><div class="banner-slide-copy">${titleWrap}${descWrap}${fHtml}${actionsSpacer}${actionsWrap}</div><div class="banner-slide-media">${fgHtml}</div></div></div></div>`;
 }
 
 /* --- Slider init --- */
@@ -376,13 +381,17 @@ function initSlider(section) {
       const href = (btn.getAttribute('href') || '#').trim();
       const page = targetObject?.pageName || '';
       const openForm = btn.getAttribute('data-cta-open-form') === 'true';
+      const isModalLink = href.includes('/modals/');
+
+      // preventDefault must run synchronously (before any await), otherwise the
+      // anchor's default navigation already fires once the handler yields at the await below
+      if (openForm || isModalLink) e.preventDefault();
 
       // Lazy analytics
       let dl;
       try { dl = await import('../../dl.js'); } catch { dl = {}; }
 
       if (openForm) {
-        e.preventDefault();
         try {
           dl.bannerClick?.(text || href, page);
           dl.ctaClick?.(text || href, 'banner-slide', 'banner-slide', page);
@@ -404,6 +413,20 @@ function initSlider(section) {
             document.body.style.overflowY = 'hidden';
           }
         } catch (err) { console.warn('banner-slide: form error', err); }
+        return;
+      }
+
+      // stopPropagation above blocks the global autolinkModals listener on document,
+      // so /modals/ links must be intercepted here to open as a modal instead of navigating.
+      if (isModalLink) {
+        try {
+          dl.bannerClick?.(text || href, page);
+          dl.ctaClick?.(text || href, 'banner-slide', 'banner-slide', page);
+        } catch { }
+        try {
+          const { openModal } = await import('../modal/modal.js');
+          openModal(href);
+        } catch (err) { console.warn('banner-slide: modal error', err); }
         return;
       }
 

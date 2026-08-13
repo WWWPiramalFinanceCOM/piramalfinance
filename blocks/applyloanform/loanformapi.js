@@ -5,6 +5,7 @@ import {
 } from '../../dl.js';
 import { targetObject } from '../../scripts/scripts.js';
 import { fetchAPI } from '../../scripts/common.js';
+import { fetchPlaceholders } from '../../scripts/aem.js';
 import {
   accessTokenURL, generateOTPURL, leadAPIURL, otpTokenURL, resendOTPUrl, smsURL, verifyOTPURL,
 } from './loanformapiurls.js';
@@ -64,11 +65,12 @@ export function getAccessToken() {
   });
 }
 
-export function AccessTokenAPI() {
+export async function AccessTokenAPI() {
+  const placeholders = await fetchPlaceholders();
   const requestJson = {
     requestJson: {
-      client_id: '270762d6d2544ce695908b3496d25e06',
-      client_secret: '5c2e50eedd8f484387ad432be9897ce4',
+      client_id: placeholders.accesstokenclientid,
+      client_secret: placeholders.accesstokenclientsecret,
       source: 'help.piramalfinance.com',
     },
   };
@@ -126,9 +128,10 @@ export function generateOTPAPI(access_token, mobileno, productName, source) {
   });
 }
 
-function getOtpToken(generateOtpAuthId) {
+async function getOtpToken(generateOtpAuthId) {
+  const placeholders = await fetchPlaceholders();
   const requesObj = {
-    requestJson: 'client_id=gx7vVKKAcOCGIpWc6O7kBYRo209OAHhq&client_secret=L3pARR8QWmanaNVC&grant_type=client_credentials',
+    requestJson: `client_id=${placeholders.otptokenclientid}&client_secret=${placeholders.otptokenclientsecret}&grant_type=client_credentials`,
   };
 
   // return new Promise((resolve, reject) => {
@@ -143,7 +146,7 @@ function getOtpToken(generateOtpAuthId) {
   // });
 
   return new Promise((resolve, reject) => {
-    const data = 'client_id=gx7vVKKAcOCGIpWc6O7kBYRo209OAHhq&client_secret=L3pARR8QWmanaNVC&grant_type=client_credentials';
+    const data = `client_id=${placeholders.otptokenclientid}&client_secret=${placeholders.otptokenclientsecret}&grant_type=client_credentials`;
 
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
@@ -164,10 +167,6 @@ function getOtpToken(generateOtpAuthId) {
     xhr.setRequestHeader('Cookie', 'CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1');
 
     xhr.send(data);
-  });
-
-  return new Promise((resolve, reject) => {
-    resolve('8jy1AFXCXeV3Hv4Xwh34LVRbZdYE');
   });
 }
 
@@ -200,13 +199,12 @@ function leadAPI(accessToken, authUniqueId) {
     },
   };
 
-  return new Promise((resolve, reject) => {
-    fetchAPI('POST', leadAPIURL, requestObj)
-      .then((response) => {
-        // console.log("Data inserted successfully.");
-        resolve('Data inserted successfully.');
-      });
-  });
+  return fetchAPI('POST', leadAPIURL, requestObj)
+    .then(() => 'Data inserted successfully.')
+    .catch((err) => {
+      showNetworkFailedScreen(err);
+      throw err;
+    });
 }
 
 export function verfyOtpAPI(otp) {
@@ -279,7 +277,7 @@ function updateFormValuve() {
   formLoanAmount = document.querySelector('#form-loan-amount')?.value;
   formCustomerName = document.querySelector('#form-customer-name')?.value;
   formCustomerNo = document.querySelector('#form-customer-no')?.value;
-  Occupation = document.querySelector('[name=emplyoment]:checked').id == 'radio-salary' ? 'Salaried' : 'Business';
+  Occupation = document.querySelector('[name=emplyoment]:checked')?.id === 'radio-salary' ? 'Salaried' : 'Business';
   formIncome = document.querySelector('#form-income')?.value;
   formDOB = document.querySelector('#loan-form-dob')?.value;
   formState = document.querySelector('#form-state')?.value;

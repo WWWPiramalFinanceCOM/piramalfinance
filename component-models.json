@@ -2235,8 +2235,8 @@
         "label": "Heading Type",
         "options": [
            {
-            "name": "H2",
-            "value": "h2"
+            "name": "H1",
+            "value": "h1"
           },
           {
             "name": "H2",

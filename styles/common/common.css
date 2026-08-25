@@ -4305,6 +4305,7 @@
 }
 
 .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a,
+.section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a,
 .section.financial-reports-carousel .tab-link-wrapper .tab-link.block>div .glider .glider-track li strong a {
     background-color: var(--greyishblue);
     color: var(--submidorange)
@@ -4312,6 +4313,7 @@
 
 .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>a:hover,
 .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:hover,
+.section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a:hover,
 .section.financial-reports-carousel .tab-link-wrapper .tab-link.block>div .glider .glider-track li a:hover {
     background-color: var(--greyishblue);
     color: var(--submidorange);
@@ -4342,12 +4344,14 @@
 }
 
 .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a,
+.section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a,
 .section.financial-reports-carousel .tab-link-wrapper .tab-link.block>div .glider .glider-track li strong a {
     color: var(--white)
 }
 
 .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>a:hover,
-.section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:hover {
+.section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:hover,
+.section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a:hover {
     background-color: var(--white);
     color: var(--black)
 }
@@ -4484,7 +4488,9 @@
     }
 
     .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:after,
-    .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:last-child:after {
+    .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a:after,
+    .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:last-child:after,
+    .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a:last-child:after {
         background: var(--black);
         border-radius: 50%;
         content: "";
@@ -4505,7 +4511,8 @@
         align-items: baseline
     }
 
-    .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a {
+    .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a,
+    .section.company-details-wrapper .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a {
         color: var(--black);
         background-color: transparent;
         font-family: Nunito-Bold, sans-serif;
@@ -4593,7 +4600,8 @@
         gap: 0
     }
 
-    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a {
+    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a,
+    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a {
         color: var(--black);
         border: unset;
         font-family: Nunito-Bold, sans-serif
@@ -4608,7 +4616,8 @@
         border: 1px solid var(--orange)
     }
 
-    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:after {
+    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:after,
+    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a:after {
         background: var(--orange)
     }
 
@@ -8977,7 +8986,8 @@ dialog[open]:has(.modal-content .section.support-contact-us-popup.risk-gradation
         border: 1px solid var(--fossil)
     }
 
-    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:after {
+    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>strong>a:after,
+    .section.company-details-wrapper.about-us-company-details .tab-link-wrapper .tab-link.block>div>div>ul>li>h1>strong>a:after {
         background: var(--black)
     }
 }

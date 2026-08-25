@@ -2228,10 +2228,10 @@
         "description": "Sets the main title of the teaser."
       },
       {
-        "component": "text",
+        "component": "select",
         "valueType": "string",
         "name": "titleType",
-        "value": "h3",
+        "value": "h2",
         "label": "Heading Type",
         "options": [
           {

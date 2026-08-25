@@ -29,19 +29,22 @@ export default async function decorate(block) {
     console.warn(error);
   }
   if (block.closest('.calculator-section-wrapper')) {
+    const calculatorSection = block.closest('.calculator-section-wrapper');
+    // keep whatever heading tag was authored (h1-h6) and just reuse the existing title styling via class
+    calculatorSection.querySelector('.default-content-wrapper h1, .default-content-wrapper h2, .default-content-wrapper h3, .default-content-wrapper h4, .default-content-wrapper h5, .default-content-wrapper h6, .default-content-wrapper p ,.default-content-wrapper div')?.classList.add('title');
     const bgImg = block.querySelector('a');
     const tryBTN = bgImg.querySelector('.button-container-text');
     let isCurrentTarget;
     tryBTN.addEventListener('click', (e) => {
       isCurrentTarget = e.currentTarget.textContent.trim().toLowerCase();
-      const title = e.target.closest('.calculator-section-wrapper').querySelector('.default-content-wrapper h2')?.innerText;
+      const title = e.target.closest('.calculator-section-wrapper').querySelector('.default-content-wrapper .title')?.innerText;
       const blockTitle = e.target.closest('.calculator-section-wrapper .block').querySelector('.title')?.innerText;
       const clicktext = e.target.closest('.calculator-section-wrapper ').querySelector('a .button-container-text')?.textContent.trim();
       ctaClick(clicktext, blockTitle, title, targetObject.pageName);
     });
     bgImg.addEventListener('click', (e) => {
       if (!(isCurrentTarget == 'try now')) {
-        const title = e.target.closest('.calculator-section-wrapper').querySelector('.default-content-wrapper h2')?.innerText;
+        const title = e.target.closest('.calculator-section-wrapper').querySelector('.default-content-wrapper .title')?.innerText;
         const blockTitle = e.target.closest('.calculator-section-wrapper .block').querySelector('.title')?.innerText;
         const clicktext = e.target.closest('.calculator-section-wrapper ').querySelector('a .button-container-text')?.textContent.trim();
         ctaClick(clicktext, blockTitle, title, targetObject.pageName);
@@ -98,7 +101,15 @@ export function renderTeaserHTMLFactory(props, block) {
   const frontImageDiv = createElement('div', 'front-image');
   if (frontImagePic) frontImageDiv.append(frontImagePic);
 
-  const titleDiv = createElement('div', 'title', title?.textContent.trim() || '');
+  // keep the authored heading tag (e.g. h1 with its id) instead of flattening it into a div
+  const titleHeading = title?.querySelector('h1, h2, h3, h4, h5, h6');
+  let titleDiv;
+  if (titleHeading) {
+    titleHeading.classList.add('title');
+    titleDiv = titleHeading;
+  } else {
+    titleDiv = createElement('div', 'title', title?.textContent.trim() || '');
+  }
   const descriptionDiv = createElement('div', 'description', description?.textContent.trim() || '');
 
   let newButtonTag = '';

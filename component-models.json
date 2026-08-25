@@ -2234,6 +2234,10 @@
         "value": "h2",
         "label": "Heading Type",
         "options": [
+           {
+            "name": "H2",
+            "value": "h2"
+          },
           {
             "name": "H2",
             "value": "h2"

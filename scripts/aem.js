@@ -467,7 +467,7 @@ export function autoLinkLangPaths(anchors) {
 }
 export function autoLinkLangPath(anchor) {
     try {
-        if(anchor.href){
+        if (anchor.href) {
             addRefAttribute(anchor);
             const anchorUrl = new URL(anchor.href);
             const currentUrl = new URL(window.location.href);
@@ -500,15 +500,15 @@ export function autoLinkLangPath(anchor) {
                     newHref = langPath + anchorUrl.pathname + anchorUrl.search;
                 }
             } else if (isExcludedText) {
-                const pathSegments = (langPath && currentUrl.pathname.startsWith(langPath)) ? currentUrl.pathname.split('/').slice(2) :  currentUrl.pathname.split('/').slice(1);
+                const pathSegments = (langPath && currentUrl.pathname.startsWith(langPath)) ? currentUrl.pathname.split('/').slice(2) : currentUrl.pathname.split('/').slice(1);
                 if (pathSegments.length > 1) {
-                    newHref = anchorUrl.pathname  + '/' + pathSegments.join('/') + anchorUrl.search;
+                    newHref = anchorUrl.pathname + '/' + pathSegments.join('/') + anchorUrl.search;
                 } else {
                     newHref = langPath
-                        ? anchorUrl.pathname.split('/').slice(0, -1).join('/') + '/'+ currentUrl.pathname.split('/').slice(2).join('/') + anchorUrl.search
+                        ? anchorUrl.pathname.split('/').slice(0, -1).join('/') + '/' + currentUrl.pathname.split('/').slice(2).join('/') + anchorUrl.search
                         : anchorUrl.pathname.split('/').slice(0, -1).join('/') + currentUrl.pathname + anchorUrl.search;
                 }
-                newHref = newHref.replaceAll('//' , '/');
+                newHref = newHref.replaceAll('//', '/');
             }
             anchor.href = newHref;
         }
@@ -787,7 +787,7 @@ async function loadBlock(block) {
         block.dataset.blockStatus = 'loading';
         const { blockName } = block.dataset;
         try {
-            if(!blockName) {throw Error(`Block Name is ${blockName}`)}
+            if (!blockName) { throw Error(`Block Name is ${blockName}`) }
             const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}${getExtension('css')}`);
             const decorationComplete = new Promise((resolve) => {
                 (async () => {
@@ -886,22 +886,26 @@ async function loadFooter(footer) {
  * @param {Array} lcpBlocks Array of blocks
  */
 async function waitForLCP(lcpBlocks) {
-    const block = document.querySelector('.block');
-    const hasLCPBlock = block && lcpBlocks.includes(block.dataset.blockName);
-    if (hasLCPBlock) await loadBlock(block);
-
-    document.body.style.display = null;
-    const lcpCandidate = document.querySelector('main img');
-
-    await new Promise((resolve) => {
-        if (lcpCandidate && !lcpCandidate.complete) {
-            lcpCandidate.setAttribute('loading', 'eager');
-            lcpCandidate.addEventListener('load', resolve);
-            lcpCandidate.addEventListener('error', resolve);
-        } else {
-            resolve();
-        }
-    });
+    await lcpBlocks.forEach(async function (eachBlock) {
+        const block = document.querySelector(eachBlock);
+        const hasLCPBlock = block && lcpBlocks.includes(block.dataset.blockName);
+        if (hasLCPBlock) await loadBlock(block);
+    
+        document.body.style.display = null;
+        const lcpCandidate = block.querySelectorAll('img');
+        await new Promise((resolve) => {
+            if (lcpCandidate.length > 0 && !lcpCandidate.complete) {
+                lcpCandidate.forEach((img) => {
+                    img.setAttribute('loading', 'eager');
+                    img.addEventListener('load', resolve);
+                    img.addEventListener('error', resolve);
+                })
+            } else {
+                resolve();
+            }
+        });
+        
+    })
 }
 
 init();

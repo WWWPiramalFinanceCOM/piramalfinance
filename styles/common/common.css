@@ -3115,7 +3115,9 @@
 }
 
 .section.list-content-wrapper .default-content-wrapper h2,
-.section.types-of-interest-rates-wrapper .default-content-wrapper h2 {
+.section.list-content-wrapper .default-content-wrapper h1,
+.section.types-of-interest-rates-wrapper .default-content-wrapper h2,
+.section.types-of-interest-rates-wrapper .default-content-wrapper h1 {
     color: var(--black);
     display: block;
     font-family: Nunito-Extrabold, sans-serif;
@@ -3247,7 +3249,8 @@
     line-height: 24px
 }
 
-.section.list-content-wrapper.company-mt-56 .default-content-wrapper h2 {
+.section.list-content-wrapper.company-mt-56 .default-content-wrapper h2,
+.section.list-content-wrapper.company-mt-56 .default-content-wrapper h1 {
     margin-top: 56px
 }
 
@@ -3281,7 +3284,9 @@
 @media screen and (max-width: 767px) {
 
     .section.list-content-wrapper .default-content-wrapper h2,
-    .section.types-of-interest-rates-wrapper .default-content-wrapper h2 {
+    .section.list-content-wrapper .default-content-wrapper h1,
+    .section.types-of-interest-rates-wrapper .default-content-wrapper h2,
+    .section.types-of-interest-rates-wrapper .default-content-wrapper h1 {
         font-size: 1.125rem;
         line-height: 24px
     }
@@ -3328,7 +3333,8 @@
 }
 
 @media screen and (max-width:1024px) {
-    .section.list-content-wrapper.company-mt-56 .default-content-wrapper h2 {
+    .section.list-content-wrapper.company-mt-56 .default-content-wrapper h2,
+    .section.list-content-wrapper.company-mt-56 .default-content-wrapper h1 {
         margin-top: unset
     }
 }
@@ -3862,7 +3868,9 @@
 }
 
 .section.board-of-directors-wrapper .default-content-wrapper>h2,
-.section.board-directors-wrapper.tab-name-container .default-content-wrapper>h2 {
+.section.board-of-directors-wrapper .default-content-wrapper>h1,
+.section.board-directors-wrapper.tab-name-container .default-content-wrapper>h2,
+.section.board-directors-wrapper.tab-name-container .default-content-wrapper>h1 {
     color: var(--black);
     display: block;
     font-family: Nunito-Extrabold, sans-serif;
@@ -4006,7 +4014,9 @@
     }
 
     .section.board-of-directors-wrapper .default-content-wrapper>h2,
-    .section.board-directors-wrapper.tab-name-container .default-content-wrapper>h2 {
+    .section.board-of-directors-wrapper .default-content-wrapper>h1,
+    .section.board-directors-wrapper.tab-name-container .default-content-wrapper>h2,
+    .section.board-directors-wrapper.tab-name-container .default-content-wrapper>h1 {
         font-size: 1.5rem;
         font-family: Nunito-Bold, sans-serif;
         margin-bottom: 20px;
@@ -4050,6 +4060,16 @@
 
     .section.board-of-directors-wrapper.board-of-directors-tabs-wrapper .tab-container-wrapper .tab-container .panel-container .teaser {
         min-height: 250px
+    }
+
+    .section.board-of-directors-wrapper .default-content-wrapper>h2,
+    .section.board-of-directors-wrapper .default-content-wrapper>h1,
+    .section.board-directors-wrapper.tab-name-container .default-content-wrapper>h2,
+    .section.board-directors-wrapper.tab-name-container .default-content-wrapper>h1 {
+        font-size: 1.5rem;
+        font-family: Nunito-Bold, sans-serif;
+        margin-bottom: 20px;
+        font-weight: 700
     }
 }
 

@@ -1,0 +1,183 @@
+{
+  "definitions": [
+    {
+      "title": "Contact Cards",
+      "id": "contact-cards",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Contact Cards",
+              "model": "contact-cards",
+              "filter": "contact-cards"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Contact Card",
+      "id": "contact-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Contact Card",
+              "model": "contact-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "contact-cards",
+      "fields": [
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Columns (desktop)",
+          "valueType": "string",
+          "value": "cols-3",
+          "maxSize": 1,
+          "options": [
+            {
+              "name": "3 columns",
+              "value": "cols-3"
+            },
+            {
+              "name": "2 columns",
+              "value": "cols-2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact-card",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Icon",
+          "name": "tabIcon"
+        },
+        {
+          "component": "select",
+          "name": "col1_icon",
+          "label": "Icon",
+          "valueType": "string",
+          "value": "phone",
+          "options": [
+            { "name": "Phone", "value": "phone" },
+            { "name": "Mail", "value": "mail" },
+            { "name": "WhatsApp", "value": "whatsapp" },
+            { "name": "Clock", "value": "clock" },
+            { "name": "Location", "value": "location" },
+            { "name": "None", "value": "" }
+          ]
+        },
+        {
+          "component": "reference",
+          "name": "col1_iconImage",
+          "label": "Icon image (optional override)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "col1_iconImageAlt",
+          "label": "Icon image alt text",
+          "valueType": "string",
+          "value": ""
+        },
+        {
+          "component": "tab",
+          "label": "Content",
+          "name": "tabContent"
+        },
+        {
+          "component": "text",
+          "name": "col2_title",
+          "label": "Title",
+          "valueType": "string",
+          "value": "",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "col3_value",
+          "label": "Primary value",
+          "description": "Highlighted line, e.g. a phone number or email address.",
+          "valueType": "string",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "name": "col3_valueSuffix",
+          "label": "Primary value suffix",
+          "description": "Muted text after the value, e.g. \"(for Loan Products)\".",
+          "valueType": "string",
+          "value": ""
+        },
+        {
+          "component": "aem-content",
+          "name": "col3_valueLink",
+          "label": "Primary value link",
+          "description": "Optional. Use tel:, mailto: or a page path. Auto-detected from the value when left blank.",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "col4_notes",
+          "label": "Notes",
+          "description": "Extra lines: timings, disclaimers, a second contact, instructions. Bold = highlighted value, italic = orange emphasis.",
+          "valueType": "string",
+          "value": ""
+        },
+        {
+          "component": "tab",
+          "label": "Call to action & QR",
+          "name": "tabCta"
+        },
+        {
+          "component": "text",
+          "name": "col5_ctaLabel",
+          "label": "CTA text",
+          "valueType": "string",
+          "value": ""
+        },
+        {
+          "component": "aem-content",
+          "name": "col5_ctaLink",
+          "label": "CTA link",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "col6_qrImage",
+          "label": "QR image (optional)",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "col6_qrImageAlt",
+          "label": "QR image alt text",
+          "valueType": "string",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "contact-cards",
+      "components": [
+        "contact-card"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+.contact-cards .contact-cards-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.contact-cards.cols-2 .contact-cards-list {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.contact-cards .contact-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  height: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: #e9f3fd;
+}
+
+.contact-cards .contact-card-icon {
+  flex: 0 0 auto;
+  width: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.contact-cards .contact-card-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.contact-cards .contact-card-content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-cards .contact-card-title {
+  margin: 0;
+  color: var(--black);
+  font-family: Nunito-Bold, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.contact-cards .contact-card-value {
+  margin: 2px 0 0;
+  font-family: Nunito-Regular, sans-serif;
+  font-size: 0.875rem;
+  line-height: 20px;
+  color: var(--darkgrey);
+}
+
+.contact-cards .contact-card-value a,
+.contact-cards .contact-card-value .contact-card-value-text {
+  color: var(--greyishblue);
+  font-family: Nunito-Bold, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.contact-cards .contact-card-value-suffix {
+  color: var(--darkgrey);
+  font-family: Nunito-Regular, sans-serif;
+  font-weight: 400;
+}
+
+.contact-cards .contact-card-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contact-cards .contact-card-notes p {
+  margin: 0;
+  font-family: Nunito-Regular, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--darkgrey);
+}
+
+/* semantic emphasis inside notes: bold = highlighted value, italic = orange label */
+.contact-cards .contact-card-notes strong,
+.contact-cards .contact-card-notes a {
+  color: var(--greyishblue);
+  font-family: Nunito-Bold, sans-serif;
+  font-weight: 700;
+}
+
+.contact-cards .contact-card-notes a {
+  text-decoration: underline;
+}
+
+.contact-cards .contact-card-notes em {
+  color: var(--orange);
+  font-family: Nunito-Bold, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.contact-cards .contact-card-cta {
+  align-self: flex-start;
+  margin-top: 6px;
+  color: var(--black);
+  font-family: Nunito-Bold, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-decoration: underline;
+}
+
+.contact-cards .contact-card-qr {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 88px;
+}
+
+.contact-cards .contact-card-qr img {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+}
+
+@media (width <= 1024px) {
+  .contact-cards .contact-cards-list,
+  .contact-cards.cols-2 .contact-cards-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (width <= 767px) {
+  .contact-cards .contact-cards-list,
+  .contact-cards.cols-2 .contact-cards-list {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-cards .contact-card-qr {
+    width: 72px;
+  }
+
+  .contact-cards .contact-card-qr img {
+    width: 72px;
+    height: 72px;
+  }
+}

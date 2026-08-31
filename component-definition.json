@@ -183,6 +183,37 @@
           }
         },
         {
+          "title": "Contact Cards",
+          "id": "contact-cards",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Contact Cards",
+                  "model": "contact-cards",
+                  "filter": "contact-cards"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Contact Card",
+          "id": "contact-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Contact Card",
+                  "model": "contact-card"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "RTE",
           "id": "rte",
           "plugins": {

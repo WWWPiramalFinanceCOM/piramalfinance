@@ -5052,7 +5052,8 @@
     }
 }
 
-.section.partnership-tab-content .default-content-wrapper>h2 {
+.section.partnership-tab-content .default-content-wrapper>h2,
+.section.partnership-tab-content .default-content-wrapper>h1 {
     color: var(--black);
     display: block;
     font-family: Nunito-Extrabold, sans-serif;
@@ -5343,7 +5344,8 @@
         margin-top: 16px
     }
 
-    .section.partnership-tab-content .default-content-wrapper>h2 {
+    .section.partnership-tab-content .default-content-wrapper>h2,
+    .section.partnership-tab-content .default-content-wrapper>h1 {
         font-size: 1.5rem;
         line-height: 28px
     }

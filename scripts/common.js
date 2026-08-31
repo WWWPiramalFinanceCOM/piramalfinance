@@ -110,41 +110,32 @@ export function renderHelper(data, template, callBack) {
     return dom.innerHTML;
   }
 
-export function fetchAPI(method, url, data) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        if (method === 'GET') {
-          const resp = await fetch(url);
-          resolve(resp);
-        } else if (method === 'POST') {
-          data.headerJson = data.headerJson || {
-            'Content-Type': 'application/json',
-          };
-  
-          if (data.headerJson['Content-Type'] == 'remove') {
-            data.headerJson['Content-Type'] = '';
-          } else {
-            data.headerJson['Content-Type'] = data.headerJson['Content-Type'] ? data.headerJson['Content-Type'] : 'application/json';
-          }
-  
-          /* Optimzie Code */
-          /* data.headerJson = data.headerJson || {};
-          data.headerJson["Content-Type"] = data.headerJson["Content-Type"] === 'remove' ? '' : data.headerJson["Content-Type"] || "application/json"; */
-  
-          const request = new Request(url, {
-            method: 'POST',
-            body: JSON.stringify(data.requestJson),
-            headers: data.headerJson,
-          });
-          const response = await fetch(request);
-          const json = await response.json();
-          resolve({ responseJson: json });
-        }
-      } catch (error) {
-        console.warn(error);
-        reject(error);
+export async function fetchAPI(method, url, data) {
+    if (method === 'GET') {
+      const resp = await fetch(url);
+      const json = await resp.json();
+      return { responseJson: json };
+    }
+    if (method === 'POST') {
+      data.headerJson = data.headerJson || {
+        'Content-Type': 'application/json',
+      };
+
+      if (data.headerJson['Content-Type'] == 'remove') {
+        data.headerJson['Content-Type'] = '';
+      } else {
+        data.headerJson['Content-Type'] = data.headerJson['Content-Type'] ? data.headerJson['Content-Type'] : 'application/json';
       }
-    });
+
+      const request = new Request(url, {
+        method: 'POST',
+        body: JSON.stringify(data.requestJson),
+        headers: data.headerJson,
+      });
+      const response = await fetch(request);
+      const json = await response.json();
+      return { responseJson: json };
+    }
   }
 
   export function getProps(block, config) {

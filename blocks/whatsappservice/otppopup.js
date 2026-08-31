@@ -1,4 +1,5 @@
 import { fetchAPI } from '../../scripts/common.js';
+import { fetchPlaceholders } from '../../scripts/aem.js';
 import {
   generateOTPAPI, getAccessToken, resendOtpAPI, showNetworkFailedScreen, verfyOtpAPI,
 } from '../applyloanform/loanformapi.js';
@@ -268,10 +269,11 @@ function addLoaderWithBlur() {
   document.querySelector('.loan-form.loan-form-sub-otp').classList.add('filterBlur');
 }
 
-function getWhatsappServicesApi(mobileNumber) {
+async function getWhatsappServicesApi(mobileNumber) {
+  const placeholders = await fetchPlaceholders();
   const requesObj = {
     headerJson: {
-      'x-apikey': '7uPoKD0zsO527QGZ6oLI9SktlpEDwhsI',
+      'x-apikey': placeholders.whatsappapikey,
       'Content-Type': 'remove',
     },
   };
@@ -288,16 +290,9 @@ function getWhatsappServicesApi(mobileNumber) {
 }
 
 export function getWhatAPIAuth() {
-  /* const requestObj = {
-    requestJson: {
-      username: 'test.kumar@getcogno.ai',
-      password: 'Success@123$',
-      bot_id: '1',
-    },
-  }; */
   const requestObj = {
-    requestJson: {}
-  }
+    requestJson: {},
+  };
   return new Promise((resolve, reject) => {
     // fetchAPI('POST', getWhatAPIAuthURL, requestObj)
     fetchAPI('POST', getWhatAPIAuthURL, requestObj)

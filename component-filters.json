@@ -55,6 +55,7 @@
       "columns",
       "breadcrumb",
       "boards",
+      "contact-cards",
       "rte",
       "city-list",
       "imgwithlink",
@@ -267,6 +268,12 @@
     "id": "private-investor",
     "components": [
       "private-investor-fields"
+    ]
+  },
+  {
+    "id": "contact-cards",
+    "components": [
+      "contact-card"
     ]
   }
 ]

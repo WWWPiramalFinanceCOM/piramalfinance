@@ -1085,10 +1085,6 @@ footer:has(.neeyat-footer) {
     }
 }
 
-.section.contact-us-rte {
-    /* margin-top: 8px; */
-}
-
 .section.contact-us-rte .default-content-wrapper {
     padding: 32px 24px;
     border-radius: 12px;
@@ -1125,6 +1121,7 @@ footer:has(.neeyat-footer) {
 
 @media (width <= 767px) {
     .section.contact-us-rte .default-content-wrapper {
+        margin: 0 16px;
         padding: 20px 16px;
     }
 

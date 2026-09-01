@@ -1,3 +1,30 @@
+/* stylelint-disable no-descending-specificity */
+
+/* section heading above the cards ("How can we help you?" + intro line) */
+.section.contact-cards-container .default-content-wrapper {
+  padding-bottom: 48px ;
+  padding-top: 16px ;
+}
+
+.section.contact-cards-container .default-content-wrapper h1,
+.section.contact-cards-container .default-content-wrapper h2 {
+  margin: 0 0 8px;
+  color: #184e7d;
+  font-family: Nunito-Extrabold, sans-serif;
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.section.contact-cards-container .default-content-wrapper p {
+  margin: 0;
+  color: var(--darkgrey);
+  font-family: Nunito-Regular, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
 .contact-cards .contact-cards-list {
   list-style: none;
   margin: 0;
@@ -17,22 +44,23 @@
   align-items: flex-start;
   gap: 12px;
   height: 100%;
-  padding: 16px;
+  padding: 20px;
   border-radius: 16px;
   background-color: #e9f3fd;
 }
 
 .contact-cards .contact-card-icon {
   flex: 0 0 auto;
-  width: 24px;
+  width: 20px;
+  margin-top: 1px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
 }
 
 .contact-cards .contact-card-icon img {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
@@ -47,14 +75,14 @@
 .contact-cards .contact-card-title {
   margin: 0;
   color: var(--black);
-  font-family: Nunito-Bold, sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 22px;
+  font-family: Nunito-Extrabold, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 20px;
 }
 
 .contact-cards .contact-card-value {
-  margin: 2px 0 0;
+  margin: 4px 0 0;
   font-family: Nunito-Regular, sans-serif;
   font-size: 0.875rem;
   line-height: 20px;
@@ -79,6 +107,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  margin-top: 2px;
 }
 
 .contact-cards .contact-card-notes p {
@@ -111,24 +140,33 @@
 
 .contact-cards .contact-card-cta {
   align-self: flex-start;
-  margin-top: 6px;
+  margin-top: 10px;
   color: var(--black);
   font-family: Nunito-Bold, sans-serif;
   font-size: 0.8125rem;
   font-weight: 700;
   line-height: 18px;
   text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* QR: pinned to the right edge, vertically centred, space reserved in the copy */
+.contact-cards .contact-card:has(.contact-card-qr) .contact-card-content {
+  padding-right: 96px;
 }
 
 .contact-cards .contact-card-qr {
-  flex: 0 0 auto;
-  align-self: center;
-  width: 88px;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  width: 80px;
+  transform: translateY(-50%);
 }
 
 .contact-cards .contact-card-qr img {
-  width: 88px;
-  height: 88px;
+  display: block;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
 }
 
@@ -141,17 +179,41 @@
 }
 
 @media (width <= 767px) {
+  .section.contact-cards-container .default-content-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .section.contact-cards-container .default-content-wrapper h1,
+  .section.contact-cards-container .default-content-wrapper h2 {
+    font-size: 1.5rem;
+  }
+
+  .section.contact-cards-container .default-content-wrapper h1 + p,
+  .section.contact-cards-container .default-content-wrapper h2 + p,
+  .section.contact-cards-container .default-content-wrapper > p {
+    font-size: 0.875rem;
+  }
+
   .contact-cards .contact-cards-list,
   .contact-cards.cols-2 .contact-cards-list {
     grid-template-columns: 1fr;
   }
 
+  .contact-cards .contact-card {
+    padding: 16px;
+  }
+
+  .contact-cards .contact-card:has(.contact-card-qr) .contact-card-content {
+    padding-right: 80px;
+  }
+
   .contact-cards .contact-card-qr {
-    width: 72px;
+    right: 16px;
+    width: 64px;
   }
 
   .contact-cards .contact-card-qr img {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
   }
 }

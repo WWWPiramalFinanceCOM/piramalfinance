@@ -1,3 +1,6 @@
+import { chatbotRedirect } from '../../dl.js';
+import { targetObject } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
     const flipHost = block.closest('.section.chatbot-container') || block;
     const [img, gif, link] = block.children;
@@ -7,7 +10,19 @@ export default function decorate(block) {
     gif.classList.add('gif');
     link.classList.add('link');
 
-    link.querySelector('a')?.setAttribute('target', '_blank');
+    const redirectAnchor = link.querySelector('a');
+    redirectAnchor?.setAttribute('target', '_blank');
+
+    // Web DataLayer: push chatbot_redirect on click of the PIA badge/link
+    redirectAnchor?.addEventListener('click', () => {
+        try {
+            const click_text = img.querySelector('img')?.alt?.trim()
+                || redirectAnchor.textContent.trim();
+            chatbotRedirect(click_text, targetObject.pageName);
+        } catch (error) {
+            console.warn(error);
+        }
+    });
 
     const flipper = document.createElement('span');
     flipper.className = 'chatbot-flipper';

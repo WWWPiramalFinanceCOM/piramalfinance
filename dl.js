@@ -28,6 +28,18 @@ export function footerInteraction(click_text, menu_category, cta_position, page_
   }
 }
 
+export function chatbotRedirect(click_text, page_type) {
+  try {
+    window.dataLayer.push({
+      event: 'chatbot_redirect',
+      click_text,
+      page_type,
+    });
+  } catch (error) {
+    console.warn(error);
+  }
+}
+
 export function outboundClick(click_text, menu_category, cta_position, page_type) {
   try {
     window.dataLayer.push({

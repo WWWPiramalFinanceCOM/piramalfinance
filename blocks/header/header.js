@@ -4,12 +4,12 @@
 import { headerInteraction, navlogin } from '../../dl.js';
 import { autoLinkLangPath, fetchPlaceholders, getMetadata, loadBlocks } from '../../scripts/aem.js';
 import { decorateMain, targetObject } from '../../scripts/scripts.js';
-// import { body } from '../../scripts/common.js';
-// import { loadFragment } from '../fragment/fragment.js';
+import { body } from '../../scripts/common.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 1201px)');
-const body = document.querySelector('body');
+
 /**
  *
  * @param {Element} navSection
@@ -210,6 +210,7 @@ export default async function decorate(block) {
   if (path.endsWith('/nav')) {
     document.querySelector('header').classList.add('primary');
   }
+  // const fragment = await loadFragment(path);
   const headerEl = block.parentElement;
   const inlined = headerEl.firstElementChild !== block;
   let fragment;
@@ -222,10 +223,8 @@ export default async function decorate(block) {
     decorateMain(fragment);
     await loadBlocks(fragment);
   } else {
-    const { loadFragment } = await import('../fragment/fragment.js');
     fragment = await loadFragment(path);
   }
-
   block.classList.add('dp-none');
   // decorate nav DOM
   const nav = document.createElement('nav');
@@ -413,6 +412,22 @@ export default async function decorate(block) {
   // Initial setup for nested toggle
   setupNestedToggle(navSections);
 
+  // Track clicks on leaf submenu links (e.g. "Construction Loan") that don't expand further
+  navSections.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor || !anchor.closest('li.nav-drop')) return;
+    const leafLi = anchor.closest('li');
+    if (leafLi.querySelector(':scope > ul')) return; // handled by nested-toggle click instead
+    try {
+      const click_text = anchor.textContent.trim();
+      const menu_category = leafLi.closest('ul')?.closest('li')?.querySelector('p')?.textContent.trim() || '';
+      targetObject.ctaPosition = isDesktop.matches ? 'Top Menu Bar' : 'Hamburger';
+      headerInteraction(click_text, menu_category, targetObject.ctaPosition, targetObject.pageName);
+    } catch (error) {
+      console.warn(error);
+    }
+  });
+
   // Re-setup nested toggle when nav section is expanded
   navSections.querySelectorAll(':scope .default-content-wrapper > ul > li.nav-drop').forEach((navDrop) => {
     const observer = new MutationObserver((mutations) => {
@@ -440,7 +455,6 @@ export default async function decorate(block) {
   let mobFragment = null;
   hamburger.addEventListener('click', async (e) => {
     if (!mobFragment) {
-      const {loadFragment} = await import('../fragment/fragment.js');
       mobFragment = await loadFragment(getMetadata('mobilenav'));
       const mobNav = mobFragment.querySelector('.default-content-wrapper');
       mobNav.classList.add('desk-dp-none');
@@ -524,6 +538,22 @@ export default async function decorate(block) {
 
       // Setup nested toggle for all levels in mobile nav
       setupMobileNestedToggle(mobNav);
+
+      // Track clicks on leaf submenu links (e.g. "Construction Loan") in mobile nav
+      mobNav.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a');
+        if (!anchor) return;
+        const leafLi = anchor.closest('li');
+        if (!leafLi || leafLi.querySelector(':scope > ul')) return; // handled by nested-toggle click instead
+        try {
+          const click_text = anchor.textContent.trim();
+          const menu_category = leafLi.closest('ul')?.closest('li')?.querySelector('p')?.textContent.trim() || '';
+          targetObject.ctaPosition = 'Hamburger';
+          headerInteraction(click_text, menu_category, targetObject.ctaPosition, targetObject.pageName);
+        } catch (error) {
+          console.warn(error);
+        }
+      });
     }
     toggleMenu(nav, navSections);
   });

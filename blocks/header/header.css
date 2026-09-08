@@ -1642,7 +1642,7 @@ body.modal-open footer {
   }
 
   .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p a {
-    font-size: 0.75rem;
+    /* font-size: 0.75rem; */
   }
 
   /* .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li:nth-child(7) p {

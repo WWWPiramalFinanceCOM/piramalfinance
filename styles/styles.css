@@ -429,8 +429,8 @@ main img {
 
 header,
 footer {
-   opacity: 0;
-   visibility: hidden;
+    opacity: 0;
+    visibility: hidden;
 }
 
 header:has(.header.block),
@@ -668,6 +668,13 @@ button:focus-visible,
     margin-top: 56px
 }
 
+
+.section h1 {
+    font-size: 40px !important;
+    font-weight: 700 !important;
+    font-family: Nunito-extra-bold, sans-serif !important;
+}
+
 @media screen and (max-width:768px) {
     .mob-mt-5 {
         margin-top: 5px
@@ -796,7 +803,22 @@ button:focus-visible,
     .mob-mb-80 {
         margin-bottom: 80px
     }
+
+    .section h1 {
+        font-size: 28px !important;
+        font-weight: 700 !important;
+        font-family: Nunito-extra-bold, sans-serif;
+    }
 }
+
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+    .section h1 {
+        font-size: 36px !important;
+        font-weight: 700 !important;
+        font-family: Nunito-extra-bold, sans-serif;
+    }
+}
+
 
 @media (width >=900px) {
     .section.page-container>div {
@@ -962,7 +984,7 @@ footer:has(.neeyat-footer) {
     font-size: 12px !important
 }
 
-.section.btn-orange .default-content-wrapper .button-container a{
+.section.btn-orange .default-content-wrapper .button-container a {
     background: var(--orange);
     border-radius: 8px;
     color: var(--white);
@@ -972,7 +994,7 @@ footer:has(.neeyat-footer) {
     margin: unset;
 }
 
-.section.btn-orange .default-content-wrapper{
+.section.btn-orange .default-content-wrapper {
     display: flex;
     justify-content: center;
 }
@@ -1119,7 +1141,7 @@ footer:has(.neeyat-footer) {
     text-underline-offset: 2px;
 }
 
-@media (width <= 767px) {
+@media (width <=767px) {
     .section.contact-us-rte .default-content-wrapper {
         margin: 0 16px;
         padding: 20px 16px;

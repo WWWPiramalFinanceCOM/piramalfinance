@@ -49,7 +49,7 @@ export function ProductLogics(loanType) {
   const loanObj = loadProduct[loanType];
   if (loanObj == false || loanObj == null) return false;
   obj.age = isValidAge(getDob(), loanObj.age.min, loanObj.age.max);
-  obj.income = isInRange(getIncome(), loanObj.income.min, loanObj.income.max);
+  obj.income = isInRange(Number(getIncome()), loanObj.income.min, loanObj.income.max);
 
   if (loanObj.profile) {
     obj.profile = loanObj.profile == getProfile();

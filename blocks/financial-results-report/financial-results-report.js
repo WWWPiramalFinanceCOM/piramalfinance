@@ -1,6 +1,10 @@
 import { fetchAPI, getProps } from '../../scripts/common.js';
+import { fetchPlaceholders } from '../../scripts/aem.js';
 
-// const AEM_PUBLISH_DOMAIN = 'https://uatmarketing.piramalfinance.com';
+let AEM_PUBLISH_DOMAIN = '';
+fetchPlaceholders().then((placeholders) => {
+  AEM_PUBLISH_DOMAIN = placeholders.aempublishdomain || '';
+});
 
 /**
  * Resolve API/asset URL - on non-publish environments, prepend AEM publish domain

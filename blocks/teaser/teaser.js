@@ -128,7 +128,8 @@ export function generateTeaserDOM(props, classes) {
   if (targetObject.isTab) {
     bgImageAllow = mobileImageStyle;
   }
-
+ let eyebrowChild = eyebrow.children[0];
+  eyebrowChild.classList.add("eyebrow");
   const teaserDOM = document.createRange().createContextualFragment(
     // <div class='background' style='background-image:url(${bgImageAllow})'>
     `
@@ -137,7 +138,8 @@ export function generateTeaserDOM(props, classes) {
       <div class='foreground'>
         <div class='text'>
           ${eyebrow.textContent.trim() !== ''
-      ? `<div class='eyebrow'>${eyebrow.textContent.trim()}</div>`
+      // ? `<div class='eyebrow'>${eyebrow.textContent.trim()}</div>`
+          ? `${eyebrowChild.outerHTML}`
       : ''
     }
           <div class='title'>${title.innerHTML}</div>

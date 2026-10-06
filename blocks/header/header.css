@@ -1758,9 +1758,9 @@ body.modal-open footer {
 /* .header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child p a, */
 .header-wrapper.primary .nav-wrapper #nav>.section.nav-sections>.default-content-wrapper>ul>li:last-child p a {
   border-radius: 8px;
-  border: 1px solid #C04A1D;
-  background: #F26E24;
-  color: var(--black);
+  border: 1px solid #E31E24;
+  background: #E31E24;
+  color: var(--white);
 }
 
 /* .header-wrapper.primary .nav-wrapper #nav .nav-sections .default-content-wrapper ul li:last-child{

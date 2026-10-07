@@ -202,6 +202,108 @@ async function buildBreadcrumbs() {
 }
 
 /**
+ * Shows a Login dropdown link as a title with a "Know more" line under it.
+ * The whole row still links to the same page as before.
+ * @param {Element} item The <li> holding a single link
+ */
+function showTitleWithKnowMore(item) {
+  const link = item.querySelector(':scope > a');
+  if (!link) return;
+  const title = link.textContent.trim();
+  link.dataset.trackText = title; // analytics keeps using the real title, not "Know more"
+  link.setAttribute('aria-label', `${title} - Know more`);
+  link.innerHTML = `<span class="login-item-title">${title}</span><span class="login-item-more">Know more</span>`;
+}
+
+/**
+ * Moves the "Existing Customers" journey links out of Customer Support (or wherever
+ * authored) into the Login dropdown. The "Existing Customers" label itself is dropped.
+ * @param {Element} nav The nav element
+ * @param {Element} loginNav The Login top-level list item
+ */
+function moveExistingCustomerLinks(nav, loginNav) {
+  if (!loginNav) return;
+  const isLabel = (li) => /^existing\s+customers?$/i.test(getDirectTextContent(li).replace(/\s+/g, ' ').trim());
+  const source = [...nav.querySelectorAll('li')].find(
+    (li) => !loginNav.contains(li) && li.querySelector(':scope > ul') && isLabel(li),
+  );
+  if (!source) return;
+  let loginList = loginNav.querySelector(':scope > ul');
+  if (!loginList) {
+    loginList = document.createElement('ul');
+    loginNav.append(loginList);
+  }
+  const items = [...source.querySelectorAll(':scope > ul > li')];
+  items.forEach((item) => {
+    showTitleWithKnowMore(item);
+    loginList.append(item);
+  });
+  // drop the now-empty Existing Customers entry from its old location
+  if (!source.querySelector(':scope > ul > li')) source.remove();
+}
+
+/**
+ * Login: the button keeps its original behaviour (click on "Login" follows the Login link).
+ * Desktop: hovering opens the dropdown of Existing Customers links.
+ * Any device: the chevron next to Login toggles it (this is how touch devices open it).
+ * @param {Element} loginNav The Login top-level list item
+ * @param {Element} navSections The nav sections container
+ * @param {Function} onClick Called on every Login click (suppresses hover analytics)
+ */
+function setupLoginDropdown(loginNav, navSections, onClick) {
+  if (!loginNav) return;
+  loginNav.addEventListener('click', () => {
+    onClick();
+    navlogin(targetObject.pageName);
+  });
+  if (!loginNav.querySelector(':scope > ul > li')) return;
+  loginNav.classList.add('login-drop');
+
+  const arrow = document.createElement('span');
+  arrow.className = 'login-arrow';
+  arrow.setAttribute('role', 'button');
+  arrow.tabIndex = 0;
+  arrow.setAttribute('aria-label', 'Show login options');
+  arrow.setAttribute('aria-haspopup', 'true');
+  arrow.setAttribute('aria-expanded', 'false');
+  (loginNav.querySelector(':scope > p > a') || loginNav.querySelector(':scope > p') || loginNav).append(arrow);
+
+  const setOpen = (open) => {
+    if (isDesktop.matches && open) toggleAllNavSections(navSections); // collapse the other menus first
+    loginNav.setAttribute('aria-expanded', open ? 'true' : 'false');
+    arrow.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (isDesktop.matches) {
+      // desktop dropdown dims the page like the other menus
+      navSections.setAttribute('aria-expanded', open ? 'true' : 'false');
+      body.classList.toggle('modal-open', open);
+    }
+  };
+  const isOpen = () => loginNav.getAttribute('aria-expanded') === 'true';
+
+  arrow.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // not a Login click: no navigation, no login analytics
+    setOpen(!isOpen());
+  });
+  arrow.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter' || e.code === 'Space') {
+      e.preventDefault();
+      setOpen(!isOpen());
+    }
+  });
+  loginNav.addEventListener('mouseenter', () => { if (isDesktop.matches) setOpen(true); });
+  loginNav.addEventListener('mouseleave', () => { if (isDesktop.matches) setOpen(false); });
+  document.addEventListener('click', (e) => {
+    if (isOpen() && !loginNav.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape' && isOpen()) setOpen(false);
+  });
+  // leaving the desktop/mobile breakpoint resets the open state
+  isDesktop.addEventListener('change', () => setOpen(false));
+}
+
+/**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -255,15 +357,16 @@ export default async function decorate(block) {
   let loginFlag = true;
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
-    let loginNav = navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').length - 1;
-    loginNav = navSections.querySelectorAll(':scope .default-content-wrapper > ul > li')[loginNav];
-    loginNav.addEventListener('click', (e) => {
-      navlogin(targetObject.pageName);
-      loginFlag = false;
-    });
+    const topItems = navSections.querySelectorAll(':scope .default-content-wrapper > ul > li');
+    const loginNav = topItems[topItems.length - 1];
+    moveExistingCustomerLinks(nav, loginNav);
+    if (loginNav?.querySelector('ul')) wrapListUE(loginNav);
+    setupLoginDropdown(loginNav, navSections, () => { loginFlag = false; });
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li:has(ul)')
       .forEach((navSection) => {
+        // Login has its own hover/click handling (setupLoginDropdown)
+        if (navSection === loginNav) return;
         wrapListUE(navSection);
         if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
         navSection.addEventListener('mouseenter', (e) => {
@@ -419,7 +522,7 @@ export default async function decorate(block) {
     const leafLi = anchor.closest('li');
     if (leafLi.querySelector(':scope > ul')) return; // handled by nested-toggle click instead
     try {
-      const click_text = anchor.textContent.trim();
+      const click_text = anchor.dataset.trackText || anchor.textContent.trim();
       const menu_category = leafLi.closest('ul')?.closest('li')?.querySelector('p')?.textContent.trim() || '';
       targetObject.ctaPosition = isDesktop.matches ? 'Top Menu Bar' : 'Hamburger';
       headerInteraction(click_text, menu_category, targetObject.ctaPosition, targetObject.pageName);

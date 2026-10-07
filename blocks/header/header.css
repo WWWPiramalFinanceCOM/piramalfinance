@@ -1821,7 +1821,7 @@ body.modal-open footer {
 
   @media only screen and (max-width: 1200px) {
     left: 30px;
-    right: 0px;
+    right: 41px;
     top: 0px;
     bottom: 0px;
     margin: auto;
@@ -1993,4 +1993,185 @@ body.modal-open footer {
   .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li[aria-expanded="true"]>ul>li>ul>li.nav-nested-toggle>ul>li>a:hover {
     color: #134f7f !important;
   }
+}
+/* Login dropdown: compact card under the Login button (desktop + mobile) */
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop {
+  position: relative;
+  padding-right: 0;
+}
+
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>p {
+  display: flex;
+  align-items: center;
+}
+
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>p::before,
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>p::after {
+  display: none;
+}
+
+/* chevron toggle: sits inside the orange Login pill, after the user icon */
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>p>a {
+  padding-right: 55px;
+}
+
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>p>a {
+  position: relative;
+}
+
+.header .nav-wrapper #nav .login-drop>p>a>.login-arrow {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  bottom: 0;
+  width: 24px;
+  cursor: pointer;
+}
+
+.header .nav-wrapper #nav .login-drop>p>a>.login-arrow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  transform: translate(-50%, -70%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.header .nav-wrapper #nav .login-drop[aria-expanded="true"]>p>a>.login-arrow::before {
+  transform: translate(-50%, -30%) rotate(225deg);
+}
+
+@media (max-width: 1200px) {
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul:has(>li.login-drop) {
+    max-width: none;
+  }
+
+  .header .nav-wrapper #nav .nav-sections .default-content-wrapper ul li.login-drop>p>a {
+    max-width: none;
+  }
+
+  /* the user icon is positioned at a fixed offset; leave room for the chevron after it */
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>p>a {
+    padding-right: 60px;
+  }
+}
+
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop>ul {
+  display: none;
+}
+
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]>ul {
+  display: block;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: auto;
+  right: 0;
+  transform: none;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  max-height: 70vh;
+  margin: 0;
+  padding: 4px 0;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+  scrollbar-width: thin;
+  scrollbar-color: #134f7f #eee;
+  z-index: 100;
+}
+
+/* small pointer from the card up to the Login button */
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]::before {
+  content: "";
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 28px;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  transform: rotate(45deg);
+  z-index: 101;
+}
+
+/* hide the mega-menu backdrop that other dropdowns draw behind their list */
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]>ul::before {
+  display: none;
+}
+
+/* transparent bridge (on the li, so the card's scroll clipping can't cut it)
+   lets the pointer travel from the button to the card without closing it */
+.header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  height: 14px;
+}
+
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>ul>li {
+  display: block;
+  position: static;
+  padding: 0;
+  border-bottom: 1px solid #ececec;
+}
+
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>ul>li:last-child {
+  border-bottom: 0;
+}
+
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>ul>li>a {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: none;
+  min-height: 0;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+/* title line */
+.header .nav-wrapper #nav .login-drop>ul>li>a .login-item-title {
+  color: #1a1a1a;
+  font-family: Nunito-Bold, sans-serif;
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* "Know more >" line with an orange arrow */
+.header .nav-wrapper #nav .login-drop>ul>li>a .login-item-more {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #134f7f;
+  font-family: Nunito-Bold, sans-serif;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.header .nav-wrapper #nav .login-drop>ul>li>a .login-item-more::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid var(--orange);
+  border-right: 2px solid var(--orange);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>ul>li>a:hover {
+  background: #f5f8fb;
+}
+
+.header .nav-wrapper #nav .login-drop>ul>li>a:hover .login-item-more::after {
+  transform: translateX(3px) rotate(45deg);
 }

@@ -2010,6 +2010,21 @@ body.modal-open footer {
   display: none;
 }
 
+/* Distance from the top of the Login item to the card: 10px below the orange button.
+   The header row is taller on desktop than on mobile, so each has its own value. */
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop {
+  --login-card-top: 76px;
+
+  /* the Login item is 24px wider than the orange button (empty icon box); line the card up with the button */
+  --login-card-right: 24px;
+}
+
+@media (max-width: 1200px) {
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop {
+    --login-card-top: 66px;
+  }
+}
+
 /* chevron toggle: sits inside the orange Login pill, after the user icon */
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>p>a {
   padding-right: 55px;
@@ -2067,9 +2082,9 @@ body.modal-open footer {
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]>ul {
   display: block;
   position: absolute;
-  top: calc(100% + 10px);
+  top: var(--login-card-top);
   left: auto;
-  right: 0;
+  right: var(--login-card-right);
   transform: none;
   width: 300px;
   max-width: calc(100vw - 32px);
@@ -2089,8 +2104,8 @@ body.modal-open footer {
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]::before {
   content: "";
   position: absolute;
-  top: calc(100% + 4px);
-  right: 28px;
+  top: calc(var(--login-card-top) - 6px);
+  right: calc(var(--login-card-right) + 16px);
   width: 12px;
   height: 12px;
   background: #fff;
@@ -2108,8 +2123,8 @@ body.modal-open footer {
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]::after {
   content: "";
   position: absolute;
-  top: 100%;
-  right: 0;
+  top: calc(var(--login-card-top) - 10px);
+  right: var(--login-card-right);
   width: 300px;
   max-width: calc(100vw - 32px);
   height: 14px;

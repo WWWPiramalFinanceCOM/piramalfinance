@@ -2190,3 +2190,17 @@ body.modal-open footer {
 .header .nav-wrapper #nav .login-drop>ul>li>a:hover .login-item-more::after {
   transform: translateX(3px) rotate(45deg);
 }
+
+/* Login dropdown on small screens: keep the card fully inside the screen.
+   (Placed last so it overrides the base card position above.)
+   The button is too far from the left edge for a right-aligned card, so pin the card
+   to the screen, 16px from the right. */
+@media (max-width: 1200px) {
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]>ul {
+    position: fixed;
+    top: var(--login-card-top);
+    right: 16px;
+    width: min(320px, calc(100vw - 32px));
+    max-width: none;
+  }
+}

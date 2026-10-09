@@ -2204,3 +2204,37 @@ body.modal-open footer {
     max-width: none;
   }
 }
+
+/* Header fit for narrow desktops (1201px - 1400px): the menu items need more room than
+   the 81.25% nav cap gives, which pushed the Login button off-screen. Use the full width
+   and tighten the spacing between items so everything fits on one row. */
+@media screen and (min-width: 1201px) and (max-width: 1400px) {
+  .header .nav-wrapper #nav {
+    max-width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .header-wrapper.primary .nav-wrapper #nav .section.nav-brand {
+    padding-right: 20px;
+  }
+
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li.nav-drop {
+    padding-right: 12px;
+  }
+
+  /* Gap between the last menu item and the Login button */
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop {
+    margin-left: 12px;
+  }
+
+  /* Slightly smaller text frees room so each dropdown chevron has space before the next item */
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>p,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>p>a {
+    font-size: 14px;
+  }
+
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>p {
+    margin-right: 14px;
+  }
+}

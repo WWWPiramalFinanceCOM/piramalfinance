@@ -87,6 +87,8 @@ export function toggleAllNavSections(sections, expanded = false) {
   sections
     ?.querySelectorAll('.nav-sections .default-content-wrapper > ul > li')
     .forEach((section) => {
+      // opening the mobile menu must not also open the Login dropdown (it has its own toggle)
+      if (section.classList.contains('login-drop') && String(expanded) === 'true') return;
       // section.classList.toggle('active');
       section.setAttribute('aria-expanded', expanded);
     });
@@ -560,6 +562,10 @@ export default async function decorate(block) {
     if (!mobFragment) {
       mobFragment = await loadFragment(getMetadata('mobilenav'));
       const mobNav = mobFragment.querySelector('.default-content-wrapper');
+      // "Existing Customers" lives only under the Login dropdown, same as desktop
+      mobNav.querySelectorAll('li').forEach((li) => {
+        if (/^existing\s+customers?$/i.test(getDirectTextContent(li).replace(/\s+/g, ' ').trim())) li.remove();
+      });
       mobNav.classList.add('desk-dp-none');
       navBrand.prepend(mobNav);
       // navSections.prepend(mobFragment.lastElementChild.lastElementChild);

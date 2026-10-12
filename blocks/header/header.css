@@ -2010,6 +2010,21 @@ body.modal-open footer {
   display: none;
 }
 
+/* Distance from the top of the Login item to the card: 10px below the orange button.
+   The header row is taller on desktop than on mobile, so each has its own value. */
+.header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop {
+  --login-card-top: 76px;
+
+  /* the Login item is 24px wider than the orange button (empty icon box); line the card up with the button */
+  --login-card-right: 24px;
+}
+
+@media (max-width: 1200px) {
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop {
+    --login-card-top: 66px;
+  }
+}
+
 /* chevron toggle: sits inside the orange Login pill, after the user icon */
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop>p>a {
   padding-right: 55px;
@@ -2067,9 +2082,9 @@ body.modal-open footer {
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]>ul {
   display: block;
   position: absolute;
-  top: calc(100% + 10px);
+  top: var(--login-card-top);
   left: auto;
-  right: 0;
+  right: var(--login-card-right);
   transform: none;
   width: 300px;
   max-width: calc(100vw - 32px);
@@ -2089,8 +2104,8 @@ body.modal-open footer {
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]::before {
   content: "";
   position: absolute;
-  top: calc(100% + 4px);
-  right: 28px;
+  top: calc(var(--login-card-top) - 6px);
+  right: calc(var(--login-card-right) + 16px);
   width: 12px;
   height: 12px;
   background: #fff;
@@ -2108,8 +2123,8 @@ body.modal-open footer {
 .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]::after {
   content: "";
   position: absolute;
-  top: 100%;
-  right: 0;
+  top: calc(var(--login-card-top) - 10px);
+  right: var(--login-card-right);
   width: 300px;
   max-width: calc(100vw - 32px);
   height: 14px;
@@ -2174,4 +2189,52 @@ body.modal-open footer {
 
 .header .nav-wrapper #nav .login-drop>ul>li>a:hover .login-item-more::after {
   transform: translateX(3px) rotate(45deg);
+}
+
+/* Login dropdown on small screens: keep the card fully inside the screen.
+   (Placed last so it overrides the base card position above.)
+   The button is too far from the left edge for a right-aligned card, so pin the card
+   to the screen, 16px from the right. */
+@media (max-width: 1200px) {
+  .header .nav-wrapper #nav>.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]>ul {
+    position: fixed;
+    top: var(--login-card-top);
+    right: 16px;
+    width: min(320px, calc(100vw - 32px));
+    max-width: none;
+  }
+}
+
+/* Header fit for narrow desktops (1201px - 1400px): the menu items need more room than
+   the 81.25% nav cap gives, which pushed the Login button off-screen. Use the full width
+   and tighten the spacing between items so everything fits on one row. */
+@media screen and (min-width: 1201px) and (max-width: 1400px) {
+  .header .nav-wrapper #nav {
+    max-width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .header-wrapper.primary .nav-wrapper #nav .section.nav-brand {
+    padding-right: 20px;
+  }
+
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper ul li.nav-drop {
+    padding-right: 12px;
+  }
+
+  /* Gap between the last menu item and the Login button */
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop {
+    margin-left: 12px;
+  }
+
+  /* Slightly smaller text frees room so each dropdown chevron has space before the next item */
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>p,
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>p>a {
+    font-size: 14px;
+  }
+
+  .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li>p {
+    margin-right: 14px;
+  }
 }

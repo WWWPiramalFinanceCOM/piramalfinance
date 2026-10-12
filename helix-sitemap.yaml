@@ -1,7 +1,7 @@
 sitemaps:
   example:
     default: en
-    lastmod: YYYY-MM-DD  # Dynamic date to be updated for each request or generation
+    lastmod: YYYY-MM-DD  # date format; value comes from the lastModified column of the query index, refreshed on every publish
     languages:
       en:
         source: /query-master.json

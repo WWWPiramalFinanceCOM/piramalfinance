@@ -1,0 +1,29 @@
+name: Sitemap
+# Regenerates the root sitemap-index.xml whenever helix-sitemap.yaml changes (e.g. a new language).
+# Page-level sitemaps are rebuilt by AEM on every publish and need no workflow.
+on:
+  push:
+    paths:
+      - helix-sitemap.yaml
+      - tools/sitemap/**
+
+permissions:
+  contents: write
+
+jobs:
+  sitemap-index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tools/sitemap/generate-sitemap-index.mjs
+      - name: Commit if changed
+        run: |
+          git diff --quiet sitemap-index.xml && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap-index.xml
+          git commit -m "chore: regenerate sitemap-index.xml"
+          git push

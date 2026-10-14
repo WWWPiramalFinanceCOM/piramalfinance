@@ -2241,6 +2241,7 @@ body.modal-open footer {
 
 /* Login text turns white while its dropdown is open (same as the other open menus),
    also on mobile where the nav itself is not expanded */
+/* stylelint-disable-next-line no-descending-specificity */
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]>p>a {
   color: var(--white) !important;
 }

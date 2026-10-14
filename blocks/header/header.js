@@ -320,8 +320,9 @@ function fixAuthorLinks(root) {
       // keep the link so it looks the same, but never leave the page
       link.setAttribute('href', '#');
       link.addEventListener('click', (event) => event.preventDefault());
+    } else {
+      link.setAttribute('href', url.pathname + url.search);
     }
-    else link.setAttribute('href', url.pathname + url.search);
   });
 }
 
@@ -336,6 +337,14 @@ function fixAuthorLinks(root) {
 function buildMobileMenu(menu) {
   const list = menu.querySelector(':scope > ul');
   if (!list) return;
+  // an item authored with two lists (e.g. Resources) must open as one dropdown
+  menu.querySelectorAll('li').forEach((li) => {
+    const [firstList, ...otherLists] = li.querySelectorAll(':scope > ul');
+    otherLists.forEach((extra) => {
+      firstList.append(...extra.children);
+      extra.remove();
+    });
+  });
   const items = [...list.children];
   items.pop(); // Login
 
@@ -746,7 +755,8 @@ export default async function decorate(block) {
             clickableEl.addEventListener('click', (evt) => {
               // evt.preventDefault();
               // evt.stopPropagation();
-              if (evt.target.tagName === 'A') return;
+              // a row with a submenu opens on tap, even when its text is a link
+              evt.preventDefault();
               const expanded = nestedUl.getAttribute('aria-expanded') === 'true';
 
               // Calculate proper height including nested content

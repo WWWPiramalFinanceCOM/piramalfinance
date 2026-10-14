@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
 import { headerInteraction, navlogin } from '../../dl.js';
-import { autoLinkLangPath, fetchPlaceholders, getMetadata, loadBlocks } from '../../scripts/aem.js';
+import { autoLinkLangPath, decorateIcons, fetchPlaceholders, getMetadata, loadBlocks } from '../../scripts/aem.js';
 import { decorateMain, targetObject } from '../../scripts/scripts.js';
 import { body } from '../../scripts/common.js';
 import { loadFragment } from '../fragment/fragment.js';
@@ -305,6 +305,138 @@ function setupLoginDropdown(loginNav, navSections, onClick) {
   isDesktop.addEventListener('change', () => setOpen(false));
 }
 
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.piramal.app.pchf';
+const APP_STORE_URL = 'https://apps.apple.com/in/app/piramal-finance/id1570115348';
+
+/**
+ * Fixes links that were pasted from the AEM author instance: a link to the nav page itself
+ * (a heading, not a page) no longer goes anywhere, any other author link points to the same path on the live site.
+ * @param {Element} root The nav element to clean
+ */
+function fixAuthorLinks(root) {
+  root.querySelectorAll('a[href*="adobeaemcloud.com"]').forEach((link) => {
+    const url = new URL(link.href);
+    if (url.pathname.endsWith('/nav.html')) {
+      // keep the link so it looks the same, but never leave the page
+      link.setAttribute('href', '#');
+      link.addEventListener('click', (event) => event.preventDefault());
+    }
+    else link.setAttribute('href', url.pathname + url.search);
+  });
+}
+
+/**
+ * Reshapes a copy of the desktop /nav list into the layout the mobile menu is styled for:
+ *  - "Loan Products" also holds the standalone links (Branch Locator, Credit Report, Calculators)
+ *  - a column without a heading becomes an "Other Products" accordion (or plain rows if it has 1-2 links)
+ *  - the remaining sections (About us, Investors, Customer Support) sit in a second list inside Loan Products
+ *  - the last item (Login) is dropped, it already sits in the header bar
+ * @param {Element} menu The copied .default-content-wrapper
+ */
+function buildMobileMenu(menu) {
+  const list = menu.querySelector(':scope > ul');
+  if (!list) return;
+  const items = [...list.children];
+  items.pop(); // Login
+
+  const hasHeading = (li) => li.querySelector(':scope > p, :scope > a');
+  const hasSubmenu = (li) => li.querySelector(':scope > ul');
+  const iconFor = { 'about us': 'about-us', 'credit report': 'credit-report', calculators: 'calculator' };
+  const makeIcon = (name) => {
+    const holder = document.createElement('div');
+    holder.innerHTML = `<span class="icon icon-${name}"></span>`;
+    decorateIcons(holder); // only the new icon, the others are already decorated
+    return holder.firstElementChild;
+  };
+  const addIcon = (li) => {
+    const row = li.querySelector(':scope > p');
+    const name = iconFor[row?.textContent.replace(/free/i, '').trim().toLowerCase()];
+    if (!name || row.querySelector('.icon')) return;
+    const link = row.querySelector('a');
+    if (link) row.insertBefore(makeIcon(name), link); else row.prepend(makeIcon(name));
+  };
+  // a row is a single link with its icon inside it (the style the mobile menu was built for)
+  const styleAsRow = (row) => {
+    const link = row?.querySelector(':scope > a');
+    if (!link || row.querySelector('sup')) return;
+    const icon = row.querySelector(':scope > .icon');
+    if (icon) link.prepend(icon);
+    row.classList.add('button-container');
+    link.classList.add('button');
+  };
+
+  const firstSection = items.find(hasSubmenu); // Loan Products
+  const productList = firstSection?.querySelector(':scope > ul');
+  const firstSectionIndex = items.indexOf(firstSection);
+  const otherList = document.createElement('ul');
+
+  if (productList) {
+    // a column with no heading: group many links, show few links as plain rows
+    [...productList.children].filter((li) => !hasHeading(li) && hasSubmenu(li)).forEach((column) => {
+      const links = [...column.querySelectorAll(':scope > ul > li')];
+      if (links.length > 2) {
+        const title = document.createElement('p');
+        title.append(makeIcon('other-products'), 'Other Products');
+        column.prepend(title);
+      } else {
+        links.forEach((li) => {
+          const row = document.createElement('li');
+          const p = document.createElement('p');
+          p.append(...li.childNodes);
+          styleAsRow(p);
+          row.append(p);
+          column.before(row);
+        });
+        column.remove();
+      }
+    });
+  }
+
+  // Home Loan / Business Loans: a heading row that opens a submenu
+  productList?.querySelectorAll(':scope > li > p').forEach(styleAsRow);
+
+  items.forEach((li, i) => {
+    if (li === firstSection) return;
+    addIcon(li);
+    if (!hasSubmenu(li)) styleAsRow(li.querySelector(':scope > p'));
+    // standalone links before the next section belong under Loan Products
+    if (i > firstSectionIndex && !hasSubmenu(li) && !otherList.children.length && productList) productList.append(li);
+    else otherList.append(li);
+  });
+
+  // mobile-only extras that are not authored in /nav (skipped once an author adds them)
+  const hasLink = (part) => menu.querySelector(`a[href*="${part}"]`);
+  if (productList && !hasLink('help.piramalfinance.com/company')) {
+    const company = document.createElement('li');
+    company.innerHTML = '<p><a href="https://help.piramalfinance.com/company" title="Company">Company</a></p>';
+    styleAsRow(company.firstElementChild);
+    productList.append(company);
+  }
+
+  // same shape as the old mobile menu: Loan Products holds the rows list, then the sections list
+  firstSection?.append(otherList);
+  list.replaceChildren(...(firstSection ? [firstSection] : []));
+
+  // "Download Piramal Finance" app badges, shown as a second list under the sections
+  if (!hasLink('play.google.com') && !hasLink('apps.apple.com')) {
+    const downloadList = document.createElement('ul');
+    downloadList.innerHTML = `<li>
+      <p>Download Piramal Finance</p>
+      <ul>
+        <li><a href="${PLAY_STORE_URL}" title="Get it on Google Play"><img src="${window.hlx.codeBasePath}/images/playstore.webp" alt="Get it on Google Play" loading="lazy"></a></li>
+        <li><a href="${APP_STORE_URL}" title="Download on the App Store"><img src="${window.hlx.codeBasePath}/images/appstore.webp" alt="Download on the App Store" loading="lazy"></a></li>
+      </ul>
+    </li>`;
+    menu.append(downloadList);
+  }
+
+  // a deep heading that opens a submenu is plain text on mobile (tapping it opens the submenu)
+  menu.querySelectorAll('li li li > p').forEach((row) => {
+    const link = row.querySelector(':scope > a');
+    if (link && row.nextElementSibling?.tagName === 'UL') link.replaceWith(...link.childNodes);
+  });
+}
+
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -358,6 +490,10 @@ export default async function decorate(block) {
   navBrand.replaceChild(a, navBrand.firstElementChild);
   let loginFlag = true;
   const navSections = nav.querySelector('.nav-sections');
+  if (navSections) fixAuthorLinks(navSections);
+  // One menu for desktop and mobile: copy the authored /nav list before the desktop
+  // code below changes it, and use the copy for the hamburger menu.
+  const mobileMenuSource = navSections?.querySelector('.default-content-wrapper')?.cloneNode(true);
   if (navSections) {
     const topItems = navSections.querySelectorAll(':scope .default-content-wrapper > ul > li');
     const loginNav = topItems[topItems.length - 1];
@@ -560,8 +696,15 @@ export default async function decorate(block) {
   let mobFragment = null;
   hamburger.addEventListener('click', async (e) => {
     if (!mobFragment) {
-      mobFragment = await loadFragment(getMetadata('mobilenav'));
-      const mobNav = mobFragment.querySelector('.default-content-wrapper');
+      // Use the /nav menu; only fall back to the old mobilenav page if /nav has no menu list
+      let mobNav = mobileMenuSource;
+      if (!mobNav) {
+        mobFragment = await loadFragment(getMetadata('mobilenav'));
+        mobNav = mobFragment.querySelector('.default-content-wrapper');
+      } else {
+        buildMobileMenu(mobNav); // /nav copy: reshape it for mobile
+      }
+      mobFragment = mobNav;
       // "Existing Customers" lives only under the Login dropdown, same as desktop
       mobNav.querySelectorAll('li').forEach((li) => {
         if (/^existing\s+customers?$/i.test(getDirectTextContent(li).replace(/\s+/g, ' ').trim())) li.remove();

@@ -1,0 +1,35 @@
+name: Clear UAT cache
+# Manual button: GitHub -> Actions -> "Clear UAT cache" -> Run workflow.
+# Purges the AEM cache for uatmarketing.piramalfinance.com (this repo, main branch).
+on:
+  workflow_dispatch:
+    inputs:
+      paths:
+        description: 'Pages/files to clear, space separated, e.g. "/home-loan /nav" (empty = home, nav, footer)'
+        required: false
+        default: ''
+      code:
+        description: 'Also re-sync all JS/CSS code from main'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Clear cache
+        env:
+          PATHS_INPUT: ${{ inputs.paths }}
+          CODE_FLAG: ${{ inputs.code && '--code' || '' }}
+          # Only needed if the Admin API is ever locked down (add it under Settings -> Secrets).
+          AEM_ADMIN_API_KEY: ${{ secrets.AEM_ADMIN_API_KEY }}
+        run: |
+          set -f  # treat "*" in paths as text, not a file pattern
+          node tools/cache/clear-uat-cache.mjs $CODE_FLAG $PATHS_INPUT

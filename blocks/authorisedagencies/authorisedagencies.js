@@ -110,6 +110,15 @@ function displayCards(block, selectedCityName, groupedLocations,index) {
     dataToDisplay[city].forEach((data) => {
       const locationValue = formatLocation(data.Location);
 
+      // Show Entity Type only when the sheet has a value for it,
+      // so cards look the same until the new column is filled in AEM.
+      const entityType = (data['Entity Type'] || '').trim();
+      const entityTypeHTML = entityType ? `
+          <div class="entity-type">
+            <p>Entity Type:</p>
+            <p>${entityType}</p>
+          </div>` : '';
+
       const cardHTML = `
         <div class="card">
           <div>
@@ -123,7 +132,7 @@ function displayCards(block, selectedCityName, groupedLocations,index) {
           <div>
             <p>Vendor Name:</p>
             <p>${data['Vendor Name']}</p>
-          </div>
+          </div>${entityTypeHTML}
           <div>
             <p>Date of Agreement:</p>
             <p>${data['Date of Agreement']}</p>
@@ -132,7 +141,7 @@ function displayCards(block, selectedCityName, groupedLocations,index) {
             <p>Date of Expiry:</p>
             <p>${data['Date of Expiry']}</p>
           </div>
-          <div>
+          <div class="tenure">
             <p>Tenure:</p>
             <p>${data.Tenure}</p>
           </div>

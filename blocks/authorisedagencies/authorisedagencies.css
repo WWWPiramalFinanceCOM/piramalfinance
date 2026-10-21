@@ -246,7 +246,7 @@
     gap: 8px;
 }
 
-.section.partner-authorised-agencies-wrapper .authorisedagencies-wrapper .authorisedagencies .card-container .card div:nth-child(6) {
+.section.partner-authorised-agencies-wrapper .authorisedagencies-wrapper .authorisedagencies .card-container .card div.tenure {
     display: flex;
     align-items: center;
     gap: 5px;

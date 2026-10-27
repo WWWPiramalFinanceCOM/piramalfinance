@@ -2239,9 +2239,9 @@ body.modal-open footer {
   }
 }
 
-/* Login text turns white while its dropdown is open (same as the other open menus),
-   also on mobile where the nav itself is not expanded */
+/* Login text stays black while its dropdown is open (on hover, or opened with the chevron on mobile).
+   This must beat the "white text on expanded menu" rule higher up, so it uses !important. */
 /* stylelint-disable-next-line no-descending-specificity */
 .header .nav-wrapper #nav .section.nav-sections .default-content-wrapper>ul>li.login-drop[aria-expanded="true"]>p>a {
-  color: var(--white) !important;
+  color: var(--black) !important;
 }

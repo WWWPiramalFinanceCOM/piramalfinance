@@ -1,0 +1,74 @@
+/*
+ * LAS in-page tabs: a sticky bar of links that jump to sections of the page.
+ * Authored as one list of links, e.g. <ul><li><a href="#types">Types</a></li>...</ul>
+ * Plain anchor links, so the tabs work with JavaScript off too.
+ */
+
+/*
+ * The bar sticks to the top while scrolling. "Sticky" only works inside a tall parent, so the
+ * section that holds the tabs is made sticky (its parent is the whole page), not the block.
+ */
+main > div:has(.las-tabs) {
+  position: sticky;
+  top: var(--las-header-height);
+  z-index: 5;
+}
+
+.las-tabs {
+  background: var(--las-white);
+  border-bottom: 1px solid var(--las-input-border);
+  padding: 0 var(--las-gutter);
+  font-family: var(--las-font);
+}
+
+.las-tabs ul {
+  display: flex;
+  gap: 32px;
+  margin: 0 auto;
+  padding: 0;
+  max-width: var(--las-max-width);
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.las-tabs li {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+}
+
+.las-tabs a {
+  display: block;
+  padding: 16px 0 14px;
+  border-bottom: 2px solid transparent;
+  color: var(--las-ink);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.las-tabs a:hover {
+  color: var(--las-orange);
+}
+
+.las-tabs a:focus-visible {
+  outline: 2px solid var(--las-orange);
+  outline-offset: 2px;
+}
+
+/* Active tab. Before the script runs (or with JavaScript off) the first tab shows as active */
+.las-tabs a.is-active,
+.las-tabs:not(.las-tabs-ready) li:first-child a {
+  color: var(--las-orange);
+  font-weight: 700;
+  border-bottom-color: var(--las-orange);
+}
+
+@media (width >= 900px) {
+  .las-tabs ul {
+    gap: 40px;
+  }
+}

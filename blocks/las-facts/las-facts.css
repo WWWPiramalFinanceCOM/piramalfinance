@@ -62,13 +62,15 @@
   list-style: none;
 }
 
+/*
+ * Each fact is a normal block (not flex), so its text and bold parts read as one sentence.
+ * The round icon is placed in the empty space on the left.
+ */
 .las-facts li {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  position: relative;
   box-sizing: border-box;
   margin: 0;
-  padding: 16px 0;
+  padding: 16px 0 16px 52px;
   border-bottom: 1px solid var(--las-input-border);
   font-size: 16px;
   line-height: 24px;
@@ -83,7 +85,10 @@
 /* Round icon at the start of each fact (icons are matched by position) */
 .las-facts li::before {
   content: "";
-  flex: 0 0 36px;
+  position: absolute;
+  top: 16px;
+  left: 0;
+  width: 36px;
   height: 36px;
   border-radius: 50%;
   background: var(--las-rose) center / 18px no-repeat;

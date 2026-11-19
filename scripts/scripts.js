@@ -881,9 +881,10 @@ async function loadTemplate(doc, templateName) {
 
 async function loadPage() {
   // loadHeader(document.querySelector('header'));
-  // const templateName = getMetadata('template');
-  if (false) {
-    // await loadTemplate(document, templateName);
+  // Only the Loan Against Securities page uses a page template for now.
+  // Every other page keeps loading the common styles as before.
+  if (getMetadata('template') === 'las') {
+    await loadTemplate(document, 'las');
   } else {
     loadingCustomCss();
   }

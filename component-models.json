@@ -1635,14 +1635,14 @@
         "label": "Eyebrow",
         "description": "Sets the small pre-title above the title."
       },
-       {
+      {
         "component": "select",
         "valueType": "string",
         "name": "eyebrowType",
         "value": "h2",
         "label": "Heading Type",
         "options": [
-           {
+          {
             "name": "H1",
             "value": "h1"
           },
@@ -2267,7 +2267,7 @@
         "value": "h2",
         "label": "Heading Type",
         "options": [
-           {
+          {
             "name": "H1",
             "value": "h1"
           },
@@ -4812,6 +4812,138 @@
         "label": "QR image alt text",
         "valueType": "string",
         "value": ""
+      }
+    ]
+  },
+  {
+    "id": "las-tabs",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "tabs",
+        "label": "Tab links",
+        "valueType": "string",
+        "description": "One bulleted list. Each item is a link to a section heading, e.g. #types"
+      }
+    ]
+  },
+  {
+    "id": "las-hero",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "breadcrumb",
+        "label": "Breadcrumb",
+        "valueType": "string",
+        "description": "Bulleted list of links, e.g. Home, Loans, Loan Against Securities"
+      },
+      {
+        "component": "text",
+        "name": "tag",
+        "label": "Tag",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "title",
+        "label": "Title (H1)",
+        "valueType": "string",
+        "description": "Use Heading 1. Italic text is shown in orange."
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Intro text",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "stats",
+        "label": "Key stats",
+        "valueType": "string",
+        "description": "Bulleted list of 4 items. Bold = number, then the label, e.g. **9.75%*** Interest from (p.a.)"
+      },
+      {
+        "component": "aem-content",
+        "name": "primaryCta",
+        "label": "Primary button link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "primaryCtaText",
+        "label": "Primary button text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "secondaryCta",
+        "label": "Secondary link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "secondaryCtaText",
+        "label": "Secondary link text",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "highlights",
+        "label": "Highlights",
+        "valueType": "string",
+        "description": "Bulleted list shown with green ticks"
+      },
+      {
+        "component": "richtext",
+        "name": "formHeading",
+        "label": "Card heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "formText",
+        "label": "Card text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "formCta",
+        "label": "Card button link",
+        "valueType": "string",
+        "description": "Shown when JavaScript is off, and until the form loads"
+      },
+      {
+        "component": "text",
+        "name": "formCtaText",
+        "label": "Card button text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "las-facts",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "text",
+        "name": "badge",
+        "label": "Badge text",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "facts",
+        "label": "Facts",
+        "valueType": "string",
+        "description": "Bulleted list of 8 items. Bold the key words."
       }
     ]
   }

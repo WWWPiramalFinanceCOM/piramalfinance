@@ -1,0 +1,18 @@
+/*
+ * Styles for the LAS page when JavaScript is switched off.
+ *
+ * head.html links this file inside <noscript>. With JavaScript on, the template and each
+ * block load their own CSS instead. Add a line here whenever a new las-* block is created.
+ *
+ * Rules inside only target las-* class names, so other pages are not affected.
+ */
+@import url("las.css");
+@import url("../../blocks/las-tabs/las-tabs.css");
+@import url("../../blocks/las-hero/las-hero.css");
+@import url("../../blocks/las-facts/las-facts.css");
+
+/* With JavaScript off the page is not hidden: show everything */
+body {
+  opacity: 1;
+  visibility: visible;
+}

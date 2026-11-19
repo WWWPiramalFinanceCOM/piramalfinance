@@ -1,0 +1,116 @@
+{
+  "definitions": [
+    {
+      "title": "LAS Hero",
+      "id": "las-hero",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "LAS Hero",
+              "model": "las-hero"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "las-hero",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "breadcrumb",
+          "label": "Breadcrumb",
+          "valueType": "string",
+          "description": "Bulleted list of links, e.g. Home, Loans, Loan Against Securities"
+        },
+        {
+          "component": "text",
+          "name": "tag",
+          "label": "Tag",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "title",
+          "label": "Title (H1)",
+          "valueType": "string",
+          "description": "Use Heading 1. Italic text is shown in orange."
+        },
+        {
+          "component": "richtext",
+          "name": "description",
+          "label": "Intro text",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "stats",
+          "label": "Key stats",
+          "valueType": "string",
+          "description": "Bulleted list of 4 items. Bold = number, then the label, e.g. **9.75%*** Interest from (p.a.)"
+        },
+        {
+          "component": "aem-content",
+          "name": "primaryCta",
+          "label": "Primary button link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "primaryCtaText",
+          "label": "Primary button text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "secondaryCta",
+          "label": "Secondary link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "secondaryCtaText",
+          "label": "Secondary link text",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "highlights",
+          "label": "Highlights",
+          "valueType": "string",
+          "description": "Bulleted list shown with green ticks"
+        },
+        {
+          "component": "richtext",
+          "name": "formHeading",
+          "label": "Card heading",
+          "valueType": "string",
+          "description": "Use Heading 2"
+        },
+        {
+          "component": "richtext",
+          "name": "formText",
+          "label": "Card text",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "formCta",
+          "label": "Card button link",
+          "valueType": "string",
+          "description": "Shown when JavaScript is off, and until the form loads"
+        },
+        {
+          "component": "text",
+          "name": "formCtaText",
+          "label": "Card button text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ]
+}

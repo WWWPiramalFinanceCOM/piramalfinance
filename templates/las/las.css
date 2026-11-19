@@ -1,0 +1,74 @@
+/*
+ * Loan Against Securities (LAS) page template.
+ *
+ * Shared by every las-* block. Blocks are styled on the RAW authored HTML, so the page
+ * looks right even when JavaScript is switched off (see las-noscript.css).
+ * This file therefore carries its own colours and fonts and does not rely on styles.css.
+ */
+
+/* Fonts: declared here because fonts.css is loaded by JavaScript */
+@font-face {
+  font-family: "LAS Nunito";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/NunitoRegular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "LAS Nunito";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/NunitoBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "LAS Nunito";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/NunitoExtraBold.woff2") format("woff2");
+}
+
+:root {
+  --las-orange: #f26841;
+  --las-rose: #fef0ec;
+  --las-peach: #fff7f4;
+  --las-ink: #333;
+  --las-grey: #666;
+  --las-blue: #365069;
+  --las-border: #ebeef0;
+  --las-input-border: #d7dce1;
+  --las-white: #fff;
+  --las-font: "LAS Nunito", nunito, arial, sans-serif;
+
+  /* Space on the left and right of every section: 100px on desktop, smaller on small screens */
+  --las-gutter: 16px;
+  --las-max-width: 1240px;
+
+  /* Height of the site header, so sticky bars and anchor links sit just below it */
+  --las-header-height: 0px;
+}
+
+@media (width >= 900px) {
+  :root {
+    --las-gutter: 40px;
+  }
+}
+
+@media (width >= 1440px) {
+  :root {
+    --las-gutter: 100px;
+  }
+}
+
+/*
+ * Note: nothing here is scoped to a body class. JavaScript adds that class, and these
+ * styles must also work when JavaScript is off. Each block sets its own font and colours.
+ */
+
+/* Headings that the in-page tabs jump to should not hide behind the sticky tab bar */
+h2[id] {
+  scroll-margin-top: calc(var(--las-header-height) + 72px);
+}

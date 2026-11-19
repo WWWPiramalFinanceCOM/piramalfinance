@@ -51,6 +51,12 @@
   text-transform: uppercase;
 }
 
+/* On phones the badge sits on its own line above the heading (only the display order changes) */
+.las-facts > div:nth-child(2) {
+  order: -1;
+  flex: 0 0 100%;
+}
+
 /* 3. The facts: two columns on wide screens, one on phones */
 .las-facts > div:nth-child(3) {
   flex: 0 0 100%;
@@ -106,6 +112,12 @@
 @media (width >= 900px) {
   .las-facts {
     padding: 32px;
+  }
+
+  /* On wide screens the badge goes back next to the heading */
+  .las-facts > div:nth-child(2) {
+    order: 0;
+    flex: 0 1 auto;
   }
 
   .las-facts ul {

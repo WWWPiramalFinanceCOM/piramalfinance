@@ -1,0 +1,195 @@
+/*
+ * LAS intro ("What is a Loan Against Securities?"): text on the left, a dark "How it works" card on the right.
+ *
+ * Authored as 5 rows: 1 small label, 2 heading, 3 body text, 4 card label, 5 list of steps.
+ * This CSS styles those raw rows, so the block works with JavaScript off (everything stacked,
+ * with rows 4 and 5 drawn as one card). With JavaScript on, las-intro.js groups the rows into
+ * a text column and a card, and they sit side by side on wide screens.
+ */
+.las-intro {
+  box-sizing: border-box;
+  width: calc(100% - 2 * var(--las-gutter));
+  max-width: var(--las-max-width);
+  margin: 0 auto;
+  padding: 40px 0;
+  color: #000;
+  font-family: var(--las-font);
+}
+
+.las-intro > div {
+  min-width: 0;
+}
+
+/* ---- Text: 1 label, 2 heading, 3 body ---- */
+.las-intro:not(.las-intro-ready) > div:nth-child(1) p,
+.las-intro-copy > div:nth-child(1) p {
+  margin: 0 0 8px;
+  color: var(--las-orange);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.las-intro h2 {
+  margin: 0 0 16px;
+  color: #000;
+  font-family: var(--las-font);
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 800;
+}
+
+.las-intro:not(.las-intro-ready) > div:nth-child(3) p,
+.las-intro-copy > div:nth-child(3) p {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+/* ---- Card: 4 label, 5 steps. With JavaScript off these two rows are drawn as one card ---- */
+.las-intro:not(.las-intro-ready) > div:nth-child(4),
+.las-intro:not(.las-intro-ready) > div:nth-child(5),
+.las-intro-card {
+  background: var(--las-blue);
+}
+
+.las-intro:not(.las-intro-ready) > div:nth-child(4) {
+  margin-top: 24px;
+  padding: 24px 20px 8px;
+  border-radius: 16px 16px 0 0;
+}
+
+.las-intro:not(.las-intro-ready) > div:nth-child(5) {
+  padding: 0 20px 24px;
+  border-radius: 0 0 16px 16px;
+}
+
+.las-intro-card {
+  margin-top: 24px;
+  padding: 24px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 12px rgb(51 51 51 / 15%);
+}
+
+.las-intro:not(.las-intro-ready) > div:nth-child(4) p,
+.las-intro-card > div:nth-child(1) p {
+  margin: 0;
+  color: rgb(255 255 255 / 70%);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.las-intro-card > div:nth-child(1) {
+  margin-bottom: 8px;
+}
+
+/* The steps: each one is a lighter box with an orange number; a small arrow sits between them */
+.las-intro ul {
+  margin: 0;
+  padding: 8px 0 0; /* space above the first step (padding, so it stays inside the card colour) */
+  list-style: none;
+  counter-reset: step;
+}
+
+.las-intro li {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0 0 40px;
+  padding: 16px 16px 16px 68px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 8%);
+  color: rgb(255 255 255 / 80%);
+  font-size: 14px;
+  line-height: 22px;
+  counter-increment: step;
+}
+
+.las-intro li:last-child {
+  margin-bottom: 0;
+}
+
+/* Orange number square */
+.las-intro li::before {
+  content: counter(step);
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--las-orange);
+  color: var(--las-white);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 800;
+}
+
+/* Arrow in the gap below every step except the last */
+.las-intro li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: -28px;
+  left: calc(50% - 8px);
+  width: 16px;
+  height: 16px;
+  background: url("icons/arrow-down.svg") center / 12px no-repeat;
+}
+
+/* Step title: bold white on its own line */
+.las-intro li strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--las-white);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+@media (width >= 900px) {
+  .las-intro {
+    padding: 60px 0;
+  }
+
+  .las-intro h2 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .las-intro:not(.las-intro-ready) > div:nth-child(3) p,
+  .las-intro-copy > div:nth-child(3) p {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .las-intro:not(.las-intro-ready) > div:nth-child(4) {
+    padding: 32px 32px 8px;
+  }
+
+  .las-intro:not(.las-intro-ready) > div:nth-child(5) {
+    padding: 0 32px 32px;
+  }
+
+  .las-intro-card {
+    padding: 32px;
+  }
+
+  /* After JavaScript: text column on the left, card on the right */
+  .las-intro-ready {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 540px;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .las-intro-ready .las-intro-card {
+    margin-top: 0;
+  }
+}

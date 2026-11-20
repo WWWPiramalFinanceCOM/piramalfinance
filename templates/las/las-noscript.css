@@ -10,6 +10,7 @@
 @import url("../../blocks/las-tabs/las-tabs.css");
 @import url("../../blocks/las-hero/las-hero.css");
 @import url("../../blocks/las-facts/las-facts.css");
+@import url("../../blocks/las-intro/las-intro.css");
 
 /* With JavaScript off the page is not hidden: show everything */
 body {

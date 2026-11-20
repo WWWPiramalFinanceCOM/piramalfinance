@@ -1,0 +1,150 @@
+/*
+ * LAS cards ("Types of Loan Against Securities"): a heading, an intro line and a row of white cards.
+ *
+ * Authored as 4 rows: 1 small label, 2 heading, 3 intro line, 4 list of cards.
+ * Each list item is one card: the title in bold, then the text, then a link, e.g.
+ *   <li><strong>Loan Against Shares</strong> Pledge approved shares... <a href="...">Explore Loan Against Shares</a></li>
+ * This CSS styles those raw rows, so the block works with JavaScript off.
+ */
+
+/* Grey band behind the block: the section that holds it gets the background */
+main > div:has(.las-cards) {
+  background: #f5f5f5;
+}
+
+.las-cards {
+  box-sizing: border-box;
+  width: calc(100% - 2 * var(--las-gutter));
+  max-width: var(--las-max-width);
+  margin: 0 auto;
+  padding: 40px 0;
+  font-family: var(--las-font);
+}
+
+.las-cards > div {
+  min-width: 0;
+}
+
+/* 1. Small label, 2. heading, 3. intro line */
+.las-cards > div:nth-child(1) p {
+  margin: 0 0 8px;
+  color: var(--las-orange);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.las-cards h2 {
+  margin: 0 0 8px;
+  color: #000;
+  font-family: var(--las-font);
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 800;
+}
+
+.las-cards > div:nth-child(3) p {
+  margin: 0;
+  color: var(--las-grey);
+  font-size: 16px;
+  line-height: 26px;
+}
+
+/* 4. The cards: one column on phones, three on wide screens */
+.las-cards ul {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.las-cards li {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--las-white);
+  box-shadow: 0 4px 6px rgb(51 51 51 / 8%);
+  color: var(--las-grey);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* Round icon at the top of each card (icons are matched by position) */
+.las-cards li::before {
+  content: "";
+  flex: 0 0 56px;
+  align-self: flex-start;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--las-rose) center / 28px no-repeat;
+}
+
+.las-cards li:nth-child(1)::before { background-image: url("icons/trend.svg"); }
+.las-cards li:nth-child(2)::before { background-image: url("icons/layers.svg"); }
+.las-cards li:nth-child(3)::before { background-image: url("icons/banknote.svg"); }
+
+/* Card title */
+.las-cards li strong {
+  color: var(--las-ink);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 800;
+}
+
+/* "Explore..." link stays at the bottom of the card, so the three links line up */
+.las-cards li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: auto;
+  color: var(--las-orange);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.las-cards li a::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: url("icons/arrow-right.svg") center / 13px no-repeat;
+}
+
+.las-cards li a:hover {
+  text-decoration: underline;
+}
+
+.las-cards li a:focus-visible {
+  outline: 2px solid var(--las-orange);
+  outline-offset: 2px;
+}
+
+@media (width >= 900px) {
+  .las-cards {
+    padding: 60px 0;
+  }
+
+  .las-cards h2 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .las-cards > div:nth-child(3) p {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .las-cards ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 40px;
+  }
+}

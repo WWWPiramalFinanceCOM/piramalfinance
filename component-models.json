@@ -4946,5 +4946,45 @@
         "description": "Bulleted list of 8 items. Bold the key words."
       }
     ]
+  },
+  {
+    "id": "las-intro",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Small label above the heading",
+        "valueType": "string",
+        "description": "For example: THE BASICS"
+      },
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "body",
+        "label": "Body text",
+        "valueType": "string",
+        "description": "One or more paragraphs"
+      },
+      {
+        "component": "text",
+        "name": "cardLabel",
+        "label": "Card label",
+        "valueType": "string",
+        "description": "For example: HOW IT WORKS"
+      },
+      {
+        "component": "richtext",
+        "name": "steps",
+        "label": "Card steps",
+        "valueType": "string",
+        "description": "Bulleted list. Start each item with the step title in bold, then its description. The numbers are added automatically."
+      }
+    ]
   }
 ]

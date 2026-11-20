@@ -4986,5 +4986,37 @@
         "description": "Bulleted list. Start each item with the step title in bold, then its description. The numbers are added automatically."
       }
     ]
+  },
+  {
+    "id": "las-cards",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Small label above the heading",
+        "valueType": "string",
+        "description": "For example: CHOOSE WHAT TO PLEDGE"
+      },
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "intro",
+        "label": "Intro line",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "cards",
+        "label": "Cards",
+        "valueType": "string",
+        "description": "One bulleted list, one bullet per card. In each bullet: the card title in bold, then the text, then the link, all in the same bullet (do not press Enter inside a bullet)."
+      }
+    ]
   }
 ]

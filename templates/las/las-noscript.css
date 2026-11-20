@@ -11,6 +11,7 @@
 @import url("../../blocks/las-hero/las-hero.css");
 @import url("../../blocks/las-facts/las-facts.css");
 @import url("../../blocks/las-intro/las-intro.css");
+@import url("../../blocks/las-cards/las-cards.css");
 
 /* With JavaScript off the page is not hidden: show everything */
 body {

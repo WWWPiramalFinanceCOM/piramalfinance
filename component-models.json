@@ -5018,5 +5018,45 @@
         "description": "One bulleted list, one bullet per card. In each bullet: the card title in bold, then the text, then the link, all in the same bullet (do not press Enter inside a bullet)."
       }
     ]
+  },
+  {
+    "id": "las-rates",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Small label above the heading",
+        "valueType": "string",
+        "description": "For example: TRANSPARENT PRICING"
+      },
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "banner",
+        "label": "Orange banner",
+        "valueType": "string",
+        "description": "Three paragraphs. 1: the rate in bold, then a few words, e.g. 9.75%* p.a. onwards. 2: the description text. 3: the button link."
+      },
+      {
+        "component": "richtext",
+        "name": "leftTable",
+        "label": "Left table",
+        "valueType": "string",
+        "description": "Heading 3, then one bulleted list. First bullet = column headings (bold label, then the second heading). Other bullets = rows: bold label, then the value. Write a value in italic to show it as a green pill (Nil). A bullet with only italic text is a group heading row."
+      },
+      {
+        "component": "richtext",
+        "name": "rightTable",
+        "label": "Right table",
+        "valueType": "string",
+        "description": "Heading 3, an optional note paragraph, then one bulleted list. Same rules as the left table."
+      }
+    ]
   }
 ]

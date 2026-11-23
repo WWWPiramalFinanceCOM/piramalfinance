@@ -2,7 +2,7 @@
  * LAS rates ("Loan Against Securities Interest Rate and Charges"): heading, orange banner
  * and two tables.
  *
- * Authored as 5 rows: 1 small label, 2 heading, 3 banner, 4 left table, 5 right table.
+ * Authored as 5 rows: 1 small label (plain text, no <p> around it), 2 heading, 3 banner, 4 left table, 5 right table.
  *  - Banner: paragraph 1 = <strong>9.75%*</strong> p.a. onwards, paragraph 2 = text, paragraph 3 = button link.
  *  - Each table: an H3, an optional note paragraph, then a bulleted list. Each bullet is one table row:
  *      first bullet                = column headings, e.g. <strong>Particulars</strong> Charges
@@ -39,7 +39,7 @@
 }
 
 /* 1. Small label, 2. heading */
-.las-rates > div:nth-child(1) p {
+.las-rates > div:nth-child(1) {
   margin: 0;
   color: var(--las-orange);
   font-size: 14px;

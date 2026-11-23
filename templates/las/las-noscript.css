@@ -13,6 +13,7 @@
 @import url("../../blocks/las-intro/las-intro.css");
 @import url("../../blocks/las-cards/las-cards.css");
 @import url("../../blocks/las-rates/las-rates.css");
+@import url("../../blocks/las-interest/las-interest.css");
 
 /* With JavaScript off the page is not hidden: show everything */
 body {

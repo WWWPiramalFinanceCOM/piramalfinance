@@ -2,16 +2,15 @@
  * LAS interest ("How Is Interest Calculated and Collected?"): numbered steps on the left,
  * an example card on the right.
  *
- * Authored as 5 rows: 1 small label (plain text), 2 heading, 3 intro, 4 steps, 5 example card.
+ * Authored as 6 rows: 1 small label (plain text), 2 heading, 3 intro, 4 steps, 5 example card (top),
+ * 6 example card (bottom). Rows 5 and 6 are drawn together as ONE white card.
  *  - Steps: one bulleted list. Each bullet = bold step title, then its text. Numbers are added by CSS.
- *  - Example card, in this order:
- *      H3, a note paragraph,
- *      a bulleted list drawn as a table:
+ *  - Row 5: H3, a note paragraph, then a bulleted list drawn as a table:
  *        first bullet = <strong>Days</strong> Amount used <em>Interest for the period</em>
  *        row bullet   = <strong>Day 1 to 20</strong> ₹3,00,000 <em>₹1,603</em>
  *        last bullet  = <strong>Total interest for the month</strong> <em>₹2,939</em>  (shown in orange)
- *      a second bulleted list = two comparison boxes, each: text, then the amount in bold,
- *      an explanation paragraph, then a small disclaimer paragraph.
+ *  - Row 6: a bulleted list of two comparison boxes (text, then the amount in bold),
+ *        an explanation paragraph, then a small disclaimer paragraph (the last one).
  * This CSS styles those raw rows, so the block works with JavaScript off.
  */
 
@@ -127,16 +126,28 @@ main > div:has(.las-interest) {
   font-weight: 800;
 }
 
-/* 5. Example card */
-.las-interest > div:nth-child(5) > div {
+/* 5 and 6. Example card: two rows that look like one white card */
+.las-interest > div:nth-child(n + 5) > div {
   box-sizing: border-box;
-  padding: 24px;
-  border-radius: 16px;
+  padding: 0 24px;
   background: var(--las-white);
   box-shadow: 0 4px 6px rgb(51 51 51 / 8%);
   color: var(--las-ink);
   font-size: 16px;
   line-height: 24px;
+}
+
+/* Top half: rounded on top, space above */
+.las-interest > div:nth-child(5) > div {
+  padding-top: 24px;
+  padding-bottom: 16px;
+  border-radius: 16px 16px 0 0;
+}
+
+/* Bottom half: rounded on the bottom, space below */
+.las-interest > div:nth-child(6) > div {
+  padding-bottom: 24px;
+  border-radius: 0 0 16px 16px;
 }
 
 .las-interest h3 {
@@ -148,28 +159,17 @@ main > div:has(.las-interest) {
   font-weight: 800;
 }
 
+/* Row 5: the note under the heading */
 .las-interest > div:nth-child(5) p {
   margin: 0 0 16px;
-}
-
-/* First paragraph = note under the heading */
-.las-interest > div:nth-child(5) p:first-of-type {
   color: var(--las-grey);
   font-size: 14px;
   line-height: 22px;
 }
 
-/* Last paragraph = small disclaimer */
-.las-interest > div:nth-child(5) p:last-of-type {
-  margin: 16px 0 0;
-  color: var(--las-grey);
-  font-size: 12px;
-  line-height: 18px;
-}
-
-/* Table: first bulleted list */
-.las-interest > div:nth-child(5) ul:first-of-type {
-  margin: 0 0 16px;
+/* Row 5: table (the bulleted list) */
+.las-interest > div:nth-child(5) ul {
+  margin: 0;
   padding: 0;
   overflow: hidden;
   border: 1px solid var(--las-interest-line);
@@ -177,7 +177,7 @@ main > div:has(.las-interest) {
   list-style: none;
 }
 
-.las-interest > div:nth-child(5) ul:first-of-type li {
+.las-interest > div:nth-child(5) li {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -188,43 +188,43 @@ main > div:has(.las-interest) {
   line-height: 22px;
 }
 
-.las-interest > div:nth-child(5) ul:first-of-type li strong {
+.las-interest > div:nth-child(5) li strong {
   flex: 0 0 32%;
   font-weight: 400;
 }
 
-.las-interest > div:nth-child(5) ul:first-of-type li em {
+.las-interest > div:nth-child(5) li em {
   flex: 0 0 28%;
   margin-left: auto;
   font-style: normal;
 }
 
 /* First bullet = column headings */
-.las-interest > div:nth-child(5) ul:first-of-type li:first-child {
+.las-interest > div:nth-child(5) li:first-child {
   border-top: 0;
   background: var(--las-rose);
   color: #4d4d4d;
   font-weight: 700;
 }
 
-.las-interest > div:nth-child(5) ul:first-of-type li:first-child strong {
+.las-interest > div:nth-child(5) li:first-child strong {
   font-weight: 700;
 }
 
 /* Last bullet = total row, in orange */
-.las-interest > div:nth-child(5) ul:first-of-type li:last-child {
+.las-interest > div:nth-child(5) li:last-child {
   background: var(--las-peach);
   color: var(--las-orange);
   font-weight: 800;
 }
 
-.las-interest > div:nth-child(5) ul:first-of-type li:last-child strong {
+.las-interest > div:nth-child(5) li:last-child strong {
   color: #000;
   font-weight: 800;
 }
 
-/* Comparison boxes: second bulleted list, two side by side */
-.las-interest > div:nth-child(5) ul:last-of-type {
+/* Row 6: two comparison boxes side by side */
+.las-interest > div:nth-child(6) ul {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
@@ -233,7 +233,7 @@ main > div:has(.las-interest) {
   list-style: none;
 }
 
-.las-interest > div:nth-child(5) ul:last-of-type li {
+.las-interest > div:nth-child(6) li {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -249,19 +249,31 @@ main > div:has(.las-interest) {
   text-align: center;
 }
 
-.las-interest > div:nth-child(5) ul:last-of-type li strong {
+.las-interest > div:nth-child(6) li strong {
   color: #365069;
   font-size: 26px;
   line-height: 34px;
   font-weight: 800;
 }
 
-.las-interest > div:nth-child(5) ul:last-of-type li:first-child {
+.las-interest > div:nth-child(6) li:first-child {
   background: var(--las-rose);
 }
 
-.las-interest > div:nth-child(5) ul:last-of-type li:first-child strong {
+.las-interest > div:nth-child(6) li:first-child strong {
   color: var(--las-orange);
+}
+
+/* Row 6: explanation paragraph, then the small disclaimer (last paragraph) */
+.las-interest > div:nth-child(6) p {
+  margin: 0 0 16px;
+}
+
+.las-interest > div:nth-child(6) p:last-child {
+  margin: 16px 0 0;
+  color: var(--las-grey);
+  font-size: 12px;
+  line-height: 18px;
 }
 
 @media (width >= 900px) {
@@ -289,11 +301,22 @@ main > div:has(.las-interest) {
     line-height: 28px;
   }
 
+  /* Steps on the left take both card rows; the card halves stack on the right */
   .las-interest > div:nth-child(4) {
+    grid-row: 4 / span 2;
     margin-bottom: 0;
   }
 
+  .las-interest > div:nth-child(n + 5) > div {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
   .las-interest > div:nth-child(5) > div {
-    padding: 32px;
+    padding-top: 32px;
+  }
+
+  .las-interest > div:nth-child(6) > div {
+    padding-bottom: 32px;
   }
 }

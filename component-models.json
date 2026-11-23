@@ -5094,7 +5094,14 @@
         "name": "example",
         "label": "Example card",
         "valueType": "string",
-        "description": "In this order: Heading 3, a note paragraph, a bulleted list for the table (first bullet = column headings: bold first heading, second heading, third heading in italic; each row: bold days, amount, interest in italic; the LAST bullet is the total row: bold label, total in italic), a second bulleted list for the two comparison boxes (text, then the amount in bold), an explanation paragraph, and a last small disclaimer paragraph."
+        "description": "In this order: Heading 3, a note paragraph, then one bulleted list for the table. First bullet = column headings (bold first heading, second heading, third heading in italic). Each row = bold days, amount, interest in italic. The LAST bullet is the total row: bold label, total in italic."
+      },
+      {
+        "component": "richtext",
+        "name": "comparison",
+        "label": "Comparison boxes and text below the table",
+        "valueType": "string",
+        "description": "In this order: a bulleted list with two bullets for the comparison boxes (text, then the amount in bold, e.g. With your LAS limit ₹2,939), an explanation paragraph, and a last small disclaimer paragraph."
       }
     ]
   }

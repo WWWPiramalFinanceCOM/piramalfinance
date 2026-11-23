@@ -32,15 +32,13 @@
   min-width: 0;
 }
 
-/* Rows 1 to 3 (label, heading, banner) sit close together */
-.las-rates > div:nth-child(1),
-.las-rates > div:nth-child(2) {
+/* The label sits close above the heading: pull it down to leave about 8px (grid gap is 32px) */
+.las-rates > div:nth-child(1) {
   margin-bottom: -24px;
 }
 
 /* 1. Small label, 2. heading */
 .las-rates > div:nth-child(1) {
-  margin: 0;
   color: var(--las-orange);
   font-size: 14px;
   line-height: 20px;
@@ -219,6 +217,11 @@
 
   .las-rates > div:nth-child(-n + 3) {
     grid-column: 1 / -1;
+  }
+
+  /* Grid gap is 40px here, so pull the label down further to keep about 8px */
+  .las-rates > div:nth-child(1) {
+    margin-bottom: -32px;
   }
 
   .las-rates h2 {

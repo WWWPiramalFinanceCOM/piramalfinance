@@ -5155,5 +5155,51 @@
         "description": "In this order: 1) a paragraph with the small label, e.g. READ BEFORE YOU BORROW. 2) the heading, as Heading 2. 3) one bulleted list. In each bullet: the lead-in in bold, then the sentence, all on one line (do not press Enter inside a bullet)."
       }
     ]
+  },
+  {
+    "id": "las-eligibility",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Small label above the heading",
+        "valueType": "string",
+        "description": "For example: WHO CAN APPLY"
+      },
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "Button link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "Button text",
+        "valueType": "string",
+        "description": "For example: Check Your Eligibility"
+      },
+      {
+        "component": "richtext",
+        "name": "whoCard",
+        "label": "Left card (who can apply)",
+        "valueType": "string",
+        "description": "In this order: 1) the card title, as Heading 3. 2) one bulleted list, one bullet per line."
+      },
+      {
+        "component": "richtext",
+        "name": "docsCard",
+        "label": "Right card (documents required)",
+        "valueType": "string",
+        "description": "In this order: 1) the card title, as Heading 3. 2) one bulleted list. In each bullet: the lead-in in bold, then the text, all on one line (do not press Enter inside a bullet)."
+      }
+    ]
   }
 ]

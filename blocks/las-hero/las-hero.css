@@ -95,7 +95,8 @@
 }
 
 /* 2. Tag pill */
-.las-hero > div:nth-child(2) p {
+.las-hero > div:nth-child(2) p,
+.las-hero > div:nth-child(2) > div:not(:has(p)) {
   display: inline-block;
   padding: 6px 14px;
   border: 1px solid #f9c9ba;
@@ -123,7 +124,8 @@
 }
 
 /* 4. Intro text */
-.las-hero > div:nth-child(4) p {
+.las-hero > div:nth-child(4) p,
+.las-hero > div:nth-child(4) > div:not(:has(p)) {
   color: var(--las-grey);
   font-size: 18px;
   line-height: 28px;
@@ -296,7 +298,9 @@
 }
 
 .las-hero:not(.las-hero-ready) > div:nth-child(10) p,
-.las-hero-card > div:nth-child(2) p {
+.las-hero:not(.las-hero-ready) > div:nth-child(10) > div:not(:has(p)),
+.las-hero-card > div:nth-child(2) p,
+.las-hero-card > div:nth-child(2) > div:not(:has(p)) {
   margin: 0 0 20px;
   color: var(--las-grey);
   font-size: 14px;
@@ -347,7 +351,8 @@
   }
 
   /* Text next to the card must not run under it */
-  .las-hero-ready > div:nth-child(4) p {
+  .las-hero-ready > div:nth-child(4) p,
+  .las-hero-ready > div:nth-child(4) > div:not(:has(p)) {
     font-size: 20px;
   }
 }

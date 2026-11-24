@@ -22,7 +22,9 @@
 
 /* ---- Text: 1 label, 2 heading, 3 body ---- */
 .las-intro:not(.las-intro-ready) > div:nth-child(1) p,
-.las-intro-copy > div:nth-child(1) p {
+.las-intro-copy > div:nth-child(1) p,
+.las-intro:not(.las-intro-ready) > div:nth-child(1) > div:not(:has(p)),
+.las-intro-copy > div:nth-child(1) > div:not(:has(p)) {
   margin: 0 0 8px;
   color: var(--las-orange);
   font-size: 14px;
@@ -42,7 +44,9 @@
 }
 
 .las-intro:not(.las-intro-ready) > div:nth-child(3) p,
-.las-intro-copy > div:nth-child(3) p {
+.las-intro-copy > div:nth-child(3) p,
+.las-intro:not(.las-intro-ready) > div:nth-child(3) > div:not(:has(p)),
+.las-intro-copy > div:nth-child(3) > div:not(:has(p)) {
   margin: 0 0 16px;
   font-size: 16px;
   line-height: 26px;
@@ -74,7 +78,9 @@
 }
 
 .las-intro:not(.las-intro-ready) > div:nth-child(4) p,
-.las-intro-card > div:nth-child(1) p {
+.las-intro-card > div:nth-child(1) p,
+.las-intro:not(.las-intro-ready) > div:nth-child(4) > div:not(:has(p)),
+.las-intro-card > div:nth-child(1) > div:not(:has(p)) {
   margin: 0;
   color: rgb(255 255 255 / 70%);
   font-size: 14px;
@@ -164,7 +170,9 @@
   }
 
   .las-intro:not(.las-intro-ready) > div:nth-child(3) p,
-  .las-intro-copy > div:nth-child(3) p {
+  .las-intro-copy > div:nth-child(3) p,
+  .las-intro:not(.las-intro-ready) > div:nth-child(3) > div:not(:has(p)),
+  .las-intro-copy > div:nth-child(3) > div:not(:has(p)) {
     font-size: 18px;
     line-height: 28px;
   }

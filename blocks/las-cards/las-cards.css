@@ -26,7 +26,8 @@ main > div:has(.las-cards) {
 }
 
 /* 1. Small label, 2. heading, 3. intro line */
-.las-cards > div:nth-child(1) p {
+.las-cards > div:nth-child(1) p,
+.las-cards > div:nth-child(1) > div:not(:has(p)) {
   margin: 0 0 8px;
   color: var(--las-orange);
   font-size: 14px;
@@ -45,7 +46,8 @@ main > div:has(.las-cards) {
   font-weight: 800;
 }
 
-.las-cards > div:nth-child(3) p {
+.las-cards > div:nth-child(3) p,
+.las-cards > div:nth-child(3) > div:not(:has(p)) {
   margin: 0;
   color: var(--las-grey);
   font-size: 16px;
@@ -138,7 +140,8 @@ main > div:has(.las-cards) {
     line-height: 40px;
   }
 
-  .las-cards > div:nth-child(3) p {
+  .las-cards > div:nth-child(3) p,
+  .las-cards > div:nth-child(3) > div:not(:has(p)) {
     font-size: 20px;
     line-height: 28px;
   }

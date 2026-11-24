@@ -5201,5 +5201,51 @@
         "description": "In this order: 1) the card title, as Heading 3. 2) one bulleted list. In each bullet: the lead-in in bold, then the text, all on one line (do not press Enter inside a bullet)."
       }
     ]
+  },
+  {
+    "id": "las-steps",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Small label above the heading",
+        "valueType": "string",
+        "description": "For example: FULLY ONLINE"
+      },
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "intro",
+        "label": "Intro line",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "steps",
+        "label": "Steps",
+        "valueType": "string",
+        "description": "One bulleted list, one bullet per step (7 in the design). In each bullet: the step title in bold, then the text, all on one line (do not press Enter inside a bullet). The numbers are added automatically."
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "Button link",
+        "valueType": "string",
+        "description": "A page address, or a section on this page such as #check-your-eligible-limit (include the #)"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "Button text",
+        "valueType": "string",
+        "description": "For example: Apply Now"
+      }
+    ]
   }
 ]

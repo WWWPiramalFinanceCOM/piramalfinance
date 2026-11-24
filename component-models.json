@@ -5136,5 +5136,24 @@
         "description": "One bulleted list, one bullet per card (10 cards in the design). In each bullet: the card title in bold, then the text, all in the same bullet (do not press Enter inside a bullet)."
       }
     ]
+  },
+  {
+    "id": "las-guidance",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "leftCard",
+        "label": "Left card (tips, with check icons)",
+        "valueType": "string",
+        "description": "In this order: 1) a paragraph with the small label, e.g. SMART BORROWING. 2) the heading, as Heading 2. 3) one bulleted list. In each bullet: the lead-in in bold, then the sentence, all on one line (do not press Enter inside a bullet)."
+      },
+      {
+        "component": "richtext",
+        "name": "rightCard",
+        "label": "Right card (things to know, with alert icons)",
+        "valueType": "string",
+        "description": "In this order: 1) a paragraph with the small label, e.g. READ BEFORE YOU BORROW. 2) the heading, as Heading 2. 3) one bulleted list. In each bullet: the lead-in in bold, then the sentence, all on one line (do not press Enter inside a bullet)."
+      }
+    ]
   }
 ]

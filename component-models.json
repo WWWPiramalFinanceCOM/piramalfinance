@@ -5104,5 +5104,37 @@
         "description": "In this order: a bulleted list with two bullets for the comparison boxes (text, then the amount in bold, e.g. With your LAS limit ₹2,939), an explanation paragraph, and a last small disclaimer paragraph."
       }
     ]
+  },
+  {
+    "id": "las-benefits",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Small label above the heading",
+        "valueType": "string",
+        "description": "For example: WHY PIRAMAL FINANCE"
+      },
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "intro",
+        "label": "Intro line",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "benefits",
+        "label": "Benefit cards",
+        "valueType": "string",
+        "description": "One bulleted list, one bullet per card (10 cards in the design). In each bullet: the card title in bold, then the text, all in the same bullet (do not press Enter inside a bullet)."
+      }
+    ]
   }
 ]

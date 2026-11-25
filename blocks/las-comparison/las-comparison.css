@@ -80,8 +80,10 @@
   border-bottom: 0;
 }
 
-/* Factor (the bold text) */
-.las-comparison > div:nth-child(4) > div > ul > li > strong {
+/* Factor (the bold text). The editor wraps it in a paragraph when the bullet has sub-bullets */
+.las-comparison > div:nth-child(4) > div > ul > li > strong,
+.las-comparison > div:nth-child(4) > div > ul > li > p {
+  margin: 0;
   padding: 16px 24px;
   color: var(--las-ink);
   font-size: 16px;
@@ -120,6 +122,7 @@
 }
 
 .las-comparison > div:nth-child(4) > div > ul > li:first-child > strong,
+.las-comparison > div:nth-child(4) > div > ul > li:first-child > p,
 .las-comparison > div:nth-child(4) > div > ul > li:first-child > ul > li:nth-child(2) {
   color: #565656;
   font-weight: 700;

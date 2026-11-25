@@ -19,6 +19,7 @@
 @import url("../../blocks/las-eligibility/las-eligibility.css");
 @import url("../../blocks/las-steps/las-steps.css");
 @import url("../../blocks/las-comparison/las-comparison.css");
+@import url("../../blocks/las-faqs/las-faqs.css");
 
 /* With JavaScript off the page is not hidden: show everything */
 body {

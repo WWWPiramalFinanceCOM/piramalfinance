@@ -244,3 +244,59 @@ main > div:has(.las-faqs) {
     line-height: 28px;
   }
 }
+
+/*
+ * Phones (under 600px): the smaller sizes from the mobile design. The blue card has 20px padding,
+ * the questions are 16px and the answers 14px.
+ */
+@media (width < 600px) {
+  .las-faqs {
+    padding: 50px 0;
+  }
+
+  .las-faqs > div:nth-child(1) {
+    padding-top: 20px;
+  }
+
+  .las-faqs > div:nth-child(1) p,
+  .las-faqs > div:nth-child(1) > div:not(:has(p)) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-faqs > div:nth-child(2) h2 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .las-faqs > div:nth-child(3) p,
+  .las-faqs > div:nth-child(3) > div:not(:has(p)) {
+    margin-bottom: 24px;
+    line-height: 24px;
+  }
+
+  .las-faqs > div:nth-child(4) {
+    padding-bottom: 20px;
+  }
+
+  .las-faqs > div:nth-child(4) a {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .las-faqs > div:nth-child(5) {
+    margin-top: 24px;
+  }
+
+  .las-faqs:not(.las-faqs-ready) h3,
+  .las-faqs-ready summary h3 {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .las-faqs:not(.las-faqs-ready) > div:nth-child(5) p,
+  .las-faqs-ready details > p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

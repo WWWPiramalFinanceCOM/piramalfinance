@@ -126,3 +126,38 @@
     column-gap: 48px;
   }
 }
+
+/*
+ * Phones (under 600px): the smaller sizes from the mobile design. The card has 20px padding, the
+ * heading is 20px and kept narrow so it wraps after "Loan", and the facts are 14px text.
+ */
+@media (width < 600px) {
+  .las-facts {
+    margin: 50px auto;
+    padding: 20px;
+  }
+
+  .las-facts > div:nth-child(1) {
+    max-width: 193px;
+  }
+
+  .las-facts h2,
+  .las-facts > div:nth-child(1) p {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  /* 16px between the heading and the first fact (the flex gap is 12px) */
+  .las-facts > div:nth-child(3) {
+    margin-top: 4px;
+  }
+
+  .las-facts li {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .las-facts li:last-child {
+    border-bottom: 1px solid var(--las-input-border);
+  }
+}

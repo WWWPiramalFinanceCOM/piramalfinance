@@ -151,3 +151,55 @@ main > div:has(.las-cards) {
     margin-top: 40px;
   }
 }
+
+/*
+ * Phones (under 600px): the smaller sizes from the mobile design. A 44px icon (drawn smaller),
+ * 16px titles, 14px text and link, and 16px between the cards.
+ */
+@media (width < 600px) {
+  .las-cards {
+    padding: 50px 0;
+  }
+
+  .las-cards > div:nth-child(1) p,
+  .las-cards > div:nth-child(1) > div:not(:has(p)) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-cards h2 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .las-cards > div:nth-child(3) p,
+  .las-cards > div:nth-child(3) > div:not(:has(p)) {
+    line-height: 24px;
+  }
+
+  .las-cards ul {
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .las-cards li {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .las-cards li strong {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .las-cards li::before {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  /* The icons are drawn about 80% of their size to fit the 44px chip */
+  .las-cards li:nth-child(1)::before { background-size: 22px auto; }
+  .las-cards li:nth-child(2)::before { background-size: 22px auto; }
+  .las-cards li:nth-child(3)::before { background-size: 20px auto; }
+}

@@ -182,6 +182,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   min-height: 48px;
   padding: 12px 32px;
   border: 0;
@@ -312,6 +313,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   min-height: 48px;
   padding: 12px 32px;
   border: 0;
@@ -354,5 +356,127 @@
   .las-hero-ready > div:nth-child(4) p,
   .las-hero-ready > div:nth-child(4) > div:not(:has(p)) {
     font-size: 20px;
+  }
+}
+
+/*
+ * Phones (under 600px): the smaller sizes from the mobile design. Wider screens keep the styles above.
+ * The breadcrumb is a little higher, the stats are small 30px-icon cards in two columns, the buttons
+ * and link are 14px, and the highlights are a vertical list.
+ */
+@media (width < 600px) {
+  .las-hero {
+    padding-top: 14px;
+    padding-bottom: 50px;
+  }
+
+  .las-hero > div:nth-child(1) {
+    margin-bottom: 28px;
+  }
+
+  .las-hero > div:nth-child(1) ul {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-hero > div:nth-child(2) p,
+  .las-hero > div:nth-child(2) > div:not(:has(p)) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .las-hero > div:nth-child(4) p,
+  .las-hero > div:nth-child(4) > div:not(:has(p)) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  /* Stats: two columns, smaller cards */
+  .las-hero > div:nth-child(5) ul {
+    gap: 12px;
+  }
+
+  .las-hero > div:nth-child(5) li {
+    padding: 14px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-hero > div:nth-child(5) strong {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .las-hero > div:nth-child(5) li::before {
+    width: 30px;
+    height: 30px;
+    background-size: 16px;
+  }
+
+  /* Buttons */
+  .las-hero > div:nth-child(6) {
+    margin-right: 20px;
+  }
+
+  .las-hero > div:nth-child(6) a,
+  .las-hero > div:nth-child(7) a {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  /* Highlights: a vertical list */
+  .las-hero > div:nth-child(8) ul {
+    flex-flow: column nowrap;
+    gap: 16px;
+  }
+
+  .las-hero > div:nth-child(8) li {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  /* The card below: 20px padding, smaller heading and button */
+  .las-hero:not(.las-hero-ready) > div:nth-child(n+9) {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .las-hero:not(.las-hero-ready) > div:nth-child(9) {
+    margin-top: 8px;
+    padding-top: 20px;
+  }
+
+  .las-hero:not(.las-hero-ready) > div:nth-child(11) {
+    padding-bottom: 20px;
+  }
+
+  .las-hero-card {
+    margin-top: 8px;
+    padding: 20px;
+  }
+
+  .las-hero:not(.las-hero-ready) > div:nth-child(9) :is(h2, h3, p),
+  .las-hero-card > div:nth-child(1) :is(h2, h3, p) {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .las-hero:not(.las-hero-ready) > div:nth-child(10) p,
+  .las-hero:not(.las-hero-ready) > div:nth-child(10) > div:not(:has(p)),
+  .las-hero-card > div:nth-child(2) p,
+  .las-hero-card > div:nth-child(2) > div:not(:has(p)) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-hero:not(.las-hero-ready) > div:nth-child(11) a,
+  .las-hero-card > div:nth-child(3) a {
+    font-size: 14px;
+    line-height: 22px;
   }
 }

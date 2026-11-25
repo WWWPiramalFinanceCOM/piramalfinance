@@ -68,6 +68,15 @@
  * styles must also work when JavaScript is off. Each block sets its own font and colours.
  */
 
+/*
+ * The site's reset (styles.css) puts the font "Nunito-Light" directly on p, li, div and similar
+ * elements. That beats the font set on the block, and Nunito-Light does not load, so text fell
+ * back to Arial. This rule sets the LAS font on the text elements inside every las-* block.
+ */
+[class^="las-"] :is(div, p, ul, ol, li, span, a, strong, em, b, i, summary, details, h1, h2, h3, h4) {
+  font-family: var(--las-font);
+}
+
 /* Headings that the in-page tabs jump to should not hide behind the sticky tab bar */
 h2[id] {
   scroll-margin-top: calc(var(--las-header-height) + 72px);

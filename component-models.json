@@ -5325,5 +5325,37 @@
         "description": "For each FAQ: the question as Heading 3, then the answer as one or more paragraphs. Then the next Heading 3 and its answer, and so on. Every question needs an answer."
       }
     ]
+  },
+  {
+    "id": "las-cta",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text line",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "Button link",
+        "valueType": "string",
+        "description": "A page address, or a section on this page such as #check-your-eligible-limit (include the #)"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "Button text",
+        "valueType": "string",
+        "description": "For example: Apply Now"
+      }
+    ]
   }
 ]

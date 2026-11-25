@@ -105,7 +105,7 @@
         },
         {
           "component": "text",
-          "name": "ctaText2",
+          "name": "cta2Text",
           "label": "Tab 2 button text",
           "valueType": "string",
           "description": "For example: Apply Now"

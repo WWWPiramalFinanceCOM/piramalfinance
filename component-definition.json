@@ -1543,6 +1543,21 @@
               }
             }
           }
+        },
+        {
+          "title": "LAS CTA",
+          "id": "las-cta",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "LAS CTA",
+                  "model": "las-cta"
+                }
+              }
+            }
+          }
         }
       ]
     }

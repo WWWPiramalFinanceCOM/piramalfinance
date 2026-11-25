@@ -1,21 +1,24 @@
 /*
  * LAS comparison ("Loan Against Securities vs Selling Your Investments"): a heading, an intro
- * paragraph and a three-column comparison table.
+ * paragraph and a comparison table.
  *
  * Authored as 4 rows: 1 small label, 2 heading, 3 intro text, 4 the table.
  * The table is one bulleted list. Each bullet is a table row, with the factor in bold and two
- * sub-bullets (the LAS text, then the Selling text):
- *   <ul><li><strong>Factor</strong><ul><li>LAS text</li><li>Selling text</li></ul></li> ...</ul>
+ * sub-bullets (the LAS text, then the Selling text). The editor may wrap the factor in a <p>:
+ *   <ul><li><p><strong>Factor</strong></p><ul><li>LAS text</li><li>Selling text</li></ul></li> ...</ul>
  * The FIRST bullet is the header row. This CSS styles that raw markup, so the block works with
  * JavaScript off. A plain text field can arrive as bare text (no <p>) when JavaScript is off,
  * so the label and intro rules also match the bare cell.
+ *
+ * Phones (the default here): each row shows the factor on its own line, with the two answers side
+ * by side in a bordered box below it. From 900px up it is a three-column table.
  */
 .las-comparison {
   box-sizing: border-box;
   width: calc(100% - 2 * var(--las-gutter));
   max-width: var(--las-max-width);
   margin: 0 auto;
-  padding: 40px 0;
+  padding: 50px 0;
   font-family: var(--las-font);
 }
 
@@ -28,8 +31,8 @@
 .las-comparison > div:nth-child(1) > div:not(:has(p)) {
   margin: 0 0 8px;
   color: var(--las-orange);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 18px;
   font-weight: 800;
   letter-spacing: 1.2px;
   text-transform: uppercase;
@@ -39,8 +42,8 @@
   margin: 0 0 8px;
   color: #000;
   font-family: var(--las-font);
-  font-size: 26px;
-  line-height: 34px;
+  font-size: 24px;
+  line-height: 32px;
   font-weight: 800;
 }
 
@@ -49,49 +52,43 @@
   margin: 0;
   color: var(--las-grey);
   font-size: 16px;
-  line-height: 26px;
+  line-height: 24px;
 }
 
-/* 4. The table. On narrow screens it keeps its three columns and scrolls sideways */
+/* 4. The table (phones) */
 .las-comparison > div:nth-child(4) > div {
-  margin-top: 32px;
-  overflow-x: auto;
-  border: 1px solid var(--las-input-border);
+  margin-top: 24px;
+  overflow: hidden;
   border-radius: 12px;
   background: var(--las-white);
 }
 
 .las-comparison > div:nth-child(4) > div > ul {
-  min-width: 840px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Each bullet is a row: factor | LAS | Selling */
+/* Each bullet is a row: the factor on top, the two answers side by side below it */
 .las-comparison > div:nth-child(4) > div > ul > li {
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
-  border-bottom: 1px solid var(--las-input-border);
-}
-
-.las-comparison > div:nth-child(4) > div > ul > li:last-child {
-  border-bottom: 0;
 }
 
 /* Factor (the bold text). The editor wraps it in a paragraph when the bullet has sub-bullets */
 .las-comparison > div:nth-child(4) > div > ul > li > strong,
 .las-comparison > div:nth-child(4) > div > ul > li > p {
+  grid-column: 1 / -1;
   margin: 0;
-  padding: 16px 24px;
+  padding: 14px 12px 4px;
   color: var(--las-ink);
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 22px;
   font-weight: 700;
 }
 
-/* The two sub-bullets become the two cells of the row */
+/* The two sub-bullets become the two answers of the row */
 .las-comparison > div:nth-child(4) > div > ul > li > ul {
   display: contents;
   margin: 0;
@@ -105,25 +102,36 @@
   gap: 10px;
   box-sizing: border-box;
   margin: 0;
-  padding: 16px 24px;
+  padding: 12px;
+  border: 1px solid var(--las-input-border);
   color: #20303f;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 22px;
 }
 
-/* The Loan Against Securities column is tinted */
+/* The two answers share one border line between them */
+.las-comparison > div:nth-child(4) > div > ul > li > ul > li:nth-child(2) {
+  border-left: 0;
+}
+
+/* The Loan Against Securities answer is tinted */
 .las-comparison > div:nth-child(4) > div > ul > li > ul > li:nth-child(1) {
   background: var(--las-peach);
 }
 
-/* Header row (the first bullet) */
+/* Header row (the first bullet): just the two column headings, no "Factor" on phones */
 .las-comparison > div:nth-child(4) > div > ul > li:first-child {
+  border-bottom: 1px solid var(--las-input-border);
   background: var(--las-rose);
 }
 
 .las-comparison > div:nth-child(4) > div > ul > li:first-child > strong,
-.las-comparison > div:nth-child(4) > div > ul > li:first-child > p,
-.las-comparison > div:nth-child(4) > div > ul > li:first-child > ul > li:nth-child(2) {
+.las-comparison > div:nth-child(4) > div > ul > li:first-child > p {
+  display: none;
+}
+
+.las-comparison > div:nth-child(4) > div > ul > li:first-child > ul > li {
+  border: 0;
   color: #565656;
   font-weight: 700;
 }
@@ -131,7 +139,6 @@
 .las-comparison > div:nth-child(4) > div > ul > li:first-child > ul > li:nth-child(1) {
   background: var(--las-orange);
   color: var(--las-white);
-  font-weight: 700;
 }
 
 /* Rows 3 to 9 get a small round tick (LAS) or cross (Selling) in front of the text */
@@ -152,6 +159,74 @@
 .las-comparison > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(2)::before {
   background-color: var(--las-rose);
   background-image: url("icons/cross.svg");
+}
+
+/* Wide screens: a three-column table (factor | LAS | Selling) that scrolls sideways if too narrow */
+@media (width >= 900px) {
+  .las-comparison {
+    padding: 40px 0;
+  }
+
+  .las-comparison > div:nth-child(1) p,
+  .las-comparison > div:nth-child(1) > div:not(:has(p)) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .las-comparison h2 {
+    font-size: 26px;
+    line-height: 34px;
+  }
+
+  .las-comparison > div:nth-child(3) p,
+  .las-comparison > div:nth-child(3) > div:not(:has(p)) {
+    line-height: 26px;
+  }
+
+  .las-comparison > div:nth-child(4) > div {
+    margin-top: 32px;
+    overflow-x: auto;
+    border: 1px solid var(--las-input-border);
+  }
+
+  .las-comparison > div:nth-child(4) > div > ul {
+    min-width: 760px;
+  }
+
+  .las-comparison > div:nth-child(4) > div > ul > li {
+    grid-template-columns: 240px minmax(0, 1fr) minmax(0, 1fr);
+    border-bottom: 1px solid var(--las-input-border);
+  }
+
+  .las-comparison > div:nth-child(4) > div > ul > li:last-child {
+    border-bottom: 0;
+  }
+
+  .las-comparison > div:nth-child(4) > div > ul > li > strong,
+  .las-comparison > div:nth-child(4) > div > ul > li > p {
+    grid-column: auto;
+    padding: 16px 24px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .las-comparison > div:nth-child(4) > div > ul > li > ul > li {
+    padding: 16px 24px;
+    border: 0;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  /* The "Factor" heading is shown again */
+  .las-comparison > div:nth-child(4) > div > ul > li:first-child > strong,
+  .las-comparison > div:nth-child(4) > div > ul > li:first-child > p {
+    display: block;
+    color: #565656;
+  }
+
+  .las-comparison > div:nth-child(4) > div > ul > li:first-child {
+    border-bottom: 1px solid var(--las-input-border);
+  }
 }
 
 @media (width >= 900px) {

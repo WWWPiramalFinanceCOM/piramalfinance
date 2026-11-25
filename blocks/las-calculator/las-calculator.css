@@ -181,39 +181,51 @@ main > div:has(.las-calculator) {
 
 /*
  * ---- The two tabs (JavaScript on) ----
- * One tab bar for both tabs: a grey bar with a white pill. The selected tab is a white pill with an
- * orange title. The colours fade when the tab changes.
+ * The Figma tab bar for both tabs: a rose tab with a round mark in front of the title. The selected
+ * tab is white and bold and joins the card below it. The colours fade when the tab changes.
  */
 .las-calculator-tabs {
   display: flex;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 24px 24px 0 0;
-  background: #f6f7f9;
 }
 
 .las-calculator-tab {
   display: flex;
   flex: 1;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
   padding: 16px 12px;
   border: 0;
-  border-radius: 14px;
-  background: transparent;
-  color: #4a5568;
+  border-radius: 16px 16px 0 0;
+  background: var(--las-rose);
+  color: var(--las-ink);
   font-family: var(--las-font);
   font-size: 16px;
   line-height: 24px;
-  font-weight: 700;
-  text-align: center;
+  font-weight: 400;
+  text-align: left;
   cursor: pointer;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.25s ease;
 }
 
 .las-calculator-tab[aria-selected="true"] {
   background: var(--las-white);
-  color: #e8704a;
+  font-weight: 700;
+}
+
+/* Round mark in front of the title: a thick dark ring when selected, a thin grey ring when not */
+.las-calculator-tab::before {
+  content: "";
+  flex: 0 0 20px;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #808080;
+  border-radius: 50%;
+  background: var(--las-white);
+}
+
+.las-calculator-tab[aria-selected="true"]::before {
+  border: 6px solid var(--las-ink);
 }
 
 .las-calculator-tab:focus-visible {
@@ -230,7 +242,7 @@ main > div:has(.las-calculator) {
   display: grid;
   gap: 24px;
   padding: 20px;
-  border-radius: 0 0 24px 24px;
+  border-radius: 0 16px 16px;
   background: var(--las-white);
   box-shadow: 0 4px 6px rgb(51 51 51 / 8%);
 }
@@ -569,13 +581,13 @@ main > div:has(.las-calculator) {
 /*
  * ---- "Interest cost" tab: its own look ----
  * A grey tab bar with a white pill and orange title, rounded input boxes, a thicker slider with a
- * ring handle, and a dark navy result panel. It applies while this tab is selected (data-tab="1"); the tab bar itself is shared.
+ * ring handle, and a dark navy result panel. It applies while this tab is selected (data-tab="1"); the tab bar is the same for both tabs.
  */
 .las-calculator-card-interest {
   gap: 0;
   padding: 0;
   overflow: hidden;
-  border-radius: 0 0 24px 24px;
+  border-radius: 16px 0 16px 16px;
 }
 
 .las-calculator-card-interest > div:nth-child(1) {
@@ -744,12 +756,9 @@ main > div:has(.las-calculator) {
     line-height: 28px;
   }
 
-  .las-calculator-tabs {
-    padding: 14px 16px;
-  }
-
   .las-calculator-tab {
-    padding: 20px 12px;
+    gap: 12px;
+    padding: 20px 32px;
     font-size: 20px;
     line-height: 28px;
   }

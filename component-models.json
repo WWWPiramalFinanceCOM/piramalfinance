@@ -5247,5 +5247,37 @@
         "description": "For example: Apply Now"
       }
     ]
+  },
+  {
+    "id": "las-comparison",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Small label above the heading",
+        "valueType": "string",
+        "description": "For example: MAKE THE RIGHT CHOICE"
+      },
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "intro",
+        "label": "Intro text",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "table",
+        "label": "Comparison table",
+        "valueType": "string",
+        "description": "One bulleted list. The FIRST bullet is the header row. Each bullet is one row: type the factor in bold, then press Enter and Tab to make two sub-bullets under it: the first sub-bullet is the Loan Against Securities text, the second is the Selling investments text. Rows 3 to 9 get a green tick / red cross automatically, so keep the row order of the design."
+      }
+    ]
   }
 ]

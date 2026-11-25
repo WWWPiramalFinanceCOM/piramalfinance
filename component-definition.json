@@ -1513,6 +1513,21 @@
               }
             }
           }
+        },
+        {
+          "title": "LAS Comparison",
+          "id": "las-comparison",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "LAS Comparison",
+                  "model": "las-comparison"
+                }
+              }
+            }
+          }
         }
       ]
     }

@@ -1,0 +1,173 @@
+/*
+ * LAS comparison ("Loan Against Securities vs Selling Your Investments"): a heading, an intro
+ * paragraph and a three-column comparison table.
+ *
+ * Authored as 4 rows: 1 small label, 2 heading, 3 intro text, 4 the table.
+ * The table is one bulleted list. Each bullet is a table row, with the factor in bold and two
+ * sub-bullets (the LAS text, then the Selling text):
+ *   <ul><li><strong>Factor</strong><ul><li>LAS text</li><li>Selling text</li></ul></li> ...</ul>
+ * The FIRST bullet is the header row. This CSS styles that raw markup, so the block works with
+ * JavaScript off. A plain text field can arrive as bare text (no <p>) when JavaScript is off,
+ * so the label and intro rules also match the bare cell.
+ */
+.las-comparison {
+  box-sizing: border-box;
+  width: calc(100% - 2 * var(--las-gutter));
+  max-width: var(--las-max-width);
+  margin: 0 auto;
+  padding: 40px 0;
+  font-family: var(--las-font);
+}
+
+.las-comparison > div {
+  min-width: 0;
+}
+
+/* 1. Small label, 2. heading, 3. intro text */
+.las-comparison > div:nth-child(1) p,
+.las-comparison > div:nth-child(1) > div:not(:has(p)) {
+  margin: 0 0 8px;
+  color: var(--las-orange);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.las-comparison h2 {
+  margin: 0 0 8px;
+  color: #000;
+  font-family: var(--las-font);
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 800;
+}
+
+.las-comparison > div:nth-child(3) p,
+.las-comparison > div:nth-child(3) > div:not(:has(p)) {
+  margin: 0;
+  color: var(--las-grey);
+  font-size: 16px;
+  line-height: 26px;
+}
+
+/* 4. The table. On narrow screens it keeps its three columns and scrolls sideways */
+.las-comparison > div:nth-child(4) > div {
+  margin-top: 32px;
+  overflow-x: auto;
+  border: 1px solid var(--las-input-border);
+  border-radius: 12px;
+  background: var(--las-white);
+}
+
+.las-comparison > div:nth-child(4) > div > ul {
+  min-width: 840px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each bullet is a row: factor | LAS | Selling */
+.las-comparison > div:nth-child(4) > div > ul > li {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) minmax(0, 1fr);
+  margin: 0;
+  border-bottom: 1px solid var(--las-input-border);
+}
+
+.las-comparison > div:nth-child(4) > div > ul > li:last-child {
+  border-bottom: 0;
+}
+
+/* Factor (the bold text) */
+.las-comparison > div:nth-child(4) > div > ul > li > strong {
+  padding: 16px 24px;
+  color: var(--las-ink);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+/* The two sub-bullets become the two cells of the row */
+.las-comparison > div:nth-child(4) > div > ul > li > ul {
+  display: contents;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.las-comparison > div:nth-child(4) > div > ul > li > ul > li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 16px 24px;
+  color: #20303f;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* The Loan Against Securities column is tinted */
+.las-comparison > div:nth-child(4) > div > ul > li > ul > li:nth-child(1) {
+  background: var(--las-peach);
+}
+
+/* Header row (the first bullet) */
+.las-comparison > div:nth-child(4) > div > ul > li:first-child {
+  background: var(--las-rose);
+}
+
+.las-comparison > div:nth-child(4) > div > ul > li:first-child > strong,
+.las-comparison > div:nth-child(4) > div > ul > li:first-child > ul > li:nth-child(2) {
+  color: #565656;
+  font-weight: 700;
+}
+
+.las-comparison > div:nth-child(4) > div > ul > li:first-child > ul > li:nth-child(1) {
+  background: var(--las-orange);
+  color: var(--las-white);
+  font-weight: 700;
+}
+
+/* Rows 3 to 9 get a small round tick (LAS) or cross (Selling) in front of the text */
+.las-comparison > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li::before {
+  content: "";
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: center / auto no-repeat;
+}
+
+.las-comparison > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(1)::before {
+  background-color: #e6f6ec;
+  background-image: url("icons/check.svg");
+}
+
+.las-comparison > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(2)::before {
+  background-color: var(--las-rose);
+  background-image: url("icons/cross.svg");
+}
+
+@media (width >= 900px) {
+  .las-comparison {
+    padding: 60px 0;
+  }
+
+  .las-comparison h2 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .las-comparison > div:nth-child(3) p,
+  .las-comparison > div:nth-child(3) > div:not(:has(p)) {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .las-comparison > div:nth-child(4) > div {
+    margin-top: 40px;
+  }
+}

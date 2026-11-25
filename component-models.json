@@ -5357,5 +5357,113 @@
         "description": "For example: Apply Now"
       }
     ]
+  },
+  {
+    "id": "las-calculator",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Small label above the heading",
+        "valueType": "string",
+        "description": "For example: PLAN BEFORE YOU APPLY"
+      },
+      {
+        "component": "richtext",
+        "name": "heading",
+        "label": "Heading",
+        "valueType": "string",
+        "description": "Use Heading 2"
+      },
+      {
+        "component": "richtext",
+        "name": "intro",
+        "label": "Intro text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "tab",
+        "label": "Tab 1 title",
+        "valueType": "string",
+        "description": "For example: Eligible loan limit"
+      },
+      {
+        "component": "richtext",
+        "name": "inputs",
+        "label": "Tab 1 inputs (securities)",
+        "valueType": "string",
+        "description": "One bulleted list, one bullet per type of security. In each bullet: the name in bold, then the LTV text with the percentage (for example LTV up to 80%), then the starting amount in italic (for example 10,00,000). The calculator reads the percentage from the LTV text, so keep it as a number followed by %."
+      },
+      {
+        "component": "richtext",
+        "name": "result",
+        "label": "Tab 1 result panel (sample figures)",
+        "valueType": "string",
+        "description": "In this order: 1) a paragraph with the label, e.g. Your estimated eligible limit. 2) a paragraph with the sample limit in bold. 3) one bulleted list: first bullet = total portfolio value, then one bullet per security in the same order as the inputs. In each bullet: the label in bold, then the sample amount in italic. 4) a short note paragraph. The calculator replaces the sample amounts with the real result; with JavaScript off, visitors see these sample figures."
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "Tab 1 button link",
+        "valueType": "string",
+        "description": "A page address, or a section on this page such as #check-your-eligible-limit (include the #)"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "Tab 1 button text",
+        "valueType": "string",
+        "description": "For example: Apply for this limit"
+      },
+      {
+        "component": "text",
+        "name": "tab2",
+        "label": "Tab 2 title",
+        "valueType": "string",
+        "description": "For example: Interest cost"
+      },
+      {
+        "component": "richtext",
+        "name": "inputs2",
+        "label": "Tab 2 inputs",
+        "valueType": "string",
+        "description": "One bulleted list with exactly three bullets, in this order: the amount, the number of days, the interest rate. In each bullet: the name in bold, then the starting value in italic (for example 5,00,000 then 30 then 9.75)."
+      },
+      {
+        "component": "richtext",
+        "name": "result2",
+        "label": "Tab 2 result panel (sample figures)",
+        "valueType": "string",
+        "description": "In this order: 1) a paragraph with the label, e.g. Total interest for the period. 2) a paragraph with the sample interest in bold. 3) one bulleted list with three bullets: interest per day, average interest per month, principal. In each bullet: the label in bold, then the sample value in italic (the principal line is plain text and stays as written). 4) a short note paragraph."
+      },
+      {
+        "component": "aem-content",
+        "name": "cta2",
+        "label": "Tab 2 button link",
+        "valueType": "string",
+        "description": "A page address, or a section on this page such as #check-your-eligible-limit (include the #)"
+      },
+      {
+        "component": "text",
+        "name": "ctaText2",
+        "label": "Tab 2 button text",
+        "valueType": "string",
+        "description": "For example: Apply Now"
+      },
+      {
+        "component": "richtext",
+        "name": "disclaimer",
+        "label": "Disclaimer",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "noScriptNote",
+        "label": "Note shown only when JavaScript is off",
+        "valueType": "string",
+        "description": "For example: Sample figures. Turn on JavaScript to enter your own amounts."
+      }
+    ]
   }
 ]

@@ -6,6 +6,9 @@
  * Each card is one rich-text cell: <h3>Title</h3> <ul><li>...</li></ul>
  * This CSS styles that raw markup, so the block works with JavaScript off.
  * A plain text field can arrive as bare text (no <p>) when JavaScript is off, so the label rule also matches the bare cell.
+ *
+ * Phones (the default here): everything stacked, the cards in the middle and the full-width button
+ * last (a visual reorder only). From 900px up: the button sits at the right of the heading row.
  */
 .las-eligibility {
   display: grid;
@@ -15,7 +18,7 @@
   width: calc(100% - 2 * var(--las-gutter));
   max-width: var(--las-max-width);
   margin: 0 auto;
-  padding: 40px 0;
+  padding: 50px 0;
   font-family: var(--las-font);
 }
 
@@ -33,8 +36,8 @@
 .las-eligibility > div:nth-child(1) > div:not(:has(p)) {
   margin: 0;
   color: var(--las-orange);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 18px;
   font-weight: 800;
   letter-spacing: 1.2px;
   text-transform: uppercase;
@@ -44,21 +47,30 @@
   margin: 0;
   color: #000;
   font-family: var(--las-font);
-  font-size: 26px;
-  line-height: 34px;
+  font-size: 24px;
+  line-height: 32px;
   font-weight: 800;
 }
 
-/* 3. Button (the authored link). The global .button look is reset, then drawn here */
+/* 3. Button (the authored link). On phones it comes after the cards. The global .button look is reset, then drawn here */
+.las-eligibility > div:nth-child(3) {
+  order: 1;
+}
+
+.las-eligibility > div:nth-child(3) > div {
+  flex: 1;
+}
+
 .las-eligibility > div:nth-child(3) p {
   margin: 0;
 }
 
 .las-eligibility > div:nth-child(3) a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  width: 100%;
   min-height: 48px;
   margin: 0;
   padding: 12px 32px;
@@ -67,8 +79,8 @@
   background: var(--las-orange);
   box-shadow: none;
   color: var(--las-white);
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 22px;
   font-weight: 700;
   text-decoration: none;
 }
@@ -78,12 +90,17 @@
   outline-offset: 2px;
 }
 
+/* The two cards are 16px apart on phones (the grid gap is 24px, so pull the second one up 8px) */
+.las-eligibility > div:nth-child(5) {
+  margin-top: -8px;
+}
+
 /* 4 and 5. The cards: the cell is the white card, stretched to the same height */
 .las-eligibility > div:nth-child(n+4) > div {
   flex: 1;
   box-sizing: border-box;
   min-width: 0;
-  padding: 24px 20px;
+  padding: 20px;
   border: 1px solid var(--las-border);
   border-radius: 16px;
   background: var(--las-white);
@@ -99,8 +116,8 @@
   margin: 0 0 8px;
   color: var(--las-ink);
   font-family: var(--las-font);
-  font-size: 22px;
-  line-height: 30px;
+  font-size: 20px;
+  line-height: 28px;
   font-weight: 800;
 }
 
@@ -132,11 +149,11 @@
   position: relative;
   box-sizing: border-box;
   margin: 0;
-  padding: 12px 0 12px 36px;
+  padding: 12px 0 12px 32px;
   border-bottom: 1px solid var(--las-input-border);
   color: var(--las-ink);
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 22px;
 }
 
 .las-eligibility li:last-child {
@@ -148,10 +165,10 @@
   position: absolute;
   top: 12px;
   left: 0;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: var(--las-rose) url("icons/check.svg") center / auto no-repeat;
+  background: var(--las-rose) url("icons/check.svg") center / 10px auto no-repeat;
 }
 
 .las-eligibility strong {
@@ -163,6 +180,24 @@
   .las-eligibility {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     padding: 60px 0;
+  }
+
+  .las-eligibility > div:nth-child(1) p,
+  .las-eligibility > div:nth-child(1) > div:not(:has(p)) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .las-eligibility li {
+    padding-left: 36px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .las-eligibility li::before {
+    width: 24px;
+    height: 24px;
+    background-size: auto;
   }
 
   .las-eligibility > div:nth-child(1),
@@ -182,7 +217,15 @@
   .las-eligibility > div:nth-child(3) {
     grid-column: 4;
     grid-row: 1 / 3;
+    order: 0;
     place-self: end;
+  }
+
+  .las-eligibility > div:nth-child(3) a {
+    display: inline-flex;
+    width: auto;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   /* The two cards share the third grid row (16px extra space above makes the gap 40px) */

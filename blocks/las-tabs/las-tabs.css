@@ -72,3 +72,16 @@ main > div:has(.las-tabs) {
     gap: 40px;
   }
 }
+
+/* Phones (under 600px): 14px tabs, 24px apart, as in the mobile design */
+@media (width < 600px) {
+  .las-tabs ul {
+    gap: 24px;
+  }
+
+  .las-tabs a {
+    padding: 14px 0 12px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

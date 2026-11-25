@@ -32,13 +32,10 @@
   min-width: 0;
 }
 
-/* The label sits close above the heading: pull it down to leave about 8px (grid gap is 32px) */
+/* 1. Small label, 2. heading. The label sits close above the heading: it is pulled down to leave
+   about 8px (the grid gap is 32px) */
 .las-rates > div:nth-child(1) {
   margin-bottom: -24px;
-}
-
-/* 1. Small label, 2. heading */
-.las-rates > div:nth-child(1) {
   color: var(--las-orange);
   font-size: 14px;
   line-height: 20px;
@@ -242,5 +239,113 @@
   .las-rates > div:nth-child(3) p:first-child strong {
     font-size: 56px;
     line-height: 64px;
+  }
+}
+
+/*
+ * Phones (under 600px): the smaller sizes from the mobile design. The banner has a 40px rate and a
+ * full-width button, and the tables use 14px text with fixed first-column widths (left table 141px,
+ * right table's charges column 117px). Wider screens keep the styles above.
+ */
+@media (width < 600px) {
+  .las-rates {
+    gap: 24px;
+    padding: 50px 0;
+  }
+
+  .las-rates > div:nth-child(1) {
+    margin-bottom: -16px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-rates h2 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  /* Banner */
+  .las-rates > div:nth-child(3) {
+    padding: 30px 20px;
+    background: #f26e24;
+  }
+
+  .las-rates > div:nth-child(3) p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .las-rates > div:nth-child(3) p:first-child {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .las-rates > div:nth-child(3) p:first-child strong {
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  .las-rates > div:nth-child(3) a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 32px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  /* Tables: 32px apart, smaller headings and notes */
+  .las-rates > div:nth-child(5) {
+    margin-top: 8px;
+  }
+
+  .las-rates h3 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .las-rates > div:nth-child(n + 4) p {
+    margin: -12px 0 16px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  /* Each row is a small grid so the second column starts in the same place on every row */
+  .las-rates li {
+    display: grid;
+    align-items: center;
+    column-gap: 28px;
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .las-rates > div:nth-child(4) li {
+    grid-template-columns: 113px minmax(0, 1fr);
+  }
+
+  .las-rates > div:nth-child(5) li {
+    grid-template-columns: minmax(0, 1fr) 89px;
+  }
+
+  .las-rates li em {
+    grid-column: 2;
+    justify-self: start;
+    line-height: 16px;
+  }
+
+  .las-rates li:has(> em:only-child) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-rates li:has(> em:only-child) em {
+    grid-column: 1 / -1;
+    line-height: 18px;
   }
 }

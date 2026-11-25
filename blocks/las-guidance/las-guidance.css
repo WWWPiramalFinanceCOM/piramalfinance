@@ -125,3 +125,51 @@ main > div:has(.las-guidance) {
     line-height: 32px;
   }
 }
+
+/*
+ * Phones (under 600px): the smaller sizes from the mobile design. 16px between the cards, 20px card
+ * padding, a 20px heading and 14px text, with a 20px check chip (left card) and a 24px alert chip.
+ */
+@media (width < 600px) {
+  .las-guidance {
+    gap: 16px;
+    padding: 50px 0;
+  }
+
+  .las-guidance > div > div {
+    padding: 20px;
+  }
+
+  .las-guidance > div > div > p:first-child {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .las-guidance h2 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .las-guidance li {
+    padding-left: 32px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .las-guidance li::before {
+    width: 20px;
+    height: 20px;
+    background-size: 10px auto;
+  }
+
+  /* The alert chip in the right card is 24px */
+  .las-guidance > div:nth-child(2) li {
+    padding-left: 36px;
+  }
+
+  .las-guidance > div:nth-child(2) li::before {
+    width: 24px;
+    height: 24px;
+    background-size: auto;
+  }
+}

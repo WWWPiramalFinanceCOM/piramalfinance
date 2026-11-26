@@ -231,14 +231,17 @@
     padding: 40px;
   }
 
-  .las-rates > div:nth-child(3) > div {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 40px;
-  }
-
   .las-rates > div:nth-child(3) p:first-child strong {
     font-size: 56px;
     line-height: 64px;
+  }
+}
+
+/* Below 1100px the banner stays stacked (rate, text, button) because the text column would be too narrow */
+@media (width >= 1100px) {
+  .las-rates > div:nth-child(3) > div {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 40px;
   }
 }
 

@@ -764,7 +764,6 @@ main > div:has(.las-calculator) {
   }
 
   .las-calculator-card {
-    grid-template-columns: minmax(0, 1fr) 500px;
     gap: 48px;
     align-items: start;
     padding: 40px;
@@ -858,7 +857,6 @@ main > div:has(.las-calculator) {
 
   /* "Interest cost": inputs on the left, the dark panel filling the right side */
   .las-calculator-card-interest {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     gap: 0;
     align-items: stretch;
     padding: 0;
@@ -890,5 +888,16 @@ main > div:has(.las-calculator) {
   .las-calculator-card-interest .las-calculator-panel > div:nth-child(1) p:nth-child(2) {
     font-size: 56px;
     line-height: 64px;
+  }
+}
+
+/* Side by side (inputs left, result right) only from 1200px; below that the result sits under the inputs */
+@media (width >= 1200px) {
+  .las-calculator-card {
+    grid-template-columns: minmax(0, 1fr) 500px;
+  }
+
+  .las-calculator-card-interest {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   }
 }

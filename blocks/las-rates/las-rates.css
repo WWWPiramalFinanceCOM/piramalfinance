@@ -5,7 +5,7 @@
  * Authored as 5 rows: 1 small label (plain text, no <p> around it), 2 heading, 3 banner, 4 left table, 5 right table.
  *  - Banner: paragraph 1 = <strong>9.75%*</strong> p.a. onwards, paragraph 2 = text, paragraph 3 = button link.
  *  - Each table: an H3, an optional note paragraph, then a bulleted list. Each bullet is one table row:
- *      first bullet                = column headings, e.g. <strong>Particulars</strong> Charges
+ *      first bullet                = column headings, both parts bold, e.g. <strong>Particulars</strong> <strong>Charges</strong>
  *      <strong>Label</strong> value = normal row
  *      <strong>Label</strong> <strong>value</strong> = highlighted row (value in bold orange)
  *      <strong>Label</strong> <em>Nil</em> = value shown as a green pill
@@ -155,15 +155,23 @@
   font-weight: 400;
 }
 
-/* First bullet = column headings */
+/* The first bullet has no line above it */
 .las-rates li:first-child {
   border-top: 0;
+}
+
+/*
+ * Column headings: the first bullet, when its label AND value are both bold, e.g.
+ * <strong>Particulars</strong> <strong>Charges</strong>. A first bullet with only the label in bold
+ * is a normal row, so deleting the heading row never turns another row into a heading.
+ */
+.las-rates li:first-child:has(> strong + strong) {
   background: var(--las-rose);
   color: #4d4d4d;
   font-weight: 700;
 }
 
-.las-rates li:first-child strong {
+.las-rates li:first-child:has(> strong + strong) strong {
   font-weight: 700;
 }
 
@@ -198,12 +206,16 @@
 /*
  * A highlighted row: the author makes the value bold as well as the label, e.g.
  * <strong>Interest rate</strong> <strong>9.75%* p.a. onwards</strong>. The highlight follows the row
- * wherever it is (and is not applied to any other row if this one is deleted).
+ * wherever it is (and is not applied to any other row if this one is deleted). The first bullet is the
+ * column headings, so a bold value there is not orange.
  */
 .las-rates li strong + strong {
   flex: 1 1 auto;
-  color: var(--las-orange);
   font-weight: 700;
+}
+
+.las-rates li:not(:first-child) strong + strong {
+  color: var(--las-orange);
 }
 
 @media (width >= 900px) {

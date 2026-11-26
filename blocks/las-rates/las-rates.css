@@ -7,6 +7,7 @@
  *  - Each table: an H3, an optional note paragraph, then a bulleted list. Each bullet is one table row:
  *      first bullet                = column headings, e.g. <strong>Particulars</strong> Charges
  *      <strong>Label</strong> value = normal row
+ *      <strong>Label</strong> <strong>value</strong> = highlighted row (value in bold orange)
  *      <strong>Label</strong> <em>Nil</em> = value shown as a green pill
  *      <em>Group title</em> only   = group heading row
  * This CSS styles those raw rows, so the block works with JavaScript off.
@@ -194,15 +195,15 @@
   line-height: inherit;
 }
 
-/* The interest rate row (first row after the headings in the left table) is orange */
-.las-rates > div:nth-child(4) li:nth-child(2) {
+/*
+ * A highlighted row: the author makes the value bold as well as the label, e.g.
+ * <strong>Interest rate</strong> <strong>9.75%* p.a. onwards</strong>. The highlight follows the row
+ * wherever it is (and is not applied to any other row if this one is deleted).
+ */
+.las-rates li strong + strong {
+  flex: 1 1 auto;
   color: var(--las-orange);
   font-weight: 700;
-}
-
-.las-rates > div:nth-child(4) li:nth-child(2) strong {
-  color: var(--las-ink);
-  font-weight: 400;
 }
 
 @media (width >= 900px) {

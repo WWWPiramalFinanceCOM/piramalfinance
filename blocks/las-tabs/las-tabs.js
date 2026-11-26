@@ -1,9 +1,25 @@
 /*
  * LAS in-page tabs.
  * The links already work without this script. The script only highlights the tab
- * of the section that is currently on screen.
+ * of the section that is currently on screen, and shares the height of the fixed site header.
  */
 export default function decorate(block) {
+  // The site header is fixed to the top of the screen, so sticky things (this bar, the FAQ card)
+  // and anchor jumps must start below it. Measure it and share its height as --las-header-height.
+  const header = document.querySelector('header');
+  const setHeaderHeight = () => {
+    const nav = document.querySelector('header .nav-wrapper') || header;
+    const height = nav ? nav.offsetHeight : 0;
+    document.documentElement.style.setProperty('--las-header-height', `${height}px`);
+  };
+  setHeaderHeight();
+  window.addEventListener('resize', setHeaderHeight);
+  window.addEventListener('load', setHeaderHeight);
+  // The header is added to the page by JavaScript a little later, so measure again when it appears
+  if (header) {
+    new MutationObserver(setHeaderHeight).observe(header, { childList: true, subtree: true });
+  }
+
   const links = [...block.querySelectorAll('a[href^="#"]')];
 
   // Pair each link with the heading it points to (skip links whose target is missing)

@@ -54,7 +54,7 @@ export default function decorate(block) {
     }
   };
 
-  if (!targets.length || !('IntersectionObserver' in window)) return;
+  if (!targets.length) return;
 
   const setActive = (activeLink) => {
     links.forEach((link) => link.classList.toggle('is-active', link === activeLink));
@@ -62,14 +62,36 @@ export default function decorate(block) {
   };
   setActive(links[0]);
 
-  // A section counts as "current" while its heading is in the top part of the screen
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setActive(targets.find((item) => item.target === entry.target).link);
+  // The current section is the one whose heading is nearest above a line a little under the sticky
+  // bars (the FAQ heading sits lower, inside its sticky card). At the very bottom of the page the
+  // last section is current, because the final sections cannot scroll up to the line. This works
+  // however many tabs there are and in any order.
+  const section = block.closest('main > div') || block;
+  let waiting = false;
+  const updateActive = () => {
+    waiting = false;
+    const line = section.getBoundingClientRect().bottom + 140;
+    const tops = targets.map((item) => item.target.getBoundingClientRect().top);
+    let current = 0;
+    let bestTop = -Infinity;
+    tops.forEach((top, index) => {
+      if (top <= line && top > bestTop) {
+        bestTop = top;
+        current = index;
       }
     });
-  }, { rootMargin: '-20% 0px -70% 0px' });
+    const pageEnd = document.documentElement.scrollHeight - 4;
+    const atBottom = window.innerHeight + window.scrollY >= pageEnd;
+    if (atBottom) current = tops.indexOf(Math.max(...tops));
+    setActive(targets[current].link);
+  };
+  const onScroll = () => {
+    if (waiting) return;
+    waiting = true;
+    window.requestAnimationFrame(updateActive);
+  };
 
-  targets.forEach((item) => observer.observe(item.target));
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  updateActive();
 }

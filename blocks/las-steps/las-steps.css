@@ -164,7 +164,7 @@ main > div:has(.las-steps) {
   outline-offset: 2px;
 }
 
-/* Tablets: a grid of centred steps, no connecting line */
+/* Tablets: rows of 4 steps (the last row centred), with a thin line through the circles of each row */
 @media (width >= 768px) {
   .las-steps {
     padding: 40px 0;
@@ -198,17 +198,28 @@ main > div:has(.las-steps) {
   }
 
   .las-steps ul {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 32px 16px;
     margin-top: 32px;
   }
 
+  /* From the middle of this circle to the middle of the next one (the last step of a row has no line) */
   .las-steps li:not(:last-child)::after {
+    top: 27px;
+    bottom: auto;
+    left: 50%;
+    width: calc(100% + 16px);
+    height: 2px;
+  }
+
+  .las-steps li:nth-child(4n)::after {
     display: none;
   }
 
   .las-steps li {
+    flex: 0 0 calc((100% - 3 * 16px) / 4);
     margin: 0;
     padding: 68px 0 0;
     font-size: 14px;
@@ -250,8 +261,13 @@ main > div:has(.las-steps) {
   }
 
   .las-steps ul {
+    display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     margin-top: 40px;
+  }
+
+  .las-steps li:not(:last-child)::after {
+    display: none;
   }
 
   /* From the middle of the first circle to the middle of the last one */

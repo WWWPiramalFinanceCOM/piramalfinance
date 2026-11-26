@@ -193,6 +193,7 @@ main > div:has(.las-calculator) {
   flex: 1;
   align-items: center;
   gap: 8px;
+  margin: 0; /* the site's button rule adds 16px above and below, which left a gap above the card */
   padding: 16px 12px;
   border: 0;
   border-radius: 16px 16px 0 0;

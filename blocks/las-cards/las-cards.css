@@ -116,6 +116,7 @@ main > div:has(.las-cards) {
 
 .las-cards li a::after {
   content: "";
+  flex: 0 0 18px; /* keep the arrow its size when the link text wraps */
   width: 18px;
   height: 18px;
   background: url("icons/arrow-right.svg") center / 13px no-repeat;

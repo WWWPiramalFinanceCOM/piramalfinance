@@ -82,7 +82,7 @@
   content: "";
   width: 14px;
   height: 14px;
-  background: url("icons/chevron.svg") center / 14px no-repeat;
+  background: url("icons/chevron.svg") center / 5px 8.5px no-repeat; /* real size, not stretched */
 }
 
 .las-hero > div:nth-child(1) a {

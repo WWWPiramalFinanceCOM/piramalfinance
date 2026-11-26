@@ -81,3 +81,8 @@
 h2[id] {
   scroll-margin-top: calc(var(--las-header-height) + 72px);
 }
+
+/* The site's a.button rule sets its own font on link buttons; LAS buttons keep the LAS font */
+[class^="las-"] a.button:any-link {
+  font-family: var(--las-font);
+}

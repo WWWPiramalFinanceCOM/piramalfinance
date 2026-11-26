@@ -28,10 +28,37 @@ export default function decorate(block) {
     .filter((item) => item.target);
 
   block.classList.add('las-tabs-ready');
+
+  // With many tabs the bar scrolls sideways. A soft fade on the edge shows there is more to see
+  const bar = block.querySelector('ul');
+  const updateFade = () => {
+    if (!bar) return;
+    block.classList.toggle('las-tabs-more-left', bar.scrollLeft > 2);
+    block.classList.toggle('las-tabs-more-right', bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 2);
+  };
+  if (bar) {
+    bar.addEventListener('scroll', updateFade, { passive: true });
+    window.addEventListener('resize', updateFade);
+    updateFade();
+  }
+
+  // Scroll the bar (not the page) so the active tab is always visible
+  const showTab = (link) => {
+    const item = link.closest('li');
+    if (!bar || !item) return;
+    const pad = 24;
+    if (item.offsetLeft < bar.scrollLeft + pad) {
+      bar.scrollTo({ left: item.offsetLeft - pad, behavior: 'smooth' });
+    } else if (item.offsetLeft + item.offsetWidth > bar.scrollLeft + bar.clientWidth - pad) {
+      bar.scrollTo({ left: item.offsetLeft + item.offsetWidth - bar.clientWidth + pad, behavior: 'smooth' });
+    }
+  };
+
   if (!targets.length || !('IntersectionObserver' in window)) return;
 
   const setActive = (activeLink) => {
     links.forEach((link) => link.classList.toggle('is-active', link === activeLink));
+    if (activeLink) showTab(activeLink);
   };
   setActive(links[0]);
 

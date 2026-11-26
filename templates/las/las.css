@@ -75,6 +75,9 @@
  */
 [class^="las-"] :is(div, p, ul, ol, li, span, a, strong, em, b, i, summary, details, h1, h2, h3, h4) {
   font-family: var(--las-font);
+
+  /* Long words or web addresses wrap instead of running off the screen */
+  overflow-wrap: anywhere;
 }
 
 /* Headings that the in-page tabs jump to should not hide behind the sticky tab bar */
@@ -85,4 +88,19 @@ h2[id] {
 /* The site's a.button rule sets its own font on link buttons; LAS buttons keep the LAS font */
 [class^="las-"] a.button:any-link {
   font-family: var(--las-font);
+}
+
+/* The site's a.button and button rules keep the text on one line; LAS buttons and tabs wrap when the text is long */
+[class^="las-"] a.button:any-link,
+[class^="las-"] button {
+  white-space: normal;
+}
+
+/*
+ * Icon tokens. An author can start a bullet with :name: (for example :rate:). The page HTML then holds
+ * <span class="icon icon-rate"></span>. The span itself is hidden; each block uses the name to pick the
+ * round icon, so the icon stays with its bullet when bullets are moved, added or deleted.
+ */
+[class^="las-"] .icon {
+  display: none;
 }

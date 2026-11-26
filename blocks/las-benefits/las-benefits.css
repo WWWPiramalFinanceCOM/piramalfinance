@@ -100,29 +100,49 @@
   background: var(--las-rose) center / auto no-repeat;
 }
 
-.las-benefits li:nth-child(1)::before { background-image: url("icons/loans.svg"); }
-.las-benefits li:nth-child(2)::before { background-image: url("icons/rate.svg"); }
-.las-benefits li:nth-child(3)::before { background-image: url("icons/pie.svg"); }
-.las-benefits li:nth-child(4)::before { background-image: url("icons/overdraft.svg"); }
-.las-benefits li:nth-child(5)::before { background-image: url("icons/zap.svg"); }
-.las-benefits li:nth-child(6)::before { background-image: url("icons/invested.svg"); }
-.las-benefits li:nth-child(7)::before { background-image: url("icons/tax.svg"); }
-.las-benefits li:nth-child(8)::before { background-image: url("icons/prepay.svg"); }
-.las-benefits li:nth-child(9)::before { background-image: url("icons/repeat.svg"); }
-.las-benefits li:nth-child(10)::before { background-image: url("icons/user.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(1)::before { background-image: url("icons/loans.svg"); }
+.las-benefits li:has(.icon-loans)::before { background-image: url("icons/loans.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(2)::before { background-image: url("icons/rate.svg"); }
+.las-benefits li:has(.icon-rate)::before { background-image: url("icons/rate.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(3)::before { background-image: url("icons/pie.svg"); }
+.las-benefits li:has(.icon-pie)::before { background-image: url("icons/pie.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(4)::before { background-image: url("icons/overdraft.svg"); }
+.las-benefits li:has(.icon-overdraft)::before { background-image: url("icons/overdraft.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(5)::before { background-image: url("icons/zap.svg"); }
+.las-benefits li:has(.icon-zap)::before { background-image: url("icons/zap.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(6)::before { background-image: url("icons/invested.svg"); }
+.las-benefits li:has(.icon-invested)::before { background-image: url("icons/invested.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(7)::before { background-image: url("icons/tax.svg"); }
+.las-benefits li:has(.icon-tax)::before { background-image: url("icons/tax.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(8)::before { background-image: url("icons/prepay.svg"); }
+.las-benefits li:has(.icon-prepay)::before { background-image: url("icons/prepay.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(9)::before { background-image: url("icons/repeat.svg"); }
+.las-benefits li:has(.icon-repeat)::before { background-image: url("icons/repeat.svg"); }
+.las-benefits:not(:has(.icon)) li:nth-child(10)::before { background-image: url("icons/user.svg"); }
+.las-benefits li:has(.icon-user)::before { background-image: url("icons/user.svg"); }
 
 /* On phones the icons are drawn smaller (about 70% of their size) to fit the 36px chip */
 @media (width < 640px) {
-  .las-benefits li:nth-child(1)::before { background-size: 18px auto; }
-  .las-benefits li:nth-child(2)::before { background-size: 18px auto; }
-  .las-benefits li:nth-child(3)::before { background-size: 16px auto; }
-  .las-benefits li:nth-child(4)::before { background-size: 19px auto; }
-  .las-benefits li:nth-child(5)::before { background-size: 15px auto; }
-  .las-benefits li:nth-child(6)::before { background-size: 19px auto; }
-  .las-benefits li:nth-child(7)::before { background-size: 18px auto; }
-  .las-benefits li:nth-child(8)::before { background-size: 18px auto; }
-  .las-benefits li:nth-child(9)::before { background-size: 15px auto; }
-  .las-benefits li:nth-child(10)::before { background-size: 13px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(1)::before { background-size: 18px auto; }
+  .las-benefits li:has(.icon-loans)::before { background-size: 18px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(2)::before { background-size: 18px auto; }
+  .las-benefits li:has(.icon-rate)::before { background-size: 18px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(3)::before { background-size: 16px auto; }
+  .las-benefits li:has(.icon-pie)::before { background-size: 16px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(4)::before { background-size: 19px auto; }
+  .las-benefits li:has(.icon-overdraft)::before { background-size: 19px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(5)::before { background-size: 15px auto; }
+  .las-benefits li:has(.icon-zap)::before { background-size: 15px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(6)::before { background-size: 19px auto; }
+  .las-benefits li:has(.icon-invested)::before { background-size: 19px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(7)::before { background-size: 18px auto; }
+  .las-benefits li:has(.icon-tax)::before { background-size: 18px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(8)::before { background-size: 18px auto; }
+  .las-benefits li:has(.icon-prepay)::before { background-size: 18px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(9)::before { background-size: 15px auto; }
+  .las-benefits li:has(.icon-repeat)::before { background-size: 15px auto; }
+  .las-benefits:not(:has(.icon)) li:nth-child(10)::before { background-size: 13px auto; }
+  .las-benefits li:has(.icon-user)::before { background-size: 13px auto; }
 }
 
 /* From 640px: cards with the icon on top, two columns */

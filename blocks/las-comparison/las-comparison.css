@@ -141,8 +141,13 @@
   color: var(--las-white);
 }
 
-/* Rows 3 to 9 get a small round tick (LAS) or cross (Selling) in front of the text */
-.las-comparison > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li::before {
+/*
+ * A small round tick (Loan Against Securities) or cross (Selling) in front of an answer.
+ * The author starts the answer with :check: or :cross: so the mark stays with its answer when rows are
+ * added, moved or deleted. Content that has no marks at all keeps the old look: marks on rows 3 to 9.
+ */
+.las-comparison:not(:has(.icon)) > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li::before,
+.las-comparison > div:nth-child(4) > div > ul > li > ul > li:is(:has(.icon-check), :has(.icon-cross))::before {
   content: "";
   flex: 0 0 20px;
   width: 20px;
@@ -151,12 +156,14 @@
   background: center / auto no-repeat;
 }
 
-.las-comparison > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(1)::before {
+.las-comparison:not(:has(.icon)) > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(1)::before,
+.las-comparison > div:nth-child(4) > div > ul > li > ul > li:has(.icon-check)::before {
   background-color: #e6f6ec;
   background-image: url("icons/check.svg");
 }
 
-.las-comparison > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(2)::before {
+.las-comparison:not(:has(.icon)) > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(2)::before,
+.las-comparison > div:nth-child(4) > div > ul > li > ul > li:has(.icon-cross)::before {
   background-color: var(--las-rose);
   background-image: url("icons/cross.svg");
 }

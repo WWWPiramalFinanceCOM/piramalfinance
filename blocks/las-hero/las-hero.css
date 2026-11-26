@@ -172,10 +172,14 @@
   background: var(--las-rose) center / 18px no-repeat;
 }
 
-.las-hero > div:nth-child(5) li:nth-child(1)::before { background-image: url("icons/percent.svg"); }
-.las-hero > div:nth-child(5) li:nth-child(2)::before { background-image: url("icons/pie.svg"); }
-.las-hero > div:nth-child(5) li:nth-child(3)::before { background-image: url("icons/bolt.svg"); }
-.las-hero > div:nth-child(5) li:nth-child(4)::before { background-image: url("icons/rupee.svg"); }
+.las-hero:not(:has(.icon)) > div:nth-child(5) li:nth-child(1)::before { background-image: url("icons/percent.svg"); }
+.las-hero > div:nth-child(5) li:has(.icon-percent)::before { background-image: url("icons/percent.svg"); }
+.las-hero:not(:has(.icon)) > div:nth-child(5) li:nth-child(2)::before { background-image: url("icons/pie.svg"); }
+.las-hero > div:nth-child(5) li:has(.icon-pie)::before { background-image: url("icons/pie.svg"); }
+.las-hero:not(:has(.icon)) > div:nth-child(5) li:nth-child(3)::before { background-image: url("icons/bolt.svg"); }
+.las-hero > div:nth-child(5) li:has(.icon-bolt)::before { background-image: url("icons/bolt.svg"); }
+.las-hero:not(:has(.icon)) > div:nth-child(5) li:nth-child(4)::before { background-image: url("icons/rupee.svg"); }
+.las-hero > div:nth-child(5) li:has(.icon-rupee)::before { background-image: url("icons/rupee.svg"); }
 
 /* 6. Primary button, 7. secondary link */
 .las-hero > div:nth-child(6) a {

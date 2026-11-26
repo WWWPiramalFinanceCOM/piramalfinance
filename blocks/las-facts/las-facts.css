@@ -101,14 +101,22 @@
   background: var(--las-rose) center / 18px no-repeat;
 }
 
-.las-facts li:nth-child(1)::before { background-image: url("icons/percent.svg"); }
-.las-facts li:nth-child(2)::before { background-image: url("icons/layers.svg"); }
-.las-facts li:nth-child(3)::before { background-image: url("icons/document.svg"); }
-.las-facts li:nth-child(4)::before { background-image: url("icons/ban.svg"); }
-.las-facts li:nth-child(5)::before { background-image: url("icons/rupee.svg"); }
-.las-facts li:nth-child(6)::before { background-image: url("icons/bolt.svg"); }
-.las-facts li:nth-child(7)::before { background-image: url("icons/calendar.svg"); }
-.las-facts li:nth-child(8)::before { background-image: url("icons/person.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(1)::before { background-image: url("icons/percent.svg"); }
+.las-facts li:has(.icon-percent)::before { background-image: url("icons/percent.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(2)::before { background-image: url("icons/layers.svg"); }
+.las-facts li:has(.icon-layers)::before { background-image: url("icons/layers.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(3)::before { background-image: url("icons/document.svg"); }
+.las-facts li:has(.icon-document)::before { background-image: url("icons/document.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(4)::before { background-image: url("icons/ban.svg"); }
+.las-facts li:has(.icon-ban)::before { background-image: url("icons/ban.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(5)::before { background-image: url("icons/rupee.svg"); }
+.las-facts li:has(.icon-rupee)::before { background-image: url("icons/rupee.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(6)::before { background-image: url("icons/bolt.svg"); }
+.las-facts li:has(.icon-bolt)::before { background-image: url("icons/bolt.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(7)::before { background-image: url("icons/calendar.svg"); }
+.las-facts li:has(.icon-calendar)::before { background-image: url("icons/calendar.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(8)::before { background-image: url("icons/person.svg"); }
+.las-facts li:has(.icon-person)::before { background-image: url("icons/person.svg"); }
 
 @media (width >= 900px) {
   .las-facts {

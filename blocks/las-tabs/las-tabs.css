@@ -30,6 +30,20 @@ main > div:has(.las-tabs) {
   list-style: none;
   overflow-x: auto;
   scrollbar-width: none;
+  position: relative;
+}
+
+/* When the bar scrolls sideways, fade the edge that has more tabs behind it */
+.las-tabs-more-right ul {
+  mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+}
+
+.las-tabs-more-left ul {
+  mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent);
+}
+
+.las-tabs-more-left.las-tabs-more-right ul {
+  mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent);
 }
 
 .las-tabs li {

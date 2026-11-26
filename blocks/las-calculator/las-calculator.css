@@ -902,3 +902,13 @@ main > div:has(.las-calculator) {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   }
 }
+
+/*
+ * Phones: each tab is as wide as its title needs (they only share the space when both fit), so a normal
+ * title stays on one line. A title that is too long for the screen wraps instead of running off it.
+ */
+@media (width < 600px) {
+  .las-calculator-tab {
+    flex: 1 1 auto;
+  }
+}

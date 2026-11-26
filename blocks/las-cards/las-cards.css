@@ -90,9 +90,12 @@ main > div:has(.las-cards) {
   background: var(--las-rose) center / 28px no-repeat;
 }
 
-.las-cards li:nth-child(1)::before { background-image: url("icons/trend.svg"); }
-.las-cards li:nth-child(2)::before { background-image: url("icons/layers.svg"); }
-.las-cards li:nth-child(3)::before { background-image: url("icons/banknote.svg"); }
+.las-cards:not(:has(.icon)) li:nth-child(1)::before { background-image: url("icons/trend.svg"); }
+.las-cards li:has(.icon-trend)::before { background-image: url("icons/trend.svg"); }
+.las-cards:not(:has(.icon)) li:nth-child(2)::before { background-image: url("icons/layers.svg"); }
+.las-cards li:has(.icon-layers)::before { background-image: url("icons/layers.svg"); }
+.las-cards:not(:has(.icon)) li:nth-child(3)::before { background-image: url("icons/banknote.svg"); }
+.las-cards li:has(.icon-banknote)::before { background-image: url("icons/banknote.svg"); }
 
 /* Card title */
 .las-cards li strong {
@@ -200,7 +203,10 @@ main > div:has(.las-cards) {
   }
 
   /* The icons are drawn about 80% of their size to fit the 44px chip */
-  .las-cards li:nth-child(1)::before { background-size: 22px auto; }
-  .las-cards li:nth-child(2)::before { background-size: 22px auto; }
-  .las-cards li:nth-child(3)::before { background-size: 20px auto; }
+  .las-cards:not(:has(.icon)) li:nth-child(1)::before { background-size: 22px auto; }
+  .las-cards li:has(.icon-trend)::before { background-size: 22px auto; }
+  .las-cards:not(:has(.icon)) li:nth-child(2)::before { background-size: 22px auto; }
+  .las-cards li:has(.icon-layers)::before { background-size: 22px auto; }
+  .las-cards:not(:has(.icon)) li:nth-child(3)::before { background-size: 20px auto; }
+  .las-cards li:has(.icon-banknote)::before { background-size: 20px auto; }
 }

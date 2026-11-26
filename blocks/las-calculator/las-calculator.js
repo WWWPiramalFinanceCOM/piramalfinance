@@ -318,11 +318,18 @@ export default function decorate(block) {
   const groups = [rows.slice(3, 7), rows.slice(7, 11)];
   const built = [setupEligibility(groups[0]), setupInterest(groups[1])];
 
-  // Only tabs that could be built become tabs; the other one stays as plain text
+  // Only tabs that could be built become tabs. The rows of a tab that could not be built (for
+  // example its result was left empty) are hidden, so no unstyled leftovers show on the page
   const tabs = built
     .map((card, index) => ({ card, titleRow: groups[index][0] }))
     .filter(({ card }) => card);
   if (!tabs.length) return;
+  groups.forEach((group, index) => {
+    if (built[index]) return;
+    group.forEach((row) => {
+      row.hidden = true;
+    });
+  });
 
   const titles = tabs.map(({ titleRow }) => titleRow.textContent.trim());
   const tablist = buildTabs(block, titles, tabs.map(({ card }) => card));

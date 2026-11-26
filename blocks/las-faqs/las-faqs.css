@@ -34,24 +34,41 @@ main > div:has(.las-faqs) {
 }
 
 /* ---- Rows 1 to 4: drawn together as one blue card ---- */
-.las-faqs > div:nth-child(-n+4) {
+.las-faqs:not(.las-faqs-ready) > div:nth-child(-n+4) {
   padding: 0 20px;
   background: var(--las-faqs-blue);
+
+  /* The blue runs 1px under each row, so no hairline of the page colour shows between the rows */
+  box-shadow: 0 1px 0 0 var(--las-faqs-blue);
 }
 
-.las-faqs > div:nth-child(1) {
+.las-faqs:not(.las-faqs-ready) > div:nth-child(4) {
+  box-shadow: none;
+}
+
+/* JavaScript on: the four rows sit in one wrapper that draws the blue card (one box, so no seams) */
+.las-faqs-card {
+  background: var(--las-faqs-blue);
+  border-radius: 16px;
+}
+
+.las-faqs-card > div {
+  padding: 0 20px;
+}
+
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) {
   padding-top: 32px;
   border-radius: 16px 16px 0 0;
 }
 
-.las-faqs > div:nth-child(4) {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) {
   padding-bottom: 32px;
   border-radius: 0 0 16px 16px;
 }
 
 /* 1. Small label */
-.las-faqs > div:nth-child(1) p,
-.las-faqs > div:nth-child(1) > div:not(:has(p)) {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) p,
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) > div:not(:has(p)) {
   margin: 0 0 12px;
   color: #afb9c3;
   font-size: 14px;
@@ -62,7 +79,7 @@ main > div:has(.las-faqs) {
 }
 
 /* 2. Heading */
-.las-faqs > div:nth-child(2) h2 {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(2) h2 {
   margin: 0 0 12px;
   color: var(--las-white);
   font-family: var(--las-font);
@@ -72,8 +89,8 @@ main > div:has(.las-faqs) {
 }
 
 /* 3. Intro line */
-.las-faqs > div:nth-child(3) p,
-.las-faqs > div:nth-child(3) > div:not(:has(p)) {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) p,
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) > div:not(:has(p)) {
   margin: 0 0 32px;
   color: var(--las-border);
   font-size: 16px;
@@ -81,11 +98,11 @@ main > div:has(.las-faqs) {
 }
 
 /* 4. Button (the authored link). The global .button look is reset, then drawn here */
-.las-faqs > div:nth-child(4) p {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) p {
   margin: 0;
 }
 
-.las-faqs > div:nth-child(4) a {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,13 +122,13 @@ main > div:has(.las-faqs) {
   text-decoration: none;
 }
 
-.las-faqs > div:nth-child(4) a:focus-visible {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) a:focus-visible {
   outline: 2px solid var(--las-white);
   outline-offset: 2px;
 }
 
 /* ---- Row 5: the questions and answers ---- */
-.las-faqs > div:nth-child(5) {
+.las-faqs > div:last-child {
   margin-top: 40px;
 }
 
@@ -212,27 +229,36 @@ main > div:has(.las-faqs) {
     padding: 60px 0;
   }
 
-  .las-faqs > div:nth-child(-n+4) {
+  .las-faqs:not(.las-faqs-ready) > div:nth-child(-n+4) {
     grid-column: 1;
   }
 
+  /* As in the design, the blue card stays in view while the questions scroll past it */
+  .las-faqs-card {
+    grid-column: 1;
+    grid-row: 1 / 5;
+    align-self: start;
+    position: sticky;
+    top: calc(var(--las-header-height) + 88px);
+  }
+
   /* The card ends at the button, even when the list on the right is taller */
-  .las-faqs > div:nth-child(4) {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) {
     align-self: start;
   }
 
-  .las-faqs > div:nth-child(2) h2 {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(2) h2 {
     font-size: 32px;
     line-height: 40px;
   }
 
-  .las-faqs > div:nth-child(3) p,
-  .las-faqs > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) p,
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) > div:not(:has(p)) {
     font-size: 20px;
     line-height: 28px;
   }
 
-  .las-faqs > div:nth-child(5) {
+  .las-faqs > div:last-child {
     grid-column: 2;
     grid-row: 1 / 5;
     margin-top: 0;
@@ -254,37 +280,37 @@ main > div:has(.las-faqs) {
     padding: 50px 0;
   }
 
-  .las-faqs > div:nth-child(1) {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) {
     padding-top: 20px;
   }
 
-  .las-faqs > div:nth-child(1) p,
-  .las-faqs > div:nth-child(1) > div:not(:has(p)) {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) p,
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) > div:not(:has(p)) {
     font-size: 12px;
     line-height: 18px;
   }
 
-  .las-faqs > div:nth-child(2) h2 {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(2) h2 {
     font-size: 24px;
     line-height: 32px;
   }
 
-  .las-faqs > div:nth-child(3) p,
-  .las-faqs > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) p,
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) > div:not(:has(p)) {
     margin-bottom: 24px;
     line-height: 24px;
   }
 
-  .las-faqs > div:nth-child(4) {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) {
     padding-bottom: 20px;
   }
 
-  .las-faqs > div:nth-child(4) a {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) a {
     font-size: 14px;
     line-height: 22px;
   }
 
-  .las-faqs > div:nth-child(5) {
+  .las-faqs > div:last-child {
     margin-top: 24px;
   }
 

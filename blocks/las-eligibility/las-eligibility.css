@@ -9,6 +9,9 @@
  *
  * Phones (the default here): everything stacked, the cards in the middle and the full-width button
  * last (a visual reorder only). From 900px up: the button sits at the right of the heading row.
+ * Rows are recognised by what they hold, not by row numbers (see las-eligibility.js), so removing one
+ * row does not restyle the others. An author can start a card heading with :user: or :file: so its icon
+ * follows the card.
  */
 .las-eligibility {
   display: grid;
@@ -28,12 +31,12 @@
 }
 
 /* 1. Small label, 2. heading. Rows are tight together, the grid gap is added back with a negative margin */
-.las-eligibility > div:nth-child(1) {
+:is(.las-eligibility:not(.las-eligibility-ready) > div:first-child:not(:has(h2, p, a, ul, h3)), .las-eligibility > .las-eligibility-label) {
   margin-bottom: -16px;
 }
 
-.las-eligibility > div:nth-child(1) p,
-.las-eligibility > div:nth-child(1) > div:not(:has(p)) {
+:is(.las-eligibility:not(.las-eligibility-ready) > div:first-child:not(:has(h2, p, a, ul, h3)), .las-eligibility > .las-eligibility-label) p,
+:is(.las-eligibility:not(.las-eligibility-ready) > div:first-child:not(:has(h2, p, a, ul, h3)), .las-eligibility > .las-eligibility-label) > div:not(:has(p)) {
   margin: 0;
   color: var(--las-orange);
   font-size: 12px;
@@ -53,19 +56,19 @@
 }
 
 /* 3. Button (the authored link). On phones it comes after the cards. The global .button look is reset, then drawn here */
-.las-eligibility > div:nth-child(3) {
+.las-eligibility > div:has(a):not(:has(h2, h3, ul)) {
   order: 1;
 }
 
-.las-eligibility > div:nth-child(3) > div {
+.las-eligibility > div:has(a):not(:has(h2, h3, ul)) > div {
   flex: 1;
 }
 
-.las-eligibility > div:nth-child(3) p {
+.las-eligibility > div:has(a):not(:has(h2, h3, ul)) p {
   margin: 0;
 }
 
-.las-eligibility > div:nth-child(3) a {
+.las-eligibility.las-eligibility > div:has(a):not(:has(h2, h3, ul)) a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,18 +88,18 @@
   text-decoration: none;
 }
 
-.las-eligibility > div:nth-child(3) a:focus-visible {
+.las-eligibility.las-eligibility > div:has(a):not(:has(h2, h3, ul)) a:focus-visible {
   outline: 2px solid var(--las-ink);
   outline-offset: 2px;
 }
 
 /* The two cards are 16px apart on phones (the grid gap is 24px, so pull the second one up 8px) */
-.las-eligibility > div:nth-child(5) {
+.las-eligibility > div:has(h3) ~ div:has(h3) {
   margin-top: -8px;
 }
 
 /* 4 and 5. The cards: the cell is the white card, stretched to the same height */
-.las-eligibility > div:nth-child(n+4) > div {
+.las-eligibility > div:has(h3) > div {
   flex: 1;
   box-sizing: border-box;
   min-width: 0;
@@ -130,11 +133,13 @@
   background: var(--las-rose) center / auto no-repeat;
 }
 
-.las-eligibility > div:nth-child(4) h3::before {
+.las-eligibility:not(:has(.icon)) > div:has(h3):not(div:has(h3) ~ div) h3::before,
+.las-eligibility h3:has(.icon-user)::before {
   background-image: url("icons/user.svg");
 }
 
-.las-eligibility > div:nth-child(5) h3::before {
+.las-eligibility:not(:has(.icon)) > div:has(h3) ~ div:has(h3) h3::before,
+.las-eligibility h3:has(.icon-file)::before {
   background-image: url("icons/file.svg");
 }
 
@@ -182,8 +187,8 @@
     padding: 60px 0;
   }
 
-  .las-eligibility > div:nth-child(1) p,
-  .las-eligibility > div:nth-child(1) > div:not(:has(p)) {
+  :is(.las-eligibility:not(.las-eligibility-ready) > div:first-child:not(:has(h2, p, a, ul, h3)), .las-eligibility > .las-eligibility-label) p,
+  :is(.las-eligibility:not(.las-eligibility-ready) > div:first-child:not(:has(h2, p, a, ul, h3)), .las-eligibility > .las-eligibility-label) > div:not(:has(p)) {
     font-size: 14px;
     line-height: 20px;
   }
@@ -200,28 +205,28 @@
     background-size: auto;
   }
 
-  .las-eligibility > div:nth-child(1),
-  .las-eligibility > div:nth-child(2) {
+  :is(.las-eligibility:not(.las-eligibility-ready) > div:first-child:not(:has(h2, p, a, ul, h3)), .las-eligibility > .las-eligibility-label),
+  .las-eligibility > div:has(h2) {
     grid-column: 1 / 4;
   }
 
-  .las-eligibility > div:nth-child(1) {
+  :is(.las-eligibility:not(.las-eligibility-ready) > div:first-child:not(:has(h2, p, a, ul, h3)), .las-eligibility > .las-eligibility-label) {
     grid-row: 1;
   }
 
-  .las-eligibility > div:nth-child(2) {
+  .las-eligibility > div:has(h2) {
     grid-row: 2;
   }
 
   /* Button on the right of the heading row, level with the bottom of the heading */
-  .las-eligibility > div:nth-child(3) {
+  .las-eligibility > div:has(a):not(:has(h2, h3, ul)) {
     grid-column: 4;
     grid-row: 1 / 3;
     order: 0;
     place-self: end;
   }
 
-  .las-eligibility > div:nth-child(3) a {
+  .las-eligibility.las-eligibility > div:has(a):not(:has(h2, h3, ul)) a {
     display: inline-flex;
     width: auto;
     font-size: 16px;
@@ -229,13 +234,13 @@
   }
 
   /* The two cards share the third grid row (16px extra space above makes the gap 40px) */
-  .las-eligibility > div:nth-child(4) {
+  .las-eligibility > div:has(h3):not(div:has(h3) ~ div) {
     grid-column: 1 / 3;
     grid-row: 3;
     margin-top: 16px;
   }
 
-  .las-eligibility > div:nth-child(5) {
+  .las-eligibility > div:has(h3) ~ div:has(h3) {
     grid-column: 3 / 5;
     grid-row: 3;
     margin-top: 16px;
@@ -246,7 +251,7 @@
     line-height: 40px;
   }
 
-  .las-eligibility > div:nth-child(n+4) > div {
+  .las-eligibility > div:has(h3) > div {
     padding: 32px;
   }
 

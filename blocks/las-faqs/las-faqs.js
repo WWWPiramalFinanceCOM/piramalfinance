@@ -8,7 +8,8 @@
  */
 export default function decorate(block) {
   const rows = [...block.children];
-  const cell = rows[4]?.firstElementChild; // row 5 holds the questions and answers
+  const faqRow = rows.find((row) => row.querySelector('h3')); // the row that holds the questions
+  const cell = faqRow?.firstElementChild;
   if (!cell) return;
 
   const items = [];
@@ -32,11 +33,19 @@ export default function decorate(block) {
   items[0].open = true;
   cell.replaceChildren(...items);
 
-  // Put the 4 heading rows (label, heading, intro, button) in one box, so CSS can draw them as one
-  // blue card and keep it in view (sticky) while the questions scroll, as in the design
+  // Put the heading rows (label, heading, intro, button: every row before the questions) in one
+  // box, so CSS can draw them as one blue card and keep it in view (sticky) while the questions
+  // scroll, as in the design. Plain-text rows get a class because the site wraps them in <p> once
+  // JavaScript runs.
+  const cardRows = rows.slice(0, rows.indexOf(faqRow));
+  const headingIndex = cardRows.findIndex((row) => row.querySelector('h2'));
+  cardRows.forEach((row, index) => {
+    if (row.querySelector('h2, a')) return;
+    row.classList.add(index < headingIndex ? 'las-faqs-label' : 'las-faqs-intro');
+  });
   const card = document.createElement('div');
   card.className = 'las-faqs-card';
-  card.append(...rows.slice(0, 4));
+  card.append(...cardRows);
   block.prepend(card);
 
   block.classList.add('las-faqs-ready');

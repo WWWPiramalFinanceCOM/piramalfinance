@@ -12,6 +12,8 @@
  *
  * Phones (the default here): each row shows the factor on its own line, with the two answers side
  * by side in a bordered box below it. From 900px up it is a three-column table.
+ * Rows are recognised by what they hold, not by row numbers (see las-comparison.js), so removing one
+ * row does not restyle the others.
  */
 .las-comparison {
   box-sizing: border-box;
@@ -27,8 +29,8 @@
 }
 
 /* 1. Small label, 2. heading, 3. intro text */
-.las-comparison > div:nth-child(1) p,
-.las-comparison > div:nth-child(1) > div:not(:has(p)) {
+:is(.las-comparison:not(.las-comparison-ready) > div:first-child:not(:has(h2, p, ul)), .las-comparison > .las-comparison-label) p,
+:is(.las-comparison:not(.las-comparison-ready) > div:first-child:not(:has(h2, p, ul)), .las-comparison > .las-comparison-label) > div:not(:has(p)) {
   margin: 0 0 8px;
   color: var(--las-orange);
   font-size: 12px;
@@ -47,8 +49,8 @@
   font-weight: 800;
 }
 
-.las-comparison > div:nth-child(3) p,
-.las-comparison > div:nth-child(3) > div:not(:has(p)) {
+:is(.las-comparison:not(.las-comparison-ready) > div:not(:first-child, :has(h2, p, ul)), .las-comparison > .las-comparison-intro) p,
+:is(.las-comparison:not(.las-comparison-ready) > div:not(:first-child, :has(h2, p, ul)), .las-comparison > .las-comparison-intro) > div:not(:has(p)) {
   margin: 0;
   color: var(--las-grey);
   font-size: 16px;
@@ -56,29 +58,29 @@
 }
 
 /* 4. The table (phones) */
-.las-comparison > div:nth-child(4) > div {
+.las-comparison.las-comparison > div:has(ul) > div {
   margin-top: 24px;
   overflow: hidden;
   border-radius: 12px;
   background: var(--las-white);
 }
 
-.las-comparison > div:nth-child(4) > div > ul {
+.las-comparison.las-comparison > div:has(ul) > div > ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 /* Each bullet is a row: the factor on top, the two answers side by side below it */
-.las-comparison > div:nth-child(4) > div > ul > li {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
 }
 
 /* Factor (the bold text). The editor wraps it in a paragraph when the bullet has sub-bullets */
-.las-comparison > div:nth-child(4) > div > ul > li > strong,
-.las-comparison > div:nth-child(4) > div > ul > li > p {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > strong,
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > p {
   grid-column: 1 / -1;
   margin: 0;
   padding: 14px 12px 4px;
@@ -89,14 +91,14 @@
 }
 
 /* The two sub-bullets become the two answers of the row */
-.las-comparison > div:nth-child(4) > div > ul > li > ul {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > ul {
   display: contents;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.las-comparison > div:nth-child(4) > div > ul > li > ul > li {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > ul > li {
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -110,33 +112,33 @@
 }
 
 /* The two answers share one border line between them */
-.las-comparison > div:nth-child(4) > div > ul > li > ul > li:nth-child(2) {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > ul > li:nth-child(2) {
   border-left: 0;
 }
 
 /* The Loan Against Securities answer is tinted */
-.las-comparison > div:nth-child(4) > div > ul > li > ul > li:nth-child(1) {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > ul > li:nth-child(1) {
   background: var(--las-peach);
 }
 
 /* Header row (the first bullet): just the two column headings, no "Factor" on phones */
-.las-comparison > div:nth-child(4) > div > ul > li:first-child {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li:first-child {
   border-bottom: 1px solid var(--las-input-border);
   background: var(--las-rose);
 }
 
-.las-comparison > div:nth-child(4) > div > ul > li:first-child > strong,
-.las-comparison > div:nth-child(4) > div > ul > li:first-child > p {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li:first-child > strong,
+.las-comparison.las-comparison > div:has(ul) > div > ul > li:first-child > p {
   display: none;
 }
 
-.las-comparison > div:nth-child(4) > div > ul > li:first-child > ul > li {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li:first-child > ul > li {
   border: 0;
   color: #565656;
   font-weight: 700;
 }
 
-.las-comparison > div:nth-child(4) > div > ul > li:first-child > ul > li:nth-child(1) {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li:first-child > ul > li:nth-child(1) {
   background: var(--las-orange);
   color: var(--las-white);
 }
@@ -147,7 +149,7 @@
  * added, moved or deleted. Content that has no marks at all keeps the old look: marks on rows 3 to 9.
  */
 .las-comparison:not(:has(.icon)) > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li::before,
-.las-comparison > div:nth-child(4) > div > ul > li > ul > li:is(:has(.icon-check), :has(.icon-cross))::before {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > ul > li:is(:has(.icon-check), :has(.icon-cross))::before {
   content: "";
   flex: 0 0 20px;
   width: 20px;
@@ -157,13 +159,13 @@
 }
 
 .las-comparison:not(:has(.icon)) > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(1)::before,
-.las-comparison > div:nth-child(4) > div > ul > li > ul > li:has(.icon-check)::before {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > ul > li:has(.icon-check)::before {
   background-color: #e6f6ec;
   background-image: url("icons/check.svg");
 }
 
 .las-comparison:not(:has(.icon)) > div:nth-child(4) > div > ul > li:nth-child(n+3):nth-child(-n+9) > ul > li:nth-child(2)::before,
-.las-comparison > div:nth-child(4) > div > ul > li > ul > li:has(.icon-cross)::before {
+.las-comparison.las-comparison > div:has(ul) > div > ul > li > ul > li:has(.icon-cross)::before {
   background-color: var(--las-rose);
   background-image: url("icons/cross.svg");
 }
@@ -174,8 +176,8 @@
     padding: 40px 0;
   }
 
-  .las-comparison > div:nth-child(1) p,
-  .las-comparison > div:nth-child(1) > div:not(:has(p)) {
+  :is(.las-comparison:not(.las-comparison-ready) > div:first-child:not(:has(h2, p, ul)), .las-comparison > .las-comparison-label) p,
+  :is(.las-comparison:not(.las-comparison-ready) > div:first-child:not(:has(h2, p, ul)), .las-comparison > .las-comparison-label) > div:not(:has(p)) {
     font-size: 14px;
     line-height: 20px;
   }
@@ -185,39 +187,39 @@
     line-height: 34px;
   }
 
-  .las-comparison > div:nth-child(3) p,
-  .las-comparison > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-comparison:not(.las-comparison-ready) > div:not(:first-child, :has(h2, p, ul)), .las-comparison > .las-comparison-intro) p,
+  :is(.las-comparison:not(.las-comparison-ready) > div:not(:first-child, :has(h2, p, ul)), .las-comparison > .las-comparison-intro) > div:not(:has(p)) {
     line-height: 26px;
   }
 
-  .las-comparison > div:nth-child(4) > div {
+  .las-comparison.las-comparison > div:has(ul) > div {
     margin-top: 32px;
     overflow-x: auto;
     border: 1px solid var(--las-input-border);
   }
 
-  .las-comparison > div:nth-child(4) > div > ul {
+  .las-comparison.las-comparison > div:has(ul) > div > ul {
     min-width: 760px;
   }
 
-  .las-comparison > div:nth-child(4) > div > ul > li {
+  .las-comparison.las-comparison > div:has(ul) > div > ul > li {
     grid-template-columns: 240px minmax(0, 1fr) minmax(0, 1fr);
     border-bottom: 1px solid var(--las-input-border);
   }
 
-  .las-comparison > div:nth-child(4) > div > ul > li:last-child {
+  .las-comparison.las-comparison > div:has(ul) > div > ul > li:last-child {
     border-bottom: 0;
   }
 
-  .las-comparison > div:nth-child(4) > div > ul > li > strong,
-  .las-comparison > div:nth-child(4) > div > ul > li > p {
+  .las-comparison.las-comparison > div:has(ul) > div > ul > li > strong,
+  .las-comparison.las-comparison > div:has(ul) > div > ul > li > p {
     grid-column: auto;
     padding: 16px 24px;
     font-size: 16px;
     line-height: 24px;
   }
 
-  .las-comparison > div:nth-child(4) > div > ul > li > ul > li {
+  .las-comparison.las-comparison > div:has(ul) > div > ul > li > ul > li {
     padding: 16px 24px;
     border: 0;
     font-size: 16px;
@@ -225,13 +227,13 @@
   }
 
   /* The "Factor" heading is shown again */
-  .las-comparison > div:nth-child(4) > div > ul > li:first-child > strong,
-  .las-comparison > div:nth-child(4) > div > ul > li:first-child > p {
+  .las-comparison.las-comparison > div:has(ul) > div > ul > li:first-child > strong,
+  .las-comparison.las-comparison > div:has(ul) > div > ul > li:first-child > p {
     display: block;
     color: #565656;
   }
 
-  .las-comparison > div:nth-child(4) > div > ul > li:first-child {
+  .las-comparison.las-comparison > div:has(ul) > div > ul > li:first-child {
     border-bottom: 1px solid var(--las-input-border);
   }
 }
@@ -246,13 +248,13 @@
     line-height: 40px;
   }
 
-  .las-comparison > div:nth-child(3) p,
-  .las-comparison > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-comparison:not(.las-comparison-ready) > div:not(:first-child, :has(h2, p, ul)), .las-comparison > .las-comparison-intro) p,
+  :is(.las-comparison:not(.las-comparison-ready) > div:not(:first-child, :has(h2, p, ul)), .las-comparison > .las-comparison-intro) > div:not(:has(p)) {
     font-size: 20px;
     line-height: 28px;
   }
 
-  .las-comparison > div:nth-child(4) > div {
+  .las-comparison.las-comparison > div:has(ul) > div {
     margin-top: 40px;
   }
 }

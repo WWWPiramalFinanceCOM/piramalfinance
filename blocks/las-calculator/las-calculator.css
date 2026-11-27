@@ -12,6 +12,8 @@
  * (.las-calculator-panel), adds the amount boxes, sliders and a tab bar, and adds .las-calculator-ready.
  * A plain text field can arrive as bare text (no <p>) when JavaScript is off, so the text rules also
  * match the bare cell.
+ * With JavaScript on, las-calculator.js finds the rows by what they hold (each tab ends with its button link) and
+ * tags the label and intro rows, so removing a row does not break the calculator.
  */
 
 /* Pale peach band behind the block: the section that holds it gets the background */
@@ -22,6 +24,7 @@ main > div:has(.las-calculator) {
 .las-calculator {
   --las-calc-green: #f0faf3;
   --las-calc-green-line: #d5e9dc;
+  --las-calc-orange-hover: #d9552f;
   --las-calc-text: #20303f;
 
   /* A grid even on phones (one column), so the text margins stay inside their rows */
@@ -40,8 +43,8 @@ main > div:has(.las-calculator) {
 }
 
 /* 1. Small label, 2. heading, 3. intro */
-.las-calculator > div:nth-child(1) p,
-.las-calculator > div:nth-child(1) > div:not(:has(p)) {
+:is(.las-calculator:not(.las-calculator-ready) > div:nth-child(1), .las-calculator > .las-calculator-label) p,
+:is(.las-calculator:not(.las-calculator-ready) > div:nth-child(1), .las-calculator > .las-calculator-label) > div:not(:has(p)) {
   margin: 0 0 8px;
   color: var(--las-orange);
   font-size: 12px;
@@ -60,12 +63,12 @@ main > div:has(.las-calculator) {
   font-weight: 800;
 }
 
-.las-calculator > div:nth-child(3) {
+:is(.las-calculator:not(.las-calculator-ready) > div:nth-child(3), .las-calculator > .las-calculator-intro) {
   margin-bottom: 24px;
 }
 
-.las-calculator > div:nth-child(3) p,
-.las-calculator > div:nth-child(3) > div:not(:has(p)) {
+:is(.las-calculator:not(.las-calculator-ready) > div:nth-child(3), .las-calculator > .las-calculator-intro) p,
+:is(.las-calculator:not(.las-calculator-ready) > div:nth-child(3), .las-calculator > .las-calculator-intro) > div:not(:has(p)) {
   margin: 0;
   color: var(--las-grey);
   font-size: 16px;
@@ -728,8 +731,8 @@ main > div:has(.las-calculator) {
     padding: 60px 0;
   }
 
-  .las-calculator > div:nth-child(1) p,
-  .las-calculator > div:nth-child(1) > div:not(:has(p)) {
+  :is(.las-calculator:not(.las-calculator-ready) > div:nth-child(1), .las-calculator > .las-calculator-label) p,
+  :is(.las-calculator:not(.las-calculator-ready) > div:nth-child(1), .las-calculator > .las-calculator-label) > div:not(:has(p)) {
     font-size: 14px;
     line-height: 20px;
   }
@@ -739,13 +742,13 @@ main > div:has(.las-calculator) {
     line-height: 40px;
   }
 
-  .las-calculator > div:nth-child(3) {
+  :is(.las-calculator:not(.las-calculator-ready) > div:nth-child(3), .las-calculator > .las-calculator-intro) {
     max-width: 900px;
     margin-bottom: 32px;
   }
 
-  .las-calculator > div:nth-child(3) p,
-  .las-calculator > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-calculator:not(.las-calculator-ready) > div:nth-child(3), .las-calculator > .las-calculator-intro) p,
+  :is(.las-calculator:not(.las-calculator-ready) > div:nth-child(3), .las-calculator > .las-calculator-intro) > div:not(:has(p)) {
     font-size: 20px;
     line-height: 28px;
   }
@@ -911,4 +914,35 @@ main > div:has(.las-calculator) {
   .las-calculator-tab {
     flex: 1 1 auto;
   }
+}
+
+/*
+ * ---- Hover and focus colours: brand orange, never the site's default blue ----
+ * The site turns every button and link button blue on hover and focus. Here the Apply buttons
+ * get a slightly deeper orange, the tabs a deeper rose, and the amount boxes an orange line.
+ */
+.las-calculator:not(.las-calculator-ready) > div:is(:nth-child(7), :nth-child(11)) a:is(:hover, :focus),
+.las-calculator-panel > div:nth-child(2) a:is(:hover, :focus) {
+  background: var(--las-calc-orange-hover);
+  color: var(--las-white);
+}
+
+.las-calculator-card-interest .las-calculator-panel > div:nth-child(2) a:is(:hover, :focus) {
+  background: #d9603c;
+}
+
+.las-calculator-tab:focus {
+  background: var(--las-rose);
+}
+
+.las-calculator-tab:hover {
+  background: #fde0d8;
+}
+
+.las-calculator-tab[aria-selected="true"]:is(:hover, :focus) {
+  background: var(--las-white);
+}
+
+.las-calculator-amount:hover {
+  border-color: var(--las-orange);
 }

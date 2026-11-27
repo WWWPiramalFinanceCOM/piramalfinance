@@ -1,0 +1,6 @@
+{"base":"","empty1":"e(1)","empty2":"e(2)","empty3":"e(3)","remove1":"r[0].remove()","remove2":"r[1].remove()","remove3":"r[2].remove()",
+"factsMore":"for(let i=0;i<3;i++){const u=r[2].querySelector('ul');u.append(u.lastElementChild.cloneNode(true));}",
+"factsOdd":"r[2].querySelector('ul').lastElementChild.remove()",
+"factsFew":"const u=r[2].querySelector('ul');while(u.children.length>3)u.lastElementChild.remove()",
+"long":"b.querySelectorAll('h2,p,li,strong').forEach(x=>{if(!x.children.length)x.append(' Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor')})",
+"longword":"b.querySelectorAll('h2,li,strong,div').forEach(x=>{if(!x.children.length)x.append(' Supercalifragilisticexpialidocious_Supercalifragilisticexpialidocious_Supercalifragilistic')})"}

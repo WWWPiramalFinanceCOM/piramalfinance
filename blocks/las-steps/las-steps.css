@@ -7,6 +7,8 @@
  * The numbers and the connecting line are drawn by this CSS. It styles the raw rows, so the block
  * works with JavaScript off. A plain text field can arrive as bare text (no <p>) when JavaScript is
  * off, so those rules also match the bare cell.
+ * Rows are recognised by what they hold, not by row numbers (see las-steps.js), so removing one
+ * row does not restyle the others.
  */
 
 /* Pale peach band behind the block: the section that holds it gets the background */
@@ -28,8 +30,8 @@ main > div:has(.las-steps) {
 }
 
 /* 1. Small label, 2. heading, 3. intro line */
-.las-steps > div:nth-child(1) p,
-.las-steps > div:nth-child(1) > div:not(:has(p)) {
+:is(.las-steps:not(.las-steps-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-steps > .las-steps-label) p,
+:is(.las-steps:not(.las-steps-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-steps > .las-steps-label) > div:not(:has(p)) {
   margin: 0 0 8px;
   color: var(--las-orange);
   font-size: 12px;
@@ -48,8 +50,8 @@ main > div:has(.las-steps) {
   font-weight: 800;
 }
 
-.las-steps > div:nth-child(3) p,
-.las-steps > div:nth-child(3) > div:not(:has(p)) {
+:is(.las-steps:not(.las-steps-ready) > div:not(:first-child, :has(h2, p, ul, a)), .las-steps > .las-steps-intro) p,
+:is(.las-steps:not(.las-steps-ready) > div:not(:first-child, :has(h2, p, ul, a)), .las-steps > .las-steps-intro) > div:not(:has(p)) {
   margin: 0;
   color: var(--las-grey);
   font-size: 16px;
@@ -131,15 +133,15 @@ main > div:has(.las-steps) {
 }
 
 /* 5. Button (the authored link). The global .button look is reset, then drawn here */
-.las-steps > div:nth-child(5) {
+.las-steps.las-steps > div:has(a):not(:has(h2, ul)) {
   margin-top: 40px;
 }
 
-.las-steps > div:nth-child(5) p {
+.las-steps.las-steps > div:has(a):not(:has(h2, ul)) p {
   margin: 0;
 }
 
-.las-steps > div:nth-child(5) a {
+.las-steps.las-steps > div:has(a):not(:has(h2, ul)) a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,7 +161,7 @@ main > div:has(.las-steps) {
   text-decoration: none;
 }
 
-.las-steps > div:nth-child(5) a:focus-visible {
+.las-steps.las-steps > div:has(a):not(:has(h2, ul)) a:focus-visible {
   outline: 2px solid var(--las-ink);
   outline-offset: 2px;
 }
@@ -170,8 +172,8 @@ main > div:has(.las-steps) {
     padding: 40px 0;
   }
 
-  .las-steps > div:nth-child(1) p,
-  .las-steps > div:nth-child(1) > div:not(:has(p)) {
+  :is(.las-steps:not(.las-steps-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-steps > .las-steps-label) p,
+  :is(.las-steps:not(.las-steps-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-steps > .las-steps-label) > div:not(:has(p)) {
     font-size: 14px;
     line-height: 20px;
   }
@@ -181,16 +183,16 @@ main > div:has(.las-steps) {
     line-height: 34px;
   }
 
-  .las-steps > div:nth-child(3) p,
-  .las-steps > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-steps:not(.las-steps-ready) > div:not(:first-child, :has(h2, p, ul, a)), .las-steps > .las-steps-intro) p,
+  :is(.las-steps:not(.las-steps-ready) > div:not(:first-child, :has(h2, p, ul, a)), .las-steps > .las-steps-intro) > div:not(:has(p)) {
     line-height: 26px;
   }
 
-  .las-steps > div:nth-child(5) {
+  .las-steps.las-steps > div:has(a):not(:has(h2, ul)) {
     margin-top: 32px;
   }
 
-  .las-steps > div:nth-child(5) a {
+  .las-steps.las-steps > div:has(a):not(:has(h2, ul)) a {
     display: inline-flex;
     width: auto;
     font-size: 16px;
@@ -254,8 +256,8 @@ main > div:has(.las-steps) {
     line-height: 40px;
   }
 
-  .las-steps > div:nth-child(3) p,
-  .las-steps > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-steps:not(.las-steps-ready) > div:not(:first-child, :has(h2, p, ul, a)), .las-steps > .las-steps-intro) p,
+  :is(.las-steps:not(.las-steps-ready) > div:not(:first-child, :has(h2, p, ul, a)), .las-steps > .las-steps-intro) > div:not(:has(p)) {
     font-size: 20px;
     line-height: 28px;
   }
@@ -279,7 +281,7 @@ main > div:has(.las-steps) {
     background: #f9c9ba;
   }
 
-  .las-steps > div:nth-child(5) {
+  .las-steps.las-steps > div:has(a):not(:has(h2, ul)) {
     margin-top: 40px;
   }
 }

@@ -8,6 +8,8 @@
  * turns each one into a <details> accordion (class las-faqs-ready) with a chevron.
  * A plain text field can arrive as bare text (no <p>) when JavaScript is off, so the label and
  * intro rules also match the bare cell.
+ * Rows are recognised by what they hold, not by row numbers (see las-faqs.js), so removing one
+ * row does not restyle the others.
  */
 
 /* Pale cream band behind the block: the section that holds it gets the background */
@@ -34,7 +36,7 @@ main > div:has(.las-faqs) {
 }
 
 /* ---- Rows 1 to 4: drawn together as one blue card ---- */
-.las-faqs:not(.las-faqs-ready) > div:nth-child(-n+4) {
+.las-faqs:not(.las-faqs-ready) > div:not(:has(h3)) {
   padding: 0 20px;
   background: var(--las-faqs-blue);
 
@@ -42,7 +44,7 @@ main > div:has(.las-faqs) {
   box-shadow: 0 1px 0 0 var(--las-faqs-blue);
 }
 
-.las-faqs:not(.las-faqs-ready) > div:nth-child(4) {
+.las-faqs:not(.las-faqs-ready) > div:has(a) {
   box-shadow: none;
 }
 
@@ -56,19 +58,19 @@ main > div:has(.las-faqs) {
   padding: 0 20px;
 }
 
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) {
+:is(.las-faqs:not(.las-faqs-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-faqs-card > .las-faqs-label) {
   padding-top: 32px;
   border-radius: 16px 16px 0 0;
 }
 
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(a) {
   padding-bottom: 32px;
   border-radius: 0 0 16px 16px;
 }
 
 /* 1. Small label */
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) p,
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) > div:not(:has(p)) {
+:is(.las-faqs:not(.las-faqs-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-faqs-card > .las-faqs-label) p,
+:is(.las-faqs:not(.las-faqs-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-faqs-card > .las-faqs-label) > div:not(:has(p)) {
   margin: 0 0 12px;
   color: #afb9c3;
   font-size: 14px;
@@ -79,7 +81,7 @@ main > div:has(.las-faqs) {
 }
 
 /* 2. Heading */
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(2) h2 {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(h2) h2 {
   margin: 0 0 12px;
   color: var(--las-white);
   font-family: var(--las-font);
@@ -89,8 +91,8 @@ main > div:has(.las-faqs) {
 }
 
 /* 3. Intro line */
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) p,
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) > div:not(:has(p)) {
+:is(.las-faqs:not(.las-faqs-ready) > div:not(:first-child, :has(h2, p, ul, a, h3)), .las-faqs-card > .las-faqs-intro) p,
+:is(.las-faqs:not(.las-faqs-ready) > div:not(:first-child, :has(h2, p, ul, a, h3)), .las-faqs-card > .las-faqs-intro) > div:not(:has(p)) {
   margin: 0 0 32px;
   color: var(--las-border);
   font-size: 16px;
@@ -98,11 +100,11 @@ main > div:has(.las-faqs) {
 }
 
 /* 4. Button (the authored link). The global .button look is reset, then drawn here */
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) p {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(a) p {
   margin: 0;
 }
 
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) a {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(a) a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,13 +124,13 @@ main > div:has(.las-faqs) {
   text-decoration: none;
 }
 
-:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) a:focus-visible {
+:is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(a) a:focus-visible {
   outline: 2px solid var(--las-white);
   outline-offset: 2px;
 }
 
 /* ---- Row 5: the questions and answers ---- */
-.las-faqs > div:last-child {
+.las-faqs > div:has(h3) {
   margin-top: 40px;
 }
 
@@ -148,15 +150,15 @@ main > div:has(.las-faqs) {
   border-top: 0;
 }
 
-.las-faqs:not(.las-faqs-ready) > div:nth-child(5) p {
+.las-faqs:not(.las-faqs-ready) > div:has(h3) p {
   margin: 12px 0 0;
   color: var(--las-grey);
   font-size: 16px;
   line-height: 24px;
 }
 
-.las-faqs:not(.las-faqs-ready) > div:nth-child(5) p:has(+ h3),
-.las-faqs:not(.las-faqs-ready) > div:nth-child(5) p:last-child,
+.las-faqs:not(.las-faqs-ready) > div:has(h3) p:has(+ h3),
+.las-faqs:not(.las-faqs-ready) > div:has(h3) p:last-child,
 .las-faqs:not(.las-faqs-ready) h3:has(+ h3),
 .las-faqs:not(.las-faqs-ready) h3:last-child {
   padding-bottom: 24px;
@@ -229,7 +231,7 @@ main > div:has(.las-faqs) {
     padding: 60px 0;
   }
 
-  .las-faqs:not(.las-faqs-ready) > div:nth-child(-n+4) {
+  .las-faqs:not(.las-faqs-ready) > div:not(:has(h3)) {
     grid-column: 1;
   }
 
@@ -243,22 +245,22 @@ main > div:has(.las-faqs) {
   }
 
   /* The card ends at the button, even when the list on the right is taller */
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(a) {
     align-self: start;
   }
 
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(2) h2 {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(h2) h2 {
     font-size: 32px;
     line-height: 40px;
   }
 
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) p,
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-faqs:not(.las-faqs-ready) > div:not(:first-child, :has(h2, p, ul, a, h3)), .las-faqs-card > .las-faqs-intro) p,
+  :is(.las-faqs:not(.las-faqs-ready) > div:not(:first-child, :has(h2, p, ul, a, h3)), .las-faqs-card > .las-faqs-intro) > div:not(:has(p)) {
     font-size: 20px;
     line-height: 28px;
   }
 
-  .las-faqs > div:last-child {
+  .las-faqs > div:has(h3) {
     grid-column: 2;
     grid-row: 1 / 5;
     margin-top: 0;
@@ -280,37 +282,37 @@ main > div:has(.las-faqs) {
     padding: 50px 0;
   }
 
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) {
+  :is(.las-faqs:not(.las-faqs-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-faqs-card > .las-faqs-label) {
     padding-top: 20px;
   }
 
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) p,
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(1) > div:not(:has(p)) {
+  :is(.las-faqs:not(.las-faqs-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-faqs-card > .las-faqs-label) p,
+  :is(.las-faqs:not(.las-faqs-ready) > div:first-child:not(:has(h2, p, ul, a)), .las-faqs-card > .las-faqs-label) > div:not(:has(p)) {
     font-size: 12px;
     line-height: 18px;
   }
 
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(2) h2 {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(h2) h2 {
     font-size: 24px;
     line-height: 32px;
   }
 
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) p,
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-faqs:not(.las-faqs-ready) > div:not(:first-child, :has(h2, p, ul, a, h3)), .las-faqs-card > .las-faqs-intro) p,
+  :is(.las-faqs:not(.las-faqs-ready) > div:not(:first-child, :has(h2, p, ul, a, h3)), .las-faqs-card > .las-faqs-intro) > div:not(:has(p)) {
     margin-bottom: 24px;
     line-height: 24px;
   }
 
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(a) {
     padding-bottom: 20px;
   }
 
-  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:nth-child(4) a {
+  :is(.las-faqs:not(.las-faqs-ready), .las-faqs-card) > div:has(a) a {
     font-size: 14px;
     line-height: 22px;
   }
 
-  .las-faqs > div:last-child {
+  .las-faqs > div:has(h3) {
     margin-top: 24px;
   }
 
@@ -320,7 +322,7 @@ main > div:has(.las-faqs) {
     line-height: 24px;
   }
 
-  .las-faqs:not(.las-faqs-ready) > div:nth-child(5) p,
+  .las-faqs:not(.las-faqs-ready) > div:has(h3) p,
   .las-faqs-ready details > p {
     font-size: 14px;
     line-height: 22px;

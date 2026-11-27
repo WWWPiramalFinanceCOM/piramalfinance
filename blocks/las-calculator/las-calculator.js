@@ -155,7 +155,8 @@ function buildCard([inputsRow, resultRow, buttonRow]) {
   card.className = 'las-calculator-card';
   const panel = document.createElement('div');
   panel.className = 'las-calculator-panel';
-  panel.append(resultRow, buttonRow);
+  panel.append(resultRow);
+  if (buttonRow) panel.append(buttonRow); // the button may have been removed
   card.append(inputsRow, panel);
 
   const list = document.createElement('div');
@@ -313,30 +314,64 @@ function buildTabs(block, titles, cards) {
 
 export default function decorate(block) {
   const rows = [...block.children];
-  if (rows.length < 11) return; // not fully authored yet, leave the sample figures as they are
 
-  const groups = [rows.slice(3, 7), rows.slice(7, 11)];
+  // Each tab is found by its result row (the only row with both a paragraph and a list). The inputs
+  // are the row before it, the button the row after it, and the title the short plain-text row
+  // before the inputs. A removed title or button is fine, and so is a removed label, intro or
+  // disclaimer.
+  const resultIndexes = rows.map((row, index) => (
+    row.querySelector('ul') && row.querySelector('p') ? index : -1
+  )).filter((index) => index >= 0).slice(0, 2);
+  if (resultIndexes.length < 2 || resultIndexes[0] < 1) return; // not fully authored: leave as is
+
+  const isTitle = (row) => {
+    const text = row?.textContent.trim() || '';
+    return text.length > 0 && text.length < 40 && !row.querySelector('h2, em, ul, a, strong');
+  };
+  const groups = resultIndexes.map((index) => [
+    isTitle(rows[index - 2]) ? rows[index - 2] : null,
+    rows[index - 1],
+    rows[index],
+    rows[index + 1]?.querySelector('a') ? rows[index + 1] : null,
+  ]);
+
+  // Remember where the first tab starts: building the tabs moves the rows into cards
+  const firstTabRow = groups[0].find(Boolean);
+  const firstTabIndex = rows.indexOf(firstTabRow);
+  const placeholder = document.createElement('div');
+  firstTabRow.before(placeholder);
+
   const built = [setupEligibility(groups[0]), setupInterest(groups[1])];
 
   // Only tabs that could be built become tabs. The rows of a tab that could not be built (for
-  // example its result was left empty) are hidden, so no unstyled leftovers show on the page
+  // example its inputs were left empty) are hidden, so no unstyled leftovers show on the page
   const tabs = built
-    .map((card, index) => ({ card, titleRow: groups[index][0] }))
+    .map((card, index) => ({ card, titleRow: groups[index][0], index }))
     .filter(({ card }) => card);
   if (!tabs.length) return;
   groups.forEach((group, index) => {
     if (built[index]) return;
     group.forEach((row) => {
-      row.hidden = true;
+      if (row) row.hidden = true;
     });
   });
 
-  const titles = tabs.map(({ titleRow }) => titleRow.textContent.trim());
-  const tablist = buildTabs(block, titles, tabs.map(({ card }) => card));
-  rows[2].after(tablist, ...tabs.map(({ card }) => card));
-  tabs.forEach(({ titleRow }) => titleRow.remove());
+  // The label rows are before the heading, the intro rows between the heading and the first tab
+  const headingIndex = rows.findIndex((row) => row.querySelector('h2'));
+  rows.forEach((row, index) => {
+    if (index >= firstTabIndex || row.querySelector('h2, a, ul')) return;
+    row.classList.add(index < headingIndex ? 'las-calculator-label' : 'las-calculator-intro');
+  });
 
-  rows[11]?.classList.add('las-calculator-disclaimer'); // its row number changes once the tabs are built
-  rows[12]?.classList.add('las-calculator-note'); // hidden once the calculator works
+  const titles = tabs.map(({ titleRow, index }) => titleRow?.textContent.trim() || `Tab ${index + 1}`);
+  const tablist = buildTabs(block, titles, tabs.map(({ card }) => card));
+  placeholder.replaceWith(tablist, ...tabs.map(({ card }) => card));
+  tabs.forEach(({ titleRow }) => titleRow?.remove());
+
+  // The two rows after the last tab: the disclaimer, then the note for visitors without JavaScript
+  const lastTabRow = groups[1][3] || groups[1][2];
+  const [disclaimer, note] = rows.slice(rows.indexOf(lastTabRow) + 1);
+  disclaimer?.classList.add('las-calculator-disclaimer');
+  note?.classList.add('las-calculator-note'); // hidden once the calculator works
   block.classList.add('las-calculator-ready');
 }

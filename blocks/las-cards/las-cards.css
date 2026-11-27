@@ -5,6 +5,8 @@
  * Each list item is one card: the title in bold, then the text, then a link, e.g.
  *   <li><strong>Loan Against Shares</strong> Pledge approved shares... <a href="...">Explore Loan Against Shares</a></li>
  * This CSS styles those raw rows, so the block works with JavaScript off.
+ * Rows are recognised by what they hold, not by row numbers, so removing one row does not restyle the others
+ * (see las-cards.js, which names each row once JavaScript runs).
  */
 
 /* Grey band behind the block: the section that holds it gets the background */
@@ -26,8 +28,8 @@ main > div:has(.las-cards) {
 }
 
 /* 1. Small label, 2. heading, 3. intro line */
-.las-cards > div:nth-child(1) p,
-.las-cards > div:nth-child(1) > div:not(:has(p)) {
+:is(.las-cards:not(.las-cards-ready) > div:first-child:not(:has(h2, p, ul)), .las-cards > .las-cards-label) p,
+:is(.las-cards:not(.las-cards-ready) > div:first-child:not(:has(h2, p, ul)), .las-cards > .las-cards-label) > div:not(:has(p)) {
   margin: 0 0 8px;
   color: var(--las-orange);
   font-size: 14px;
@@ -46,8 +48,8 @@ main > div:has(.las-cards) {
   font-weight: 800;
 }
 
-.las-cards > div:nth-child(3) p,
-.las-cards > div:nth-child(3) > div:not(:has(p)) {
+:is(.las-cards:not(.las-cards-ready) > div:not(:first-child, :has(h2, p, ul)), .las-cards > .las-cards-intro) p,
+:is(.las-cards:not(.las-cards-ready) > div:not(:first-child, :has(h2, p, ul)), .las-cards > .las-cards-intro) > div:not(:has(p)) {
   margin: 0;
   color: var(--las-grey);
   font-size: 16px;
@@ -79,9 +81,11 @@ main > div:has(.las-cards) {
   line-height: 24px;
 }
 
-/* Round icon at the top of each card (icons are matched by position) */
+/* Round icon at the top of each card. It only shows when the card has an icon (one of the first
+   three by position, or an icon token), so an extra card has no empty circle */
 .las-cards li::before {
   content: "";
+  display: none;
   flex: 0 0 56px;
   align-self: flex-start;
   width: 56px;
@@ -90,12 +94,36 @@ main > div:has(.las-cards) {
   background: var(--las-rose) center / 28px no-repeat;
 }
 
-.las-cards:not(:has(.icon)) li:nth-child(1)::before { background-image: url("icons/trend.svg"); }
-.las-cards li:has(.icon-trend)::before { background-image: url("icons/trend.svg"); }
-.las-cards:not(:has(.icon)) li:nth-child(2)::before { background-image: url("icons/layers.svg"); }
-.las-cards li:has(.icon-layers)::before { background-image: url("icons/layers.svg"); }
-.las-cards:not(:has(.icon)) li:nth-child(3)::before { background-image: url("icons/banknote.svg"); }
-.las-cards li:has(.icon-banknote)::before { background-image: url("icons/banknote.svg"); }
+.las-cards:not(:has(.icon)) li:nth-child(1)::before {
+  display: block;
+  background-image: url("icons/trend.svg");
+}
+
+.las-cards li:has(.icon-trend)::before {
+  display: block;
+  background-image: url("icons/trend.svg");
+}
+
+.las-cards:not(:has(.icon)) li:nth-child(2)::before {
+  display: block;
+  background-image: url("icons/layers.svg");
+}
+
+.las-cards li:has(.icon-layers)::before {
+  display: block;
+  background-image: url("icons/layers.svg");
+}
+
+.las-cards:not(:has(.icon)) li:nth-child(3)::before {
+  display: block;
+  background-image: url("icons/banknote.svg");
+}
+
+.las-cards li:has(.icon-banknote)::before {
+  display: block;
+  background-image: url("icons/banknote.svg");
+}
+
 
 /* Card title */
 .las-cards li strong {
@@ -144,8 +172,8 @@ main > div:has(.las-cards) {
     line-height: 40px;
   }
 
-  .las-cards > div:nth-child(3) p,
-  .las-cards > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-cards:not(.las-cards-ready) > div:not(:first-child, :has(h2, p, ul)), .las-cards > .las-cards-intro) p,
+  :is(.las-cards:not(.las-cards-ready) > div:not(:first-child, :has(h2, p, ul)), .las-cards > .las-cards-intro) > div:not(:has(p)) {
     font-size: 20px;
     line-height: 28px;
   }
@@ -165,8 +193,8 @@ main > div:has(.las-cards) {
     padding: 50px 0;
   }
 
-  .las-cards > div:nth-child(1) p,
-  .las-cards > div:nth-child(1) > div:not(:has(p)) {
+  :is(.las-cards:not(.las-cards-ready) > div:first-child:not(:has(h2, p, ul)), .las-cards > .las-cards-label) p,
+  :is(.las-cards:not(.las-cards-ready) > div:first-child:not(:has(h2, p, ul)), .las-cards > .las-cards-label) > div:not(:has(p)) {
     font-size: 12px;
     line-height: 18px;
   }
@@ -176,8 +204,8 @@ main > div:has(.las-cards) {
     line-height: 32px;
   }
 
-  .las-cards > div:nth-child(3) p,
-  .las-cards > div:nth-child(3) > div:not(:has(p)) {
+  :is(.las-cards:not(.las-cards-ready) > div:not(:first-child, :has(h2, p, ul)), .las-cards > .las-cards-intro) p,
+  :is(.las-cards:not(.las-cards-ready) > div:not(:first-child, :has(h2, p, ul)), .las-cards > .las-cards-intro) > div:not(:has(p)) {
     line-height: 24px;
   }
 

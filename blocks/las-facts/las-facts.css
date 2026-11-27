@@ -1,7 +1,9 @@
 /*
  * LAS quick facts: a white card with a heading, an "AT A GLANCE" badge and a two-column list of facts.
  *
- * Authored as 3 rows: 1 heading, 2 badge text, 3 list of facts. This CSS styles those raw rows,
+ * Authored as 3 rows: heading, badge text, list of facts. The rows are recognised by what they hold
+ * (the row with the H2, the row with the list, the plain-text row), not by position, so removing
+ * one of them does not restyle the others. This CSS styles those raw rows,
  * so the block works with JavaScript off. Bold text inside a fact is shown in blue.
  */
 .las-facts {
@@ -28,7 +30,7 @@
 
 /* 1. Heading and 2. badge share the first line */
 .las-facts h2,
-.las-facts > div:nth-child(1) p {
+.las-facts > div:has(h2) p {
   margin: 0;
   font-family: var(--las-font);
   color: #000;
@@ -37,8 +39,8 @@
   font-weight: 800;
 }
 
-.las-facts > div:nth-child(2) p,
-.las-facts > div:nth-child(2) > div:not(:has(p)) {
+.las-facts > div:not(:has(h2), :has(ul)) p,
+.las-facts > div:not(:has(h2), :has(ul)) > div:not(:has(p)) {
   display: inline-block;
   margin: 0;
   padding: 4px 10px;
@@ -53,13 +55,13 @@
 }
 
 /* On phones the badge sits on its own line above the heading (only the display order changes) */
-.las-facts > div:nth-child(2) {
+.las-facts > div:not(:has(h2), :has(ul)) {
   order: -1;
   flex: 0 0 100%;
 }
 
 /* 3. The facts: two columns on wide screens, one on phones */
-.las-facts > div:nth-child(3) {
+.las-facts > div:has(ul) {
   flex: 0 0 100%;
 }
 
@@ -89,9 +91,11 @@
   font-weight: 700;
 }
 
-/* Round icon at the start of each fact (icons are matched by position) */
+/* Round icon at the start of each fact. It only shows when the fact has an icon (one of the first
+   eight by position, or an icon token), so an extra fact has no empty circle */
 .las-facts li::before {
   content: "";
+  display: none;
   position: absolute;
   top: 16px;
   left: 0;
@@ -101,22 +105,86 @@
   background: var(--las-rose) center / 18px no-repeat;
 }
 
-.las-facts:not(:has(.icon)) li:nth-child(1)::before { background-image: url("icons/percent.svg"); }
-.las-facts li:has(.icon-percent)::before { background-image: url("icons/percent.svg"); }
-.las-facts:not(:has(.icon)) li:nth-child(2)::before { background-image: url("icons/layers.svg"); }
-.las-facts li:has(.icon-layers)::before { background-image: url("icons/layers.svg"); }
-.las-facts:not(:has(.icon)) li:nth-child(3)::before { background-image: url("icons/document.svg"); }
-.las-facts li:has(.icon-document)::before { background-image: url("icons/document.svg"); }
-.las-facts:not(:has(.icon)) li:nth-child(4)::before { background-image: url("icons/ban.svg"); }
-.las-facts li:has(.icon-ban)::before { background-image: url("icons/ban.svg"); }
-.las-facts:not(:has(.icon)) li:nth-child(5)::before { background-image: url("icons/rupee.svg"); }
-.las-facts li:has(.icon-rupee)::before { background-image: url("icons/rupee.svg"); }
-.las-facts:not(:has(.icon)) li:nth-child(6)::before { background-image: url("icons/bolt.svg"); }
-.las-facts li:has(.icon-bolt)::before { background-image: url("icons/bolt.svg"); }
-.las-facts:not(:has(.icon)) li:nth-child(7)::before { background-image: url("icons/calendar.svg"); }
-.las-facts li:has(.icon-calendar)::before { background-image: url("icons/calendar.svg"); }
-.las-facts:not(:has(.icon)) li:nth-child(8)::before { background-image: url("icons/person.svg"); }
-.las-facts li:has(.icon-person)::before { background-image: url("icons/person.svg"); }
+.las-facts:not(:has(.icon)) li:nth-child(1)::before {
+  display: block;
+  background-image: url("icons/percent.svg");
+}
+
+.las-facts li:has(.icon-percent)::before {
+  display: block;
+  background-image: url("icons/percent.svg");
+}
+
+.las-facts:not(:has(.icon)) li:nth-child(2)::before {
+  display: block;
+  background-image: url("icons/layers.svg");
+}
+
+.las-facts li:has(.icon-layers)::before {
+  display: block;
+  background-image: url("icons/layers.svg");
+}
+
+.las-facts:not(:has(.icon)) li:nth-child(3)::before {
+  display: block;
+  background-image: url("icons/document.svg");
+}
+
+.las-facts li:has(.icon-document)::before {
+  display: block;
+  background-image: url("icons/document.svg");
+}
+
+.las-facts:not(:has(.icon)) li:nth-child(4)::before {
+  display: block;
+  background-image: url("icons/ban.svg");
+}
+
+.las-facts li:has(.icon-ban)::before {
+  display: block;
+  background-image: url("icons/ban.svg");
+}
+
+.las-facts:not(:has(.icon)) li:nth-child(5)::before {
+  display: block;
+  background-image: url("icons/rupee.svg");
+}
+
+.las-facts li:has(.icon-rupee)::before {
+  display: block;
+  background-image: url("icons/rupee.svg");
+}
+
+.las-facts:not(:has(.icon)) li:nth-child(6)::before {
+  display: block;
+  background-image: url("icons/bolt.svg");
+}
+
+.las-facts li:has(.icon-bolt)::before {
+  display: block;
+  background-image: url("icons/bolt.svg");
+}
+
+.las-facts:not(:has(.icon)) li:nth-child(7)::before {
+  display: block;
+  background-image: url("icons/calendar.svg");
+}
+
+.las-facts li:has(.icon-calendar)::before {
+  display: block;
+  background-image: url("icons/calendar.svg");
+}
+
+.las-facts:not(:has(.icon)) li:nth-child(8)::before {
+  display: block;
+  background-image: url("icons/person.svg");
+}
+
+.las-facts li:has(.icon-person)::before {
+  display: block;
+  background-image: url("icons/person.svg");
+}
+
 
 @media (width >= 900px) {
   .las-facts {
@@ -124,7 +192,7 @@
   }
 
   /* On wide screens the badge goes back next to the heading */
-  .las-facts > div:nth-child(2) {
+  .las-facts > div:not(:has(h2), :has(ul)) {
     order: 0;
     flex: 0 1 auto;
   }
@@ -145,18 +213,18 @@
     padding: 20px;
   }
 
-  .las-facts > div:nth-child(1) {
+  .las-facts > div:has(h2) {
     max-width: 193px;
   }
 
   .las-facts h2,
-  .las-facts > div:nth-child(1) p {
+  .las-facts > div:has(h2) p {
     font-size: 20px;
     line-height: 28px;
   }
 
   /* 16px between the heading and the first fact (the flex gap is 12px) */
-  .las-facts > div:nth-child(3) {
+  .las-facts > div:has(ul) {
     margin-top: 4px;
   }
 
